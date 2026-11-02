@@ -18,6 +18,8 @@ docker compose up -d --build             # http://localhost:8080
 - Máy khác trong mạng LAN mở `http://<IP máy này>:8080` (Windows có thể hỏi mở firewall). Kết nối là HTTP thường;
   đừng mở cổng này ra internet: video khoá học có bản quyền.
 
+Phụ đề "VI (AI)" nằm ở `app/content/transcripts-ai/`, không có trong git và không tạo lại được bằng script: hãy tự sao lưu thư mục này. Thiếu thư mục thì app dùng phụ đề VI gốc.
+
 ## Chạy để phát triển
 
 ```bash

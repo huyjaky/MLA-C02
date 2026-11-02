@@ -172,5 +172,15 @@
   "quiz.resumeInfo": "Câu {n}/{total} · đã trả lời {answered} câu · {mode} · lưu lúc {time}",
   "quiz.resume": "Làm tiếp",
   "quiz.startOver": "Làm lại từ đầu",
-  "quiz.inProgress": "đang làm dở, đã trả lời {n}/{total}"
+  "quiz.inProgress": "đang làm dở, đã trả lời {n}/{total}",
+  "lecture.langAi": "VI (AI)",
+  "lecture.langAiHint": "Bản tiếng Việt tự nhiên do AI viết lại, giữ và tô sáng thuật ngữ. Bản VI gốc vẫn còn.",
+  "mistakes.title": "Phòng ôn câu sai",
+  "mistakes.lead": "{n} câu cần sửa. Câu sẽ rời danh sách khi bạn làm đúng.",
+  "mistakes.practice": "Luyện lại các câu này",
+  "mistakes.related": "Bài nên xem lại",
+  "mistakes.noRelated": "Chưa tìm thấy bài liên quan rõ ràng.",
+  "mistakes.advice": "Lời khuyên từ đề thi",
+  "quizzes.clear": "Xóa lịch sử thi",
+  "quizzes.clearConfirm": "Xóa toàn bộ điểm, câu đã sai và bài đang làm dở của tài khoản này? Không thể hoàn tác. Tiến độ bài giảng và flashcard vẫn giữ nguyên."
 }

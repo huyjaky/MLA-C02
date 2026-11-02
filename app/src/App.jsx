@@ -6,6 +6,7 @@ import { SectionPage } from './pages/SectionPage'
 import { LecturePage } from './pages/LecturePage'
 import { QuizzesPage } from './pages/QuizzesPage'
 import { QuizPage } from './pages/QuizPage'
+import { MistakesPage } from './pages/MistakesPage'
 import { FlashcardsPage } from './pages/FlashcardsPage'
 import { GlossaryPage } from './pages/GlossaryPage'
 import { NotesPage } from './pages/NotesPage'
@@ -23,6 +24,7 @@ export function App() {
             <Route path="lecture/:id" element={<LecturePage />} />
             <Route path="quizzes" element={<QuizzesPage />} />
             <Route path="quiz/:id" element={<QuizPage />} />
+            <Route path="mistakes" element={<MistakesPage />} />
             <Route path="flashcards" element={<FlashcardsPage />} />
             <Route path="glossary" element={<GlossaryPage />} />
             <Route path="notes" element={<NotesPage />} />

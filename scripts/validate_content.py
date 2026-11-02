@@ -18,7 +18,7 @@ from course_env import ROOT, load_paths
 
 CONTENT = ROOT / "app" / "content"
 TAG = re.compile(r"</?([a-z0-9]+)")
-SKIP = {"transcripts"}  # derived from .srt, already bilingual by file
+SKIP = {"transcripts", "transcripts-ai"}  # derived from .srt, already bilingual by file
 
 
 class ContentValidator:

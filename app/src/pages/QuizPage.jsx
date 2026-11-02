@@ -10,6 +10,7 @@ import { Meter } from '../components/Meter'
 import { QuestionCard } from '../components/quiz/QuestionCard'
 import { AnswerSheet } from '../components/quiz/AnswerSheet'
 import { ExamTimer } from '../components/quiz/ExamTimer'
+import { MistakeHelp } from '../components/quiz/MistakeHelp'
 import { NotFoundPage } from './NotFoundPage'
 
 /** Real quizzes come from content; "mistakes" is built from every question answered wrong. */
@@ -199,6 +200,7 @@ function QuizRun({ quiz, mode, saved, onRestart }) {
             <CheckCheck size={16} aria-hidden="true" /> {l.ui('quiz.submit')}
           </button>
         )}
+        {quiz.id === 'mistakes' && <MistakeHelp question={q} showAdvice={revealed} />}
       </aside>
     </div>
   )

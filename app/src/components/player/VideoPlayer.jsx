@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Maximize, Minimize, Pause, Play, RotateCcw, RotateCw, Volume2, VolumeX } from 'lucide-react'
 import { useApp } from '../../state/AppContext'
 import { Localizer } from '../../core/Localizer'
+import { CueText } from './CueText'
 
 const RATES = [0.75, 1, 1.25, 1.5, 1.75, 2]
 const IDLE_MS = 2500 // controls fade out after this long without pointer movement while playing
@@ -121,7 +122,7 @@ export function VideoPlayer({ src, videoRef, captions = [], extraControls, overl
         <div className="captions" aria-live="off">
           {captions.map((c, i) => (
             <p key={c.lang} lang={c.lang} className={`captions__line captions__line--${i === 0 ? 'primary' : 'secondary'}`}>
-              {c.text}
+              <CueText text={c.text} />
             </p>
           ))}
         </div>

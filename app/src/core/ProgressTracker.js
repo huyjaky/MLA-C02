@@ -94,6 +94,11 @@ export class ProgressTracker extends PersistentStore {
     })
   }
 
+  /** Forget all scores, missed questions and unfinished attempts; lectures and flashcards are kept. */
+  clearExamHistory() {
+    for (const slice of ['quizzes', 'mistakes', 'quizRuns']) this.update(slice, () => ({}))
+  }
+
   quizStats(quizId) {
     return this.state.quizzes[quizId] ?? null
   }

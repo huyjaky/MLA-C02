@@ -8,6 +8,7 @@ import { BiText } from '../components/BiText'
 import { SectionTab } from '../components/SectionTab'
 import { Segmented } from '../components/Segmented'
 import { VideoPlayer } from '../components/player/VideoPlayer'
+import { CueText } from '../components/player/CueText'
 import { LectureSummary } from '../components/LectureSummary'
 import { NotFoundPage } from './NotFoundPage'
 
@@ -27,7 +28,7 @@ function useTracks(repo, lectureId) {
     let live = true
     setTracks(null)
     repo.transcript(lectureId).then((cues) => {
-      if (live) setTracks({ en: new TranscriptTrack(cues.en), vi: new TranscriptTrack(cues.vi) })
+      if (live) setTracks({ en: new TranscriptTrack(cues.en), vi: new TranscriptTrack(cues.vi), ai: new TranscriptTrack(cues.ai) })
     })
     return () => { live = false }
   }, [repo, lectureId])
@@ -148,8 +149,9 @@ function VideoWithTranscript({ lecture, autoResume, onComplete }) {
   const active = track ? track.indexAt(subTime) : -1
   const captionLines = useMemo(() => {
     if (!tracks || captions === 'off') return []
-    const langs = captions === 'both' ? [l.lang, l.other] : [captions]
-    return langs.map((lg) => ({ lang: lg, text: tracks[lg].textAt(subTime) })).filter((c) => c.text)
+    const single = captions === 'ai' && tracks.ai.isEmpty ? 'vi' : captions // lectures without an AI rewrite fall back to the original
+    const langs = captions === 'both' ? [l.lang, l.other] : [single]
+    return langs.map((lg) => ({ lang: lg === 'ai' ? 'vi' : lg, text: tracks[lg].textAt(subTime) })).filter((c) => c.text)
   }, [tracks, captions, subTime, l])
 
   useEffect(() => {
@@ -231,6 +233,7 @@ function VideoWithTranscript({ lecture, autoResume, onComplete }) {
                 options={[
                   { value: 'off', label: l.ui('lecture.capOff') },
                   { value: 'vi', label: 'VI' },
+                  { value: 'ai', label: l.ui('lecture.langAi'), title: l.ui('lecture.langAiHint') },
                   { value: 'en', label: 'EN' },
                   { value: 'both', label: l.ui('lecture.capBoth') },
                 ]}
@@ -263,7 +266,10 @@ function VideoWithTranscript({ lecture, autoResume, onComplete }) {
             label={l.ui('lecture.transcriptLang')}
             value={lang}
             onChange={setLang}
-            options={Localizer.LANGS.map((lg) => ({ value: lg, label: lg.toUpperCase() }))}
+            options={[
+              ...Localizer.LANGS.map((lg) => ({ value: lg, label: lg.toUpperCase() })),
+              { value: 'ai', label: l.ui('lecture.langAi'), title: l.ui('lecture.langAiHint') },
+            ]}
           />
           <label className="check">
             <input type="checkbox" checked={follow} onChange={(e) => setFollow(e.target.checked)} />
@@ -277,12 +283,12 @@ function VideoWithTranscript({ lecture, autoResume, onComplete }) {
         ) : track.isEmpty ? (
           <p className="empty">{l.ui('lecture.noTranscript')}</p>
         ) : (
-          <ol className="transcript__list" ref={list} lang={lang}>
+          <ol className="transcript__list" ref={list} lang={lang === 'ai' ? 'vi' : lang}>
             {track.cues.map(([start, , text], i) => (
               <li key={i} data-index={i}>
                 <button type="button" className="cue" aria-current={i === active || undefined} onClick={() => playFrom(start + delay)}>
                   <span className="cue__time num">{Localizer.clock(start)}</span>
-                  <span className="cue__text">{text}</span>
+                  <span className="cue__text"><CueText text={text} /></span>
                 </button>
               </li>
             ))}

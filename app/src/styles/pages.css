@@ -945,6 +945,20 @@
   height: 1.875rem;
 }
 
+/* technical terms kept in English in the AI subtitles */
+.term-mark {
+  padding: 0 0.15em;
+  border-radius: 3px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.captions .term-mark {
+  background: transparent;
+  color: #7fd4ff;
+}
+
 .transcript {
   display: flex;
   flex-direction: column;
@@ -1753,5 +1767,67 @@ article.prose {
   .btn--known {
     min-width: 0;
     flex: 1;
+  }
+}
+
+/* ---------- mistakes room ---------- */
+.mistake-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.mistake {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: var(--s-5);
+  padding: var(--s-4) 0;
+  border-top: 1px solid var(--line);
+}
+
+.mistake__question {
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+}
+
+.mistake-help {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  font-size: var(--fs-sm);
+}
+
+.mistake-help h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--s-1);
+  font-size: var(--fs-xs);
+  color: var(--ink-3);
+}
+
+.mistake-help ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+}
+
+.mistake-help a {
+  display: inline-flex;
+  gap: var(--s-1);
+  align-items: baseline;
+  text-decoration: none;
+}
+
+.mistake-help a:hover {
+  text-decoration: underline;
+}
+
+.quiz__side .mistake-help {
+  padding-top: var(--s-3);
+  border-top: 1px solid var(--line);
+}
+
+@media (max-width: 900px) {
+  .mistake {
+    grid-template-columns: 1fr;
   }
 }

@@ -5,11 +5,13 @@ const noteFiles = import.meta.glob('../../content/notes/*.json', { eager: true, 
 const glossaryFiles = import.meta.glob('../../content/glossary/*.json', { eager: true, import: 'default' })
 const uiFiles = import.meta.glob('../../content/ui/*.json', { eager: true, import: 'default' })
 import course from '../../content/course.json'
+import { MistakeCoach } from './MistakeCoach'
 
 // Large per-section files ({ lectureId: entry }), loaded only when a lecture asks for them.
 const lazySectionFiles = {
   transcripts: import.meta.glob('../../content/transcripts/*.json', { import: 'default' }),
   summaries: import.meta.glob('../../content/summaries/*.json', { import: 'default' }),
+  'transcripts-ai': import.meta.glob('../../content/transcripts-ai/*.json', { import: 'default' }),
 }
 
 const byOrder = (a, b) => a.order - b.order
@@ -33,6 +35,7 @@ export class ContentRepository {
     this.questionIndex = new Map()
     this.quizzes.forEach((quiz) => quiz.questions.forEach((q) => this.questionIndex.set(q.id, { question: q, quiz })))
     this.lazyCache = new Map()
+    this.coach = new MistakeCoach(this.terms, [...this.lectureIndex.values()].map((e) => e.lecture))
     this.slides = course.slides
   }
 
@@ -74,6 +77,11 @@ export class ContentRepository {
     return this.terms.filter((t) => t.section === sectionId)
   }
 
+  /** Lecture ids worth rewatching for a question. */
+  relatedLectures(question) {
+    return this.coach.related(question, this.questionIndex.get(question.id)?.quiz.section)
+  }
+
   questionsByIds(ids) {
     return ids.map((id) => this.questionIndex.get(Number(id))?.question).filter(Boolean)
   }
@@ -88,9 +96,10 @@ export class ContentRepository {
     return (await this.lazyCache.get(key))[lectureId]
   }
 
-  /** { en, vi } subtitle cue lists for a lecture. */
+  /** { en, vi, ai } subtitle cue lists for a lecture; ai is the natural rewrite, kept apart from the original vi. */
   async transcript(lectureId) {
-    return (await this.#lectureEntry('transcripts', lectureId)) ?? {}
+    const [cues, ai] = await Promise.all([this.#lectureEntry('transcripts', lectureId), this.#lectureEntry('transcripts-ai', lectureId)])
+    return { ...cues, ai }
   }
 
   /** { tldr, points, services, funFact?, diagram? } for a lecture, or null when none was written. */

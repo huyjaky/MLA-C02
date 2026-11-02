@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { RotateCcw, Timer } from 'lucide-react'
+import { RotateCcw, Timer, Trash2 } from 'lucide-react'
 import { useApp } from '../state/AppContext'
 import { PageHeader } from '../components/PageHeader'
 import { BiText } from '../components/BiText'
@@ -36,15 +36,23 @@ export function QuizzesPage() {
     ['quizzes.sections', repo.quizzes.filter((q) => q.kind === 'section')],
   ]
   const mistakes = tracker.mistakeIds.length
+  const clearHistory = () => {
+    if (window.confirm(l.ui('quizzes.clearConfirm'))) tracker.clearExamHistory()
+  }
   return (
     <div className="page">
       <PageHeader
         title={l.ui('nav.quizzes')}
         lead={l.ui('quizzes.lead', { n: repo.questionIndex.size })}
         aside={
-          <Link to="/quiz/mistakes" className={`btn ${mistakes ? 'btn--primary' : ''}`}>
-            <RotateCcw size={16} aria-hidden="true" /> {l.ui('dash.mistakes', { n: mistakes })}
-          </Link>
+          <div className="actions">
+            <Link to="/mistakes" className={`btn ${mistakes ? 'btn--primary' : ''}`}>
+              <RotateCcw size={16} aria-hidden="true" /> {l.ui('dash.mistakes', { n: mistakes })}
+            </Link>
+            <button type="button" className="btn" onClick={clearHistory}>
+              <Trash2 size={16} aria-hidden="true" /> {l.ui('quizzes.clear')}
+            </button>
+          </div>
         }
       />
       {groups.map(([key, quizzes]) => (

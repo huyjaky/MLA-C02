@@ -55,7 +55,7 @@ export function DashboardPage() {
         </TodayLink>
         <TodayLink to="/flashcards" icon={Layers} label={l.ui('nav.flashcards')} value={l.ui('dash.due', { n: scheduler.queue(cards).length })} />
         <TodayLink
-          to={mistakes ? '/quiz/mistakes' : '/quizzes'}
+          to={mistakes ? '/mistakes' : '/quizzes'}
           icon={RotateCcw}
           label={l.ui('quiz.mistakes')}
           value={l.ui('dash.mistakes', { n: mistakes })}

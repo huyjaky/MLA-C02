@@ -4,6 +4,7 @@ import { LeitnerScheduler } from '../src/core/LeitnerScheduler.js'
 import { QuizSession } from '../src/core/QuizSession.js'
 import { TranscriptTrack } from '../src/core/TranscriptTrack.js'
 import { Localizer } from '../src/core/Localizer.js'
+import { MistakeCoach } from '../src/core/MistakeCoach.js'
 
 const now = 1_000_000
 assert.equal(LeitnerScheduler.review(undefined, true, now).box, 2)
@@ -47,6 +48,22 @@ assert.ok(back.flagged.has(1), 'flags restored with numeric ids')
 assert.equal(Math.round(back.secondsLeft(5_000_000)), back.duration - 90, 'clock resumes, not reset')
 const pruned = QuizSession.restore({ id: 'q', questions: [questions[1]] }, saved)
 assert.equal(pruned.answeredCount, 1, 'answers to removed questions are dropped')
+
+const coach = new MistakeCoach(
+  [{ term: 'data lake', lecture: '02-004', section: '02' }, { term: 'Kinesis', lecture: '02-038', section: '02' }, { term: 'lake', lecture: '09-001', section: '09' }],
+  [{ id: '02-009', title: { en: 'Amazon S3' } }, { id: '01-001', title: { en: 'Intro' } }],
+)
+const missed = {
+  id: 7,
+  question: { en: '<p>Where to keep raw files in a data lake on Amazon S3?</p>' },
+  options: [{ en: 'x' }, { en: 'Kinesisx' }],
+  answer: [0],
+  explanation: { en: '<p>Short.</p><p>A long explanation paragraph that is clearly at least eighty characters long for the advice.</p>', vi: '<p>Ngắn.</p><p>Giải thích.</p>' },
+}
+assert.deepEqual(coach.related(missed, '02'), ['02-009', '02-004', '09-001'], 'titles weigh most, own section first, whole words only')
+assert.match(MistakeCoach.advice(missed).en, /^A long explanation/, 'advice skips short paragraphs')
+assert.equal(MistakeCoach.advice({ answer: [0], options: [], explanation: { en: '<p>Short.</p>' } }), null, 'no advice when the exam has none')
+assert.equal(MistakeCoach.advice({ answer: [0], feedback: [{ en: '<p>Right because.</p>', vi: '<p>Đúng vì.</p>' }] }).vi, 'Đúng vì.')
 
 const t = new TranscriptTrack([[0, 2, 'a'], [2.5, 4, 'b'], [10, 12, 'c']])
 assert.equal(t.textAt(1), 'a')

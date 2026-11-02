@@ -172,5 +172,15 @@
   "quiz.resumeInfo": "Question {n}/{total} · {answered} answered · {mode} · saved {time}",
   "quiz.resume": "Continue",
   "quiz.startOver": "Start over",
-  "quiz.inProgress": "in progress, {n}/{total} answered"
+  "quiz.inProgress": "in progress, {n}/{total} answered",
+  "lecture.langAi": "VI (AI)",
+  "lecture.langAiHint": "Natural Vietnamese rewritten by AI, technical terms kept and highlighted. The original VI stays available.",
+  "mistakes.title": "Mistakes room",
+  "mistakes.lead": "{n} questions to fix. They leave this list once you answer them correctly.",
+  "mistakes.practice": "Practice these questions",
+  "mistakes.related": "Lectures to rewatch",
+  "mistakes.noRelated": "No clearly related lecture was found.",
+  "mistakes.advice": "Advice from the exam",
+  "quizzes.clear": "Clear exam history",
+  "quizzes.clearConfirm": "Delete all scores, missed questions and unfinished attempts for this account? This cannot be undone. Lectures and flashcards are kept."
 }

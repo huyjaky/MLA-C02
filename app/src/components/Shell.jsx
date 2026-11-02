@@ -1,5 +1,5 @@
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
-import { BookOpenText, Layers, LayoutGrid, ListChecks, LogOut, Moon, NotebookPen, PlayCircle, Sun, SunMoon, Library, Languages, UserRound } from 'lucide-react'
+import { BookOpenText, Dumbbell, Layers, LayoutGrid, ListChecks, LogOut, Moon, NotebookPen, PlayCircle, Sun, SunMoon, Library, Languages, UserRound } from 'lucide-react'
 import { useEffect, useRef } from 'react'
 import { useApp } from '../state/AppContext'
 import { BiText } from './BiText'
@@ -9,6 +9,7 @@ import { Segmented } from './Segmented'
 const NAV = [
   { to: '/', key: 'nav.dashboard', icon: LayoutGrid, end: true },
   { to: '/quizzes', key: 'nav.quizzes', icon: ListChecks },
+  { to: '/mistakes', key: 'mistakes.title', icon: Dumbbell },
   { to: '/flashcards', key: 'nav.flashcards', icon: Layers },
   { to: '/glossary', key: 'nav.glossary', icon: Library },
   { to: '/notes', key: 'nav.notes', icon: NotebookPen },
