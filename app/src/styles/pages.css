@@ -297,6 +297,7 @@
   background: #05070a;
   box-shadow: var(--shadow-lift);
   aspect-ratio: 16 / 9;
+  container-type: inline-size;
 }
 
 .player__stage[data-chrome='hidden'] {
@@ -672,7 +673,7 @@
   align-self: stretch;
   display: grid;
   grid-template-rows: 1fr;
-  background: linear-gradient(to top, rgb(5 7 10 / 0.9), rgb(5 7 10 / 0.55) 70%, transparent);
+  background: rgb(5 7 10 / 0.88); /* solid: a gradient left the seek bar unreadable over bright slides */
   color: var(--vp-ink);
   pointer-events: auto;
   transition: grid-template-rows var(--t-slow) var(--ease-out), opacity var(--t-base);
@@ -687,7 +688,12 @@
 .vp-controls__inner {
   min-height: 0;
   overflow: hidden;
-  padding: var(--s-5) var(--s-3) var(--s-2);
+  padding: var(--s-1) var(--s-3);
+}
+
+/* keep the seek tooltip visible above the bar; clipping is only needed while it collapses */
+.player__stage[data-chrome='shown'] .vp-controls__inner {
+  overflow: visible;
 }
 
 .seek {
@@ -703,7 +709,7 @@
   inset: auto 0;
   height: 4px;
   border-radius: 2px;
-  background: rgb(255 255 255 / 0.2);
+  background: rgb(255 255 255 / 0.35);
   overflow: hidden;
   transition: height var(--t-fast) var(--ease-out);
 }
@@ -721,7 +727,7 @@
 }
 
 .seek__buffered {
-  background: rgb(255 255 255 / 0.32);
+  background: rgb(255 255 255 / 0.55);
   transform: scaleX(var(--buffered));
 }
 
@@ -1829,5 +1835,40 @@ article.prose {
 @media (max-width: 900px) {
   .mistake {
     grid-template-columns: 1fr;
+  }
+}
+
+/* a normal-size player: one compact row of controls so less of the slide is covered (J/L still skip 10s) */
+@container (max-width: 780px) {
+  .vp-group:first-child > .vp-btn:not(.vp-btn--play) {
+    display: none;
+  }
+
+  .vp-row {
+    gap: var(--s-1);
+  }
+
+  .vp-group--end {
+    gap: var(--s-1);
+  }
+
+  .vp-time__total {
+    display: none;
+  }
+
+  .vp-controls .segmented__option {
+    padding: 0 var(--s-2);
+    font-size: var(--fs-xs);
+  }
+
+  .delay__value {
+    min-width: 3.25rem;
+    padding: 0 var(--s-1);
+  }
+
+  .vp-rate select {
+    min-width: 3.25rem;
+    padding: 0 var(--s-1);
+    font-size: var(--fs-xs);
   }
 }
