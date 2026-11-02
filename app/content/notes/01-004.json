@@ -1,0 +1,12 @@
+{
+ "id": "01-004",
+ "section": "01",
+ "title": {
+  "en": "Heads Up! Choose the correct AWS Sign Up experience",
+  "vi": "Lưu ý! Chọn đúng trải nghiệm đăng ký AWS"
+ },
+ "body": {
+  "en": "<p>If you are creating a new AWS account for use in this course, you may be offered a <a href=\"https://docs.aws.amazon.com/accounts/latest/reference/sign-in-new.html\">new signup experience.</a> This allows you to sign into AWS using existing credentials from other services, and leads to an AWS UI that organizes your services by project. However, it includes a limited set of services, and won't be compatible with the labs in this course.</p><p><strong>IF YOU SEE THE SCREEN BELOW, SELECT THE SIGN UP (ADVANCED) OPTION.</strong> This will lead to the full enterprise AWS experience that this course assumes.</p><p><br></p><img src=\"https://img-c.udemycdn.com/redactor/raw/article_lecture/2026-09-02_15-23-35-639664036172c95e31b031c3ef48b462.png\">",
+  "vi": "<p>Nếu bạn tạo tài khoản AWS mới để dùng cho khóa học này, bạn có thể được đề nghị dùng <a href=\"https://docs.aws.amazon.com/accounts/latest/reference/sign-in-new.html\">trải nghiệm đăng ký mới.</a> Cách này cho phép bạn đăng nhập AWS bằng thông tin đăng nhập có sẵn từ các dịch vụ khác, và dẫn tới giao diện AWS sắp xếp dịch vụ theo dự án. Tuy nhiên, nó chỉ gồm một số ít dịch vụ và sẽ không tương thích với các lab trong khóa học này.</p><p><strong>NẾU BẠN THẤY MÀN HÌNH BÊN DƯỚI, HÃY CHỌN TÙY CHỌN SIGN UP (ADVANCED).</strong> Tùy chọn này dẫn tới trải nghiệm AWS đầy đủ dành cho doanh nghiệp mà khóa học giả định.</p><p><br></p><img src=\"https://img-c.udemycdn.com/redactor/raw/article_lecture/2026-09-02_15-23-35-639664036172c95e31b031c3ef48b462.png\">"
+ }
+}

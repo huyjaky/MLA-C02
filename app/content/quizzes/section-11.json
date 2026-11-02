@@ -1,0 +1,486 @@
+{
+ "id": "section-11",
+ "kind": "section",
+ "section": "11",
+ "title": {
+  "en": "Management and Governance",
+  "vi": "Quản lý và Governance"
+ },
+ "description": {
+  "en": "<p>Test your knowledge of this section of the course.</p>",
+  "vi": "<p>Kiểm tra kiến thức của bạn về phần này của khóa học.</p>"
+ },
+ "passPercent": 70,
+ "questions": [
+  {
+   "id": 87796115,
+   "multi": false,
+   "question": {
+    "en": "<p>An operations team wants to plot endpoint InvocationLatency by model variant and instance. In CloudWatch terminology, what identifies attributes such as the variant or instance ID?</p>",
+    "vi": "<p>Một đội vận hành muốn vẽ biểu đồ InvocationLatency của endpoint theo model variant và instance. Trong thuật ngữ CloudWatch, thành phần nào xác định các thuộc tính như variant hay instance ID?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use metric dimensions</p>",
+     "vi": "<p>Dùng metric dimensions</p>"
+    },
+    {
+     "en": "<p>Use log retention policies</p>",
+     "vi": "<p>Dùng log retention policies</p>"
+    },
+    {
+     "en": "<p>Use trace subsegments</p>",
+     "vi": "<p>Dùng trace subsegments</p>"
+    },
+    {
+     "en": "<p>Use configuration recorders</p>",
+     "vi": "<p>Dùng configuration recorders</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Correct. Dimensions are name-value attributes that identify a metric's context.</p>",
+     "vi": "<p>Đúng. Dimensions là các thuộc tính dạng name-value xác định ngữ cảnh của một metric.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Retention policies determine how long logs are stored.</p>",
+     "vi": "<p>Sai. Retention policy quyết định thời gian lưu log.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Subsegments are components of X-Ray traces.</p>",
+     "vi": "<p>Sai. Subsegment là thành phần của X-Ray trace.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Config recorders capture resource configurations.</p>",
+     "vi": "<p>Sai. Config recorder ghi lại cấu hình tài nguyên.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87796123,
+   "multi": false,
+   "question": {
+    "en": "<p>A company must continuously export a selected subset of CloudWatch metrics to Datadog with near-real-time, low-latency delivery. Which feature should it use?</p>",
+    "vi": "<p>Một công ty phải liên tục xuất một tập con metric CloudWatch sang Datadog với độ trễ thấp, gần thời gian thực. Nên dùng tính năng nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use CloudWatch Logs export tasks</p>",
+     "vi": "<p>Dùng CloudWatch Logs export tasks</p>"
+    },
+    {
+     "en": "<p>Use AWS Config snapshots</p>",
+     "vi": "<p>Dùng AWS Config snapshots</p>"
+    },
+    {
+     "en": "<p>Use CloudTrail event history</p>",
+     "vi": "<p>Dùng CloudTrail event history</p>"
+    },
+    {
+     "en": "<p>Use CloudWatch Metric Streams</p>",
+     "vi": "<p>Dùng CloudWatch Metric Streams</p>"
+    }
+   ],
+   "answer": [
+    3
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Logs export tasks move log data to S3 and can take hours.</p>",
+     "vi": "<p>Sai. Logs export task chuyển log sang S3 và có thể mất hàng giờ.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Config snapshots describe resource configuration.</p>",
+     "vi": "<p>Sai. Config snapshot mô tả cấu hình tài nguyên.</p>"
+    },
+    {
+     "en": "<p>Incorrect. CloudTrail event history records API activity.</p>",
+     "vi": "<p>Sai. CloudTrail event history ghi lại hoạt động API.</p>"
+    },
+    {
+     "en": "<p>Correct. Metric Streams continuously deliver filtered metrics through Firehose or supported partners.</p>",
+     "vi": "<p>Đúng. Metric Streams liên tục chuyển các metric đã lọc qua Firehose hoặc các đối tác được hỗ trợ.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87796131,
+   "multi": false,
+   "question": {
+    "en": "<p>An engineer needs to search multiple CloudWatch log groups for ERROR entries, aggregate counts by service, and save the query on a dashboard. Which capability should be used?</p>",
+    "vi": "<p>Một kỹ sư cần tìm các entry ERROR trong nhiều CloudWatch log group, tổng hợp số lượng theo service và lưu query lên dashboard. Nên dùng khả năng nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use AWS Trusted Advisor</p>",
+     "vi": "<p>Dùng AWS Trusted Advisor</p>"
+    },
+    {
+     "en": "<p>Use CloudTrail Insights</p>",
+     "vi": "<p>Dùng CloudTrail Insights</p>"
+    },
+    {
+     "en": "<p>Use CloudWatch Logs Insights</p>",
+     "vi": "<p>Dùng CloudWatch Logs Insights</p>"
+    },
+    {
+     "en": "<p>Use Cost Explorer reports</p>",
+     "vi": "<p>Dùng báo cáo Cost Explorer</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Trusted Advisor provides account recommendations.</p>",
+     "vi": "<p>Sai. Trusted Advisor đưa ra khuyến nghị cho account.</p>"
+    },
+    {
+     "en": "<p>Incorrect. CloudTrail Insights detects unusual API write activity.</p>",
+     "vi": "<p>Sai. CloudTrail Insights phát hiện hoạt động ghi API bất thường.</p>"
+    },
+    {
+     "en": "<p>Correct. Logs Insights provides a query language for filtering, aggregation, sorting, and dashboards.</p>",
+     "vi": "<p>Đúng. Logs Insights cung cấp ngôn ngữ truy vấn để lọc, tổng hợp, sắp xếp và đưa lên dashboard.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Cost Explorer analyzes spending and usage.</p>",
+     "vi": "<p>Sai. Cost Explorer phân tích chi tiêu và mức sử dụng.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87796135,
+   "multi": false,
+   "question": {
+    "en": "<p>A security pipeline must process matching CloudWatch log events within seconds by invoking Lambda. Which delivery mechanism should it configure?</p>",
+    "vi": "<p>Một pipeline bảo mật phải xử lý các log event CloudWatch khớp điều kiện trong vài giây bằng cách gọi Lambda. Nên cấu hình cơ chế chuyển giao nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Configure a daily S3 export task</p>",
+     "vi": "<p>Cấu hình export task S3 hằng ngày</p>"
+    },
+    {
+     "en": "<p>Configure a Config conformance pack</p>",
+     "vi": "<p>Cấu hình Config conformance pack</p>"
+    },
+    {
+     "en": "<p>Configure a monthly cost report</p>",
+     "vi": "<p>Cấu hình báo cáo chi phí hằng tháng</p>"
+    },
+    {
+     "en": "<p>Configure a Logs subscription filter</p>",
+     "vi": "<p>Cấu hình Logs subscription filter</p>"
+    }
+   ],
+   "answer": [
+    3
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. S3 export can take up to 12 hours and is not real time.</p>",
+     "vi": "<p>Sai. Export sang S3 có thể mất đến 12 giờ và không phải thời gian thực.</p>"
+    },
+    {
+     "en": "<p>Incorrect. A conformance pack evaluates resource compliance.</p>",
+     "vi": "<p>Sai. Conformance pack đánh giá mức độ tuân thủ của tài nguyên.</p>"
+    },
+    {
+     "en": "<p>Incorrect. A cost report does not process log events.</p>",
+     "vi": "<p>Sai. Báo cáo chi phí không xử lý log event.</p>"
+    },
+    {
+     "en": "<p>Correct. A subscription filter sends matching log events to Lambda, Kinesis, or Firehose in real time.</p>",
+     "vi": "<p>Đúng. Subscription filter gửi các log event khớp tới Lambda, Kinesis hoặc Firehose theo thời gian thực.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87796139,
+   "multi": false,
+   "question": {
+    "en": "<p>An EC2 inference server must send application logs plus RAM, process, and disk metrics to CloudWatch. Which component should be installed?</p>",
+    "vi": "<p>Một inference server trên EC2 phải gửi application log cùng các metric RAM, process và disk lên CloudWatch. Nên cài thành phần nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Install the CloudWatch Unified Agent</p>",
+     "vi": "<p>Cài CloudWatch Unified Agent</p>"
+    },
+    {
+     "en": "<p>Install the Kinesis Producer Library</p>",
+     "vi": "<p>Cài Kinesis Producer Library</p>"
+    },
+    {
+     "en": "<p>Install the AWS X-Ray console</p>",
+     "vi": "<p>Cài AWS X-Ray console</p>"
+    },
+    {
+     "en": "<p>Install the Glue Crawler service</p>",
+     "vi": "<p>Cài dịch vụ Glue Crawler</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Correct. The Unified Agent collects logs and system-level metrics such as RAM, disk, and processes.</p>",
+     "vi": "<p>Đúng. Unified Agent thu thập log và metric cấp hệ thống như RAM, disk và process.</p>"
+    },
+    {
+     "en": "<p>Incorrect. KPL publishes records to Kinesis Data Streams.</p>",
+     "vi": "<p>Sai. KPL đẩy record vào Kinesis Data Streams.</p>"
+    },
+    {
+     "en": "<p>Incorrect. X-Ray uses an SDK and daemon for traces, not host RAM metrics.</p>",
+     "vi": "<p>Sai. X-Ray dùng SDK và daemon cho trace, không phải metric RAM của host.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Glue crawlers discover data schemas.</p>",
+     "vi": "<p>Sai. Glue crawler khám phá schema dữ liệu.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87796143,
+   "multi": false,
+   "question": {
+    "en": "<p>A team receives too many alerts when either CPU or IOPS briefly spikes. It wants one notification only when both underlying alarms are in ALARM state. What should it create?</p>",
+    "vi": "<p>Một đội nhận quá nhiều cảnh báo khi CPU hoặc IOPS tăng đột biến ngắn. Họ chỉ muốn một thông báo khi CẢ HAI alarm bên dưới đều ở trạng thái ALARM. Nên tạo gì?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Create a high-resolution metric stream</p>",
+     "vi": "<p>Tạo high-resolution metric stream</p>"
+    },
+    {
+     "en": "<p>Create a composite CloudWatch alarm</p>",
+     "vi": "<p>Tạo composite CloudWatch alarm</p>"
+    },
+    {
+     "en": "<p>Create a CloudTrail organization trail</p>",
+     "vi": "<p>Tạo CloudTrail organization trail</p>"
+    },
+    {
+     "en": "<p>Create an AWS Config aggregator</p>",
+     "vi": "<p>Tạo AWS Config aggregator</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Metric streams export data but do not combine alarm logic.</p>",
+     "vi": "<p>Sai. Metric stream xuất dữ liệu nhưng không kết hợp logic alarm.</p>"
+    },
+    {
+     "en": "<p>Correct. Composite alarms apply AND or OR logic to the states of multiple alarms.</p>",
+     "vi": "<p>Đúng. Composite alarm áp dụng logic AND hoặc OR lên trạng thái của nhiều alarm.</p>"
+    },
+    {
+     "en": "<p>Incorrect. CloudTrail records API calls.</p>",
+     "vi": "<p>Sai. CloudTrail ghi lại các lệnh gọi API.</p>"
+    },
+    {
+     "en": "<p>Incorrect. A Config aggregator centralizes configuration and compliance data.</p>",
+     "vi": "<p>Sai. Config aggregator tập trung dữ liệu cấu hình và tuân thủ.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87796151,
+   "multi": false,
+   "question": {
+    "en": "<p>An EC2 host fails its underlying system status check. The instance must be recovered while preserving its IP addresses and metadata. Which action should a CloudWatch alarm trigger?</p>",
+    "vi": "<p>Một EC2 host không qua được system status check bên dưới. Instance phải được khôi phục mà vẫn giữ địa chỉ IP và metadata. CloudWatch alarm nên kích hoạt hành động nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Trigger instance termination</p>",
+     "vi": "<p>Kích hoạt terminate instance</p>"
+    },
+    {
+     "en": "<p>Trigger instance hibernation</p>",
+     "vi": "<p>Kích hoạt hibernate instance</p>"
+    },
+    {
+     "en": "<p>Trigger EC2 instance recovery</p>",
+     "vi": "<p>Kích hoạt EC2 instance recovery</p>"
+    },
+    {
+     "en": "<p>Trigger AMI deregistration</p>",
+     "vi": "<p>Kích hoạt deregister AMI</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Termination destroys the running instance.</p>",
+     "vi": "<p>Sai. Terminate sẽ hủy instance đang chạy.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Hibernation is not the automated recovery action for failed hardware.</p>",
+     "vi": "<p>Sai. Hibernate không phải hành động khôi phục tự động cho lỗi phần cứng.</p>"
+    },
+    {
+     "en": "<p>Correct. EC2 recovery moves the instance after a system-status failure while preserving key attributes.</p>",
+     "vi": "<p>Đúng. EC2 recovery di chuyển instance sau khi system status lỗi và vẫn giữ các thuộc tính quan trọng.</p>"
+    },
+    {
+     "en": "<p>Incorrect. AMI deregistration is unrelated to instance health.</p>",
+     "vi": "<p>Sai. Deregister AMI không liên quan đến tình trạng instance.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87796163,
+   "multi": false,
+   "question": {
+    "en": "<p>A microservices request crosses API Gateway, Lambda, and several services. The team needs an end-to-end service map to locate latency and errors. Which service should it use?</p>",
+    "vi": "<p>Một request microservices đi qua API Gateway, Lambda và nhiều service khác. Đội cần service map end-to-end để xác định độ trễ và lỗi. Nên dùng dịch vụ nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use Amazon QuickSight</p>",
+     "vi": "<p>Dùng Amazon QuickSight</p>"
+    },
+    {
+     "en": "<p>Use AWS Cost Explorer</p>",
+     "vi": "<p>Dùng AWS Cost Explorer</p>"
+    },
+    {
+     "en": "<p>Use AWS Config</p>",
+     "vi": "<p>Dùng AWS Config</p>"
+    },
+    {
+     "en": "<p>Use AWS X-Ray</p>",
+     "vi": "<p>Dùng AWS X-Ray</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. QuickSight creates business visualizations, not distributed traces.</p>",
+     "vi": "<p>Sai. QuickSight tạo trực quan hóa cho nghiệp vụ, không phải distributed trace.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Cost Explorer analyzes costs.</p>",
+     "vi": "<p>Sai. Cost Explorer phân tích chi phí.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Config tracks resource configuration and compliance.</p>",
+     "vi": "<p>Sai. Config theo dõi cấu hình và tuân thủ của tài nguyên.</p>"
+    },
+    {
+     "en": "<p>Correct. X-Ray traces requests across distributed services and builds a service map.</p>",
+     "vi": "<p>Đúng. X-Ray theo dõi request qua các distributed service và xây dựng service map.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87796171,
+   "multi": false,
+   "question": {
+    "en": "<p>Executives need fast interactive dashboards over a large imported dataset, and repeated queries should run from an in-memory columnar engine. Which QuickSight feature should be used?</p>",
+    "vi": "<p>Lãnh đạo cần dashboard tương tác nhanh trên một tập dữ liệu lớn đã import, và các truy vấn lặp lại nên chạy từ engine columnar trong bộ nhớ. Nên dùng tính năng QuickSight nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use the SPICE engine</p>",
+     "vi": "<p>Dùng SPICE engine</p>"
+    },
+    {
+     "en": "<p>Use a CloudTrail trail</p>",
+     "vi": "<p>Dùng CloudTrail trail</p>"
+    },
+    {
+     "en": "<p>Use a Config rule</p>",
+     "vi": "<p>Dùng Config rule</p>"
+    },
+    {
+     "en": "<p>Use an S3 lifecycle rule</p>",
+     "vi": "<p>Dùng S3 lifecycle rule</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Correct. SPICE is QuickSight's in-memory, columnar calculation engine for interactive analytics.</p>",
+     "vi": "<p>Đúng. SPICE là engine tính toán columnar, in-memory của QuickSight cho phân tích tương tác.</p>"
+    },
+    {
+     "en": "<p>Incorrect. CloudTrail records API events.</p>",
+     "vi": "<p>Sai. CloudTrail ghi lại các API event.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Config rules evaluate resource compliance.</p>",
+     "vi": "<p>Sai. Config rule đánh giá mức độ tuân thủ của tài nguyên.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Lifecycle rules manage object retention and storage classes.</p>",
+     "vi": "<p>Sai. Lifecycle rule quản lý thời gian lưu giữ và storage class của object.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87796183,
+   "multi": false,
+   "question": {
+    "en": "<p>A sales manager wants to ask 'What are the top-selling items in Florida?' in natural language against a curated QuickSight dataset. Which feature should be configured?</p>",
+    "vi": "<p>Một sales manager muốn hỏi bằng ngôn ngữ tự nhiên 'What are the top-selling items in Florida?' trên một dataset QuickSight đã được chuẩn bị. Nên cấu hình tính năng nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Configure CloudWatch Logs Insights</p>",
+     "vi": "<p>Cấu hình CloudWatch Logs Insights</p>"
+    },
+    {
+     "en": "<p>Configure Amazon QuickSight Q</p>",
+     "vi": "<p>Cấu hình Amazon QuickSight Q</p>"
+    },
+    {
+     "en": "<p>Configure CloudTrail Lake</p>",
+     "vi": "<p>Cấu hình CloudTrail Lake</p>"
+    },
+    {
+     "en": "<p>Configure AWS Budgets</p>",
+     "vi": "<p>Cấu hình AWS Budgets</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Logs Insights queries operational logs.</p>",
+     "vi": "<p>Sai. Logs Insights truy vấn log vận hành.</p>"
+    },
+    {
+     "en": "<p>Correct. QuickSight Q answers business questions in natural language using configured topics.</p>",
+     "vi": "<p>Đúng. QuickSight Q trả lời câu hỏi nghiệp vụ bằng ngôn ngữ tự nhiên dựa trên các topic đã cấu hình.</p>"
+    },
+    {
+     "en": "<p>Incorrect. CloudTrail Lake analyzes audit events.</p>",
+     "vi": "<p>Sai. CloudTrail Lake phân tích các audit event.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Budgets tracks spending thresholds.</p>",
+     "vi": "<p>Sai. Budgets theo dõi ngưỡng chi tiêu.</p>"
+    }
+   ]
+  }
+ ]
+}

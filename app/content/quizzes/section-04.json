@@ -1,0 +1,486 @@
+{
+ "id": "section-04",
+ "kind": "section",
+ "section": "04",
+ "title": {
+  "en": "AWS Managed AI Services",
+  "vi": "Các dịch vụ AI được quản lý của AWS"
+ },
+ "description": {
+  "en": "<p>Test your knowledge of the material in this section.</p>",
+  "vi": "<p>Kiểm tra kiến thức của bạn về nội dung trong phần này.</p>"
+ },
+ "passPercent": 70,
+ "questions": [
+  {
+   "id": 87789399,
+   "multi": false,
+   "question": {
+    "en": "<p>An insurance company must route incoming claim documents into business-defined categories such as auto, home, and life. It wants a managed NLP service and custom labels. Which service should it use?</p>",
+    "vi": "<p>Một công ty bảo hiểm cần phân loại các hồ sơ yêu cầu bồi thường đến vào những danh mục do doanh nghiệp định nghĩa như xe hơi, nhà ở và nhân thọ. Công ty muốn dùng dịch vụ NLP được quản lý với nhãn tùy chỉnh. Nên dùng dịch vụ nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use Amazon Textract queries</p>",
+     "vi": "<p>Dùng Amazon Textract queries</p>"
+    },
+    {
+     "en": "<p>Use Amazon Translate jobs</p>",
+     "vi": "<p>Dùng các job của Amazon Translate</p>"
+    },
+    {
+     "en": "<p>Use custom text classification</p>",
+     "vi": "<p>Dùng custom text classification</p>"
+    },
+    {
+     "en": "<p>Use Amazon Polly lexicons</p>",
+     "vi": "<p>Dùng lexicon của Amazon Polly</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Textract extracts text and document structure but does not classify documents into custom business categories.</p>",
+     "vi": "<p>Sai. Textract trích xuất văn bản và cấu trúc tài liệu nhưng không phân loại tài liệu vào các danh mục kinh doanh tùy chỉnh.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Translate converts text between languages.</p>",
+     "vi": "<p>Sai. Translate chuyển đổi văn bản giữa các ngôn ngữ.</p>"
+    },
+    {
+     "en": "<p>Correct. Comprehend custom classification trains a managed classifier on user-defined document classes.</p>",
+     "vi": "<p>Đúng. Custom classification của Comprehend huấn luyện một bộ phân loại được quản lý trên các lớp tài liệu do người dùng định nghĩa.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Polly lexicons control speech pronunciation.</p>",
+     "vi": "<p>Sai. Lexicon của Polly điều khiển cách phát âm giọng nói.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87789407,
+   "multi": false,
+   "question": {
+    "en": "<p>A mortgage processor needs to extract proprietary policy numbers and escalation phrases from customer emails. Standard named-entity categories are insufficient. Which capability should it use?</p>",
+    "vi": "<p>Một đơn vị xử lý thế chấp cần trích xuất số hợp đồng bảo hiểm riêng và các cụm từ báo hiệu leo thang khiếu nại từ email khách hàng. Các loại named entity chuẩn là không đủ. Nên dùng khả năng nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use custom entity recognition</p>",
+     "vi": "<p>Dùng custom entity recognition</p>"
+    },
+    {
+     "en": "<p>Use Transcribe automatic redaction</p>",
+     "vi": "<p>Dùng tính năng tự động redaction của Transcribe</p>"
+    },
+    {
+     "en": "<p>Use Rekognition Custom Labels</p>",
+     "vi": "<p>Dùng Rekognition Custom Labels</p>"
+    },
+    {
+     "en": "<p>Use Personalize item affinity</p>",
+     "vi": "<p>Dùng item affinity của Personalize</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Correct. Custom entity recognition extracts domain-specific terms and noun phrases from text.</p>",
+     "vi": "<p>Đúng. Custom entity recognition trích xuất các thuật ngữ và cụm danh từ đặc thù theo lĩnh vực từ văn bản.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Transcribe redaction applies to speech-to-text output and PII.</p>",
+     "vi": "<p>Sai. Redaction của Transcribe áp dụng cho kết quả speech-to-text và PII.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Rekognition Custom Labels analyzes images.</p>",
+     "vi": "<p>Sai. Rekognition Custom Labels phân tích hình ảnh.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Personalize item affinity creates recommendation segments.</p>",
+     "vi": "<p>Sai. Item affinity của Personalize tạo các phân khúc cho đề xuất.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87789775,
+   "multi": false,
+   "question": {
+    "en": "<p>A travel marketplace must localize millions of product descriptions into several languages without building a translation model. Which service should it choose?</p>",
+    "vi": "<p>Một sàn du lịch phải bản địa hóa hàng triệu mô tả sản phẩm sang nhiều ngôn ngữ mà không muốn tự xây mô hình dịch. Nên chọn dịch vụ nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Choose Amazon Comprehend</p>",
+     "vi": "<p>Chọn Amazon Comprehend</p>"
+    },
+    {
+     "en": "<p>Choose Amazon Transcribe</p>",
+     "vi": "<p>Chọn Amazon Transcribe</p>"
+    },
+    {
+     "en": "<p>Choose Amazon Translate</p>",
+     "vi": "<p>Chọn Amazon Translate</p>"
+    },
+    {
+     "en": "<p>Choose Amazon Textract</p>",
+     "vi": "<p>Chọn Amazon Textract</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Comprehend extracts insights from text rather than translating it.</p>",
+     "vi": "<p>Sai. Comprehend trích xuất insight từ văn bản chứ không dịch văn bản.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Transcribe converts speech to text.</p>",
+     "vi": "<p>Sai. Transcribe chuyển giọng nói thành văn bản.</p>"
+    },
+    {
+     "en": "<p>Correct. Translate is the managed service for high-volume natural-language translation.</p>",
+     "vi": "<p>Đúng. Translate là dịch vụ được quản lý để dịch ngôn ngữ tự nhiên với khối lượng lớn.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Textract extracts text and fields from documents.</p>",
+     "vi": "<p>Sai. Textract trích xuất văn bản và trường dữ liệu từ tài liệu.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87789783,
+   "multi": false,
+   "question": {
+    "en": "<p>A semiconductor company transcribes engineering calls containing uncommon acronyms. It needs better recognition of specific terms and their pronunciations. What should it configure first?</p>",
+    "vi": "<p>Một công ty bán dẫn phiên âm các cuộc họp kỹ thuật chứa nhiều từ viết tắt hiếm gặp. Họ cần nhận dạng tốt hơn các thuật ngữ cụ thể và cách phát âm của chúng. Nên cấu hình gì trước tiên?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Configure a Polly speech mark</p>",
+     "vi": "<p>Cấu hình một speech mark của Polly</p>"
+    },
+    {
+     "en": "<p>Configure a custom vocabulary</p>",
+     "vi": "<p>Cấu hình một custom vocabulary</p>"
+    },
+    {
+     "en": "<p>Configure a Lex slot type</p>",
+     "vi": "<p>Cấu hình một slot type của Lex</p>"
+    },
+    {
+     "en": "<p>Configure a Comprehend topic model</p>",
+     "vi": "<p>Cấu hình một topic model của Comprehend</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Polly speech marks synchronize generated speech and text.</p>",
+     "vi": "<p>Sai. Speech mark của Polly đồng bộ giọng nói được tạo ra với văn bản.</p>"
+    },
+    {
+     "en": "<p>Correct. A Transcribe custom vocabulary supplies domain words and pronunciation hints.</p>",
+     "vi": "<p>Đúng. Custom vocabulary của Transcribe cung cấp các từ chuyên ngành và gợi ý phát âm.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Lex slot types collect chatbot parameters.</p>",
+     "vi": "<p>Sai. Slot type của Lex dùng để thu thập tham số cho chatbot.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Comprehend topic modeling discovers themes in documents.</p>",
+     "vi": "<p>Sai. Topic modeling của Comprehend khám phá các chủ đề trong tài liệu.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87789791,
+   "multi": false,
+   "question": {
+    "en": "<p>An accessibility application converts articles to speech and must pronounce the acronym 'W3C' as 'World Wide Web Consortium.' Which feature should be used?</p>",
+    "vi": "<p>Một ứng dụng hỗ trợ tiếp cận chuyển bài viết thành giọng nói và phải đọc từ viết tắt 'W3C' thành 'World Wide Web Consortium.' Nên dùng tính năng nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use a Transcribe language model</p>",
+     "vi": "<p>Dùng language model của Transcribe</p>"
+    },
+    {
+     "en": "<p>Use a Translate terminology file</p>",
+     "vi": "<p>Dùng file terminology của Translate</p>"
+    },
+    {
+     "en": "<p>Use a Comprehend entity list</p>",
+     "vi": "<p>Dùng entity list của Comprehend</p>"
+    },
+    {
+     "en": "<p>Use an Amazon Polly lexicon</p>",
+     "vi": "<p>Dùng lexicon của Amazon Polly</p>"
+    }
+   ],
+   "answer": [
+    3
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Transcribe converts speech into text.</p>",
+     "vi": "<p>Sai. Transcribe chuyển giọng nói thành văn bản.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Translate terminology controls translations, not text-to-speech pronunciation.</p>",
+     "vi": "<p>Sai. Terminology của Translate điều khiển bản dịch, không phải cách phát âm của text-to-speech.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Comprehend entity lists support text analysis.</p>",
+     "vi": "<p>Sai. Entity list của Comprehend hỗ trợ phân tích văn bản.</p>"
+    },
+    {
+     "en": "<p>Correct. Polly lexicons define how specific text should be pronounced or expanded.</p>",
+     "vi": "<p>Đúng. Lexicon của Polly định nghĩa cách một đoạn văn bản cụ thể được phát âm hoặc mở rộng.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87789799,
+   "multi": false,
+   "question": {
+    "en": "<p>A beverage company needs to find its own logo in social-media images. The logo is not a standard Rekognition label, and the company can provide labeled examples. Which capability should it use?</p>",
+    "vi": "<p>Một công ty đồ uống cần tìm logo của mình trong ảnh trên mạng xã hội. Logo này không phải là nhãn chuẩn của Rekognition, và công ty có thể cung cấp ảnh đã gán nhãn. Nên dùng khả năng nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use Rekognition Custom Labels</p>",
+     "vi": "<p>Dùng Rekognition Custom Labels</p>"
+    },
+    {
+     "en": "<p>Use Textract AnalyzeDocument</p>",
+     "vi": "<p>Dùng Textract AnalyzeDocument</p>"
+    },
+    {
+     "en": "<p>Use Comprehend custom entities</p>",
+     "vi": "<p>Dùng custom entities của Comprehend</p>"
+    },
+    {
+     "en": "<p>Use Personalize Similar-Items</p>",
+     "vi": "<p>Dùng Similar-Items của Personalize</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Correct. Rekognition Custom Labels trains an image model for company-specific visual categories.</p>",
+     "vi": "<p>Đúng. Rekognition Custom Labels huấn luyện một mô hình ảnh cho các hạng mục hình ảnh riêng của công ty.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Textract extracts text, forms, and tables from documents.</p>",
+     "vi": "<p>Sai. Textract trích xuất văn bản, form và bảng từ tài liệu.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Comprehend custom entities operate on text.</p>",
+     "vi": "<p>Sai. Custom entities của Comprehend hoạt động trên văn bản.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Personalize recommends similar catalog items from interaction data.</p>",
+     "vi": "<p>Sai. Personalize đề xuất các mục tương tự trong danh mục dựa trên dữ liệu tương tác.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87789805,
+   "multi": false,
+   "question": {
+    "en": "<p>A user-generated-content platform wants to detect offensive images automatically and send only uncertain results to moderators. Which solution should it use?</p>",
+    "vi": "<p>Một nền tảng nội dung do người dùng tạo muốn tự động phát hiện hình ảnh phản cảm và chỉ gửi các kết quả không chắc chắn cho người kiểm duyệt. Nên dùng giải pháp nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use Polly with SSML tags</p>",
+     "vi": "<p>Dùng Polly với thẻ SSML</p>"
+    },
+    {
+     "en": "<p>Use Rekognition moderation</p>",
+     "vi": "<p>Dùng Rekognition moderation</p>"
+    },
+    {
+     "en": "<p>Use Lex intent fulfillment</p>",
+     "vi": "<p>Dùng intent fulfillment của Lex</p>"
+    },
+    {
+     "en": "<p>Use Translate batch processing</p>",
+     "vi": "<p>Dùng batch processing của Translate</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Polly generates speech and cannot moderate images.</p>",
+     "vi": "<p>Sai. Polly tạo giọng nói và không thể kiểm duyệt hình ảnh.</p>"
+    },
+    {
+     "en": "<p>Correct. Rekognition Content Moderation detects inappropriate visual content and can reduce human review volume.</p>",
+     "vi": "<p>Đúng. Rekognition Content Moderation phát hiện nội dung hình ảnh không phù hợp và có thể giảm khối lượng kiểm duyệt thủ công.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Lex handles conversational intents.</p>",
+     "vi": "<p>Sai. Lex xử lý các intent hội thoại.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Translate processes text between languages.</p>",
+     "vi": "<p>Sai. Translate xử lý văn bản giữa các ngôn ngữ.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87790183,
+   "multi": false,
+   "question": {
+    "en": "<p>A hotel needs a voice-and-text chatbot that identifies a booking intent, asks for missing dates as parameters, and invokes Lambda to complete the reservation. Which service should it use?</p>",
+    "vi": "<p>Một khách sạn cần chatbot hỗ trợ giọng nói và văn bản, nhận diện intent đặt phòng, hỏi các tham số còn thiếu như ngày, và gọi Lambda để hoàn tất đặt chỗ. Nên dùng dịch vụ nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use Amazon Personalize</p>",
+     "vi": "<p>Dùng Amazon Personalize</p>"
+    },
+    {
+     "en": "<p>Use Amazon Comprehend</p>",
+     "vi": "<p>Dùng Amazon Comprehend</p>"
+    },
+    {
+     "en": "<p>Use Amazon Lex</p>",
+     "vi": "<p>Dùng Amazon Lex</p>"
+    },
+    {
+     "en": "<p>Use Amazon Polly</p>",
+     "vi": "<p>Dùng Amazon Polly</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Personalize provides recommendations rather than conversational fulfillment.</p>",
+     "vi": "<p>Sai. Personalize cung cấp đề xuất chứ không thực hiện hội thoại.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Comprehend analyzes text but does not manage intents and slots.</p>",
+     "vi": "<p>Sai. Comprehend phân tích văn bản nhưng không quản lý intent và slot.</p>"
+    },
+    {
+     "en": "<p>Correct. Lex recognizes intents, elicits slots, and integrates with Lambda for fulfillment.</p>",
+     "vi": "<p>Đúng. Lex nhận diện intent, hỏi lấy slot và tích hợp với Lambda để thực thi.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Polly synthesizes speech but does not manage a chatbot conversation.</p>",
+     "vi": "<p>Sai. Polly tổng hợp giọng nói nhưng không quản lý cuộc hội thoại của chatbot.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87790457,
+   "multi": false,
+   "question": {
+    "en": "<p>A video service must return a personalized ranking of a supplied list of movies for each viewer. Which Amazon Personalize recipe type is MOST appropriate?</p>",
+    "vi": "<p>Một dịch vụ video phải trả về bảng xếp hạng phim được cá nhân hóa cho từng người xem từ một danh sách phim cho trước. Loại recipe nào của Amazon Personalize phù hợp NHẤT?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use a RELATED_ITEMS recipe</p>",
+     "vi": "<p>Dùng recipe RELATED_ITEMS</p>"
+    },
+    {
+     "en": "<p>Use a USER_SEGMENTATION recipe</p>",
+     "vi": "<p>Dùng recipe USER_SEGMENTATION</p>"
+    },
+    {
+     "en": "<p>Use a POPULAR_ITEMS recipe</p>",
+     "vi": "<p>Dùng recipe POPULAR_ITEMS</p>"
+    },
+    {
+     "en": "<p>Use a PERSONALIZED_RANKING recipe</p>",
+     "vi": "<p>Dùng recipe PERSONALIZED_RANKING</p>"
+    }
+   ],
+   "answer": [
+    3
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. RELATED_ITEMS recommends items similar to another item.</p>",
+     "vi": "<p>Sai. RELATED_ITEMS đề xuất các mục tương tự một mục khác.</p>"
+    },
+    {
+     "en": "<p>Incorrect. USER_SEGMENTATION produces groups of users.</p>",
+     "vi": "<p>Sai. USER_SEGMENTATION tạo ra các nhóm người dùng.</p>"
+    },
+    {
+     "en": "<p>Incorrect. POPULAR_ITEMS recommends generally trending items.</p>",
+     "vi": "<p>Sai. POPULAR_ITEMS đề xuất các mục đang được ưa chuộng chung.</p>"
+    },
+    {
+     "en": "<p>Correct. PERSONALIZED_RANKING reranks a supplied item list for an individual user.</p>",
+     "vi": "<p>Đúng. PERSONALIZED_RANKING xếp hạng lại một danh sách mục cho trước cho từng người dùng.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87790627,
+   "multi": false,
+   "question": {
+    "en": "<p>A finance department scans invoices and must extract printed text, handwriting, form fields, and table cells into structured output. Which service should be used?</p>",
+    "vi": "<p>Một phòng tài chính quét hóa đơn và cần trích xuất chữ in, chữ viết tay, các trường form và ô bảng thành đầu ra có cấu trúc. Nên dùng dịch vụ nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use Amazon Textract</p>",
+     "vi": "<p>Dùng Amazon Textract</p>"
+    },
+    {
+     "en": "<p>Use Amazon Rekognition</p>",
+     "vi": "<p>Dùng Amazon Rekognition</p>"
+    },
+    {
+     "en": "<p>Use Amazon Comprehend</p>",
+     "vi": "<p>Dùng Amazon Comprehend</p>"
+    },
+    {
+     "en": "<p>Use Amazon Transcribe</p>",
+     "vi": "<p>Dùng Amazon Transcribe</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Correct. Textract extracts text, handwriting, forms, and tables from scanned documents.</p>",
+     "vi": "<p>Đúng. Textract trích xuất văn bản, chữ viết tay, form và bảng từ tài liệu được quét.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Rekognition identifies visual objects, faces, and labels.</p>",
+     "vi": "<p>Sai. Rekognition nhận diện đối tượng, khuôn mặt và nhãn trong hình ảnh.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Comprehend analyzes already available text.</p>",
+     "vi": "<p>Sai. Comprehend phân tích văn bản đã có sẵn.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Transcribe converts audio speech into text.</p>",
+     "vi": "<p>Sai. Transcribe chuyển giọng nói trong âm thanh thành văn bản.</p>"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,486 @@
+{
+ "id": "section-02",
+ "kind": "section",
+ "section": "02",
+ "title": {
+  "en": "Data Ingestion and Storage",
+  "vi": "Thu thập và lưu trữ dữ liệu"
+ },
+ "description": {
+  "en": "<p>Test your knowledge on the concepts in this section.</p>",
+  "vi": "<p>Kiểm tra kiến thức của bạn về các khái niệm trong phần này.</p>"
+ },
+ "passPercent": 70,
+ "questions": [
+  {
+   "id": 87784109,
+   "multi": false,
+   "question": {
+    "en": "<p>A research publisher must retain raw PDFs, JSON metadata, and future data types whose schemas are not yet known. Data scientists will explore the data for machine learning. Which storage architecture is MOST appropriate?</p>",
+    "vi": "<p>Một nhà xuất bản nghiên cứu cần lưu giữ file PDF thô, metadata JSON và các loại dữ liệu trong tương lai chưa biết schema. Data scientist sẽ khám phá dữ liệu này cho machine learning. Kiến trúc lưu trữ nào phù hợp NHẤT?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use a data warehouse with schema-on-write</p>",
+     "vi": "<p>Dùng data warehouse với schema-on-write</p>"
+    },
+    {
+     "en": "<p>Use a data lake with schema-on-read</p>",
+     "vi": "<p>Dùng data lake với schema-on-read</p>"
+    },
+    {
+     "en": "<p>Use an OLTP database with fixed tables</p>",
+     "vi": "<p>Dùng cơ sở dữ liệu OLTP với các bảng cố định</p>"
+    },
+    {
+     "en": "<p>Use an in-memory cache with snapshots</p>",
+     "vi": "<p>Dùng in-memory cache với snapshot</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. A warehouse is optimized for structured data and predefined schemas.</p>",
+     "vi": "<p>Sai. Warehouse được tối ưu cho dữ liệu có cấu trúc và schema định nghĩa trước.</p>"
+    },
+    {
+     "en": "<p>Correct. A data lake accepts raw structured and unstructured data and applies schema when read.</p>",
+     "vi": "<p>Đúng. Data lake nhận dữ liệu thô có cấu trúc lẫn phi cấu trúc và áp dụng schema khi đọc.</p>"
+    },
+    {
+     "en": "<p>Incorrect. An OLTP database is not the best repository for large, varied analytical data.</p>",
+     "vi": "<p>Sai. Cơ sở dữ liệu OLTP không phải nơi lưu trữ tốt nhất cho dữ liệu phân tích lớn và đa dạng.</p>"
+    },
+    {
+     "en": "<p>Incorrect. A cache is not durable primary storage for a flexible analytics repository.</p>",
+     "vi": "<p>Sai. Cache không phải nơi lưu trữ chính bền vững cho một kho phân tích linh hoạt.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87784121,
+   "multi": false,
+   "question": {
+    "en": "<p>A genomics team queries only a few columns from multi-terabyte datasets in Amazon S3. The team wants to reduce scanned bytes and improve compression. Which file format should the team use?</p>",
+    "vi": "<p>Một nhóm genomics chỉ truy vấn vài cột từ các dataset nhiều terabyte trong Amazon S3. Nhóm muốn giảm số byte phải quét và cải thiện khả năng nén. Nhóm nên dùng định dạng file nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use Parquet columnar files</p>",
+     "vi": "<p>Dùng file columnar Parquet</p>"
+    },
+    {
+     "en": "<p>Use JSON document files</p>",
+     "vi": "<p>Dùng file tài liệu JSON</p>"
+    },
+    {
+     "en": "<p>Use CSV delimited files</p>",
+     "vi": "<p>Dùng file phân cách CSV</p>"
+    },
+    {
+     "en": "<p>Use Avro row-oriented files</p>",
+     "vi": "<p>Dùng file Avro hướng dòng</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Correct. Parquet is columnar, compressed, and efficient when analytics reads selected columns.</p>",
+     "vi": "<p>Đúng. Parquet là định dạng columnar, được nén và hiệu quả khi phân tích chỉ đọc một số cột.</p>"
+    },
+    {
+     "en": "<p>Incorrect. JSON is flexible but verbose and not columnar.</p>",
+     "vi": "<p>Sai. JSON linh hoạt nhưng dài dòng và không phải columnar.</p>"
+    },
+    {
+     "en": "<p>Incorrect. CSV requires scanning row data and provides limited type information.</p>",
+     "vi": "<p>Sai. CSV buộc phải quét dữ liệu theo dòng và cung cấp ít thông tin về kiểu dữ liệu.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Avro is efficient for row-oriented serialization, not selective column scans.</p>",
+     "vi": "<p>Sai. Avro hiệu quả cho tuần tự hóa hướng dòng, không phải cho quét chọn lọc theo cột.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87784139,
+   "multi": false,
+   "question": {
+    "en": "<p>An animation studio overwrites model artifacts in an S3 bucket and must recover quickly from accidental replacements or deletions. Which feature should be enabled?</p>",
+    "vi": "<p>Một studio hoạt hình ghi đè các model artifact trong một S3 bucket và phải khôi phục nhanh khi bị thay thế hoặc xóa nhầm. Nên bật tính năng nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Enable S3 Transfer Acceleration</p>",
+     "vi": "<p>Bật S3 Transfer Acceleration</p>"
+    },
+    {
+     "en": "<p>Enable S3 Object Lock only</p>",
+     "vi": "<p>Chỉ bật S3 Object Lock</p>"
+    },
+    {
+     "en": "<p>Enable S3 server access logs</p>",
+     "vi": "<p>Bật S3 server access logs</p>"
+    },
+    {
+     "en": "<p>Enable S3 bucket versioning</p>",
+     "vi": "<p>Bật S3 bucket versioning</p>"
+    }
+   ],
+   "answer": [
+    3
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Transfer Acceleration improves upload paths but does not preserve prior objects.</p>",
+     "vi": "<p>Sai. Transfer Acceleration cải thiện đường truyền upload nhưng không giữ lại object trước đó.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Object Lock serves retention use cases but versioning is the direct recovery feature.</p>",
+     "vi": "<p>Sai. Object Lock phục vụ nhu cầu retention, còn versioning mới là tính năng khôi phục trực tiếp.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Access logs record requests but do not restore overwritten data.</p>",
+     "vi": "<p>Sai. Access logs ghi lại các request nhưng không khôi phục được dữ liệu bị ghi đè.</p>"
+    },
+    {
+     "en": "<p>Correct. Versioning retains prior object versions and supports rollback after overwrite or deletion.</p>",
+     "vi": "<p>Đúng. Versioning giữ lại các phiên bản object trước và hỗ trợ rollback sau khi ghi đè hoặc xóa.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87784157,
+   "multi": false,
+   "question": {
+    "en": "<p>A bank must asynchronously copy training data from an S3 bucket in one AWS Region to a bucket in another Region. Which prerequisite is required for S3 Cross-Region Replication?</p>",
+    "vi": "<p>Một ngân hàng phải sao chép bất đồng bộ dữ liệu huấn luyện từ một S3 bucket ở một AWS Region sang bucket ở Region khác. Điều kiện tiên quyết nào là bắt buộc cho S3 Cross-Region Replication?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Enable requester pays on both buckets</p>",
+     "vi": "<p>Bật requester pays trên cả hai bucket</p>"
+    },
+    {
+     "en": "<p>Enable S3 Select on both buckets</p>",
+     "vi": "<p>Bật S3 Select trên cả hai bucket</p>"
+    },
+    {
+     "en": "<p>Enable website hosting on both buckets</p>",
+     "vi": "<p>Bật website hosting trên cả hai bucket</p>"
+    },
+    {
+     "en": "<p>Enable versioning on both buckets</p>",
+     "vi": "<p>Bật versioning trên cả hai bucket</p>"
+    }
+   ],
+   "answer": [
+    3
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Requester Pays controls billing and is unrelated to replication.</p>",
+     "vi": "<p>Sai. Requester Pays kiểm soát việc tính phí và không liên quan đến replication.</p>"
+    },
+    {
+     "en": "<p>Incorrect. S3 Select filters object content and is not a replication prerequisite.</p>",
+     "vi": "<p>Sai. S3 Select lọc nội dung object và không phải điều kiện tiên quyết của replication.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Static website hosting is unrelated to object replication.</p>",
+     "vi": "<p>Sai. Static website hosting không liên quan đến replication object.</p>"
+    },
+    {
+     "en": "<p>Correct. S3 replication requires versioning on both the source and destination buckets.</p>",
+     "vi": "<p>Đúng. S3 replication yêu cầu bật versioning trên cả bucket nguồn và bucket đích.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87787355,
+   "multi": false,
+   "question": {
+    "en": "<p>A satellite company cannot predict how often archived imagery will be accessed. It wants S3 to move objects between access tiers automatically without retrieval charges. Which storage class should it choose?</p>",
+    "vi": "<p>Một công ty vệ tinh không thể dự đoán tần suất truy cập ảnh lưu trữ. Họ muốn S3 tự động chuyển object giữa các tầng truy cập mà không tính phí truy xuất. Nên chọn storage class nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>S3 Standard-Infrequent Access</p>",
+     "vi": "<p>S3 Standard-Infrequent Access</p>"
+    },
+    {
+     "en": "<p>S3 Glacier Flexible Retrieval</p>",
+     "vi": "<p>S3 Glacier Flexible Retrieval</p>"
+    },
+    {
+     "en": "<p>S3 Intelligent-Tiering</p>",
+     "vi": "<p>S3 Intelligent-Tiering</p>"
+    },
+    {
+     "en": "<p>S3 One Zone-Infrequent Access</p>",
+     "vi": "<p>S3 One Zone-Infrequent Access</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Standard-IA charges for retrieval and does not automatically follow access patterns.</p>",
+     "vi": "<p>Sai. Standard-IA tính phí truy xuất và không tự động theo mẫu truy cập.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Glacier Flexible Retrieval is archival storage with retrieval considerations.</p>",
+     "vi": "<p>Sai. Glacier Flexible Retrieval là lưu trữ archive và có các lưu ý về truy xuất.</p>"
+    },
+    {
+     "en": "<p>Correct. Intelligent-Tiering monitors access and automatically moves objects without retrieval charges.</p>",
+     "vi": "<p>Đúng. Intelligent-Tiering theo dõi truy cập và tự động chuyển object mà không tính phí truy xuất.</p>"
+    },
+    {
+     "en": "<p>Incorrect. One Zone-IA stores data in one AZ and charges for retrieval.</p>",
+     "vi": "<p>Sai. One Zone-IA lưu dữ liệu trong một AZ và tính phí truy xuất.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87787375,
+   "multi": false,
+   "question": {
+    "en": "<p>A legal analytics firm must move S3 case logs to archival storage after 180 days and delete them after seven years. Which solution requires the LEAST operational effort?</p>",
+    "vi": "<p>Một công ty phân tích pháp lý phải chuyển log vụ án trong S3 sang lưu trữ archive sau 180 ngày và xóa sau bảy năm. Giải pháp nào đòi hỏi công sức vận hành ÍT NHẤT?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Run a daily EC2 copy-and-delete script</p>",
+     "vi": "<p>Chạy script copy-và-xóa hằng ngày trên EC2</p>"
+    },
+    {
+     "en": "<p>Configure S3 lifecycle rules</p>",
+     "vi": "<p>Cấu hình S3 lifecycle rules</p>"
+    },
+    {
+     "en": "<p>Create an Athena CTAS query on a schedule</p>",
+     "vi": "<p>Tạo truy vấn Athena CTAS theo lịch</p>"
+    },
+    {
+     "en": "<p>Publish each object event to an SNS topic</p>",
+     "vi": "<p>Gửi mỗi event của object tới một SNS topic</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. A custom script adds compute and operational overhead.</p>",
+     "vi": "<p>Sai. Script tự viết làm tăng chi phí compute và công sức vận hành.</p>"
+    },
+    {
+     "en": "<p>Correct. Lifecycle rules natively transition and expire objects by age, prefix, or tag.</p>",
+     "vi": "<p>Đúng. Lifecycle rules tự động chuyển tầng và hết hạn object theo tuổi, prefix hoặc tag.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Athena CTAS transforms query results and does not manage retention.</p>",
+     "vi": "<p>Sai. Athena CTAS biến đổi kết quả truy vấn và không quản lý retention.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Notifications do not themselves transition or delete stored objects.</p>",
+     "vi": "<p>Sai. Notification tự nó không chuyển tầng hay xóa object đã lưu.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87787403,
+   "multi": false,
+   "question": {
+    "en": "<p>A healthcare company needs server-side encryption for S3 training data and an audit trail showing use of the encryption key. Which option should it use?</p>",
+    "vi": "<p>Một công ty y tế cần mã hóa phía server (server-side encryption) cho dữ liệu huấn luyện trong S3 và nhật ký kiểm toán cho việc sử dụng khóa mã hóa. Nên dùng tùy chọn nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use SSE-S3 managed encryption</p>",
+     "vi": "<p>Dùng mã hóa SSE-S3 managed</p>"
+    },
+    {
+     "en": "<p>Use SSE-C customer key headers</p>",
+     "vi": "<p>Dùng header khóa khách hàng SSE-C</p>"
+    },
+    {
+     "en": "<p>Use client-side AES encryption</p>",
+     "vi": "<p>Dùng mã hóa AES phía client</p>"
+    },
+    {
+     "en": "<p>Use SSE-KMS managed encryption</p>",
+     "vi": "<p>Dùng mã hóa SSE-KMS managed</p>"
+    }
+   ],
+   "answer": [
+    3
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. SSE-S3 encrypts data but does not provide KMS key-usage auditing.</p>",
+     "vi": "<p>Sai. SSE-S3 mã hóa dữ liệu nhưng không cung cấp kiểm toán việc sử dụng khóa KMS.</p>"
+    },
+    {
+     "en": "<p>Incorrect. SSE-C requires the client to supply and manage keys for each request.</p>",
+     "vi": "<p>Sai. SSE-C yêu cầu client cung cấp và quản lý khóa cho mỗi request.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Client-side encryption shifts encryption and key handling to the application.</p>",
+     "vi": "<p>Sai. Mã hóa phía client chuyển việc mã hóa và quản lý khóa sang ứng dụng.</p>"
+    },
+    {
+     "en": "<p>Correct. SSE-KMS provides key control and CloudTrail auditing of key usage.</p>",
+     "vi": "<p>Đúng. SSE-KMS cung cấp quyền kiểm soát khóa và kiểm toán việc sử dụng khóa qua CloudTrail.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87787457,
+   "multi": false,
+   "question": {
+    "en": "<p>Several Linux EC2 training instances in different Availability Zones need concurrent access to the same scalable POSIX file system. Which storage service should be used?</p>",
+    "vi": "<p>Nhiều EC2 instance Linux dùng để huấn luyện ở các Availability Zone khác nhau cần truy cập đồng thời cùng một hệ thống file POSIX có khả năng mở rộng. Nên dùng dịch vụ lưu trữ nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use Amazon EBS block volumes</p>",
+     "vi": "<p>Dùng Amazon EBS block volume</p>"
+    },
+    {
+     "en": "<p>Use Amazon EFS shared storage</p>",
+     "vi": "<p>Dùng Amazon EFS shared storage</p>"
+    },
+    {
+     "en": "<p>Use EC2 instance store volumes</p>",
+     "vi": "<p>Dùng EC2 instance store volume</p>"
+    },
+    {
+     "en": "<p>Use S3 Glacier archive storage</p>",
+     "vi": "<p>Dùng lưu trữ archive S3 Glacier</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. An EBS volume is AZ-bound and normally attached to one instance.</p>",
+     "vi": "<p>Sai. EBS volume gắn với một AZ và thường chỉ attach vào một instance.</p>"
+    },
+    {
+     "en": "<p>Correct. EFS is a managed NFS file system that can be mounted by many instances across AZs.</p>",
+     "vi": "<p>Đúng. EFS là hệ thống file NFS được quản lý, có thể mount bởi nhiều instance trên nhiều AZ.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Instance store is ephemeral and local to one instance.</p>",
+     "vi": "<p>Sai. Instance store là tạm thời và cục bộ cho một instance.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Glacier is object archival storage, not a mounted POSIX file system.</p>",
+     "vi": "<p>Sai. Glacier là lưu trữ archive dạng object, không phải hệ thống file POSIX có thể mount.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87787467,
+   "multi": false,
+   "question": {
+    "en": "<p>A seismic modeling workload needs a parallel file system with hundreds of GB/s throughput, millions of IOPS, and transparent access to S3 datasets. Which service is the BEST fit?</p>",
+    "vi": "<p>Một workload mô hình hóa địa chấn cần hệ thống file song song với throughput hàng trăm GB/s, hàng triệu IOPS và truy cập trong suốt vào các dataset S3. Dịch vụ nào phù hợp NHẤT?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use Amazon FSx for Lustre</p>",
+     "vi": "<p>Dùng Amazon FSx for Lustre</p>"
+    },
+    {
+     "en": "<p>Use Amazon EFS Standard</p>",
+     "vi": "<p>Dùng Amazon EFS Standard</p>"
+    },
+    {
+     "en": "<p>Use Amazon EBS Throughput Optimized</p>",
+     "vi": "<p>Dùng Amazon EBS Throughput Optimized</p>"
+    },
+    {
+     "en": "<p>Use Amazon S3 Intelligent-Tiering</p>",
+     "vi": "<p>Dùng Amazon S3 Intelligent-Tiering</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Correct. FSx for Lustre is designed for HPC and ML and integrates directly with S3.</p>",
+     "vi": "<p>Đúng. FSx for Lustre được thiết kế cho HPC và ML và tích hợp trực tiếp với S3.</p>"
+    },
+    {
+     "en": "<p>Incorrect. EFS is shared NFS storage but not the specialized parallel HPC file system described.</p>",
+     "vi": "<p>Sai. EFS là lưu trữ NFS dùng chung nhưng không phải hệ thống file song song HPC chuyên dụng như mô tả.</p>"
+    },
+    {
+     "en": "<p>Incorrect. EBS is block storage attached to EC2 and lacks transparent S3 file-system integration.</p>",
+     "vi": "<p>Sai. EBS là block storage gắn vào EC2 và không có tích hợp hệ thống file trong suốt với S3.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Intelligent-Tiering is an S3 storage class, not a parallel file system.</p>",
+     "vi": "<p>Sai. Intelligent-Tiering là một S3 storage class, không phải hệ thống file song song.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87787615,
+   "multi": false,
+   "question": {
+    "en": "<p>A sports telemetry stream has unpredictable spikes. The operations team does not want to estimate or manually adjust shard counts. Which Kinesis Data Streams capacity mode should it select?</p>",
+    "vi": "<p>Một luồng telemetry thể thao có các đợt tăng đột biến không đoán trước. Đội vận hành không muốn ước tính hay chỉnh số shard thủ công. Nên chọn capacity mode nào của Kinesis Data Streams?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use provisioned mode with one shard</p>",
+     "vi": "<p>Dùng provisioned mode với một shard</p>"
+    },
+    {
+     "en": "<p>Use provisioned mode with resharding</p>",
+     "vi": "<p>Dùng provisioned mode có resharding</p>"
+    },
+    {
+     "en": "<p>Use on-demand capacity mode</p>",
+     "vi": "<p>Dùng on-demand capacity mode</p>"
+    },
+    {
+     "en": "<p>Use enhanced fan-out mode</p>",
+     "vi": "<p>Dùng enhanced fan-out mode</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. One provisioned shard can be overwhelmed during spikes.</p>",
+     "vi": "<p>Sai. Một provisioned shard có thể bị quá tải khi tăng đột biến.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Provisioned resharding still requires capacity management.</p>",
+     "vi": "<p>Sai. Resharding ở provisioned mode vẫn đòi hỏi quản lý dung lượng.</p>"
+    },
+    {
+     "en": "<p>Correct. On-demand mode automatically manages stream capacity from observed throughput.</p>",
+     "vi": "<p>Đúng. Chế độ on-demand tự động quản lý dung lượng stream dựa trên throughput quan sát được.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Enhanced fan-out changes consumer throughput, not overall shard capacity management.</p>",
+     "vi": "<p>Sai. Enhanced fan-out thay đổi throughput của consumer, không phải việc quản lý dung lượng shard tổng thể.</p>"
+    }
+   ]
+  }
+ ]
+}

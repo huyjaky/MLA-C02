@@ -1,0 +1,275 @@
+{
+ "section": "02",
+ "terms": [
+  {
+   "id": "data-lake",
+   "term": "Data lake",
+   "lecture": "02-004",
+   "definition": {
+    "en": "A central repository that stores raw structured and unstructured data at any scale and applies schema on read (schema-on-read). Choose it when data types are varied or schemas are not yet known, e.g. for ML exploration; on AWS it is typically built on S3.",
+    "vi": "Kho lưu trữ tập trung chứa dữ liệu thô có cấu trúc lẫn phi cấu trúc ở mọi quy mô và áp dụng schema khi đọc (schema-on-read). Chọn khi dữ liệu đa dạng hoặc chưa biết schema, ví dụ để khám phá cho ML; trên AWS thường xây dựng trên S3."
+   }
+  },
+  {
+   "id": "data-warehouse",
+   "term": "Data warehouse",
+   "lecture": "02-004",
+   "definition": {
+    "en": "A store of structured, curated data with a predefined schema (schema-on-write), optimized for fast analytical SQL queries and BI (e.g. Amazon Redshift). Choose it for structured reporting workloads, not for raw or unstructured data.",
+    "vi": "Kho dữ liệu có cấu trúc, đã được tuyển chọn với schema định nghĩa trước (schema-on-write), tối ưu cho truy vấn SQL phân tích và BI nhanh (ví dụ Amazon Redshift). Chọn cho báo cáo dữ liệu có cấu trúc, không phải dữ liệu thô hay phi cấu trúc."
+   }
+  },
+  {
+   "id": "data-lakehouse",
+   "term": "Data lakehouse",
+   "lecture": "02-004",
+   "definition": {
+    "en": "An architecture that combines the low-cost, flexible storage of a data lake with the structure and query performance of a data warehouse (e.g. S3 plus Redshift Spectrum / Lake Formation). Choose it when you need both ML on raw data and BI on curated data.",
+    "vi": "Kiến trúc kết hợp lưu trữ linh hoạt, chi phí thấp của data lake với cấu trúc và hiệu năng truy vấn của data warehouse (ví dụ S3 kết hợp Redshift Spectrum / Lake Formation). Chọn khi cần cả ML trên dữ liệu thô lẫn BI trên dữ liệu đã tuyển chọn."
+   }
+  },
+  {
+   "id": "data-mesh",
+   "term": "Data mesh",
+   "lecture": "02-005",
+   "definition": {
+    "en": "A decentralized organizational approach where each domain team owns and publishes its data as a product, with federated governance and self-service infrastructure. It addresses organizational scaling rather than being a specific AWS service.",
+    "vi": "Cách tiếp cận tổ chức phi tập trung, trong đó mỗi domain team sở hữu và công bố dữ liệu của mình như một sản phẩm, với quản trị liên kết và hạ tầng self-service. Giải quyết bài toán mở rộng về mặt tổ chức, không phải một dịch vụ AWS cụ thể."
+   }
+  },
+  {
+   "id": "three-vs",
+   "term": "The three Vs of data (Volume, Velocity, Variety)",
+   "lecture": "02-003",
+   "definition": {
+    "en": "Volume is the amount of data, velocity is the speed at which it arrives and must be processed, and variety is the range of formats and sources. They guide the choice of storage and ingestion (e.g. high velocity points to streaming services).",
+    "vi": "Volume là lượng dữ liệu, velocity là tốc độ dữ liệu đến và cần xử lý, variety là sự đa dạng về định dạng và nguồn. Chúng định hướng việc chọn lưu trữ và thu nhập dữ liệu (ví dụ velocity cao thì dùng dịch vụ streaming)."
+   }
+  },
+  {
+   "id": "parquet",
+   "term": "Parquet",
+   "lecture": "02-007",
+   "definition": {
+    "en": "A columnar, compressed file format that is ideal for analytics and ML on S3: queries read only the needed columns, reducing scanned bytes and cost (e.g. with Athena). Prefer it over CSV/JSON for large analytical datasets.",
+    "vi": "Định dạng file columnar, có nén, lý tưởng cho phân tích và ML trên S3: truy vấn chỉ đọc các cột cần thiết, giảm số byte quét và chi phí (ví dụ với Athena). Ưu tiên hơn CSV/JSON cho dataset phân tích lớn."
+   }
+  },
+  {
+   "id": "avro",
+   "term": "Avro",
+   "lecture": "02-007",
+   "definition": {
+    "en": "A row-based binary format with an embedded schema, well suited for serialization and streaming (e.g. Kafka). Choose it for row-oriented, schema-evolving data exchange, not for selective column scans.",
+    "vi": "Định dạng nhị phân hướng dòng có schema nhúng, phù hợp cho tuần tự hóa và streaming (ví dụ Kafka). Chọn cho trao đổi dữ liệu hướng dòng có schema tiến hóa, không phải cho quét chọn lọc theo cột."
+   }
+  },
+  {
+   "id": "etl-pipeline",
+   "term": "ETL pipeline",
+   "lecture": "02-006",
+   "definition": {
+    "en": "Extract, Transform, Load: data is pulled from sources, transformed, and loaded into a target store, usually coordinated by an orchestration service (e.g. Glue workflows, Step Functions, MWAA). Orchestration manages ordering, retries and dependencies.",
+    "vi": "Extract, Transform, Load: dữ liệu được lấy từ nguồn, biến đổi rồi nạp vào kho đích, thường được điều phối bởi một dịch vụ orchestration (ví dụ Glue workflows, Step Functions, MWAA). Orchestration quản lý thứ tự, retry và phụ thuộc."
+   }
+  },
+  {
+   "id": "s3-bucket-policy",
+   "term": "S3 bucket policy",
+   "lecture": "02-010",
+   "definition": {
+    "en": "A resource-based JSON policy attached to a bucket that grants or denies access to principals, including cross-account access, and can force conditions such as encryption in transit or on upload. Use it for bucket-wide and cross-account access control.",
+    "vi": "Policy dạng JSON dựa trên tài nguyên gắn vào bucket để cấp hoặc từ chối quyền cho các principal, gồm cả truy cập cross-account, và có thể ép các điều kiện như mã hóa khi truyền hoặc khi upload. Dùng để kiểm soát truy cập toàn bucket và cross-account."
+   }
+  },
+  {
+   "id": "s3-versioning",
+   "term": "S3 Versioning",
+   "lecture": "02-012",
+   "definition": {
+    "en": "Keeps multiple versions of each object in a bucket, protecting against accidental overwrite or deletion (a delete adds a delete marker). It is a prerequisite for S3 replication and enables rollback.",
+    "vi": "Giữ nhiều phiên bản của mỗi object trong bucket, bảo vệ khỏi ghi đè hoặc xóa nhầm (thao tác xóa chỉ thêm delete marker). Là điều kiện tiên quyết của S3 replication và cho phép rollback."
+   }
+  },
+  {
+   "id": "s3-replication",
+   "term": "S3 Replication (CRR / SRR)",
+   "lecture": "02-014",
+   "definition": {
+    "en": "Asynchronous copying of objects between buckets in different Regions (CRR) or the same Region (SRR). Requires versioning enabled on both source and destination buckets and proper IAM permissions; only new objects are replicated after enabling it.",
+    "vi": "Sao chép bất đồng bộ object giữa các bucket ở Region khác nhau (CRR) hoặc cùng Region (SRR). Yêu cầu bật versioning ở cả bucket nguồn lẫn đích và IAM permission phù hợp; chỉ object mới sau khi bật mới được replicate."
+   }
+  },
+  {
+   "id": "s3-storage-classes",
+   "term": "S3 storage classes",
+   "lecture": "02-017",
+   "definition": {
+    "en": "Classes trade cost against access speed and durability: Standard, Standard-IA, One Zone-IA (single AZ), Glacier Instant/Flexible Retrieval/Deep Archive, and Intelligent-Tiering. Pick based on access frequency and retrieval time requirements.",
+    "vi": "Các class đánh đổi chi phí với tốc độ truy cập và độ bền: Standard, Standard-IA, One Zone-IA (một AZ), Glacier Instant/Flexible Retrieval/Deep Archive và Intelligent-Tiering. Chọn dựa trên tần suất truy cập và yêu cầu thời gian truy xuất."
+   }
+  },
+  {
+   "id": "s3-intelligent-tiering",
+   "term": "S3 Intelligent-Tiering",
+   "lecture": "02-017",
+   "definition": {
+    "en": "Automatically moves objects between access tiers based on observed access patterns, with no retrieval charges (a small monitoring fee applies). Choose it when access patterns are unknown or unpredictable.",
+    "vi": "Tự động chuyển object giữa các tầng truy cập dựa trên mẫu truy cập quan sát được, không tính phí truy xuất (có phí giám sát nhỏ). Chọn khi mẫu truy cập chưa biết hoặc không đoán trước được."
+   }
+  },
+  {
+   "id": "s3-lifecycle-rules",
+   "term": "S3 Lifecycle rules",
+   "lecture": "02-019",
+   "definition": {
+    "en": "Rules that automatically transition objects to cheaper storage classes or expire (delete) them after a set time, scoped by prefix or tag. The lowest-operational-effort answer for archive-then-delete retention scenarios.",
+    "vi": "Quy tắc tự động chuyển object sang storage class rẻ hơn hoặc hết hạn (xóa) sau một khoảng thời gian, phạm vi theo prefix hoặc tag. Đáp án ít công sức vận hành nhất cho các kịch bản archive rồi xóa theo thời hạn lưu giữ."
+   }
+  },
+  {
+   "id": "s3-event-notifications",
+   "term": "S3 Event Notifications",
+   "lecture": "02-021",
+   "definition": {
+    "en": "Triggers events (e.g. ObjectCreated, ObjectRemoved) to targets such as Lambda, SQS, SNS or EventBridge when objects change. Use it to start ingestion or processing pipelines when new data lands in S3.",
+    "vi": "Phát sự kiện (ví dụ ObjectCreated, ObjectRemoved) tới các đích như Lambda, SQS, SNS hoặc EventBridge khi object thay đổi. Dùng để khởi chạy pipeline thu nhập hoặc xử lý khi dữ liệu mới vào S3."
+   }
+  },
+  {
+   "id": "s3-performance",
+   "term": "S3 performance (multipart upload, Transfer Acceleration, byte-range fetches)",
+   "lecture": "02-023",
+   "definition": {
+    "en": "S3 supports at least 3,500 PUT/COPY/POST/DELETE and 5,500 GET/HEAD requests per second per prefix. Use multipart upload for files over 100 MB (required over 5 GB), Transfer Acceleration for long-distance uploads, and byte-range fetches to parallelize downloads.",
+    "vi": "S3 hỗ trợ ít nhất 3.500 request PUT/COPY/POST/DELETE và 5.500 GET/HEAD mỗi giây trên mỗi prefix. Dùng multipart upload cho file trên 100 MB (bắt buộc trên 5 GB), Transfer Acceleration cho upload đường dài, và byte-range fetch để song song hóa tải xuống."
+   }
+  },
+  {
+   "id": "s3-sse-kms",
+   "term": "S3 server-side encryption (SSE-S3, SSE-KMS, SSE-C)",
+   "lecture": "02-024",
+   "definition": {
+    "en": "SSE-S3 uses S3-managed keys; SSE-KMS uses KMS keys and adds key control and CloudTrail auditing of key usage; SSE-C uses customer-supplied keys sent with every request over HTTPS. Choose SSE-KMS when an audit trail of key usage is required.",
+    "vi": "SSE-S3 dùng khóa do S3 quản lý; SSE-KMS dùng khóa KMS và bổ sung quyền kiểm soát khóa cùng kiểm toán qua CloudTrail; SSE-C dùng khóa do khách hàng cung cấp gửi kèm mỗi request qua HTTPS. Chọn SSE-KMS khi cần nhật ký kiểm toán việc dùng khóa."
+   }
+  },
+  {
+   "id": "s3-access-points",
+   "term": "S3 Access Points",
+   "lecture": "02-028",
+   "definition": {
+    "en": "Named network endpoints, each with its own policy, that simplify managing access to shared datasets in a bucket for different applications or teams. They can be restricted to a VPC.",
+    "vi": "Các endpoint mạng có tên, mỗi cái có policy riêng, giúp đơn giản hóa việc quản lý truy cập vào dataset dùng chung trong một bucket cho các ứng dụng hoặc nhóm khác nhau. Có thể giới hạn trong một VPC."
+   }
+  },
+  {
+   "id": "s3-object-lambda",
+   "term": "S3 Object Lambda",
+   "lecture": "02-029",
+   "definition": {
+    "en": "Uses a Lambda function to transform an object as it is retrieved through an S3 Object Lambda Access Point (e.g. redact PII, convert formats), without storing multiple copies of the data.",
+    "vi": "Dùng hàm Lambda để biến đổi object khi được truy xuất qua S3 Object Lambda Access Point (ví dụ che PII, chuyển định dạng) mà không cần lưu nhiều bản sao dữ liệu."
+   }
+  },
+  {
+   "id": "amazon-ebs",
+   "term": "Amazon EBS",
+   "lecture": "02-030",
+   "definition": {
+    "en": "Network-attached block storage for a single EC2 instance, bound to one Availability Zone (snapshots can be copied across AZs/Regions). Choose it for low-latency boot and database volumes; Elastic Volumes lets you change size and type without downtime.",
+    "vi": "Block storage gắn qua mạng cho một EC2 instance, bị ràng buộc trong một Availability Zone (snapshot có thể sao chép giữa AZ/Region). Chọn cho boot volume và database cần độ trễ thấp; Elastic Volumes cho phép đổi dung lượng và loại mà không downtime."
+   }
+  },
+  {
+   "id": "amazon-efs",
+   "term": "Amazon EFS",
+   "lecture": "02-033",
+   "definition": {
+    "en": "A managed, elastic NFS (POSIX) file system for Linux that can be mounted concurrently by many instances across multiple AZs. Choose it for shared storage among training/inference instances; it is more expensive than EBS per GB.",
+    "vi": "Hệ thống file NFS (POSIX) được quản lý, co giãn cho Linux, có thể được mount đồng thời bởi nhiều instance trên nhiều AZ. Chọn cho lưu trữ dùng chung giữa các instance huấn luyện/suy luận; đắt hơn EBS theo GB."
+   }
+  },
+  {
+   "id": "amazon-fsx-lustre",
+   "term": "Amazon FSx for Lustre",
+   "lecture": "02-036",
+   "definition": {
+    "en": "A managed parallel file system for HPC and ML with very high throughput (hundreds of GB/s) and millions of IOPS, with sub-millisecond latency and native S3 integration. Choose it for large-scale training that needs fast access to S3 datasets.",
+    "vi": "Hệ thống file song song được quản lý cho HPC và ML với throughput rất cao (hàng trăm GB/s), hàng triệu IOPS, độ trễ dưới mili giây và tích hợp S3 gốc. Chọn cho huấn luyện quy mô lớn cần truy cập nhanh vào dataset S3."
+   }
+  },
+  {
+   "id": "kinesis-data-streams",
+   "term": "Amazon Kinesis Data Streams",
+   "lecture": "02-038",
+   "definition": {
+    "en": "Service to collect and store real-time streaming data in shards, retaining it from 24 hours up to 365 days so consumers can replay it; records cannot be deleted before expiry and each can be up to 10 MB. Choose it for real-time ingestion with custom consumers.",
+    "vi": "Dịch vụ thu thập và lưu trữ dữ liệu streaming thời gian thực trong các shard, giữ từ 24 giờ đến 365 ngày để consumer có thể replay; bản ghi không xóa được trước khi hết hạn và mỗi bản ghi tối đa 10 MB. Chọn cho thu nhập thời gian thực với consumer tùy biến."
+   }
+  },
+  {
+   "id": "kds-capacity-modes",
+   "term": "Kinesis Data Streams capacity modes (provisioned vs on-demand)",
+   "lecture": "02-038",
+   "definition": {
+    "en": "Provisioned mode requires you to choose and scale shards yourself (each shard handles about 1 MB/s or 1,000 records/s in and 2 MB/s out). On-demand mode automatically scales capacity with throughput; choose it for unpredictable traffic.",
+    "vi": "Provisioned mode yêu cầu bạn tự chọn và scale số shard (mỗi shard xử lý khoảng 1 MB/s hoặc 1.000 bản ghi/s vào và 2 MB/s ra). On-demand mode tự động scale dung lượng theo throughput; chọn cho lưu lượng không đoán trước."
+   }
+  },
+  {
+   "id": "kds-partition-key",
+   "term": "Partition key and hot shards",
+   "lecture": "02-041",
+   "definition": {
+    "en": "The partition key decides which shard a record goes to, and ordering is guaranteed per partition key. A poorly distributed key causes hot shards and throttling (ProvisionedThroughputExceeded); fix it with a better key, resharding, or batching.",
+    "vi": "Partition key quyết định bản ghi vào shard nào, và thứ tự được đảm bảo theo từng partition key. Key phân bố kém gây hot shard và throttling (ProvisionedThroughputExceeded); khắc phục bằng key tốt hơn, resharding hoặc batching."
+   }
+  },
+  {
+   "id": "amazon-data-firehose",
+   "term": "Amazon Data Firehose",
+   "lecture": "02-040",
+   "definition": {
+    "en": "Fully managed, serverless, near-real-time delivery service that buffers streaming data and loads it into S3, Redshift, OpenSearch, third-party partners (Splunk, Datadog) or HTTP endpoints, with optional Lambda transformation. Choose it for simple loading with no custom consumer code; it is not real-time and has no replay.",
+    "vi": "Dịch vụ phân phối gần thời gian thực (near-real-time), serverless, được quản lý hoàn toàn, đệm dữ liệu streaming rồi nạp vào S3, Redshift, OpenSearch, đối tác bên thứ ba (Splunk, Datadog) hoặc HTTP endpoint, có thể biến đổi bằng Lambda. Chọn cho việc nạp dữ liệu đơn giản không cần code consumer; không phải real-time và không có replay."
+   }
+  },
+  {
+   "id": "managed-flink",
+   "term": "Amazon Managed Service for Apache Flink",
+   "lecture": "02-042",
+   "definition": {
+    "en": "Serverless service (formerly Kinesis Data Analytics) to run real-time analytics on streams from Kinesis Data Streams or MSK using Apache Flink (SQL, Java, Python, Scala). Choose it for windowed aggregations and stream processing; it is not cheap, so shut jobs down when finished.",
+    "vi": "Dịch vụ serverless (trước đây là Kinesis Data Analytics) để chạy phân tích thời gian thực trên stream từ Kinesis Data Streams hoặc MSK bằng Apache Flink (SQL, Java, Python, Scala). Chọn cho tổng hợp theo cửa sổ và xử lý stream; chi phí không rẻ nên cần tắt job khi xong."
+   }
+  },
+  {
+   "id": "random-cut-forest",
+   "term": "RANDOM_CUT_FOREST",
+   "lecture": "02-044",
+   "definition": {
+    "en": "An anomaly-detection algorithm available as a SQL function in Kinesis Data Analytics that assigns an anomaly score to each record in a stream. Use it for real-time anomaly detection on streaming data.",
+    "vi": "Thuật toán phát hiện bất thường có sẵn dưới dạng hàm SQL trong Kinesis Data Analytics, gán điểm bất thường cho từng bản ghi trong stream. Dùng cho phát hiện bất thường thời gian thực trên dữ liệu streaming."
+   }
+  },
+  {
+   "id": "amazon-msk",
+   "term": "Amazon MSK",
+   "lecture": "02-045",
+   "definition": {
+    "en": "Fully managed Apache Kafka on AWS (topics and partitions). Choose it over Kinesis when you need Kafka compatibility, messages larger than 1 MB (configurable, e.g. to 10 MB+), or migration of existing Kafka workloads; MSK Serverless removes capacity management and MSK Connect runs Kafka Connect connectors.",
+    "vi": "Apache Kafka được quản lý hoàn toàn trên AWS (topic và partition). Chọn thay cho Kinesis khi cần tương thích Kafka, message lớn hơn 1 MB (cấu hình được) hoặc di chuyển workload Kafka hiện có; MSK Serverless loại bỏ việc quản lý dung lượng và MSK Connect chạy các connector Kafka Connect."
+   }
+  },
+  {
+   "id": "kinesis-vs-msk",
+   "term": "Kinesis Data Streams vs Amazon MSK",
+   "lecture": "02-048",
+   "definition": {
+    "en": "Kinesis uses shards (split/merge to scale), TLS in transit by default, and IAM for authN/authZ. MSK uses topic partitions (can only add, not remove), allows plaintext or TLS, and offers mTLS, SASL/SCRAM or IAM access control. The exam usually favors Kinesis unless large messages or Kafka compatibility are required.",
+    "vi": "Kinesis dùng shard (split/merge để scale), TLS khi truyền mặc định và IAM cho xác thực/ủy quyền. MSK dùng partition của topic (chỉ thêm, không xóa được), cho phép plaintext hoặc TLS, và hỗ trợ mTLS, SASL/SCRAM hoặc IAM access control. Kỳ thi thường nghiêng về Kinesis trừ khi cần message lớn hoặc tương thích Kafka."
+   }
+  }
+ ]
+}

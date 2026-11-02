@@ -1,0 +1,486 @@
+{
+ "id": "section-09",
+ "kind": "section",
+ "section": "09",
+ "title": {
+  "en": "MLOps",
+  "vi": "Vận hành Machine Learning và AI (MLOps AIOps) với AWS"
+ },
+ "description": {
+  "en": "<p>Test your knowledge from this section of the course.</p>",
+  "vi": "<p>Kiểm tra kiến thức của bạn từ phần này của khóa học.</p>"
+ },
+ "passPercent": 70,
+ "questions": [
+  {
+   "id": 87793773,
+   "multi": false,
+   "question": {
+    "en": "<p>A brokerage wants to send 10% of inference traffic to a candidate model, monitor it, and automatically roll back if alarms fire. Which SageMaker deployment strategy should it use?</p>",
+    "vi": "<p>Một công ty môi giới muốn gửi 10% lưu lượng inference tới một model ứng viên, giám sát nó và tự động rollback nếu alarm kích hoạt. Nên dùng chiến lược triển khai SageMaker nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use an all-at-once deployment</p>",
+     "vi": "<p>Dùng triển khai all-at-once</p>"
+    },
+    {
+     "en": "<p>Use a canary deployment guardrail</p>",
+     "vi": "<p>Dùng canary deployment guardrail</p>"
+    },
+    {
+     "en": "<p>Use an offline batch transform</p>",
+     "vi": "<p>Dùng offline batch transform</p>"
+    },
+    {
+     "en": "<p>Use a training warm pool</p>",
+     "vi": "<p>Dùng training warm pool</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. All-at-once immediately shifts all traffic and increases risk.</p>",
+     "vi": "<p>Sai. All-at-once chuyển toàn bộ lưu lượng ngay lập tức và làm tăng rủi ro.</p>"
+    },
+    {
+     "en": "<p>Correct. A canary guardrail shifts a small share first and supports monitoring and rollback.</p>",
+     "vi": "<p>Đúng. Canary guardrail chuyển một phần nhỏ trước và hỗ trợ giám sát cùng rollback.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Batch Transform does not manage live endpoint traffic.</p>",
+     "vi": "<p>Sai. Batch Transform không quản lý lưu lượng endpoint trực tiếp.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Warm Pools accelerate repeated training jobs.</p>",
+     "vi": "<p>Sai. Warm Pool tăng tốc các training job lặp lại.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87793789,
+   "multi": false,
+   "question": {
+    "en": "<p>A team has a proprietary algorithm and runtime not available in a prebuilt SageMaker image. It needs the same dependencies during training and hosting. What should the team do?</p>",
+    "vi": "<p>Một nhóm có thuật toán và runtime độc quyền không có trong image dựng sẵn của SageMaker. Họ cần cùng các dependency khi huấn luyện và khi hosting. Nhóm nên làm gì?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Store the runtime only in an S3 object</p>",
+     "vi": "<p>Chỉ lưu runtime trong một S3 object</p>"
+    },
+    {
+     "en": "<p>Place dependencies in a CloudWatch dashboard</p>",
+     "vi": "<p>Đặt dependency trong CloudWatch dashboard</p>"
+    },
+    {
+     "en": "<p>Define the algorithm in an IAM policy</p>",
+     "vi": "<p>Định nghĩa thuật toán trong IAM policy</p>"
+    },
+    {
+     "en": "<p>Package the code in a custom Docker image</p>",
+     "vi": "<p>Đóng gói code vào custom Docker image</p>"
+    }
+   ],
+   "answer": [
+    3
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. S3 can store files but does not create an executable runtime environment.</p>",
+     "vi": "<p>Sai. S3 có thể lưu tệp nhưng không tạo ra môi trường runtime thực thi được.</p>"
+    },
+    {
+     "en": "<p>Incorrect. CloudWatch dashboards visualize metrics.</p>",
+     "vi": "<p>Sai. CloudWatch dashboard dùng để trực quan hóa metric.</p>"
+    },
+    {
+     "en": "<p>Incorrect. IAM policies authorize actions and do not package software.</p>",
+     "vi": "<p>Sai. IAM policy cấp quyền cho các hành động và không đóng gói phần mềm.</p>"
+    },
+    {
+     "en": "<p>Correct. A custom container packages the runtime and dependencies for SageMaker training and inference.</p>",
+     "vi": "<p>Đúng. Custom container đóng gói runtime và dependency cho training và inference của SageMaker.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87794143,
+   "multi": false,
+   "question": {
+    "en": "<p>An MLOps pipeline builds SageMaker-compatible container images and needs a managed private repository with IAM controls and vulnerability scanning. Which service should store the images?</p>",
+    "vi": "<p>Một MLOps pipeline build các container image tương thích SageMaker và cần một repository riêng được quản lý, có kiểm soát IAM và quét lỗ hổng. Dịch vụ nào nên lưu các image?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Store images in Amazon EFS</p>",
+     "vi": "<p>Lưu image trong Amazon EFS</p>"
+    },
+    {
+     "en": "<p>Store images in AWS CodePipeline</p>",
+     "vi": "<p>Lưu image trong AWS CodePipeline</p>"
+    },
+    {
+     "en": "<p>Store images in Amazon ECR</p>",
+     "vi": "<p>Lưu image trong Amazon ECR</p>"
+    },
+    {
+     "en": "<p>Store images in Amazon CloudWatch</p>",
+     "vi": "<p>Lưu image trong Amazon CloudWatch</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. EFS stores files but is not a container registry.</p>",
+     "vi": "<p>Sai. EFS lưu tệp nhưng không phải container registry.</p>"
+    },
+    {
+     "en": "<p>Incorrect. CodePipeline orchestrates workflow stages but does not serve as the image registry.</p>",
+     "vi": "<p>Sai. CodePipeline điều phối các stage của workflow và không đóng vai trò image registry.</p>"
+    },
+    {
+     "en": "<p>Correct. ECR stores container images and supports IAM access and vulnerability scanning.</p>",
+     "vi": "<p>Đúng. ECR lưu container image và hỗ trợ truy cập IAM cùng quét lỗ hổng.</p>"
+    },
+    {
+     "en": "<p>Incorrect. CloudWatch stores monitoring data, not deployable images.</p>",
+     "vi": "<p>Sai. CloudWatch lưu dữ liệu giám sát, không lưu image có thể triển khai.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87794251,
+   "multi": false,
+   "question": {
+    "en": "<p>A retailer wants to run a live A/B test by routing 20% of endpoint traffic to model B and 80% to model A. Which SageMaker feature should it configure?</p>",
+    "vi": "<p>Một nhà bán lẻ muốn chạy A/B test trực tiếp bằng cách định tuyến 20% lưu lượng endpoint tới model B và 80% tới model A. Nên cấu hình tính năng SageMaker nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Configure two training channels</p>",
+     "vi": "<p>Cấu hình hai training channel</p>"
+    },
+    {
+     "en": "<p>Configure two S3 access points</p>",
+     "vi": "<p>Cấu hình hai S3 access point</p>"
+    },
+    {
+     "en": "<p>Configure two notebook kernels</p>",
+     "vi": "<p>Cấu hình hai notebook kernel</p>"
+    },
+    {
+     "en": "<p>Configure weighted production variants</p>",
+     "vi": "<p>Cấu hình production variant có trọng số</p>"
+    }
+   ],
+   "answer": [
+    3
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Training channels provide input data rather than route inference traffic.</p>",
+     "vi": "<p>Sai. Training channel cung cấp dữ liệu đầu vào chứ không định tuyến lưu lượng inference.</p>"
+    },
+    {
+     "en": "<p>Incorrect. S3 access points manage object access.</p>",
+     "vi": "<p>Sai. S3 access point quản lý quyền truy cập object.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Notebook kernels are development runtimes.</p>",
+     "vi": "<p>Sai. Notebook kernel là runtime phát triển.</p>"
+    },
+    {
+     "en": "<p>Correct. Production variant weights divide live endpoint traffic among models.</p>",
+     "vi": "<p>Đúng. Trọng số của production variant chia lưu lượng endpoint trực tiếp giữa các model.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87794363,
+   "multi": false,
+   "question": {
+    "en": "<p>A long SageMaker training job can tolerate interruptions and must minimize compute cost. Which combination should the team use?</p>",
+    "vi": "<p>Một training job SageMaker dài có thể chịu được gián đoạn và phải giảm thiểu chi phí compute. Nhóm nên dùng tổ hợp nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use Managed Spot Training with S3 checkpoints</p>",
+     "vi": "<p>Dùng Managed Spot Training với checkpoint trên S3</p>"
+    },
+    {
+     "en": "<p>Use on-demand training without checkpoints</p>",
+     "vi": "<p>Dùng on-demand training không có checkpoint</p>"
+    },
+    {
+     "en": "<p>Use Serverless Inference with EFS backups</p>",
+     "vi": "<p>Dùng Serverless Inference với bản sao lưu EFS</p>"
+    },
+    {
+     "en": "<p>Use Batch Transform with provisioned shards</p>",
+     "vi": "<p>Dùng Batch Transform với shard được provision</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Correct. Spot training reduces cost, and checkpoints allow recovery after interruptions.</p>",
+     "vi": "<p>Đúng. Spot training giảm chi phí, còn checkpoint cho phép khôi phục sau khi bị gián đoạn.</p>"
+    },
+    {
+     "en": "<p>Incorrect. On-demand capacity costs more and ignores the interruption-tolerant requirement.</p>",
+     "vi": "<p>Sai. Năng lực on-demand tốn kém hơn và bỏ qua yêu cầu chịu được gián đoạn.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Serverless Inference serves predictions rather than training.</p>",
+     "vi": "<p>Sai. Serverless Inference phục vụ dự đoán chứ không phải huấn luyện.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Batch Transform and shards do not provide interruptible training.</p>",
+     "vi": "<p>Sai. Batch Transform và shard không cung cấp khả năng huấn luyện chịu gián đoạn.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87794587,
+   "multi": false,
+   "question": {
+    "en": "<p>An endpoint receives a few unpredictable requests each day, may remain idle for hours, and can tolerate cold starts. Which inference option is MOST cost-effective?</p>",
+    "vi": "<p>Một endpoint nhận vài request khó đoán mỗi ngày, có thể nhàn rỗi nhiều giờ và chấp nhận được cold start. Tùy chọn inference nào tiết kiệm chi phí NHẤT?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use a large persistent real-time endpoint</p>",
+     "vi": "<p>Dùng real-time endpoint lớn chạy liên tục</p>"
+    },
+    {
+     "en": "<p>Use SageMaker Serverless Inference</p>",
+     "vi": "<p>Dùng SageMaker Serverless Inference</p>"
+    },
+    {
+     "en": "<p>Use a continuously running notebook</p>",
+     "vi": "<p>Dùng notebook chạy liên tục</p>"
+    },
+    {
+     "en": "<p>Use a provisioned Kinesis consumer</p>",
+     "vi": "<p>Dùng Kinesis consumer được provision</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. A persistent endpoint incurs cost during idle periods.</p>",
+     "vi": "<p>Sai. Endpoint chạy liên tục phát sinh chi phí cả trong thời gian nhàn rỗi.</p>"
+    },
+    {
+     "en": "<p>Correct. Serverless Inference scales to zero and suits infrequent unpredictable traffic that tolerates cold starts.</p>",
+     "vi": "<p>Đúng. Serverless Inference scale về 0 và phù hợp lưu lượng thưa, khó đoán, chấp nhận cold start.</p>"
+    },
+    {
+     "en": "<p>Incorrect. A notebook is not a production inference endpoint.</p>",
+     "vi": "<p>Sai. Notebook không phải endpoint inference production.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Kinesis consumer capacity does not host a model.</p>",
+     "vi": "<p>Sai. Năng lực Kinesis consumer không host model.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87794593,
+   "multi": false,
+   "question": {
+    "en": "<p>A team is unsure which instance type provides the required latency and throughput for a registered model at the lowest cost. Which service can automate comparative load tests?</p>",
+    "vi": "<p>Một nhóm không chắc loại instance nào đáp ứng độ trễ và throughput yêu cầu cho một model đã đăng ký với chi phí thấp nhất. Dịch vụ nào có thể tự động hóa các load test so sánh?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use SageMaker Model Registry</p>",
+     "vi": "<p>Dùng SageMaker Model Registry</p>"
+    },
+    {
+     "en": "<p>Use SageMaker Feature Store</p>",
+     "vi": "<p>Dùng SageMaker Feature Store</p>"
+    },
+    {
+     "en": "<p>Use SageMaker Inference Recommender</p>",
+     "vi": "<p>Dùng SageMaker Inference Recommender</p>"
+    },
+    {
+     "en": "<p>Use SageMaker Data Wrangler</p>",
+     "vi": "<p>Dùng SageMaker Data Wrangler</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Model Registry catalogs the model but does not benchmark endpoint types by itself.</p>",
+     "vi": "<p>Sai. Model Registry lập danh mục model nhưng tự nó không benchmark các loại endpoint.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Feature Store supplies feature values.</p>",
+     "vi": "<p>Sai. Feature Store cung cấp giá trị feature.</p>"
+    },
+    {
+     "en": "<p>Correct. Inference Recommender benchmarks endpoint configurations and reports cost, latency, and throughput metrics.</p>",
+     "vi": "<p>Đúng. Inference Recommender benchmark các cấu hình endpoint và báo cáo metric chi phí, độ trễ, throughput.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Data Wrangler prepares datasets.</p>",
+     "vi": "<p>Sai. Data Wrangler chuẩn bị dataset.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87794605,
+   "multi": false,
+   "question": {
+    "en": "<p>A real-time SageMaker endpoint must remain available if one Availability Zone fails. Which configuration is required?</p>",
+    "vi": "<p>Một real-time endpoint SageMaker phải vẫn sẵn sàng nếu một Availability Zone gặp sự cố. Cần cấu hình nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Deploy one instance in one public subnet</p>",
+     "vi": "<p>Triển khai một instance trong một public subnet</p>"
+    },
+    {
+     "en": "<p>Deploy one instance with a larger EBS volume</p>",
+     "vi": "<p>Triển khai một instance với EBS volume lớn hơn</p>"
+    },
+    {
+     "en": "<p>Deploy one model in a single-AZ VPC</p>",
+     "vi": "<p>Triển khai một model trong VPC chỉ có một AZ</p>"
+    },
+    {
+     "en": "<p>Deploy multiple instances across AZ subnets</p>",
+     "vi": "<p>Triển khai nhiều instance trên các subnet ở các AZ khác nhau</p>"
+    }
+   ],
+   "answer": [
+    3
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. One instance provides no endpoint redundancy.</p>",
+     "vi": "<p>Sai. Một instance không tạo ra dự phòng cho endpoint.</p>"
+    },
+    {
+     "en": "<p>Incorrect. More storage does not add Availability Zone resilience.</p>",
+     "vi": "<p>Sai. Thêm dung lượng lưu trữ không tăng khả năng chịu lỗi cấp Availability Zone.</p>"
+    },
+    {
+     "en": "<p>Incorrect. A single-AZ design cannot survive that AZ's failure.</p>",
+     "vi": "<p>Sai. Thiết kế một AZ không thể sống sót khi AZ đó gặp sự cố.</p>"
+    },
+    {
+     "en": "<p>Correct. Multiple instances with subnets in at least two AZs enable SageMaker to distribute capacity.</p>",
+     "vi": "<p>Đúng. Nhiều instance cùng các subnet ở ít nhất hai AZ cho phép SageMaker phân bổ năng lực.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87794621,
+   "multi": false,
+   "question": {
+    "en": "<p>A production model's input distributions have shifted, but labels arrive weeks later. Which monitoring action can detect the issue immediately?</p>",
+    "vi": "<p>Phân phối đầu vào của một model production đã dịch chuyển nhưng nhãn đến sau vài tuần. Hành động giám sát nào có thể phát hiện vấn đề ngay lập tức?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Compare feature statistics to a baseline</p>",
+     "vi": "<p>So sánh thống kê feature với baseline</p>"
+    },
+    {
+     "en": "<p>Wait for labels and calculate only final accuracy</p>",
+     "vi": "<p>Chờ nhãn và chỉ tính accuracy cuối cùng</p>"
+    },
+    {
+     "en": "<p>Increase model temperature for every request</p>",
+     "vi": "<p>Tăng temperature của model cho mọi request</p>"
+    },
+    {
+     "en": "<p>Rebuild the endpoint on a larger instance</p>",
+     "vi": "<p>Dựng lại endpoint trên instance lớn hơn</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Correct. Comparing recent input statistics with a reference baseline detects data drift before labels arrive.</p>",
+     "vi": "<p>Đúng. So sánh thống kê đầu vào gần đây với baseline tham chiếu phát hiện data drift trước khi có nhãn.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Waiting for labels delays detection of input shift.</p>",
+     "vi": "<p>Sai. Chờ nhãn làm chậm việc phát hiện dịch chuyển đầu vào.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Temperature applies to generative sampling and does not measure drift.</p>",
+     "vi": "<p>Sai. Temperature áp dụng cho lấy mẫu generative và không đo drift.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Larger infrastructure does not diagnose distribution changes.</p>",
+     "vi": "<p>Sai. Hạ tầng lớn hơn không chẩn đoán được thay đổi phân phối.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87794659,
+   "multi": false,
+   "question": {
+    "en": "<p>A team wants SageMaker Studio's native MLOps templates to create repositories, pipelines, model build workflows, and deployment workflows. Which feature should it use?</p>",
+    "vi": "<p>Một nhóm muốn dùng các template MLOps gốc của SageMaker Studio để tạo repository, pipeline, workflow build model và workflow triển khai. Nên dùng tính năng nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use SageMaker Canvas</p>",
+     "vi": "<p>Dùng SageMaker Canvas</p>"
+    },
+    {
+     "en": "<p>Use SageMaker Projects</p>",
+     "vi": "<p>Dùng SageMaker Projects</p>"
+    },
+    {
+     "en": "<p>Use SageMaker Ground Truth</p>",
+     "vi": "<p>Dùng SageMaker Ground Truth</p>"
+    },
+    {
+     "en": "<p>Use SageMaker Clarify</p>",
+     "vi": "<p>Dùng SageMaker Clarify</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Canvas is a no-code modeling interface.</p>",
+     "vi": "<p>Sai. Canvas là giao diện tạo model no-code.</p>"
+    },
+    {
+     "en": "<p>Correct. SageMaker Projects provisions standardized MLOps and CI/CD resources around SageMaker Pipelines.</p>",
+     "vi": "<p>Đúng. SageMaker Projects provision các tài nguyên MLOps và CI/CD chuẩn hóa xoay quanh SageMaker Pipelines.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Ground Truth labels data.</p>",
+     "vi": "<p>Sai. Ground Truth gắn nhãn dữ liệu.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Clarify is not the native project scaffolding feature and is in maintenance mode.</p>",
+     "vi": "<p>Sai. Clarify không phải tính năng dựng khung project gốc và đang ở maintenance mode.</p>"
+    }
+   ]
+  }
+ ]
+}

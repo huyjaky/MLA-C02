@@ -1,0 +1,2061 @@
+{
+ "09-001": {
+  "tldr": {
+   "en": "Section intro: deep dive into SageMaker internals, custom containers, resource optimization, and ops services like ECR, CloudFormation, CDK, EventBridge and Step Functions.",
+   "vi": "Giới thiệu section: đi sâu vào SageMaker, container tự xây, tối ưu tài nguyên và các dịch vụ ops như ECR, CloudFormation, CDK, EventBridge, Step Functions."
+  },
+  "points": [
+   {
+    "en": "You will bring your own containers into SageMaker.",
+    "vi": "Bạn sẽ đưa container riêng vào SageMaker."
+   },
+   {
+    "en": "Training and inference resources are large; choices exist to optimize their usage.",
+    "vi": "Tài nguyên training và inference rất lớn; có nhiều cách tối ưu việc sử dụng."
+   },
+   {
+    "en": "Ops services in scope: ECR, CloudFormation, CDK, EventBridge, Step Functions.",
+    "vi": "Các dịch vụ ops trong phạm vi thi: ECR, CloudFormation, CDK, EventBridge, Step Functions."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon ECR",
+    "use": {
+     "en": "Registry that stores container images for SageMaker.",
+     "vi": "Registry lưu container image cho SageMaker."
+    }
+   },
+   {
+    "name": "AWS CloudFormation",
+    "use": {
+     "en": "Infrastructure as code templates.",
+     "vi": "Template infrastructure as code."
+    }
+   },
+   {
+    "name": "AWS CDK",
+    "use": {
+     "en": "Define infrastructure in programming languages.",
+     "vi": "Định nghĩa hạ tầng bằng ngôn ngữ lập trình."
+    }
+   },
+   {
+    "name": "Amazon EventBridge",
+    "use": {
+     "en": "Event routing between services.",
+     "vi": "Định tuyến event giữa các dịch vụ."
+    }
+   },
+   {
+    "name": "AWS Step Functions",
+    "use": {
+     "en": "Orchestrate workflows.",
+     "vi": "Điều phối workflow."
+    }
+   }
+  ]
+ },
+ "09-002": {
+  "tldr": {
+   "en": "Save cost and capacity on foundation model deployments with multi-model endpoints, inference components, Bedrock import, async inference and model compression.",
+   "vi": "Tiết kiệm chi phí khi triển khai foundation model: multi-model endpoint, inference components, Bedrock import, async inference và nén model."
+  },
+  "points": [
+   {
+    "en": "Endpoints can serve multiple models or containers, raising utilization; each endpoint keeps its own guardrails, VPC and network isolation.",
+    "vi": "Một endpoint phục vụ nhiều model hoặc container giúp tăng mức sử dụng; mỗi endpoint có guardrails, VPC, network isolation riêng."
+   },
+   {
+    "en": "Inference components give each model its own scaling policy, so models scale independently.",
+    "vi": "Inference components cho mỗi model scaling policy riêng, scale độc lập."
+   },
+   {
+    "en": "Bedrock Custom Model Import hosts a model tuned in SageMaker serverlessly; cross-region inference reroutes traffic if a region is overloaded.",
+    "vi": "Bedrock Custom Model Import host model đã tune trong SageMaker kiểu serverless; cross-region inference chuyển traffic khi một region quá tải."
+   },
+   {
+    "en": "Use asynchronous inference when latency is not critical; or build your own queue with SNS or SQS.",
+    "vi": "Dùng asynchronous inference khi latency không quan trọng; hoặc tự xây queue bằng SNS hoặc SQS."
+   },
+   {
+    "en": "Shrink models via quantization, pruning, knowledge distillation. Measure with CloudWatch before optimizing.",
+    "vi": "Thu nhỏ model bằng quantization, pruning, knowledge distillation. Đo bằng CloudWatch trước khi tối ưu."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker multi-model endpoint",
+    "use": {
+     "en": "Host many models on one fleet to save cost.",
+     "vi": "Host nhiều model trên một fleet để tiết kiệm."
+    }
+   },
+   {
+    "name": "SageMaker inference components",
+    "use": {
+     "en": "Per-model scaling policy.",
+     "vi": "Scaling policy riêng cho từng model."
+    }
+   },
+   {
+    "name": "Bedrock Custom Model Import",
+    "use": {
+     "en": "Serverless hosting of a model trained or tuned in SageMaker.",
+     "vi": "Host serverless model đã train/tune trong SageMaker."
+    }
+   },
+   {
+    "name": "Bedrock cross-region inference",
+    "use": {
+     "en": "Redistribute traffic across regions when one is down or busy.",
+     "vi": "Phân phối lại traffic giữa các region khi một region lỗi hoặc quá tải."
+    }
+   },
+   {
+    "name": "DJL Serving",
+    "use": {
+     "en": "Model server for Deep Java Library, supports Triton.",
+     "vi": "Model server cho Deep Java Library, hỗ trợ Triton."
+    }
+   },
+   {
+    "name": "TorchServe",
+    "use": {
+     "en": "Model server for PyTorch models.",
+     "vi": "Model server cho PyTorch."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "DJL stands for Deep Java Library, an Amazon-made Java deep learning library.",
+   "vi": "DJL là Deep Java Library, thư viện deep learning bằng Java do Amazon làm."
+  }
+ },
+ "09-003": {
+  "tldr": {
+   "en": "Deployment guardrails and shadow tests make model rollouts safer, with traffic shifting and automatic rollback.",
+   "vi": "Deployment guardrails và shadow test giúp rollout model an toàn hơn, với chuyển traffic và tự động rollback."
+  },
+  "points": [
+   {
+    "en": "Deployment guardrails work on real-time and async endpoints using blue/green deployment: old model on blue fleet, new on green.",
+    "vi": "Deployment guardrails dùng được cho endpoint real-time và async theo blue/green deployment: model cũ ở blue, mới ở green."
+   },
+   {
+    "en": "Three modes: all at once, canary (small slice first), linear (traffic shifted in equal steps).",
+    "vi": "Ba chế độ: all at once, canary (chuyển một phần nhỏ trước), linear (chuyển theo các bước đều nhau)."
+   },
+   {
+    "en": "Automatic rollback returns to the blue fleet if monitoring shows problems.",
+    "vi": "Tự động rollback về blue fleet nếu monitoring phát hiện lỗi."
+   },
+   {
+    "en": "Shadow tests send a share of traffic to a shadow variant; you compare it manually in the console and decide when to promote.",
+    "vi": "Shadow test gửi một phần traffic tới shadow variant; bạn so sánh thủ công trong console rồi quyết định promote."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker deployment guardrails",
+    "use": {
+     "en": "Controlled blue/green traffic shifting with auto rollback.",
+     "vi": "Chuyển traffic blue/green có kiểm soát và tự rollback."
+    }
+   },
+   {
+    "name": "SageMaker shadow tests",
+    "use": {
+     "en": "Validate a new variant on live traffic copy before promotion.",
+     "vi": "Kiểm tra variant mới với traffic thật trước khi promote."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Blue fleet: old model\"] -->|\"shift traffic\"| B[\"Green fleet: new model\"]\n  B --> C[\"Monitor\"]\n  C -->|\"OK\"| D[\"Terminate blue\"]\n  C -->|\"Alarm\"| E[\"Auto rollback to blue\"]",
+   "vi": "flowchart LR\n  A[\"Blue fleet: model cũ\"] -->|\"chuyển traffic\"| B[\"Green fleet: model mới\"]\n  B --> C[\"Giám sát\"]\n  C -->|\"OK\"| D[\"Tắt blue\"]\n  C -->|\"Cảnh báo\"| E[\"Tự rollback về blue\"]"
+  }
+ },
+ "09-004": {
+  "tldr": {
+   "en": "Every SageMaker model runs in a Docker container stored in ECR. Know the /opt/ml layout, the Dockerfile essentials and production variants for live A/B testing.",
+   "vi": "Mọi model SageMaker chạy trong Docker container lưu trong ECR. Cần nhớ cấu trúc /opt/ml, Dockerfile cơ bản và production variants để A/B test."
+  },
+  "points": [
+   {
+    "en": "Images (built from a Dockerfile) live in ECR; training pulls data from S3 and writes the model artifact back to S3 for inference.",
+    "vi": "Image (build từ Dockerfile) nằm trong ECR; training lấy data từ S3 và ghi model artifact lại S3 cho inference."
+   },
+   {
+    "en": "Training layout under /opt/ml: input (config, hyperparameters, data channels), code (your script), output (errors), model.",
+    "vi": "Cấu trúc training trong /opt/ml: input (config, hyperparameters, data channels), code (script của bạn), output (lỗi), model."
+   },
+   {
+    "en": "The only required env var for your own container is SAGEMAKER_PROGRAM, the entrypoint script in /opt/ml/code.",
+    "vi": "Biến môi trường bắt buộc duy nhất cho container tự xây là SAGEMAKER_PROGRAM, script entrypoint trong /opt/ml/code."
+   },
+   {
+    "en": "TensorFlow does not distribute across machines automatically; use Horovod or parameter servers.",
+    "vi": "TensorFlow không tự phân tán qua nhiều máy; dùng Horovod hoặc parameter servers."
+   },
+   {
+    "en": "Production variants with variant weights split live traffic (e.g. 10% new) for A/B tests; roll back by changing weights.",
+    "vi": "Production variants với variant weights chia traffic thật (vd 10% model mới) để A/B test; rollback bằng cách đổi weights."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon ECR",
+    "use": {
+     "en": "Stores the Docker images SageMaker uses.",
+     "vi": "Lưu Docker image mà SageMaker dùng."
+    }
+   },
+   {
+    "name": "SageMaker production variants",
+    "use": {
+     "en": "Run several model versions behind one endpoint with traffic weights.",
+     "vi": "Chạy nhiều phiên bản model sau một endpoint theo trọng số traffic."
+    }
+   },
+   {
+    "name": "SageMaker Estimator",
+    "use": {
+     "en": "Python SDK object to train with your own image via fit.",
+     "vi": "Đối tượng SDK để train bằng image riêng qua fit."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Offline validation fails for some models like recommenders, which is why live traffic testing matters.",
+   "vi": "Một số model như recommender khó đánh giá offline, nên cần test bằng traffic thật."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Dockerfile\"] --> B[\"Image\"]\n  B --> C[\"Amazon ECR\"]\n  C --> D[\"Training job\"]\n  S1[\"S3 training data\"] --> D\n  D --> S2[\"S3 model artifact\"]\n  S2 --> E[\"Inference container\"]\n  C --> E\n  E --> F[\"Endpoint\"]",
+   "vi": "flowchart LR\n  A[\"Dockerfile\"] --> B[\"Image\"]\n  B --> C[\"Amazon ECR\"]\n  C --> D[\"Training job\"]\n  S1[\"Dữ liệu training S3\"] --> D\n  D --> S2[\"Model artifact S3\"]\n  S2 --> E[\"Inference container\"]\n  C --> E\n  E --> F[\"Endpoint\"]"
+  }
+ },
+ "09-005": {
+  "tldr": {
+   "en": "Pick instance types by workload and cut training cost with managed spot training plus S3 checkpoints.",
+   "vi": "Chọn instance theo workload và giảm chi phí training bằng managed spot training cùng checkpoint S3."
+  },
+  "points": [
+   {
+    "en": "Deep learning training benefits from GPU instances (P3, G4); inference is lighter, often fine on compute types like C5.",
+    "vi": "Training deep learning cần GPU (P3, G4); inference nhẹ hơn, thường đủ với instance compute như C5."
+   },
+   {
+    "en": "Non-GPU algorithms usually fit general purpose instances like M5.",
+    "vi": "Thuật toán không dùng GPU thường chạy tốt trên M5 general purpose."
+   },
+   {
+    "en": "One multi-GPU machine can be cheaper than many CPU instances for the same work.",
+    "vi": "Một máy nhiều GPU có thể rẻ hơn nhiều instance CPU cho cùng công việc."
+   },
+   {
+    "en": "Managed spot training saves up to 90%, but spot can be interrupted so use S3 checkpoints; training may wait longer.",
+    "vi": "Managed spot training tiết kiệm đến 90%, nhưng spot có thể bị ngắt nên cần checkpoint S3; có thể phải chờ lâu hơn."
+   }
+  ],
+  "services": [
+   {
+    "name": "Managed Spot Training",
+    "use": {
+     "en": "Cheap training on EC2 spot, resume from S3 checkpoints.",
+     "vi": "Training giá rẻ trên EC2 spot, tiếp tục từ checkpoint S3."
+    }
+   },
+   {
+    "name": "EC2 P3 / G4 instances",
+    "use": {
+     "en": "GPU instances for deep learning training.",
+     "vi": "Instance GPU cho training deep learning."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Spot training can save up to 90% versus on-demand.",
+   "vi": "Spot training có thể tiết kiệm đến 90% so với on-demand."
+  }
+ },
+ "09-006": {
+  "tldr": {
+   "en": "Auto scaling adjusts inference instances per production variant; spread across AZs for resilience.",
+   "vi": "Auto scaling điều chỉnh số instance inference theo từng production variant; rải qua nhiều AZ để tăng khả năng chịu lỗi."
+  },
+  "points": [
+   {
+    "en": "Scaling policy uses target metrics, min/max capacity and cool-down periods, driven by CloudWatch.",
+    "vi": "Scaling policy dùng target metric, min/max capacity và cool-down, dựa trên CloudWatch."
+   },
+   {
+    "en": "Scaling works per production variant, following traffic changes between variants.",
+    "vi": "Scaling hoạt động theo từng production variant, theo sự thay đổi traffic giữa các variant."
+   },
+   {
+    "en": "Load test the scaling policy before production to avoid too little or too much capacity.",
+    "vi": "Load test scaling policy trước khi lên production để tránh thiếu hoặc thừa capacity."
+   },
+   {
+    "en": "Use at least two instances per endpoint and a VPC with two subnets in different AZs.",
+    "vi": "Dùng ít nhất hai instance mỗi endpoint và VPC có hai subnet ở các AZ khác nhau."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker automatic scaling",
+    "use": {
+     "en": "Add or remove inference instances based on metrics.",
+     "vi": "Thêm hoặc bớt instance inference theo metric."
+    }
+   },
+   {
+    "name": "Amazon CloudWatch",
+    "use": {
+     "en": "Supplies the metrics that trigger scaling.",
+     "vi": "Cung cấp metric kích hoạt scaling."
+    }
+   }
+  ]
+ },
+ "09-007": {
+  "tldr": {
+   "en": "Foundation models bill by token, so measure tokens first (Count Tokens API, CloudWatch) then trim context and cap responses.",
+   "vi": "Foundation model tính phí theo token, nên đo token trước (Count Tokens API, CloudWatch) rồi cắt bớt context và giới hạn response."
+  },
+  "points": [
+   {
+    "en": "Bedrock Count Tokens API returns the token count for a prompt without running it, and it is free.",
+    "vi": "Bedrock Count Tokens API trả về số token của prompt mà không chạy model, và miễn phí."
+   },
+   {
+    "en": "CloudWatch tracks input/output tokens, invocation count, latency, time to first token, throttles and errors.",
+    "vi": "CloudWatch theo dõi token vào/ra, số lần gọi, latency, time to first token, throttle và lỗi."
+   },
+   {
+    "en": "In RAG, limit retrieved chunks (top 2 or 5, not 10), balance chunk size, and filter chunks by metadata.",
+    "vi": "Với RAG, giới hạn số chunk lấy về (top 2 hoặc 5 thay vì 10), cân đối kích thước chunk, lọc chunk theo metadata."
+   },
+   {
+    "en": "Summarize or truncate old conversation history to shrink the context window.",
+    "vi": "Tóm tắt hoặc cắt bớt lịch sử hội thoại cũ để giảm context window."
+   },
+   {
+    "en": "Use the max tokens parameter to cap response length.",
+    "vi": "Dùng tham số max tokens để giới hạn độ dài response."
+   }
+  ],
+  "services": [
+   {
+    "name": "Bedrock Count Tokens API",
+    "use": {
+     "en": "Free token count for a prompt without invoking the model.",
+     "vi": "Đếm token miễn phí mà không gọi model."
+    }
+   },
+   {
+    "name": "Amazon CloudWatch",
+    "use": {
+     "en": "Monitors tokens, latency, time to first token and throttles.",
+     "vi": "Giám sát token, latency, time to first token và throttle."
+    }
+   }
+  ]
+ },
+ "09-008": {
+  "tldr": {
+   "en": "Maximize utilization on Bedrock: batch work, plan quota, and buy provisioned throughput (with the provisioned model ARN) when you need steady performance.",
+   "vi": "Tối đa hóa sử dụng tài nguyên trên Bedrock: gom batch, lập kế hoạch quota và mua provisioned throughput (dùng ARN) khi cần hiệu năng ổn định."
+  },
+  "points": [
+   {
+    "en": "Batch embedding requests for vector stores, and use Bedrock batch inference (prompts in S3, results back in S3) when real time is not needed.",
+    "vi": "Gom batch request embedding cho vector store và dùng Bedrock batch inference (prompt trong S3, kết quả trả về S3) khi không cần real time."
+   },
+   {
+    "en": "Estimate tokens per minute and requests per minute, then use Service Quotas to check capacity or request an increase.",
+    "vi": "Ước tính tokens/phút và requests/phút, rồi dùng Service Quotas để kiểm tra capacity hoặc xin tăng quota."
+   },
+   {
+    "en": "Provisioned throughput gives dedicated capacity in model units; it is required for customized models.",
+    "vi": "Provisioned throughput cấp capacity riêng theo model unit; bắt buộc với customized model."
+   },
+   {
+    "en": "Inference calls must use the ARN of the provisioned model, not the generic model ID.",
+    "vi": "Khi gọi inference phải dùng ARN của provisioned model, không dùng model ID chung."
+   },
+   {
+    "en": "Tensor parallelism shards model weights across GPUs for better memory use; Cost Explorer attributes costs to business functions.",
+    "vi": "Tensor parallelism chia weights model qua nhiều GPU để dùng bộ nhớ tốt hơn; Cost Explorer quy chi phí về từng bộ phận nghiệp vụ."
+   }
+  ],
+  "services": [
+   {
+    "name": "Bedrock batch inference",
+    "use": {
+     "en": "Process many prompts from S3 when real time is not needed.",
+     "vi": "Xử lý nhiều prompt từ S3 khi không cần real time."
+    }
+   },
+   {
+    "name": "Bedrock provisioned throughput",
+    "use": {
+     "en": "Dedicated capacity for consistent performance; needed for custom models.",
+     "vi": "Capacity riêng cho hiệu năng ổn định; bắt buộc cho custom model."
+    }
+   },
+   {
+    "name": "AWS Service Quotas",
+    "use": {
+     "en": "Estimate capacity and request quota increases.",
+     "vi": "Ước tính capacity và xin tăng quota."
+    }
+   },
+   {
+    "name": "AWS Cost Explorer",
+    "use": {
+     "en": "Attribute model costs to applications or departments.",
+     "vi": "Quy chi phí model về ứng dụng hoặc phòng ban."
+    }
+   },
+   {
+    "name": "Amazon CloudWatch",
+    "use": {
+     "en": "Utilization dashboards, an alternative to QuickSight.",
+     "vi": "Dashboard theo dõi sử dụng, thay thế QuickSight."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Need Bedrock capacity\"] --> B{\"Real time needed?\"}\n  B -->|\"No\"| C[\"Batch inference via S3\"]\n  B -->|\"Yes, steady high volume\"| D[\"Provisioned throughput\"]\n  B -->|\"Yes, variable\"| E[\"On-demand plus quota check\"]\n  D --> F[\"Call with provisioned model ARN\"]",
+   "vi": "flowchart TD\n  A[\"Cần capacity Bedrock\"] --> B{\"Cần real time?\"}\n  B -->|\"Không\"| C[\"Batch inference qua S3\"]\n  B -->|\"Có, ổn định khối lượng lớn\"| D[\"Provisioned throughput\"]\n  B -->|\"Có, biến động\"| E[\"On-demand và kiểm tra quota\"]\n  D --> F[\"Gọi bằng ARN provisioned model\"]"
+  }
+ },
+ "09-009": {
+  "tldr": {
+   "en": "Ways to deploy models (JumpStart, Model Builder, CloudFormation) and the inference types: real time, serverless, async, with auto scaling.",
+   "vi": "Các cách deploy model (JumpStart, Model Builder, CloudFormation) và các loại inference: real time, serverless, async, kèm auto scaling."
+  },
+  "points": [
+   {
+    "en": "Easiest deploy is SageMaker JumpStart; Model Builder in the Python SDK gives more control; CloudFormation suits repeatable CI/CD.",
+    "vi": "Dễ nhất là SageMaker JumpStart; Model Builder trong Python SDK kiểm soát nhiều hơn; CloudFormation phù hợp deploy lặp lại trong CI/CD."
+   },
+   {
+    "en": "Real time inference: interactive workloads with low latency, such as fraud checks.",
+    "vi": "Real time inference: workload tương tác cần latency thấp, ví dụ kiểm tra gian lận."
+   },
+   {
+    "en": "Serverless inference suits idle or uneven traffic but must tolerate cold starts.",
+    "vi": "Serverless inference hợp với traffic nhàn rỗi hoặc không đều, nhưng phải chịu được cold start."
+   },
+   {
+    "en": "Asynchronous inference handles payloads up to 1 GB with long processing; results come back later.",
+    "vi": "Asynchronous inference xử lý payload đến 1 GB với thời gian xử lý lâu; kết quả trả sau."
+   },
+   {
+    "en": "Auto scaling adjusts endpoint capacity to traffic.",
+    "vi": "Auto scaling điều chỉnh capacity endpoint theo traffic."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker JumpStart",
+    "use": {
+     "en": "One-click deploy of pre-trained models.",
+     "vi": "Deploy model pre-trained chỉ vài thao tác."
+    }
+   },
+   {
+    "name": "SageMaker Model Builder",
+    "use": {
+     "en": "Python SDK class to configure deployments in code.",
+     "vi": "Class trong Python SDK để cấu hình deploy bằng code."
+    }
+   },
+   {
+    "name": "AWS CloudFormation",
+    "use": {
+     "en": "AWS::SageMaker::Model resource for repeatable deployments.",
+     "vi": "Resource AWS::SageMaker::Model cho deploy lặp lại."
+    }
+   },
+   {
+    "name": "SageMaker serverless inference",
+    "use": {
+     "en": "No infrastructure to manage, good for idle periods.",
+     "vi": "Không quản lý hạ tầng, hợp khi có thời gian nhàn rỗi."
+    }
+   },
+   {
+    "name": "SageMaker asynchronous inference",
+    "use": {
+     "en": "Large payloads, long processing, queued results.",
+     "vi": "Payload lớn, xử lý lâu, kết quả xếp hàng trả sau."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Inference need\"] --> B{\"Payload and latency\"}\n  B -->|\"Low latency, steady\"| C[\"Real time endpoint\"]\n  B -->|\"Idle or spiky traffic\"| D[\"Serverless inference\"]\n  B -->|\"Up to 1 GB, long run\"| E[\"Asynchronous inference\"]\n  B -->|\"Large offline dataset\"| F[\"Batch transform\"]",
+   "vi": "flowchart TD\n  A[\"Nhu cầu inference\"] --> B{\"Payload và latency\"}\n  B -->|\"Latency thấp, ổn định\"| C[\"Real time endpoint\"]\n  B -->|\"Nhàn rỗi hoặc đột biến\"| D[\"Serverless inference\"]\n  B -->|\"Đến 1 GB, chạy lâu\"| E[\"Asynchronous inference\"]\n  B -->|\"Dataset lớn offline\"| F[\"Batch transform\"]"
+  }
+ },
+ "09-010": {
+  "tldr": {
+   "en": "Serverless inference scales to zero and bills by usage; Inference Recommender helps pick instance types via automated load tests.",
+   "vi": "Serverless inference scale về 0 và tính phí theo sử dụng; Inference Recommender giúp chọn instance bằng load test tự động."
+  },
+  "points": [
+   {
+    "en": "Serverless inference: you set container memory and concurrency; AWS provisions and scales capacity, down to zero.",
+    "vi": "Serverless inference: bạn chỉ định memory và concurrency của container; AWS tự cấp và scale, kể cả về 0."
+   },
+   {
+    "en": "Monitor model setup time, invocations, errors and memory utilization in CloudWatch to check your settings.",
+    "vi": "Theo dõi model setup time, invocations, lỗi và memory utilization trong CloudWatch để kiểm tra cấu hình."
+   },
+   {
+    "en": "Inference Recommender suggests instance types and configs; register the model in Model Registry first.",
+    "vi": "Inference Recommender gợi ý instance type và cấu hình; cần đăng ký model trong Model Registry trước."
+   },
+   {
+    "en": "Instance recommendations mode takes about 45 minutes for a quick answer.",
+    "vi": "Chế độ instance recommendations mất khoảng 45 phút để có đáp án nhanh."
+   },
+   {
+    "en": "Endpoint recommendations is a custom load test against your traffic pattern and latency or throughput needs, taking about 2 hours.",
+    "vi": "Endpoint recommendations là load test tùy chỉnh theo traffic, latency, throughput của bạn, mất khoảng 2 giờ."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker serverless inference",
+    "use": {
+     "en": "Scale to zero, pay per use for unpredictable traffic.",
+     "vi": "Scale về 0, trả theo sử dụng cho traffic khó đoán."
+    }
+   },
+   {
+    "name": "SageMaker Inference Recommender",
+    "use": {
+     "en": "Automated load tests that recommend instance type and config.",
+     "vi": "Load test tự động để gợi ý instance type và cấu hình."
+    }
+   },
+   {
+    "name": "SageMaker Model Registry",
+    "use": {
+     "en": "Where the model is registered before benchmarking.",
+     "vi": "Nơi đăng ký model trước khi benchmark."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Despite its name, Inference Recommender is not a recommender system; it recommends instance types.",
+   "vi": "Dù tên là Recommender, nó không phải recommender system mà chỉ gợi ý instance type."
+  }
+ },
+ "09-011": {
+  "tldr": {
+   "en": "AI cost drivers: model size, token usage, embeddings and vector stores. Right-size models and trim tokens.",
+   "vi": "Các yếu tố chi phí AI: kích thước model, token, embedding và vector store. Chọn model vừa đủ và giảm token."
+  },
+  "points": [
+   {
+    "en": "Right-size the model: a small model can handle simple classification faster and cheaper than a frontier model.",
+    "vi": "Chọn model vừa đủ: model nhỏ làm phân loại đơn giản nhanh và rẻ hơn model frontier."
+   },
+   {
+    "en": "Match pricing mode to traffic: on-demand or batch for sporadic use, provisioned only for steady 24/7 load.",
+    "vi": "Chọn mô hình giá theo traffic: on-demand hoặc batch cho dùng rời rạc, provisioned chỉ khi tải đều 24/7."
+   },
+   {
+    "en": "Cut tokens: concise prompts, trimmed context, capped response length, structured output, and prompt caching.",
+    "vi": "Giảm token: prompt ngắn gọn, cắt context, giới hạn độ dài response, output có cấu trúc và prompt caching."
+   },
+   {
+    "en": "Embedding models are cheap; storage and retrieval cost more, so avoid oversized vector dimensions and needless re-embedding.",
+    "vi": "Embedding model rẻ; lưu trữ và truy xuất mới tốn, nên tránh vector dimension quá lớn và re-embed không cần thiết."
+   },
+   {
+    "en": "Vector store cost depends on storage size, dimensions, and index and query capacity.",
+    "vi": "Chi phí vector store phụ thuộc dung lượng, số dimension, năng lực index và query."
+   }
+  ],
+  "services": [
+   {
+    "name": "Prompt caching",
+    "use": {
+     "en": "Cheaper rates for repeated prompt prefixes such as chat history.",
+     "vi": "Giá rẻ hơn cho phần prompt lặp lại như lịch sử chat."
+    }
+   },
+   {
+    "name": "Amazon OpenSearch",
+    "use": {
+     "en": "Common vector store whose storage and IO costs add up.",
+     "vi": "Vector store phổ biến, chi phí lưu trữ và IO cộng dồn."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "A 2,048-dimension embedding vector can take more space than the original text it represents.",
+   "vi": "Một vector embedding 2.048 chiều có thể chiếm nhiều dung lượng hơn chính đoạn text gốc."
+  }
+ },
+ "09-012": {
+  "tldr": {
+   "en": "Inference pipelines chain 2 to 15 containers into one sequence, for real time or batch transform.",
+   "vi": "Inference pipeline nối 2 đến 15 container thành một chuỗi, dùng cho real time hoặc batch transform."
+  },
+  "points": [
+   {
+    "en": "Chain pre-processing, prediction and post-processing containers in a linear sequence of 2 to 15.",
+    "vi": "Nối các container tiền xử lý, dự đoán và hậu xử lý theo chuỗi tuyến tính từ 2 đến 15."
+   },
+   {
+    "en": "Mix built-in algorithms and your own containers, including scikit-learn and Spark ML.",
+    "vi": "Kết hợp thuật toán built-in và container riêng, gồm scikit-learn và Spark ML."
+   },
+   {
+    "en": "Spark ML containers run via Glue or EMR and are serialized to MLeap format.",
+    "vi": "Container Spark ML chạy qua Glue hoặc EMR và được serialize sang định dạng MLeap."
+   },
+   {
+    "en": "Works for both real time inference and batch transform.",
+    "vi": "Dùng được cho cả real time inference và batch transform."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker inference pipelines",
+    "use": {
+     "en": "Chain multiple containers behind one endpoint.",
+     "vi": "Nối nhiều container sau một endpoint."
+    }
+   },
+   {
+    "name": "MLeap",
+    "use": {
+     "en": "Serialization format for Spark ML containers.",
+     "vi": "Định dạng serialize cho container Spark ML."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Request\"] --> B[\"Pre-processing container\"]\n  B --> C[\"Prediction container\"]\n  C --> D[\"Post-processing container\"]\n  D --> E[\"Response\"]",
+   "vi": "flowchart LR\n  A[\"Request\"] --> B[\"Container tiền xử lý\"]\n  B --> C[\"Container dự đoán\"]\n  C --> D[\"Container hậu xử lý\"]\n  D --> E[\"Response\"]"
+  }
+ },
+ "09-013": {
+  "tldr": {
+   "en": "Drift means production data or model quality moves away from the training baseline. Detect it by comparing statistics and alert a human.",
+   "vi": "Drift là khi dữ liệu production hoặc chất lượng model lệch khỏi baseline lúc training. Phát hiện bằng so sánh thống kê và cảnh báo cho con người."
+  },
+  "points": [
+   {
+    "en": "Data drift: inference input distribution diverges from the training reference (ranges, missing rates, means, categories).",
+    "vi": "Data drift: phân phối dữ liệu inference lệch khỏi dữ liệu training (range, tỉ lệ missing, mean, category)."
+   },
+   {
+    "en": "Model quality drift: accuracy, precision, recall, F1, AUC, RMSE degrade; it needs ground truth or human feedback.",
+    "vi": "Model quality drift: accuracy, precision, recall, F1, AUC, RMSE giảm; cần ground truth hoặc phản hồi của con người."
+   },
+   {
+    "en": "Data drift is a warning, not proof of failure; keep a human in the loop before costly retraining.",
+    "vi": "Data drift là cảnh báo, chưa chắc model hỏng; cần con người quyết định trước khi retrain tốn kém."
+   },
+   {
+    "en": "SageMaker Model Monitor is in maintenance mode; use MLflow, Evidently AI, CloudWatch and QuickSight instead.",
+    "vi": "SageMaker Model Monitor đã ở maintenance mode; dùng MLflow, Evidently AI, CloudWatch và QuickSight thay thế."
+   },
+   {
+    "en": "After drift: inspect upstream data, retrain, adjust pre-processing, replace or roll back the model.",
+    "vi": "Sau khi phát hiện drift: kiểm tra dữ liệu upstream, retrain, chỉnh pre-processing, thay hoặc rollback model."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon CloudWatch",
+    "use": {
+     "en": "Publish drift and quality metrics, dashboards and alarms.",
+     "vi": "Đăng metric drift/chất lượng, dashboard và alarm."
+    }
+   },
+   {
+    "name": "Amazon QuickSight",
+    "use": {
+     "en": "Visualize drift for monitoring and governance dashboards.",
+     "vi": "Trực quan hóa drift cho dashboard giám sát và governance."
+    }
+   },
+   {
+    "name": "MLflow",
+    "use": {
+     "en": "Track metrics and experiments, compare runs, root cause analysis.",
+     "vi": "Theo dõi metric và experiment, so sánh, phân tích nguyên nhân gốc."
+    }
+   },
+   {
+    "name": "Evidently AI",
+    "use": {
+     "en": "Open source tool generating drift and quality reports.",
+     "vi": "Công cụ open source tạo báo cáo drift và chất lượng."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Training data baseline\"] --> C[\"Compare statistics\"]\n  B[\"Production inference data\"] --> C\n  C -->|\"beyond threshold\"| D[\"CloudWatch alarm\"]\n  D --> E[\"Human review\"]\n  E --> F[\"Retrain or roll back\"]",
+   "vi": "flowchart LR\n  A[\"Baseline từ dữ liệu training\"] --> C[\"So sánh thống kê\"]\n  B[\"Dữ liệu inference production\"] --> C\n  C -->|\"vượt ngưỡng\"| D[\"CloudWatch alarm\"]\n  D --> E[\"Con người xem xét\"]\n  E --> F[\"Retrain hoặc rollback\"]"
+  }
+ },
+ "09-014": {
+  "tldr": {
+   "en": "Monitor infrastructure, input data and predictions of an ML app; SageMaker plus CloudWatch gives most of it, and alarms must lead to action.",
+   "vi": "Giám sát hạ tầng, dữ liệu đầu vào và dự đoán của ứng dụng ML; SageMaker cùng CloudWatch cung cấp phần lớn, và alarm phải dẫn tới hành động."
+  },
+  "points": [
+   {
+    "en": "Infrastructure: invocations, latency, errors, CPU, GPU, memory and throttling, all via CloudWatch alarms.",
+    "vi": "Hạ tầng: invocations, latency, lỗi, CPU, GPU, memory, throttling, đều qua CloudWatch alarm."
+   },
+   {
+    "en": "Inputs: watch for missing or malformed features, unexpected ranges or categories, and distribution changes.",
+    "vi": "Input: theo dõi feature thiếu hoặc sai định dạng, range hoặc category bất thường, và thay đổi phân phối."
+   },
+   {
+    "en": "Outputs: compare prediction distribution to baseline; ground truth metrics are ideal but often delayed.",
+    "vi": "Output: so sánh phân phối dự đoán với baseline; metric theo ground truth là lý tưởng nhưng thường đến trễ."
+   },
+   {
+    "en": "SageMaker endpoints can capture sampled input and output data for statistical analysis.",
+    "vi": "SageMaker endpoint có thể ghi mẫu dữ liệu input và output để phân tích thống kê."
+   },
+   {
+    "en": "On alarm: check upstream data and infrastructure, retrain, deploy a new version, or roll back. Thresholds are workload specific.",
+    "vi": "Khi có alarm: kiểm tra dữ liệu upstream và hạ tầng, retrain, deploy bản mới hoặc rollback. Ngưỡng phụ thuộc workload."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon CloudWatch",
+    "use": {
+     "en": "Metrics, dashboards and alarms for endpoints.",
+     "vi": "Metric, dashboard và alarm cho endpoint."
+    }
+   },
+   {
+    "name": "MLflow and Evidently AI",
+    "use": {
+     "en": "Reference tools replacing Model Monitor for drift and quality analysis.",
+     "vi": "Công cụ tham chiếu thay Model Monitor để phân tích drift và chất lượng."
+    }
+   },
+   {
+    "name": "Amazon QuickSight",
+    "use": {
+     "en": "Dashboards for monitoring data.",
+     "vi": "Dashboard cho dữ liệu giám sát."
+    }
+   }
+  ]
+ },
+ "09-015": {
+  "tldr": {
+   "en": "MLOps on AWS: use SageMaker Projects and Pipelines for native CI/CD, or Kubeflow components to integrate with Kubernetes and on-premises.",
+   "vi": "MLOps trên AWS: dùng SageMaker Projects và Pipelines cho CI/CD native, hoặc Kubeflow components để tích hợp Kubernetes và on-premises."
+  },
+  "points": [
+   {
+    "en": "SageMaker Operators for Kubernetes and Components for Kubeflow Pipelines enable hybrid ML workflows with existing Kubernetes setups.",
+    "vi": "SageMaker Operators for Kubernetes và Components for Kubeflow Pipelines cho phép workflow ML hybrid với Kubernetes hiện có."
+   },
+   {
+    "en": "Kubeflow components cover processing, hyperparameter tuning, training and inference hosting.",
+    "vi": "Kubeflow components gồm processing, hyperparameter tuning, training và inference hosting."
+   },
+   {
+    "en": "SageMaker Projects is the native MLOps solution with CI/CD inside SageMaker Studio.",
+    "vi": "SageMaker Projects là giải pháp MLOps native với CI/CD trong SageMaker Studio."
+   },
+   {
+    "en": "SageMaker Pipelines chain steps: process data, train, evaluate, register in Model Registry.",
+    "vi": "SageMaker Pipelines nối các bước: xử lý dữ liệu, train, evaluate, đăng ký vào Model Registry."
+   },
+   {
+    "en": "Typical flow: code commit, EventBridge, CodePipeline, CodeBuild runs pipeline, then deploy via CloudFormation to staging and production.",
+    "vi": "Luồng điển hình: commit code, EventBridge, CodePipeline, CodeBuild chạy pipeline, rồi deploy bằng CloudFormation lên staging và production."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Projects",
+    "use": {
+     "en": "MLOps templates with CI/CD in SageMaker Studio.",
+     "vi": "Template MLOps với CI/CD trong SageMaker Studio."
+    }
+   },
+   {
+    "name": "SageMaker Pipelines",
+    "use": {
+     "en": "Define ML workflow steps from data to registry.",
+     "vi": "Định nghĩa các bước workflow ML từ dữ liệu đến registry."
+    }
+   },
+   {
+    "name": "SageMaker Model Registry",
+    "use": {
+     "en": "Stores approved model versions for deployment.",
+     "vi": "Lưu các phiên bản model đã duyệt để deploy."
+    }
+   },
+   {
+    "name": "Amazon EventBridge",
+    "use": {
+     "en": "Triggers pipelines on events.",
+     "vi": "Kích hoạt pipeline theo event."
+    }
+   },
+   {
+    "name": "AWS CodePipeline",
+    "use": {
+     "en": "Orchestrates build and deploy stages.",
+     "vi": "Điều phối các stage build và deploy."
+    }
+   },
+   {
+    "name": "AWS CodeBuild",
+    "use": {
+     "en": "Builds and runs the SageMaker pipeline.",
+     "vi": "Build và chạy SageMaker pipeline."
+    }
+   },
+   {
+    "name": "AWS CloudFormation",
+    "use": {
+     "en": "Deploys endpoints to staging and production.",
+     "vi": "Deploy endpoint lên staging và production."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Code commit\"] --> B[\"EventBridge\"]\n  B --> C[\"CodePipeline build\"]\n  C --> D[\"CodeBuild runs SageMaker Pipeline\"]\n  D --> E[\"Model Registry\"]\n  E --> F[\"EventBridge\"]\n  F --> G[\"CodePipeline deploy\"]\n  G --> H[\"CloudFormation staging\"]\n  H -->|\"manual approval\"| I[\"CloudFormation production\"]",
+   "vi": "flowchart LR\n  A[\"Commit code\"] --> B[\"EventBridge\"]\n  B --> C[\"CodePipeline build\"]\n  C --> D[\"CodeBuild chạy SageMaker Pipeline\"]\n  D --> E[\"Model Registry\"]\n  E --> F[\"EventBridge\"]\n  F --> G[\"CodePipeline deploy\"]\n  G --> H[\"CloudFormation staging\"]\n  H -->|\"duyệt thủ công\"| I[\"CloudFormation production\"]"
+  }
+ },
+ "09-016": {
+  "tldr": {
+   "en": "Docker packages apps into portable containers; images are stored in ECR and run on AWS via ECS, EKS or Fargate.",
+   "vi": "Docker đóng gói ứng dụng thành container portable; image lưu trong ECR và chạy trên AWS qua ECS, EKS hoặc Fargate."
+  },
+  "points": [
+   {
+    "en": "Containers share the host OS, so they are lighter than VMs and you can run more per server, with less isolation.",
+    "vi": "Container dùng chung OS của host nên nhẹ hơn VM và chạy được nhiều hơn trên một server, nhưng cách ly kém hơn."
+   },
+   {
+    "en": "Workflow: Dockerfile, build image, push to a repository, pull, run as a container.",
+    "vi": "Quy trình: Dockerfile, build image, push lên repository, pull, chạy thành container."
+   },
+   {
+    "en": "Repositories: Docker Hub (public), Amazon ECR (private) and ECR Public Gallery.",
+    "vi": "Repository: Docker Hub (public), Amazon ECR (private) và ECR Public Gallery."
+   },
+   {
+    "en": "AWS options: ECS (AWS-native), EKS (managed Kubernetes), Fargate (serverless, works with both).",
+    "vi": "Lựa chọn trên AWS: ECS (native), EKS (Kubernetes managed), Fargate (serverless, dùng được với cả hai)."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon ECR",
+    "use": {
+     "en": "Private (and public) container image registry.",
+     "vi": "Registry image container private (và public)."
+    }
+   },
+   {
+    "name": "Amazon ECS",
+    "use": {
+     "en": "AWS-native container orchestration.",
+     "vi": "Điều phối container native của AWS."
+    }
+   },
+   {
+    "name": "Amazon EKS",
+    "use": {
+     "en": "Managed Kubernetes.",
+     "vi": "Kubernetes được quản lý."
+    }
+   },
+   {
+    "name": "AWS Fargate",
+    "use": {
+     "en": "Serverless compute for ECS and EKS containers.",
+     "vi": "Compute serverless cho container ECS và EKS."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Dockerfile\"] -->|\"build\"| B[\"Docker image\"]\n  B -->|\"push\"| C[\"Amazon ECR\"]\n  C -->|\"pull\"| D[\"ECS or EKS\"]\n  D --> E[\"Running container\"]",
+   "vi": "flowchart LR\n  A[\"Dockerfile\"] -->|\"build\"| B[\"Docker image\"]\n  B -->|\"push\"| C[\"Amazon ECR\"]\n  C -->|\"pull\"| D[\"ECS hoặc EKS\"]\n  D --> E[\"Container đang chạy\"]"
+  }
+ },
+ "09-017": {
+  "tldr": {
+   "en": "ECS runs containers as tasks on a cluster, on EC2 (you manage servers) or Fargate (serverless, the exam favorite). Know the two IAM role types.",
+   "vi": "ECS chạy container dưới dạng task trên cluster, dùng EC2 (tự quản server) hoặc Fargate (serverless, hay gặp khi thi). Cần phân biệt hai loại IAM role."
+  },
+  "points": [
+   {
+    "en": "EC2 launch type: you provision instances running the ECS Agent; Fargate: define a task with CPU and RAM and AWS runs it, no servers.",
+    "vi": "EC2 launch type: bạn tự cấp instance chạy ECS Agent; Fargate: định nghĩa task với CPU và RAM, AWS chạy, không cần server."
+   },
+   {
+    "en": "EC2 Instance Profile is used by the ECS Agent (ECR pull, CloudWatch Logs, Secrets Manager); only for EC2 launch type.",
+    "vi": "EC2 Instance Profile dùng cho ECS Agent (pull ECR, CloudWatch Logs, Secrets Manager); chỉ với EC2 launch type."
+   },
+   {
+    "en": "ECS Task Role is per task (e.g. S3 for one, DynamoDB for another), defined in the task definition, for both launch types.",
+    "vi": "ECS Task Role gán cho từng task (vd S3 cho task này, DynamoDB cho task kia), khai báo trong task definition, dùng cho cả hai launch type."
+   },
+   {
+    "en": "Use an Application Load Balancer for HTTP/HTTPS; NLB for very high throughput or PrivateLink; Classic LB does not work with Fargate.",
+    "vi": "Dùng Application Load Balancer cho HTTP/HTTPS; NLB cho throughput rất cao hoặc PrivateLink; Classic LB không dùng được với Fargate."
+   },
+   {
+    "en": "Amazon EFS gives persistent, shared multi-AZ storage for tasks on both EC2 and Fargate.",
+    "vi": "Amazon EFS cung cấp lưu trữ bền vững, chia sẻ đa AZ cho task trên cả EC2 và Fargate."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon ECS",
+    "use": {
+     "en": "Run Docker containers as tasks in a cluster.",
+     "vi": "Chạy Docker container dưới dạng task trong cluster."
+    }
+   },
+   {
+    "name": "AWS Fargate",
+    "use": {
+     "en": "Serverless launch type, preferred answer over EC2 launch type.",
+     "vi": "Launch type serverless, thường là đáp án thay vì EC2 launch type."
+    }
+   },
+   {
+    "name": "Amazon EFS",
+    "use": {
+     "en": "Persistent shared file storage for containers.",
+     "vi": "Lưu trữ file chia sẻ bền vững cho container."
+    }
+   },
+   {
+    "name": "Application Load Balancer",
+    "use": {
+     "en": "Expose ECS tasks over HTTP or HTTPS.",
+     "vi": "Expose ECS task qua HTTP hoặc HTTPS."
+    }
+   }
+  ]
+ },
+ "09-018": {
+  "tldr": {
+   "en": "Demo: create an ECS cluster and see the capacity options, Fargate, managed instances or self-managed ASG, and the capacity providers.",
+   "vi": "Demo: tạo ECS cluster và xem các lựa chọn capacity: Fargate, managed instances hoặc ASG tự quản, cùng capacity provider."
+  },
+  "points": [
+   {
+    "en": "Capacity options: Fargate only (serverless), Fargate plus Managed Instances, or Fargate plus self-managed instances.",
+    "vi": "Lựa chọn capacity: chỉ Fargate (serverless), Fargate cộng Managed Instances, hoặc Fargate cộng self-managed instances."
+   },
+   {
+    "en": "AWS is moving users away from self-managed instances; Managed Instances needs an instance profile and an infrastructure role.",
+    "vi": "AWS đang khuyến khích bỏ self-managed instances; Managed Instances cần instance profile và infrastructure role."
+   },
+   {
+    "en": "Self-managed option creates an Auto Scaling Group with instance type, max size and root volume size.",
+    "vi": "Tùy chọn self-managed tạo Auto Scaling Group với instance type, max size và dung lượng root volume."
+   },
+   {
+    "en": "Cluster capacity providers: FARGATE, FARGATE_SPOT and the ASG provider for EC2.",
+    "vi": "Capacity provider của cluster: FARGATE, FARGATE_SPOT và ASG provider cho EC2."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon ECS",
+    "use": {
+     "en": "Cluster created with several capacity options.",
+     "vi": "Cluster tạo với nhiều lựa chọn capacity."
+    }
+   },
+   {
+    "name": "ECS Managed Instances",
+    "use": {
+     "en": "AWS manages the EC2 instances behind the scenes.",
+     "vi": "AWS quản lý EC2 instance phía sau."
+    }
+   },
+   {
+    "name": "EC2 Auto Scaling Group",
+    "use": {
+     "en": "Backs the self-managed EC2 capacity provider.",
+     "vi": "Nền tảng cho capacity provider EC2 tự quản."
+    }
+   },
+   {
+    "name": "Fargate Spot",
+    "use": {
+     "en": "Run Fargate tasks on spare capacity at lower cost.",
+     "vi": "Chạy Fargate task trên capacity dư với giá thấp hơn."
+    }
+   }
+  ]
+ },
+ "09-019": {
+  "tldr": {
+   "en": "Demo: create an ECS task definition (Fargate, nginx image) and launch it as a service behind an Application Load Balancer.",
+   "vi": "Demo: tạo ECS task definition (Fargate, image nginx) và chạy thành service phía sau Application Load Balancer."
+  },
+  "points": [
+   {
+    "en": "A task definition sets launch type (Fargate), CPU and memory size, container image, port mappings and logging.",
+    "vi": "Task definition chỉ định launch type (Fargate), CPU và memory, container image, port mapping và logging."
+   },
+   {
+    "en": "Task role is the IAM role your containers use to call AWS APIs; the task execution role lets ECS pull images and write logs.",
+    "vi": "Task role là IAM role để container gọi AWS API; task execution role cho ECS pull image và ghi log."
+   },
+   {
+    "en": "A service runs a desired number of tasks (replicas) in the cluster using a capacity provider strategy.",
+    "vi": "Service chạy số lượng task mong muốn (replica) trong cluster theo capacity provider strategy."
+   },
+   {
+    "en": "Service networking: subnets, a security group allowing HTTP, and an ALB with listener and target group on port 80.",
+    "vi": "Networking của service: subnet, security group cho phép HTTP, và ALB với listener và target group cổng 80."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon ECS task definition",
+    "use": {
+     "en": "Blueprint of image, CPU, memory, ports and roles.",
+     "vi": "Bản thiết kế gồm image, CPU, memory, port và role."
+    }
+   },
+   {
+    "name": "Amazon ECS service",
+    "use": {
+     "en": "Keeps the desired number of tasks running.",
+     "vi": "Duy trì số task mong muốn đang chạy."
+    }
+   },
+   {
+    "name": "Application Load Balancer",
+    "use": {
+     "en": "Routes traffic to ECS tasks via a target group.",
+     "vi": "Định tuyến traffic tới ECS task qua target group."
+    }
+   }
+  ]
+ },
+ "09-020": {
+  "tldr": {
+   "en": "Amazon ECR stores and manages Docker images, privately or publicly, and is the answer whenever the exam says store Docker images.",
+   "vi": "Amazon ECR lưu và quản lý Docker image, private hoặc public, và là đáp án khi đề hỏi nơi lưu Docker image."
+  },
+  "points": [
+   {
+    "en": "ECR can be private (your accounts) or public (ECR Public Gallery); images are stored behind the scenes in S3.",
+    "vi": "ECR có thể private (các account của bạn) hoặc public (ECR Public Gallery); image được lưu bằng S3 phía sau."
+   },
+   {
+    "en": "Access is controlled by IAM; an EC2 instance needs an IAM role to pull images, and permission errors mean check policies.",
+    "vi": "Truy cập kiểm soát bằng IAM; EC2 instance cần IAM role để pull image, lỗi permission thì kiểm tra policy."
+   },
+   {
+    "en": "Features: vulnerability scanning, versioning, image tags and lifecycle policies.",
+    "vi": "Tính năng: quét lỗ hổng, versioning, image tag và lifecycle policy."
+   },
+   {
+    "en": "Fully integrated with ECS.",
+    "vi": "Tích hợp hoàn toàn với ECS."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon ECR",
+    "use": {
+     "en": "Container registry with image scanning and lifecycle rules.",
+     "vi": "Container registry có quét image và lifecycle rule."
+    }
+   }
+  ]
+ },
+ "09-021": {
+  "tldr": {
+   "en": "EKS is managed Kubernetes on AWS; pick it when you already use Kubernetes or want cloud-agnostic containers.",
+   "vi": "EKS là Kubernetes managed trên AWS; chọn khi đã dùng Kubernetes hoặc muốn container không phụ thuộc cloud."
+  },
+  "points": [
+   {
+    "en": "Kubernetes is open source and cloud agnostic, unlike ECS; EKS suits teams on Kubernetes on-prem or other clouds.",
+    "vi": "Kubernetes là open source và cloud agnostic, khác ECS; EKS hợp với team đã dùng Kubernetes on-prem hoặc cloud khác."
+   },
+   {
+    "en": "Pods (the Kubernetes equivalent of ECS tasks) run on nodes; launch modes are EC2 or Fargate.",
+    "vi": "Pod (tương đương ECS task) chạy trên node; launch mode là EC2 hoặc Fargate."
+   },
+   {
+    "en": "Node types: managed node groups (AWS-managed ASG, On-Demand or Spot), self-managed nodes, or Fargate with no nodes.",
+    "vi": "Loại node: managed node group (ASG do AWS quản, On-Demand hoặc Spot), self-managed node, hoặc Fargate không có node."
+   },
+   {
+    "en": "Storage via a StorageClass and CSI driver: EBS, EFS (only one that works with Fargate), FSx for Lustre, FSx for NetApp ONTAP.",
+    "vi": "Lưu trữ qua StorageClass và CSI driver: EBS, EFS (duy nhất dùng được với Fargate), FSx for Lustre, FSx for NetApp ONTAP."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon EKS",
+    "use": {
+     "en": "Managed Kubernetes control plane.",
+     "vi": "Control plane Kubernetes managed."
+    }
+   },
+   {
+    "name": "Amazon EFS",
+    "use": {
+     "en": "Only EKS storage class supported on Fargate.",
+     "vi": "StorageClass duy nhất của EKS dùng được với Fargate."
+    }
+   }
+  ]
+ },
+ "09-022": {
+  "tldr": {
+   "en": "Demo: create an EKS cluster with Auto Mode, IAM roles, networking, observability options and add-ons.",
+   "vi": "Demo: tạo EKS cluster với Auto Mode, IAM role, networking, tùy chọn observability và add-on."
+  },
+  "points": [
+   {
+    "en": "EKS Auto Mode creates new nodes automatically when a pod cannot fit on existing ones.",
+    "vi": "EKS Auto Mode tự tạo node mới khi pod không còn chỗ trên node hiện có."
+   },
+   {
+    "en": "It needs a cluster IAM role and a node IAM role (AmazonEKSAutoNodeRole) with the proper managed policies.",
+    "vi": "Cần cluster IAM role và node IAM role (AmazonEKSAutoNodeRole) với các managed policy phù hợp."
+   },
+   {
+    "en": "Networking: choose VPC, subnets and cluster endpoint access (public, public and private, or private).",
+    "vi": "Networking: chọn VPC, subnet và kiểu truy cập cluster (public, public và private, hoặc private)."
+   },
+   {
+    "en": "Observability: metrics to CloudWatch or Prometheus, plus control plane logs; add-ons cover DNS, EFS, SageMaker and more.",
+    "vi": "Observability: metric gửi CloudWatch hoặc Prometheus, cùng control plane log; add-on gồm DNS, EFS, SageMaker và nhiều hơn."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon EKS Auto Mode",
+    "use": {
+     "en": "AWS-managed nodes that scale with pods.",
+     "vi": "Node do AWS quản lý, scale theo pod."
+    }
+   },
+   {
+    "name": "Amazon CloudWatch",
+    "use": {
+     "en": "Receives EKS metrics and control plane logs.",
+     "vi": "Nhận metric và control plane log của EKS."
+    }
+   }
+  ]
+ },
+ "09-023": {
+  "tldr": {
+   "en": "AWS Batch runs any batch job from Docker images on dynamically provisioned EC2 or Spot instances, with no cluster to manage.",
+   "vi": "AWS Batch chạy mọi batch job từ Docker image trên EC2 hoặc Spot được cấp động, không cần quản lý cluster."
+  },
+  "points": [
+   {
+    "en": "Batch provisions the right number and type of instances for your jobs; you pay only for the underlying EC2.",
+    "vi": "Batch tự cấp đúng số lượng và loại instance cho job; bạn chỉ trả tiền EC2 bên dưới."
+   },
+   {
+    "en": "Schedule jobs with CloudWatch Events (EventBridge) or orchestrate them with Step Functions.",
+    "vi": "Lên lịch job bằng CloudWatch Events (EventBridge) hoặc điều phối bằng Step Functions."
+   },
+   {
+    "en": "Batch is for any Docker-based batch work, such as cleaning up an S3 bucket; Glue is for Spark ETL only.",
+    "vi": "Batch dùng cho mọi batch job dựa trên Docker, ví dụ dọn dẹp S3 bucket; Glue chỉ cho ETL Spark."
+   },
+   {
+    "en": "Batch resources run in your own account, so you have access to everything there.",
+    "vi": "Tài nguyên Batch chạy trong account của bạn nên truy cập được mọi thứ trong đó."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS Batch",
+    "use": {
+     "en": "Serverless batch computing on Docker images.",
+     "vi": "Batch computing serverless dựa trên Docker image."
+    }
+   },
+   {
+    "name": "AWS Glue",
+    "use": {
+     "en": "Pick instead of Batch when the job is Spark ETL.",
+     "vi": "Chọn thay Batch khi job là ETL Spark."
+    }
+   }
+  ]
+ },
+ "09-024": {
+  "tldr": {
+   "en": "CloudFormation defines AWS infrastructure declaratively as code so stacks can be repeated across environments, regions and accounts.",
+   "vi": "CloudFormation định nghĩa hạ tầng AWS dạng khai báo bằng code để lặp lại trên nhiều môi trường, region và account."
+  },
+  "points": [
+   {
+    "en": "Declarative templates: CloudFormation creates resources in the right order with the exact configuration.",
+    "vi": "Template dạng khai báo: CloudFormation tạo resource đúng thứ tự với đúng cấu hình."
+   },
+   {
+    "en": "Infrastructure as code means changes go through code review rather than manual console clicks.",
+    "vi": "Infrastructure as code nghĩa là thay đổi đi qua code review thay vì thao tác tay trên console."
+   },
+   {
+    "en": "Resources in a stack share tags, costs can be estimated, and stacks can be deleted and recreated on a schedule to save money.",
+    "vi": "Resource trong stack dùng chung tag, có thể ước tính chi phí, và xóa rồi tạo lại stack theo lịch để tiết kiệm."
+   },
+   {
+    "en": "Custom resources cover anything not natively supported; Infrastructure Composer visualizes templates.",
+    "vi": "Custom resource bao phủ thứ chưa được hỗ trợ; Infrastructure Composer trực quan hóa template."
+   },
+   {
+    "en": "Exam keyword: infrastructure as code, repeating an architecture across environments, regions or accounts.",
+    "vi": "Từ khóa thi: infrastructure as code, lặp lại kiến trúc qua môi trường, region hoặc account."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS CloudFormation",
+    "use": {
+     "en": "Declarative infrastructure as code.",
+     "vi": "Infrastructure as code dạng khai báo."
+    }
+   },
+   {
+    "name": "AWS Infrastructure Composer",
+    "use": {
+     "en": "Visual diagrams of CloudFormation templates.",
+     "vi": "Sơ đồ trực quan của template CloudFormation."
+    }
+   }
+  ]
+ },
+ "09-025": {
+  "tldr": {
+   "en": "Demo: create a CloudFormation stack from a YAML template (EC2 instance), then update it with a security group and Elastic IP.",
+   "vi": "Demo: tạo CloudFormation stack từ template YAML (EC2 instance), rồi cập nhật thêm security group và Elastic IP."
+  },
+  "points": [
+   {
+    "en": "Upload a template, name the stack, add tags and submit; CloudFormation creates the resources and logs events.",
+    "vi": "Upload template, đặt tên stack, thêm tag rồi submit; CloudFormation tạo resource và ghi event."
+   },
+   {
+    "en": "Stack tags propagate to resources, along with CloudFormation-added tags such as stack name, logical ID and stack ID.",
+    "vi": "Tag của stack được áp xuống resource, cùng các tag CloudFormation tự thêm như stack name, logical ID, stack ID."
+   },
+   {
+    "en": "Templates can include Parameters, prompting for values (like a security group description) at create or update time.",
+    "vi": "Template có thể có Parameters, hỏi giá trị (vd mô tả security group) khi tạo hoặc cập nhật."
+   },
+   {
+    "en": "Updating a stack with a new template changes the existing resources; the demo template only works in us-east-1 because of the AZ and AMI ID.",
+    "vi": "Cập nhật stack bằng template mới sẽ thay đổi resource hiện có; template demo chỉ chạy ở us-east-1 vì AZ và AMI ID."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS CloudFormation",
+    "use": {
+     "en": "Create and update stacks from YAML templates.",
+     "vi": "Tạo và cập nhật stack từ template YAML."
+    }
+   },
+   {
+    "name": "AWS Application Composer",
+    "use": {
+     "en": "Visualize a template on a canvas.",
+     "vi": "Hiển thị template trên canvas."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "AMI IDs are scoped to a region, which is why the template only works in us-east-1.",
+   "vi": "AMI ID gắn với từng region, nên template chỉ chạy ở us-east-1."
+  }
+ },
+ "09-026": {
+  "tldr": {
+   "en": "AWS CDK lets you define infrastructure in a programming language and synthesizes it into CloudFormation templates.",
+   "vi": "AWS CDK cho phép định nghĩa hạ tầng bằng ngôn ngữ lập trình và synth thành template CloudFormation."
+  },
+  "points": [
+   {
+    "en": "Supports TypeScript, JavaScript, Python, Java and .NET; high-level constructs like VPC, ECS cluster or load-balanced Fargate service.",
+    "vi": "Hỗ trợ TypeScript, JavaScript, Python, Java và .NET; có construct cấp cao như VPC, ECS cluster, Fargate service có load balancer."
+   },
+   {
+    "en": "Code is type-checked at compile time, catching errors before deployment, unlike plain YAML.",
+    "vi": "Code được kiểm tra kiểu khi compile nên bắt lỗi trước khi deploy, khác với YAML thuần."
+   },
+   {
+    "en": "cdk synth produces the CloudFormation template that is then deployed; infra and runtime code can ship together.",
+    "vi": "cdk synth tạo ra template CloudFormation để deploy; hạ tầng và code runtime có thể deploy cùng nhau."
+   },
+   {
+    "en": "SAM is serverless-focused (declarative YAML); CDK covers every AWS service. SAM CLI can locally test CDK apps after synth.",
+    "vi": "SAM tập trung serverless (YAML khai báo); CDK bao phủ mọi dịch vụ AWS. SAM CLI test local ứng dụng CDK sau khi synth."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS CDK",
+    "use": {
+     "en": "Infrastructure as code in real programming languages.",
+     "vi": "Infrastructure as code bằng ngôn ngữ lập trình thật."
+    }
+   },
+   {
+    "name": "AWS SAM",
+    "use": {
+     "en": "Serverless-focused templates, mainly Lambda.",
+     "vi": "Template tập trung serverless, chủ yếu Lambda."
+    }
+   },
+   {
+    "name": "AWS CloudFormation",
+    "use": {
+     "en": "Backend that CDK and SAM generate to.",
+     "vi": "Nền tảng mà CDK và SAM sinh ra template để chạy."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"CDK code: TypeScript or Python\"] -->|\"cdk synth\"| B[\"CloudFormation template\"]\n  B -->|\"cdk deploy\"| C[\"CloudFormation stack\"]\n  C --> D[\"AWS resources\"]",
+   "vi": "flowchart LR\n  A[\"Code CDK: TypeScript hoặc Python\"] -->|\"cdk synth\"| B[\"Template CloudFormation\"]\n  B -->|\"cdk deploy\"| C[\"CloudFormation stack\"]\n  C --> D[\"Resource AWS\"]"
+  }
+ },
+ "09-027": {
+  "tldr": {
+   "en": "Demo: install CDK, init an app and define an S3 bucket, IAM role, DynamoDB table and Lambda function in a few lines of code.",
+   "vi": "Demo: cài CDK, init app và định nghĩa S3 bucket, IAM role, DynamoDB table và Lambda function bằng vài dòng code."
+  },
+  "points": [
+   {
+    "en": "Steps: npm install aws-cdk-lib, cdk init app with a language, cdk ls to confirm the stack.",
+    "vi": "Các bước: npm install aws-cdk-lib, cdk init app với một ngôn ngữ, cdk ls để xác nhận stack."
+   },
+   {
+    "en": "Constructs for S3, IAM, Lambda and DynamoDB are imported; removal policy destroy deletes the resource when the stack is destroyed.",
+    "vi": "Import construct cho S3, IAM, Lambda và DynamoDB; removal policy destroy xóa resource khi stack bị xóa."
+   },
+   {
+    "en": "Helper methods such as grant read/write give Lambda access to the bucket and table in one line instead of hand-written IAM policy.",
+    "vi": "Hàm hỗ trợ như grant read/write cấp quyền cho Lambda lên bucket và table chỉ một dòng, không cần tự viết IAM policy."
+   },
+   {
+    "en": "Event sources wire S3 to trigger Lambda, which calls Rekognition and saves results to DynamoDB.",
+    "vi": "Event source nối S3 kích hoạt Lambda, gọi Rekognition và lưu kết quả vào DynamoDB."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS CDK",
+    "use": {
+     "en": "Defines the whole app stack in code.",
+     "vi": "Định nghĩa toàn bộ stack ứng dụng bằng code."
+    }
+   },
+   {
+    "name": "Amazon Rekognition",
+    "use": {
+     "en": "Analyzes the uploaded image in the demo app.",
+     "vi": "Phân tích ảnh được upload trong app demo."
+    }
+   },
+   {
+    "name": "Amazon DynamoDB",
+    "use": {
+     "en": "Stores the analysis results.",
+     "vi": "Lưu kết quả phân tích."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"User uploads image\"] --> B[\"S3 bucket\"]\n  B -->|\"event\"| C[\"Lambda function\"]\n  C --> D[\"Amazon Rekognition\"]\n  D --> C\n  C --> E[\"DynamoDB table\"]",
+   "vi": "flowchart LR\n  A[\"Người dùng upload ảnh\"] --> B[\"S3 bucket\"]\n  B -->|\"event\"| C[\"Lambda function\"]\n  C --> D[\"Amazon Rekognition\"]\n  D --> C\n  C --> E[\"DynamoDB table\"]"
+  }
+ },
+ "09-028": {
+  "tldr": {
+   "en": "CodeDeploy automatically upgrades applications from v1 to v2 on EC2 instances and on-premises servers, independent of Beanstalk or CloudFormation.",
+   "vi": "CodeDeploy tự động nâng cấp ứng dụng từ v1 lên v2 trên EC2 và server on-premises, độc lập với Beanstalk hay CloudFormation."
+  },
+  "points": [
+   {
+    "en": "It is a hybrid service: works with EC2 instances and on-premises servers.",
+    "vi": "Là dịch vụ hybrid: dùng với EC2 instance và server on-premises."
+   },
+   {
+    "en": "You provision the servers yourself and install the CodeDeploy agent on them.",
+    "vi": "Bạn tự cấp server và cài CodeDeploy agent."
+   },
+   {
+    "en": "Good for migrating from on-premises to AWS with one deployment method.",
+    "vi": "Phù hợp khi chuyển từ on-premises lên AWS với một cách deploy duy nhất."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS CodeDeploy",
+    "use": {
+     "en": "Automated application deployment to EC2 and on-premises servers.",
+     "vi": "Deploy ứng dụng tự động lên EC2 và server on-premises."
+    }
+   }
+  ]
+ },
+ "09-029": {
+  "tldr": {
+   "en": "CodeBuild is a serverless build service that compiles code, runs tests and produces deployable artifacts.",
+   "vi": "CodeBuild là dịch vụ build serverless: biên dịch code, chạy test và tạo artifact sẵn sàng deploy."
+  },
+  "points": [
+   {
+    "en": "Pulls source (for example from CodeCommit), runs your build script, outputs ready-to-deploy artifacts.",
+    "vi": "Lấy source (vd từ CodeCommit), chạy script build, xuất artifact sẵn sàng deploy."
+   },
+   {
+    "en": "Fully managed, scalable, highly available and secure, no servers to manage.",
+    "vi": "Fully managed, scale được, sẵn sàng cao và bảo mật, không phải quản lý server."
+   },
+   {
+    "en": "Pay-as-you-go: you pay only for build time.",
+    "vi": "Trả theo sử dụng: chỉ trả tiền thời gian build."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS CodeBuild",
+    "use": {
+     "en": "Serverless compile, test and package.",
+     "vi": "Compile, test và đóng gói serverless."
+    }
+   }
+  ]
+ },
+ "09-030": {
+  "tldr": {
+   "en": "CodePipeline orchestrates the CI/CD steps from source to build to deploy; the answer for pipeline orchestration on the exam.",
+   "vi": "CodePipeline điều phối các bước CI/CD từ source đến build đến deploy; là đáp án cho điều phối pipeline khi thi."
+  },
+  "points": [
+   {
+    "en": "CI/CD: every code push is built, tested and deployed automatically.",
+    "vi": "CI/CD: mỗi lần push code đều được build, test và deploy tự động."
+   },
+   {
+    "en": "Example flow: CodeCommit source, CodeBuild, CodeDeploy, then Elastic Beanstalk, but many combinations exist.",
+    "vi": "Ví dụ: source CodeCommit, CodeBuild, CodeDeploy, rồi Elastic Beanstalk, nhưng có nhiều cách kết hợp."
+   },
+   {
+    "en": "Fully managed and integrates with CodeCommit, CodeBuild, CodeDeploy, Beanstalk, CloudFormation, GitHub and third parties.",
+    "vi": "Fully managed và tích hợp CodeCommit, CodeBuild, CodeDeploy, Beanstalk, CloudFormation, GitHub và bên thứ ba."
+   },
+   {
+    "en": "Exam keyword: orchestrating a pipeline means CodePipeline.",
+    "vi": "Từ khóa thi: điều phối pipeline thì chọn CodePipeline."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS CodePipeline",
+    "use": {
+     "en": "Orchestrates source, build, test and deploy stages.",
+     "vi": "Điều phối các stage source, build, test và deploy."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"CodeCommit source\"] --> B[\"CodeBuild\"]\n  B --> C[\"CodeDeploy\"]\n  C --> D[\"Elastic Beanstalk or EC2\"]",
+   "vi": "flowchart LR\n  A[\"Source CodeCommit\"] --> B[\"CodeBuild\"]\n  B --> C[\"CodeDeploy\"]\n  C --> D[\"Elastic Beanstalk hoặc EC2\"]"
+  }
+ },
+ "09-031": {
+  "tldr": {
+   "en": "CodeCommit is AWS-hosted private Git; CodeConnections links third-party repos (GitHub, GitLab, Bitbucket). Both can trigger CodePipeline.",
+   "vi": "CodeCommit là Git private do AWS host; CodeConnections kết nối repo bên thứ ba (GitHub, GitLab, Bitbucket). Cả hai đều kích hoạt được CodePipeline."
+  },
+  "points": [
+   {
+    "en": "CodeCommit is a private Git repository with IAM integration and can be the source stage of a pipeline.",
+    "vi": "CodeCommit là Git repository private tích hợp IAM và có thể là source stage của pipeline."
+   },
+   {
+    "en": "A Git push can trigger a pipeline that retrains and redeploys an ML model.",
+    "vi": "Một lần Git push có thể kích hoạt pipeline retrain và redeploy model ML."
+   },
+   {
+    "en": "CodeConnections connects AWS to GitHub, GitHub Enterprise, GitLab or Bitbucket.",
+    "vi": "CodeConnections kết nối AWS với GitHub, GitHub Enterprise, GitLab hoặc Bitbucket."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS CodeCommit",
+    "use": {
+     "en": "AWS-hosted Git source control.",
+     "vi": "Source control Git do AWS host."
+    }
+   },
+   {
+    "name": "AWS CodeConnections",
+    "use": {
+     "en": "Link external Git repos to AWS pipelines.",
+     "vi": "Liên kết repo Git bên ngoài với pipeline AWS."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "AWS tried to deprecate CodeCommit, developers protested, and it came back and is in the exam guide.",
+   "vi": "AWS từng định ngừng CodeCommit, developer phản đối ầm ĩ nên nó được đưa lại và có trong exam guide."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"CodeCommit push\"] --> C[\"CodePipeline\"]\n  B[\"GitHub, GitLab or Bitbucket via CodeConnections\"] --> C\n  C --> D[\"Retrain and redeploy\"]",
+   "vi": "flowchart LR\n  A[\"Push lên CodeCommit\"] --> C[\"CodePipeline\"]\n  B[\"GitHub, GitLab hoặc Bitbucket qua CodeConnections\"] --> C\n  C --> D[\"Retrain và redeploy\"]"
+  }
+ },
+ "09-032": {
+  "tldr": {
+   "en": "CI/CD for AI treats prompts, models, agents and knowledge base configs as versioned artifacts, promoted only after tests and evaluations pass.",
+   "vi": "CI/CD cho AI coi prompt, model, agent và cấu hình knowledge base là các artifact có version, chỉ promote sau khi qua test và evaluation."
+  },
+  "points": [
+   {
+    "en": "AI artifacts beyond code: prompt templates, models, agents and knowledge base configurations, each with version history.",
+    "vi": "Artifact AI ngoài code: prompt template, model, agent và cấu hình knowledge base, mỗi loại có lịch sử version."
+   },
+   {
+    "en": "Prompts live in Bedrock Prompt Management, models in SageMaker Model Registry or MLflow, agents in Bedrock AgentCore.",
+    "vi": "Prompt nằm trong Bedrock Prompt Management, model trong SageMaker Model Registry hoặc MLflow, agent trong Bedrock AgentCore."
+   },
+   {
+    "en": "Pipeline: build, package, test and evaluate, register and version, then promote only approved versions; keep rollback.",
+    "vi": "Pipeline: build, đóng gói, test và evaluate, đăng ký và version, chỉ promote bản đã duyệt; luôn có rollback."
+   },
+   {
+    "en": "Never let the AI write or control its own tests and evaluations, because it could loosen them to pass.",
+    "vi": "Không để AI tự viết hoặc kiểm soát test và evaluation của chính nó vì nó có thể nới lỏng để vượt qua."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock Prompt Management",
+    "use": {
+     "en": "Version and manage prompt templates.",
+     "vi": "Quản lý version prompt template."
+    }
+   },
+   {
+    "name": "SageMaker Model Registry and MLflow",
+    "use": {
+     "en": "Version trained or tuned models.",
+     "vi": "Quản lý version model đã train hoặc tune."
+    }
+   },
+   {
+    "name": "Bedrock AgentCore",
+    "use": {
+     "en": "Agent versions and aliases (Bedrock Agents Classic is in maintenance mode).",
+     "vi": "Version và alias của agent (Bedrock Agents Classic đang ở maintenance mode)."
+    }
+   },
+   {
+    "name": "AWS CodePipeline / CodeBuild",
+    "use": {
+     "en": "Orchestrate builds, tests, evaluations and deployments.",
+     "vi": "Điều phối build, test, evaluation và deploy."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Change: prompt, model, agent or KB\"] --> B[\"Build and package\"]\n  B --> C[\"Tests and evaluations\"]\n  C -->|\"pass\"| D[\"Register and version\"]\n  D --> E[\"Promote to production\"]\n  C -->|\"fail\"| F[\"Reject and retry\"]\n  E -.->|\"problem\"| G[\"Roll back to known good\"]",
+   "vi": "flowchart LR\n  A[\"Thay đổi: prompt, model, agent hoặc KB\"] --> B[\"Build và đóng gói\"]\n  B --> C[\"Test và evaluation\"]\n  C -->|\"đạt\"| D[\"Đăng ký và version\"]\n  D --> E[\"Promote lên production\"]\n  C -->|\"không đạt\"| F[\"Từ chối và thử lại\"]\n  E -.->|\"có sự cố\"| G[\"Rollback bản tốt gần nhất\"]"
+  }
+ },
+ "09-033": {
+  "tldr": {
+   "en": "Keep the knowledge base index in sync with changing source documents using a Bedrock start ingestion job pipeline, and validate retrieval before promoting.",
+   "vi": "Giữ index knowledge base đồng bộ với tài liệu nguồn bằng pipeline start ingestion job của Bedrock, và kiểm tra retrieval trước khi promote."
+  },
+  "points": [
+   {
+    "en": "If source documents change, embeddings must be recomputed or the retrieval index drifts out of sync.",
+    "vi": "Khi tài liệu nguồn thay đổi phải tính lại embedding, nếu không index retrieval sẽ lệch."
+   },
+   {
+    "en": "Bedrock Knowledge Bases StartIngestionJob API reprocesses added, modified or deleted data, but something must call it.",
+    "vi": "API StartIngestionJob của Bedrock Knowledge Bases xử lý lại dữ liệu thêm, sửa, xóa, nhưng phải có thứ gọi nó."
+   },
+   {
+    "en": "Trigger it by event (such as S3 changes) or on a schedule, then check the job status.",
+    "vi": "Kích hoạt theo event (như thay đổi S3) hoặc theo lịch, rồi kiểm tra trạng thái job."
+   },
+   {
+    "en": "Exam tip: a refresh is successful only when ingestion completes and retrieval quality is verified.",
+    "vi": "Mẹo thi: refresh chỉ thành công khi ingestion hoàn tất và đã xác minh chất lượng retrieval."
+   }
+  ],
+  "services": [
+   {
+    "name": "Bedrock Knowledge Bases",
+    "use": {
+     "en": "Managed RAG index; StartIngestionJob syncs it with source data.",
+     "vi": "Index RAG managed; StartIngestionJob đồng bộ với dữ liệu nguồn."
+    }
+   },
+   {
+    "name": "Amazon S3",
+    "use": {
+     "en": "Typical source of documents, can trigger ingestion on change.",
+     "vi": "Nguồn tài liệu điển hình, có thể kích hoạt ingestion khi thay đổi."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Source documents change\"] --> B[\"StartIngestionJob\"]\n  B --> C[\"Chunk and embed\"]\n  C --> D[\"Update vector store\"]\n  D --> E[\"Validate retrieval quality\"]\n  E --> F[\"Promote to production\"]",
+   "vi": "flowchart LR\n  A[\"Tài liệu nguồn thay đổi\"] --> B[\"StartIngestionJob\"]\n  B --> C[\"Chia chunk và embed\"]\n  C --> D[\"Cập nhật vector store\"]\n  D --> E[\"Kiểm tra chất lượng retrieval\"]\n  E --> F[\"Promote lên production\"]"
+  }
+ },
+ "09-034": {
+  "tldr": {
+   "en": "GenAI regression testing is non-deterministic, so run a fixed evaluation set and gate deployment on quality thresholds instead of exact matches.",
+   "vi": "Regression testing cho GenAI không tất định, nên chạy bộ evaluation cố định và chặn deploy theo ngưỡng chất lượng thay vì so khớp chính xác."
+  },
+  "points": [
+   {
+    "en": "Outputs vary between runs, so score quality against criteria and thresholds, not exact string matches.",
+    "vi": "Output thay đổi giữa các lần chạy, nên chấm chất lượng theo tiêu chí và ngưỡng, không so khớp chuỗi chính xác."
+   },
+   {
+    "en": "Keep a fixed evaluation set covering normal cases, edge cases and key business scenarios; optional ground truth compared by semantic similarity.",
+    "vi": "Giữ bộ evaluation cố định gồm case thường, edge case và kịch bản nghiệp vụ chính; ground truth tùy chọn so bằng semantic similarity."
+   },
+   {
+    "en": "Use a held-out test set never used to tune the prompt or model.",
+    "vi": "Dùng held-out test set chưa từng dùng để tinh chỉnh prompt hoặc model."
+   },
+   {
+    "en": "Measure correctness, completeness, relevance, safety and custom criteria; block deployment when quality regresses below the threshold.",
+    "vi": "Đo correctness, completeness, relevance, safety và tiêu chí riêng; chặn deploy khi chất lượng tụt dưới ngưỡng."
+   },
+   {
+    "en": "Bedrock Model Evaluations offers built-in metrics, custom metrics and human evaluation.",
+    "vi": "Bedrock Model Evaluations có metric built-in, metric tùy chỉnh và đánh giá bởi con người."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock Model Evaluations",
+    "use": {
+     "en": "Built-in, custom and human evaluation of model outputs.",
+     "vi": "Đánh giá output model bằng metric built-in, tùy chỉnh và con người."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Prompt or model change\"] --> B[\"Run fixed evaluation set\"]\n  B --> C[\"Score responses\"]\n  C --> D{\"Meets threshold?\"}\n  D -->|\"Yes\"| E[\"Deploy to production\"]\n  D -->|\"No\"| F[\"Revise and rerun\"]",
+   "vi": "flowchart LR\n  A[\"Thay đổi prompt hoặc model\"] --> B[\"Chạy bộ evaluation cố định\"]\n  B --> C[\"Chấm điểm response\"]\n  C --> D{\"Đạt ngưỡng?\"}\n  D -->|\"Có\"| E[\"Deploy lên production\"]\n  D -->|\"Không\"| F[\"Sửa và chạy lại\"]"
+  }
+ },
+ "09-035": {
+  "tldr": {
+   "en": "Quick git refresher for the exam: remote versus local repos and the common commands for staging, branching, syncing and undoing.",
+   "vi": "Ôn nhanh git cho kỳ thi: repo remote và local, cùng các lệnh thông dụng để stage, rẽ nhánh, đồng bộ và hoàn tác."
+  },
+  "points": [
+   {
+    "en": "Basics: git init, git clone, git config, git status; stage with git add, then git commit and git log.",
+    "vi": "Cơ bản: git init, git clone, git config, git status; stage bằng git add, rồi git commit và git log."
+   },
+   {
+    "en": "Branches: git branch lists or creates, git checkout switches (checkout -b creates and switches), git merge combines, branch -d deletes.",
+    "vi": "Branch: git branch liệt kê hoặc tạo, git checkout chuyển nhánh (checkout -b tạo và chuyển), git merge gộp, branch -d xóa."
+   },
+   {
+    "en": "Remotes: git remote add, git push sends local commits, git pull brings remote changes into the current branch.",
+    "vi": "Remote: git remote add, git push đẩy commit local lên, git pull kéo thay đổi remote về nhánh hiện tại."
+   },
+   {
+    "en": "Undo: git reset resets staging to the last commit, with --hard also the working directory; git revert undoes a previous commit.",
+    "vi": "Hoàn tác: git reset đưa staging về commit gần nhất, thêm --hard thì cả working directory; git revert hoàn tác một commit trước đó."
+   }
+  ],
+  "services": [
+   {
+    "name": "Git",
+    "use": {
+     "en": "Distributed version control for code and ML artifacts.",
+     "vi": "Version control phân tán cho code và artifact ML."
+    }
+   }
+  ]
+ },
+ "09-036": {
+  "tldr": {
+   "en": "Git flow uses many branches and suits parallel work; GitHub flow uses just main plus feature branches and needs fast, automated releases.",
+   "vi": "Git flow dùng nhiều nhánh, hợp làm việc song song; GitHub flow chỉ có main cùng feature branch và cần release nhanh, tự động."
+  },
+  "points": [
+   {
+    "en": "Git flow branches: main (production), develop, feature, release and hotfix.",
+    "vi": "Các nhánh trong git flow: main (production), develop, feature, release và hotfix."
+   },
+   {
+    "en": "Git flow handles parallel work well but is complex to keep in sync.",
+    "vi": "Git flow xử lý tốt việc song song nhưng khó giữ đồng bộ."
+   },
+   {
+    "en": "GitHub flow has only main and feature branches; test, then merge back to main.",
+    "vi": "GitHub flow chỉ có main và feature branch; test xong merge về main."
+   },
+   {
+    "en": "GitHub flow works only if you can release quickly, with automated tests and deployments, even several times a day.",
+    "vi": "GitHub flow chỉ chạy được nếu release nhanh, có test và deploy tự động, thậm chí vài lần mỗi ngày."
+   }
+  ],
+  "services": [],
+  "diagram": {
+   "en": "flowchart TD\n  subgraph g1[\"Git flow\"]\n    A[\"main\"] --> B[\"develop\"]\n    B --> C[\"feature branches\"]\n    B --> D[\"release branch\"]\n    A --> E[\"hotfix branch\"]\n  end\n  subgraph g2[\"GitHub flow\"]\n    F[\"main\"] --> G[\"feature branch\"]\n    G -->|\"test then merge\"| F\n  end",
+   "vi": "flowchart TD\n  subgraph g1[\"Git flow\"]\n    A[\"main\"] --> B[\"develop\"]\n    B --> C[\"feature branches\"]\n    B --> D[\"release branch\"]\n    A --> E[\"hotfix branch\"]\n  end\n  subgraph g2[\"GitHub flow\"]\n    F[\"main\"] --> G[\"feature branch\"]\n    G -->|\"test rồi merge\"| F\n  end"
+  }
+ },
+ "09-037": {
+  "tldr": {
+   "en": "EventBridge (formerly CloudWatch Events) routes events from AWS services, schedules, partners and custom apps to targets like Lambda, SNS, Step Functions.",
+   "vi": "EventBridge (trước là CloudWatch Events) định tuyến event từ dịch vụ AWS, lịch, partner và app tùy chỉnh tới target như Lambda, SNS, Step Functions."
+  },
+  "points": [
+   {
+    "en": "Two trigger styles: schedules (cron) and event patterns that react to services, such as an IAM root sign-in sending an SNS email.",
+    "vi": "Hai kiểu kích hoạt: lịch (cron) và event pattern phản ứng với dịch vụ, ví dụ root user đăng nhập thì gửi email qua SNS."
+   },
+   {
+    "en": "Sources include EC2 state changes, CodeBuild, S3, Trusted Advisor, and any API call via CloudTrail; rules filter events and send JSON to targets.",
+    "vi": "Nguồn gồm thay đổi trạng thái EC2, CodeBuild, S3, Trusted Advisor và mọi API call qua CloudTrail; rule lọc event và gửi JSON tới target."
+   },
+   {
+    "en": "Targets: Lambda, Batch, ECS task, SQS, SNS, Kinesis, Step Functions, CodePipeline, CodeBuild, SSM, EC2 actions.",
+    "vi": "Target: Lambda, Batch, ECS task, SQS, SNS, Kinesis, Step Functions, CodePipeline, CodeBuild, SSM, hành động EC2."
+   },
+   {
+    "en": "Event buses: default (AWS services), partner (SaaS like Zendesk, Datadog, Auth0), custom (your own apps); cross-account via resource policies.",
+    "vi": "Event bus: default (dịch vụ AWS), partner (SaaS như Zendesk, Datadog, Auth0), custom (app của bạn); cross-account qua resource policy."
+   },
+   {
+    "en": "Archive events with indefinite or set retention, and replay them later, e.g. to retest a fixed Lambda.",
+    "vi": "Archive event với thời gian lưu vô hạn hoặc cố định, và replay lại sau, ví dụ để test lại Lambda đã sửa."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon EventBridge",
+    "use": {
+     "en": "Event bus and scheduler routing events to targets.",
+     "vi": "Event bus và scheduler định tuyến event tới target."
+    }
+   },
+   {
+    "name": "AWS CloudTrail",
+    "use": {
+     "en": "Combined with EventBridge to react to any API call.",
+     "vi": "Kết hợp EventBridge để phản ứng với mọi API call."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"AWS services\"] --> E[\"EventBridge bus\"]\n  B[\"Schedule or cron\"] --> E\n  C[\"Partner SaaS\"] --> E\n  D[\"Custom apps\"] --> E\n  E -->|\"rule filter\"| F[\"Lambda\"]\n  E -->|\"rule filter\"| G[\"SNS or SQS\"]\n  E -->|\"rule filter\"| H[\"Step Functions\"]\n  E --> I[\"Archive and replay\"]",
+   "vi": "flowchart LR\n  A[\"Dịch vụ AWS\"] --> E[\"EventBridge bus\"]\n  B[\"Lịch hoặc cron\"] --> E\n  C[\"Partner SaaS\"] --> E\n  D[\"App tùy chỉnh\"] --> E\n  E -->|\"lọc bằng rule\"| F[\"Lambda\"]\n  E -->|\"lọc bằng rule\"| G[\"SNS hoặc SQS\"]\n  E -->|\"lọc bằng rule\"| H[\"Step Functions\"]\n  E --> I[\"Archive và replay\"]"
+  }
+ },
+ "09-038": {
+  "tldr": {
+   "en": "Demo: build an EventBridge rule on EC2 state changes that alerts via SNS, plus a recurring schedule, custom event bus and archive.",
+   "vi": "Demo: tạo EventBridge rule theo thay đổi trạng thái EC2 gửi cảnh báo qua SNS, cùng schedule định kỳ, custom event bus và archive."
+  },
+  "points": [
+   {
+    "en": "Event pattern rule: pick the service event (EC2 Instance State-change Notification) and filter on state values shutting-down or terminated.",
+    "vi": "Rule event pattern: chọn event dịch vụ (EC2 Instance State-change Notification) và lọc theo state shutting-down hoặc terminated."
+   },
+   {
+    "en": "The sample events and schema show exactly which field values to match.",
+    "vi": "Sample event và schema cho biết chính xác giá trị field cần khớp."
+   },
+   {
+    "en": "Target is an SNS topic; EventBridge creates an execution role and supports retry policy and dead-letter queue.",
+    "vi": "Target là SNS topic; EventBridge tạo execution role và hỗ trợ retry policy, dead-letter queue."
+   },
+   {
+    "en": "EventBridge Scheduler supports one-time or recurring schedules (cron or rate) invoking Lambda, ECS, Firehose and more.",
+    "vi": "EventBridge Scheduler hỗ trợ lịch một lần hoặc định kỳ (cron hoặc rate) gọi Lambda, ECS, Firehose và nhiều hơn."
+   },
+   {
+    "en": "Also in the console: Pipes (source to target with filtering and enrichment), schema registry, custom buses, archive and replay.",
+    "vi": "Trong console còn có: Pipes (source tới target có lọc và làm giàu), schema registry, custom bus, archive và replay."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon EventBridge",
+    "use": {
+     "en": "Rules, schedules, pipes and event buses.",
+     "vi": "Rule, schedule, pipe và event bus."
+    }
+   },
+   {
+    "name": "Amazon SNS",
+    "use": {
+     "en": "Sends the notification when the rule matches.",
+     "vi": "Gửi thông báo khi rule khớp."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"EC2 state change\"] --> B[\"EventBridge rule\"]\n  B -->|\"state shutting-down or terminated\"| C[\"SNS topic\"]\n  C --> D[\"Email alert\"]",
+   "vi": "flowchart LR\n  A[\"EC2 đổi trạng thái\"] --> B[\"EventBridge rule\"]\n  B -->|\"state shutting-down hoặc terminated\"| C[\"SNS topic\"]\n  C --> D[\"Email cảnh báo\"]"
+  }
+ },
+ "09-039": {
+  "tldr": {
+   "en": "Step Functions designs and visualizes workflows across AWS, with built-in error handling, retries and audit history.",
+   "vi": "Step Functions thiết kế và hiển thị workflow trên AWS, có sẵn xử lý lỗi, retry và lịch sử audit."
+  },
+  "points": [
+   {
+    "en": "Visual workflow graphs; error handling and retry live outside your step code.",
+    "vi": "Workflow dạng đồ thị trực quan; xử lý lỗi và retry nằm ngoài code của từng bước."
+   },
+   {
+    "en": "Keeps an audit history of executions and can wait arbitrary time between steps.",
+    "vi": "Lưu lịch sử audit các lần chạy và có thể chờ khoảng thời gian tùy ý giữa các bước."
+   },
+   {
+    "en": "Max execution time of a state machine is one year; defined in JSON Amazon States Language (ASL), which the exam does not test.",
+    "vi": "Thời gian chạy tối đa của state machine là một năm; định nghĩa bằng JSON Amazon States Language (ASL), đề thi không hỏi."
+   },
+   {
+    "en": "ML uses: generate data, train with SageMaker XGBoost, batch transform; or run a hyperparameter tuning job; or monitor a single batch job.",
+    "vi": "Dùng cho ML: tạo dữ liệu, train bằng SageMaker XGBoost, batch transform; hoặc chạy hyperparameter tuning; hoặc theo dõi một batch job."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS Step Functions",
+    "use": {
+     "en": "Orchestrate ML and data workflows with retries and monitoring.",
+     "vi": "Điều phối workflow ML và dữ liệu có retry và giám sát."
+    }
+   },
+   {
+    "name": "SageMaker training and tuning",
+    "use": {
+     "en": "Steps commonly orchestrated by Step Functions.",
+     "vi": "Các bước thường được Step Functions điều phối."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "A single Step Functions workflow can run for up to a year.",
+   "vi": "Một workflow Step Functions có thể chạy tới một năm."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Generate dataset: Lambda\"] --> B[\"Train: SageMaker XGBoost\"]\n  B --> C[\"Save model\"]\n  C --> D[\"Batch transform\"]",
+   "vi": "flowchart LR\n  A[\"Tạo dataset: Lambda\"] --> B[\"Train: SageMaker XGBoost\"]\n  B --> C[\"Lưu model\"]\n  C --> D[\"Batch transform\"]"
+  }
+ },
+ "09-040": {
+  "tldr": {
+   "en": "Know the Step Functions state types: Task, Choice, Wait, Parallel, Map, Pass, Succeed and Fail.",
+   "vi": "Cần nhớ các loại state của Step Functions: Task, Choice, Wait, Parallel, Map, Pass, Succeed và Fail."
+  },
+  "points": [
+   {
+    "en": "The workflow is a state machine and each step is a state.",
+    "vi": "Workflow là state machine và mỗi bước là một state."
+   },
+   {
+    "en": "Task does the work (Lambda, other AWS services, third-party APIs); Choice adds conditional logic; Wait delays.",
+    "vi": "Task làm việc thật (Lambda, dịch vụ AWS khác, API bên thứ ba); Choice thêm logic điều kiện; Wait tạo độ trễ."
+   },
+   {
+    "en": "Parallel runs separate branches at once; Map applies the same steps to each item of a dataset in parallel.",
+    "vi": "Parallel chạy các nhánh riêng cùng lúc; Map áp dụng cùng các bước cho từng phần tử của dataset song song."
+   },
+   {
+    "en": "Pass just forwards data (debugging); Succeed and Fail end the execution.",
+    "vi": "Pass chỉ chuyển dữ liệu đi (debug); Succeed và Fail kết thúc execution."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS Step Functions",
+    "use": {
+     "en": "Many exam questions on state types in data pipelines.",
+     "vi": "Nhiều câu hỏi về các loại state trong data pipeline."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Start\"] --> B[\"Task\"]\n  B --> C{\"Choice\"}\n  C -->|\"rule 1\"| D[\"Map over items\"]\n  C -->|\"rule 2\"| E[\"Parallel branches\"]\n  D --> F[\"Succeed\"]\n  E --> F\n  C -->|\"default\"| G[\"Fail\"]",
+   "vi": "flowchart TD\n  A[\"Bắt đầu\"] --> B[\"Task\"]\n  B --> C{\"Choice\"}\n  C -->|\"rule 1\"| D[\"Map trên từng phần tử\"]\n  C -->|\"rule 2\"| E[\"Các nhánh Parallel\"]\n  D --> F[\"Succeed\"]\n  E --> F\n  C -->|\"mặc định\"| G[\"Fail\"]"
+  }
+ },
+ "09-041": {
+  "tldr": {
+   "en": "Amazon MWAA is managed Apache Airflow: write Python DAGs, upload to S3, and AWS runs and scales the scheduler and workers.",
+   "vi": "Amazon MWAA là Apache Airflow managed: viết DAG bằng Python, upload lên S3, AWS chạy và scale scheduler cùng worker."
+  },
+  "points": [
+   {
+    "en": "Airflow is batch-oriented; workflows are DAGs (directed acyclic graphs) defined in Python code, not drag and drop.",
+    "vi": "Airflow thiên về batch; workflow là DAG (directed acyclic graph) định nghĩa bằng code Python, không kéo thả."
+   },
+   {
+    "en": "DAG code (optionally zipped with plugins) is uploaded to S3 and MWAA picks it up.",
+    "vi": "Code DAG (có thể zip cùng plugin) được upload lên S3 và MWAA tự nhận."
+   },
+   {
+    "en": "Runs in a VPC across at least two AZs; the web server uses private or public endpoints controlled by IAM.",
+    "vi": "Chạy trong VPC qua ít nhất hai AZ; web server dùng endpoint private hoặc public kiểm soát bằng IAM."
+   },
+   {
+    "en": "Workers auto scale up to your limit; schedulers and workers run on Fargate containers.",
+    "vi": "Worker tự scale đến giới hạn bạn đặt; scheduler và worker chạy trên container Fargate."
+   },
+   {
+    "en": "Integrates with Athena, Batch, EMR, Glue, Lambda, Redshift, SageMaker, S3, SNS, SQS and more.",
+    "vi": "Tích hợp Athena, Batch, EMR, Glue, Lambda, Redshift, SageMaker, S3, SNS, SQS và nhiều hơn."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon MWAA",
+    "use": {
+     "en": "Managed Apache Airflow for complex ETL and ML data workflows.",
+     "vi": "Apache Airflow managed cho workflow ETL và dữ liệu ML phức tạp."
+    }
+   },
+   {
+    "name": "Amazon S3",
+    "use": {
+     "en": "Stores the DAG code.",
+     "vi": "Lưu code DAG."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Python DAG code\"] --> B[\"S3 bucket\"]\n  B --> C[\"Amazon MWAA\"]\n  C --> D[\"Fargate scheduler and workers\"]\n  D --> E[\"Glue, EMR, SageMaker, Lambda\"]",
+   "vi": "flowchart LR\n  A[\"Code DAG Python\"] --> B[\"S3 bucket\"]\n  B --> C[\"Amazon MWAA\"]\n  C --> D[\"Scheduler và worker Fargate\"]\n  D --> E[\"Glue, EMR, SageMaker, Lambda\"]"
+  }
+ },
+ "09-042": {
+  "tldr": {
+   "en": "Lake Formation, built on Glue, helps set up a secure S3 data lake with ingestion, transforms, and centralized access control.",
+   "vi": "Lake Formation, xây trên Glue, giúp dựng data lake S3 an toàn với ingest, transform và kiểm soát truy cập tập trung."
+  },
+  "points": [
+   {
+    "en": "Loads data from S3, on-premises relational or NoSQL sources; sets partitions, encryption, and runs Glue-style ETL (e.g. to Parquet or ORC).",
+    "vi": "Nạp dữ liệu từ S3, DB quan hệ hoặc NoSQL on-prem; thiết lập partition, mã hóa và chạy ETL kiểu Glue (vd sang Parquet hoặc ORC)."
+   },
+   {
+    "en": "Manages access control and auditing; Athena, Redshift Spectrum and EMR can query data registered in it.",
+    "vi": "Quản lý kiểm soát truy cập và audit; Athena, Redshift Spectrum và EMR truy vấn được dữ liệu đã đăng ký."
+   },
+   {
+    "en": "Lake Formation itself is free; you pay for the underlying Glue, S3, EMR, Athena and Redshift.",
+    "vi": "Bản thân Lake Formation miễn phí; bạn trả tiền Glue, S3, EMR, Athena, Redshift bên dưới."
+   },
+   {
+    "en": "Setup: IAM analyst user, Glue connection, S3 bucket, register path, database, blueprint workflow, run it, grant SELECT.",
+    "vi": "Thiết lập: IAM analyst user, Glue connection, S3 bucket, đăng ký path, database, workflow blueprint, chạy, cấp quyền SELECT."
+   },
+   {
+    "en": "Cross-account sharing needs the recipient set as data lake administrator; AWS RAM helps share with external accounts.",
+    "vi": "Chia sẻ cross-account cần đặt bên nhận là data lake administrator; AWS RAM giúp chia sẻ với account bên ngoài."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS Lake Formation",
+    "use": {
+     "en": "Secure data lake setup and permissions on top of Glue.",
+     "vi": "Dựng data lake an toàn và phân quyền trên nền Glue."
+    }
+   },
+   {
+    "name": "AWS Resource Access Manager",
+    "use": {
+     "en": "Share resources with external accounts.",
+     "vi": "Chia sẻ resource với account bên ngoài."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Sources: S3, RDBMS, NoSQL\"] --> B[\"Lake Formation blueprint and Glue ETL\"]\n  B --> C[\"S3 data lake\"]\n  C --> D[\"Athena\"]\n  C --> E[\"Redshift Spectrum\"]\n  C --> F[\"EMR\"]",
+   "vi": "flowchart LR\n  A[\"Nguồn: S3, RDBMS, NoSQL\"] --> B[\"Lake Formation blueprint và Glue ETL\"]\n  B --> C[\"Data lake S3\"]\n  C --> D[\"Athena\"]\n  C --> E[\"Redshift Spectrum\"]\n  C --> F[\"EMR\"]"
+  }
+ },
+ "09-043": {
+  "tldr": {
+   "en": "Lake Formation data filters give column, row or cell level security, applied when granting SELECT on a table.",
+   "vi": "Data filter của Lake Formation cho bảo mật cấp cột, hàng hoặc ô, áp dụng khi cấp quyền SELECT trên bảng."
+  },
+  "points": [
+   {
+    "en": "Row-level: all columns plus a row filter expression.",
+    "vi": "Cấp hàng: chọn mọi cột cộng row filter expression."
+   },
+   {
+    "en": "Column-level: leave the row filter blank (all rows) and include or exclude columns.",
+    "vi": "Cấp cột: để trống row filter (mọi hàng) và include hoặc exclude cột."
+   },
+   {
+    "en": "Cell-level: combine column selection with a row filter expression.",
+    "vi": "Cấp ô: kết hợp chọn cột với row filter expression."
+   },
+   {
+    "en": "Create in the console or via the CreateDataCellsFilter API.",
+    "vi": "Tạo trong console hoặc qua API CreateDataCellsFilter."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS Lake Formation data filters",
+    "use": {
+     "en": "Fine-grained column, row and cell security.",
+     "vi": "Bảo mật chi tiết theo cột, hàng và ô."
+    }
+   }
+  ]
+ }
+}

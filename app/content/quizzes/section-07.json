@@ -1,0 +1,486 @@
+{
+ "id": "section-07",
+ "kind": "section",
+ "section": "07",
+ "title": {
+  "en": "Generative AI Model Fundamentals",
+  "vi": "Nền tảng mô hình Generative AI"
+ },
+ "description": {
+  "en": "<p>Test your knowledge from this section.</p>",
+  "vi": "<p>Kiểm tra kiến thức của bạn trong phần này.</p>"
+ },
+ "passPercent": 70,
+ "questions": [
+  {
+   "id": 87791953,
+   "multi": false,
+   "question": {
+    "en": "<p>A language-model team wants to train on long sequences efficiently by processing tokens in parallel rather than maintaining a recurrent hidden state. Which architecture should it choose?</p>",
+    "vi": "<p>Một nhóm làm language model muốn huấn luyện hiệu quả trên chuỗi dài bằng cách xử lý các token song song thay vì duy trì recurrent hidden state. Nên chọn kiến trúc nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Choose a transformer with self-attention</p>",
+     "vi": "<p>Chọn transformer với self-attention</p>"
+    },
+    {
+     "en": "<p>Choose an RNN with sequential recurrence</p>",
+     "vi": "<p>Chọn RNN với recurrence tuần tự</p>"
+    },
+    {
+     "en": "<p>Choose K-means with Euclidean distance</p>",
+     "vi": "<p>Chọn K-means với khoảng cách Euclidean</p>"
+    },
+    {
+     "en": "<p>Choose linear regression with SGD</p>",
+     "vi": "<p>Chọn linear regression với SGD</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Correct. Transformers replace recurrence with self-attention and parallel feed-forward processing.</p>",
+     "vi": "<p>Đúng. Transformer thay recurrence bằng self-attention và xử lý feed-forward song song.</p>"
+    },
+    {
+     "en": "<p>Incorrect. RNNs process sequences step by step and are difficult to parallelize.</p>",
+     "vi": "<p>Sai. RNN xử lý chuỗi từng bước và khó song song hóa.</p>"
+    },
+    {
+     "en": "<p>Incorrect. K-Means clusters vectors and is not a language architecture.</p>",
+     "vi": "<p>Sai. K-Means gom cụm vector và không phải kiến trúc ngôn ngữ.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Linear regression cannot model token context at this scale.</p>",
+     "vi": "<p>Sai. Linear regression không thể mô hình hóa ngữ cảnh token ở quy mô này.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87791999,
+   "multi": false,
+   "question": {
+    "en": "<p>In a transformer, the representation of the word 'bank' should change depending on whether nearby words discuss a river or a loan. Which mechanism provides this contextualization?</p>",
+    "vi": "<p>Trong transformer, biểu diễn của từ 'bank' phải thay đổi tùy theo các từ lân cận nói về dòng sông hay khoản vay. Cơ chế nào tạo ra sự ngữ cảnh hóa này?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Static one-hot target encoding</p>",
+     "vi": "<p>One-hot target encoding tĩnh</p>"
+    },
+    {
+     "en": "<p>Weighted self-attention over tokens</p>",
+     "vi": "<p>Self-attention có trọng số trên các token</p>"
+    },
+    {
+     "en": "<p>Random minority oversampling</p>",
+     "vi": "<p>Random minority oversampling</p>"
+    },
+    {
+     "en": "<p>Fixed min-max input scaling</p>",
+     "vi": "<p>Min-max input scaling cố định</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. One-hot encoding does not incorporate surrounding context.</p>",
+     "vi": "<p>Sai. One-hot encoding không kết hợp ngữ cảnh xung quanh.</p>"
+    },
+    {
+     "en": "<p>Correct. Self-attention produces a context-dependent weighted combination of token embeddings.</p>",
+     "vi": "<p>Đúng. Self-attention tạo ra tổ hợp có trọng số phụ thuộc ngữ cảnh của các token embedding.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Oversampling addresses class imbalance.</p>",
+     "vi": "<p>Sai. Oversampling giải quyết mất cân bằng lớp.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Scaling adjusts magnitudes but not linguistic relationships.</p>",
+     "vi": "<p>Sai. Scaling điều chỉnh độ lớn nhưng không điều chỉnh quan hệ ngôn ngữ.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87792059,
+   "multi": false,
+   "question": {
+    "en": "<p>A decoder-only model is trained to predict the next token. During training, each position must be prevented from using tokens that appear later in the sequence. What should be applied?</p>",
+    "vi": "<p>Một mô hình decoder-only được huấn luyện để dự đoán token tiếp theo. Trong lúc huấn luyện, mỗi vị trí phải bị ngăn dùng các token xuất hiện sau nó trong chuỗi. Nên áp dụng gì?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Apply unmasked bidirectional attention</p>",
+     "vi": "<p>Áp dụng bidirectional attention không mask</p>"
+    },
+    {
+     "en": "<p>Apply random feature dropout only</p>",
+     "vi": "<p>Chỉ áp dụng random feature dropout</p>"
+    },
+    {
+     "en": "<p>Apply causal masked self-attention</p>",
+     "vi": "<p>Áp dụng causal masked self-attention</p>"
+    },
+    {
+     "en": "<p>Apply a larger embedding dimension</p>",
+     "vi": "<p>Áp dụng embedding dimension lớn hơn</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Bidirectional attention would expose future tokens to the current position.</p>",
+     "vi": "<p>Sai. Bidirectional attention sẽ để lộ token tương lai cho vị trí hiện tại.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Dropout regularizes the model but does not enforce causal visibility.</p>",
+     "vi": "<p>Sai. Dropout regularize mô hình nhưng không áp đặt khả năng nhìn mang tính nhân quả.</p>"
+    },
+    {
+     "en": "<p>Correct. A causal mask blocks attention to future tokens.</p>",
+     "vi": "<p>Đúng. Causal mask chặn attention tới các token tương lai.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Embedding size does not control which positions are visible.</p>",
+     "vi": "<p>Sai. Kích thước embedding không kiểm soát vị trí nào được nhìn thấy.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87792149,
+   "multi": false,
+   "question": {
+    "en": "<p>A transformer should learn several kinds of relationships between tokens at the same layer and compute them in parallel. Which design supports this requirement?</p>",
+    "vi": "<p>Một transformer cần học nhiều loại quan hệ giữa các token trong cùng một lớp và tính toán chúng song song. Thiết kế nào đáp ứng yêu cầu này?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use a single scalar attention score</p>",
+     "vi": "<p>Dùng một attention score vô hướng duy nhất</p>"
+    },
+    {
+     "en": "<p>Use a recurrent feedback connection</p>",
+     "vi": "<p>Dùng kết nối phản hồi recurrent</p>"
+    },
+    {
+     "en": "<p>Use one fixed positional bucket</p>",
+     "vi": "<p>Dùng một positional bucket cố định</p>"
+    },
+    {
+     "en": "<p>Use multi-head self-attention</p>",
+     "vi": "<p>Dùng multi-head self-attention</p>"
+    }
+   ],
+   "answer": [
+    3
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. One scalar view limits the kinds of relationships learned.</p>",
+     "vi": "<p>Sai. Một góc nhìn vô hướng giới hạn các loại quan hệ được học.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Recurrence reintroduces sequential processing.</p>",
+     "vi": "<p>Sai. Recurrence đưa lại xử lý tuần tự.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Positional buckets do not create multiple attention subspaces.</p>",
+     "vi": "<p>Sai. Positional bucket không tạo ra nhiều không gian con attention.</p>"
+    },
+    {
+     "en": "<p>Correct. Multiple heads learn and process different attention relationships in parallel.</p>",
+     "vi": "<p>Đúng. Nhiều head học và xử lý các quan hệ attention khác nhau song song.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87792161,
+   "multi": false,
+   "question": {
+    "en": "<p>A team is explaining why GPT can be pretrained on large unlabeled text collections. What is the model's fundamental training behavior?</p>",
+    "vi": "<p>Một nhóm đang giải thích vì sao GPT có thể được pretrain trên các tập văn bản lớn không có nhãn. Hành vi huấn luyện cơ bản của mô hình là gì?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>It repeatedly predicts the next token</p>",
+     "vi": "<p>Liên tục dự đoán token tiếp theo</p>"
+    },
+    {
+     "en": "<p>It assigns a label to each document</p>",
+     "vi": "<p>Gán nhãn cho mỗi tài liệu</p>"
+    },
+    {
+     "en": "<p>It clusters documents into fixed groups</p>",
+     "vi": "<p>Gom cụm tài liệu thành các nhóm cố định</p>"
+    },
+    {
+     "en": "<p>It forecasts a numeric time series</p>",
+     "vi": "<p>Dự báo chuỗi thời gian số</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Correct. GPT learns by autoregressively generating the next token from prior tokens.</p>",
+     "vi": "<p>Đúng. GPT học bằng cách sinh token tiếp theo theo kiểu autoregressive từ các token trước đó.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Document classification requires labels and is not the basic GPT objective.</p>",
+     "vi": "<p>Sai. Phân loại tài liệu cần nhãn và không phải mục tiêu cơ bản của GPT.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Clustering is not the decoder-only language-model objective.</p>",
+     "vi": "<p>Sai. Clustering không phải mục tiêu của language model decoder-only.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Numeric forecasting is a different task family.</p>",
+     "vi": "<p>Sai. Dự báo số là một họ tác vụ khác.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87792807,
+   "multi": false,
+   "question": {
+    "en": "<p>A transformer knows token meanings but confuses otherwise identical words that occur at different places in a sentence. Which input component is missing?</p>",
+    "vi": "<p>Một transformer biết nghĩa của token nhưng nhầm lẫn các từ giống hệt nhau xuất hiện ở các vị trí khác nhau trong câu. Thành phần đầu vào nào đang thiếu?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>A larger output vocabulary</p>",
+     "vi": "<p>Output vocabulary lớn hơn</p>"
+    },
+    {
+     "en": "<p>A lower training batch size</p>",
+     "vi": "<p>Training batch size thấp hơn</p>"
+    },
+    {
+     "en": "<p>A regression loss function</p>",
+     "vi": "<p>Hàm loss của regression</p>"
+    },
+    {
+     "en": "<p>A positional encoding</p>",
+     "vi": "<p>Positional encoding</p>"
+    }
+   ],
+   "answer": [
+    3
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Vocabulary size determines available tokens, not their order.</p>",
+     "vi": "<p>Sai. Kích thước vocabulary quyết định các token có sẵn chứ không phải thứ tự của chúng.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Batch size does not encode token positions.</p>",
+     "vi": "<p>Sai. Batch size không mã hóa vị trí token.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Regression loss does not represent sequence order.</p>",
+     "vi": "<p>Sai. Regression loss không biểu diễn thứ tự chuỗi.</p>"
+    },
+    {
+     "en": "<p>Correct. Positional encoding supplies relative or absolute order information to token embeddings.</p>",
+     "vi": "<p>Đúng. Positional encoding cung cấp thông tin thứ tự tương đối hoặc tuyệt đối cho token embedding.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87792817,
+   "multi": false,
+   "question": {
+    "en": "<p>An application exceeds a model limit because the prompt, retrieved passages, and conversation history contain too many tokens at once. Which model property has been exceeded?</p>",
+    "vi": "<p>Một ứng dụng vượt giới hạn của mô hình vì prompt, các đoạn truy xuất và lịch sử hội thoại chứa quá nhiều token cùng lúc. Thuộc tính nào của mô hình đã bị vượt?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>The learning-rate schedule</p><p><br></p>",
+     "vi": "<p>Learning-rate schedule</p><p><br></p>"
+    },
+    {
+     "en": "<p>The embedding vector norm</p>",
+     "vi": "<p>Embedding vector norm</p>"
+    },
+    {
+     "en": "<p>The context window</p>",
+     "vi": "<p>Context window</p>"
+    },
+    {
+     "en": "<p>The classifier threshold</p>",
+     "vi": "<p>Classifier threshold</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Learning rate affects training optimization.</p>",
+     "vi": "<p>Sai. Learning rate ảnh hưởng đến tối ưu hóa khi huấn luyện.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Vector norm is not the input-length limit.</p>",
+     "vi": "<p>Sai. Vector norm không phải giới hạn độ dài đầu vào.</p>"
+    },
+    {
+     "en": "<p>Correct. The context window is the number of tokens the model can process together.</p>",
+     "vi": "<p>Đúng. Context window là số token mà mô hình có thể xử lý cùng lúc.</p>"
+    },
+    {
+     "en": "<p>Incorrect. A classifier threshold affects discrete decisions.</p>",
+     "vi": "<p>Sai. Classifier threshold ảnh hưởng đến các quyết định rời rạc.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87792827,
+   "multi": false,
+   "question": {
+    "en": "<p>A customer-service generator produces responses that vary too much between identical requests. Which inference setting should be reduced first?</p>",
+    "vi": "<p>Một bộ sinh phản hồi cho chăm sóc khách hàng tạo ra các phản hồi khác nhau quá nhiều giữa các yêu cầu giống hệt nhau. Nên giảm thiết lập inference nào trước?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Reduce the vocabulary size</p>",
+     "vi": "<p>Giảm vocabulary size</p>"
+    },
+    {
+     "en": "<p>Reduce the embedding width</p>",
+     "vi": "<p>Giảm embedding width</p>"
+    },
+    {
+     "en": "<p>Reduce the context window</p>",
+     "vi": "<p>Giảm context window</p>"
+    },
+    {
+     "en": "<p>Reduce the temperature</p>",
+     "vi": "<p>Giảm temperature</p>"
+    }
+   ],
+   "answer": [
+    3
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Vocabulary size is a model property and is not the normal randomness control.</p>",
+     "vi": "<p>Sai. Vocabulary size là thuộc tính của mô hình và không phải cách kiểm soát tính ngẫu nhiên thông thường.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Embedding width is fixed by the model.</p>",
+     "vi": "<p>Sai. Embedding width được cố định bởi mô hình.</p>"
+    },
+    {
+     "en": "<p>Incorrect. A smaller context window can remove needed information without reliably controlling randomness.</p>",
+     "vi": "<p>Sai. Context window nhỏ hơn có thể làm mất thông tin cần thiết mà không kiểm soát tính ngẫu nhiên một cách đáng tin cậy.</p>"
+    },
+    {
+     "en": "<p>Correct. Lower temperature makes next-token selection more consistent.</p>",
+     "vi": "<p>Đúng. Temperature thấp hơn làm việc chọn token tiếp theo nhất quán hơn.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87792917,
+   "multi": false,
+   "question": {
+    "en": "<p>A creative-writing application should consider a broader nucleus of likely next tokens rather than only the most probable few. Which setting should be increased?</p>",
+    "vi": "<p>Một ứng dụng viết sáng tạo nên xem xét một nhóm token tiếp theo (nucleus) rộng hơn thay vì chỉ vài token có xác suất cao nhất. Nên tăng thiết lập nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Increase the Top P value</p>",
+     "vi": "<p>Tăng giá trị Top P</p>"
+    },
+    {
+     "en": "<p>Increase the gradient clipping</p>",
+     "vi": "<p>Tăng gradient clipping</p>"
+    },
+    {
+     "en": "<p>Increase the training epochs</p>",
+     "vi": "<p>Tăng số training epoch</p>"
+    },
+    {
+     "en": "<p>Increase the feature scaling</p>",
+     "vi": "<p>Tăng feature scaling</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Correct. A higher Top P includes a larger cumulative-probability set and generally increases randomness.</p>",
+     "vi": "<p>Đúng. Top P cao hơn bao gồm tập có xác suất tích lũy lớn hơn và nhìn chung làm tăng tính ngẫu nhiên.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Gradient clipping applies during training.</p>",
+     "vi": "<p>Sai. Gradient clipping áp dụng khi huấn luyện.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Training epochs do not control runtime token sampling.</p>",
+     "vi": "<p>Sai. Số epoch huấn luyện không kiểm soát việc lấy mẫu token lúc chạy.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Feature scaling is unrelated to language-model decoding.</p>",
+     "vi": "<p>Sai. Feature scaling không liên quan đến decoding của language model.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87792931,
+   "multi": false,
+   "question": {
+    "en": "<p>A developer wants the decoder to choose among exactly the K most probable candidate tokens at each generation step. Which sampling parameter should be configured?</p>",
+    "vi": "<p>Một developer muốn decoder chọn trong đúng K token ứng viên có xác suất cao nhất ở mỗi bước sinh. Nên cấu hình tham số sampling nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Configure a max-token limit</p>",
+     "vi": "<p>Cấu hình giới hạn max-token</p>"
+    },
+    {
+     "en": "<p>Configure the Top K value</p>",
+     "vi": "<p>Cấu hình giá trị Top K</p>"
+    },
+    {
+     "en": "<p>Configure an L1 penalty</p>",
+     "vi": "<p>Cấu hình L1 penalty</p>"
+    },
+    {
+     "en": "<p>Configure a batch-size limit</p>",
+     "vi": "<p>Cấu hình giới hạn batch-size</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Max tokens limits output length, not the candidate set per step.</p>",
+     "vi": "<p>Sai. Max tokens giới hạn độ dài output chứ không phải tập ứng viên mỗi bước.</p>"
+    },
+    {
+     "en": "<p>Correct. Top K restricts selection to the K highest-probability tokens.</p>",
+     "vi": "<p>Đúng. Top K giới hạn việc chọn trong K token có xác suất cao nhất.</p>"
+    },
+    {
+     "en": "<p>Incorrect. L1 is a training regularizer.</p>",
+     "vi": "<p>Sai. L1 là regularizer khi huấn luyện.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Batch size controls how many examples are processed together.</p>",
+     "vi": "<p>Sai. Batch size kiểm soát số mẫu được xử lý cùng nhau.</p>"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,198 @@
+{
+ "14-001": {
+  "tldr": {
+   "en": "Congratulations on finishing; this section covers exam tips, how to sign up, and a request for a review.",
+   "vi": "Chúc mừng bạn đã học xong; phần này nói về mẹo thi, cách đăng ký và lời nhắn để lại đánh giá."
+  },
+  "points": [
+   {
+    "en": "Section covers what to expect, how to prepare further, and how to register.",
+    "vi": "Phần này nói về những gì sẽ gặp, cách ôn thêm và cách đăng ký thi."
+   },
+   {
+    "en": "The exam is tough, but finishing the course improves your odds.",
+    "vi": "Đề thi khó, nhưng hoàn thành khóa học làm tăng cơ hội đậu."
+   }
+  ],
+  "services": []
+ },
+ "14-002": {
+  "tldr": {
+   "en": "Extra prep: AWS Skill Builder, official docs, the exam guide, and possibly the AI Practitioner exam first.",
+   "vi": "Ôn thêm: AWS Skill Builder, tài liệu chính thức, exam guide, và có thể thi AI Practitioner trước."
+  },
+  "points": [
+   {
+    "en": "Skill Builder has a free exam prep plan with an official 20-question practice set, the most realistic one.",
+    "vi": "Skill Builder có exam prep plan miễn phí với bộ 20 câu hỏi chính thức, sát đề thật nhất."
+   },
+   {
+    "en": "A paid Skill Builder subscription adds a full-length practice exam.",
+    "vi": "Gói Skill Builder trả phí có thêm một đề thi thử đầy đủ."
+   },
+   {
+    "en": "Re-read official docs for SageMaker AI, Bedrock and AgentCore, which are dense.",
+    "vi": "Đọc lại tài liệu chính thức của SageMaker AI, Bedrock và AgentCore vì rất dày."
+   },
+   {
+    "en": "Use the exam guide domains and skills list to find your gaps.",
+    "vi": "Dùng danh sách domain và skill trong exam guide để tìm chỗ còn hổng."
+   },
+   {
+    "en": "New to AI and AWS? Consider the foundational AI Practitioner exam first.",
+    "vi": "Mới với AI và AWS? Cân nhắc thi AI Practitioner (foundational) trước."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS Skill Builder",
+    "use": {
+     "en": "Official AWS training and practice questions for the exam.",
+     "vi": "Đào tạo chính thức của AWS và câu hỏi luyện thi."
+    }
+   },
+   {
+    "name": "Amazon SageMaker",
+    "use": {
+     "en": "Official docs are dense; review them for refreshers.",
+     "vi": "Tài liệu chính thức dày; nên xem lại để ôn."
+    }
+   },
+   {
+    "name": "Amazon Bedrock",
+    "use": {
+     "en": "Official docs worth reviewing as exam source material.",
+     "vi": "Tài liệu chính thức nên xem lại như nguồn ôn thi."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Course slides\"] --> B[\"Skill Builder 20 free questions\"]\n  B --> C[\"Official docs\"]\n  C --> D[\"Exam guide gap check\"]\n  D --> E[\"Schedule exam\"]",
+   "vi": "flowchart TD\n  A[\"Slide khóa học\"] --> B[\"20 câu miễn phí Skill Builder\"]\n  B --> C[\"Tài liệu chính thức\"]\n  C --> D[\"Đối chiếu exam guide\"]\n  D --> E[\"Đặt lịch thi\"]"
+  }
+ },
+ "14-003": {
+  "tldr": {
+   "en": "The exam has 65 questions over about three hours; read carefully, flag doubtful items, eliminate wrong answers, and stay calm.",
+   "vi": "Đề thi có 65 câu trong khoảng ba giờ; đọc kỹ, đánh dấu câu nghi ngờ, loại đáp án sai và giữ bình tĩnh."
+  },
+  "points": [
+   {
+    "en": "About two minutes per question: do not rush, and note what the question asks you to optimize.",
+    "vi": "Khoảng hai phút mỗi câu: đừng vội, và chú ý câu hỏi yêu cầu tối ưu điều gì."
+   },
+   {
+    "en": "Several answers may seem right; small details decide the best one.",
+    "vi": "Nhiều đáp án có vẻ đúng; chi tiết nhỏ quyết định đáp án tốt nhất."
+   },
+   {
+    "en": "Use the flag icon to revisit unsure questions at the end.",
+    "vi": "Dùng biểu tượng flag để quay lại câu chưa chắc ở cuối giờ."
+   },
+   {
+    "en": "Use process of elimination; you do not need 100 percent, it is pass or fail.",
+    "vi": "Dùng phương pháp loại trừ; không cần 100 điểm, chỉ cần đậu hoặc rớt."
+   },
+   {
+    "en": "No bathroom break, no items online; rest, eat earlier, and review precision vs recall.",
+    "vi": "Không được nghỉ vệ sinh, thi online không mang gì; nghỉ ngơi, ăn sớm và ôn precision vs recall."
+   }
+  ],
+  "services": [],
+  "funFact": {
+   "en": "The instructor says this associate exam feels as hard as the specialty-level exam, though it focuses less on high-level system design.",
+   "vi": "Giảng viên nhận xét đề associate này khó ngang đề specialty, dù ít tập trung vào thiết kế hệ thống tầng cao."
+  },
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Read question fully\"] --> B{\"Sure of answer?\"}\n  B -->|\"Yes\"| C[\"Answer\"]\n  B -->|\"No\"| D[\"Eliminate wrong options\"]\n  D --> E[\"Pick best and flag\"]\n  E --> F[\"Review flagged at end\"]",
+   "vi": "flowchart TD\n  A[\"Đọc kỹ câu hỏi\"] --> B{\"Chắc đáp án?\"}\n  B -->|\"Có\"| C[\"Trả lời\"]\n  B -->|\"Không\"| D[\"Loại đáp án sai\"]\n  D --> E[\"Chọn đáp án tốt nhất và flag\"]\n  E --> F[\"Xem lại câu flag cuối giờ\"]"
+  }
+ },
+ "14-004": {
+  "tldr": {
+   "en": "Sign in at aws.training/certification with an AWS Builder ID, then schedule via Pearson VUE at a test center or online with OnVUE.",
+   "vi": "Đăng nhập aws.training/certification bằng AWS Builder ID, rồi đặt lịch qua Pearson VUE tại trung tâm thi hoặc online với OnVUE."
+  },
+  "points": [
+   {
+    "en": "Create an AWS Builder ID, the account used for AWS certifications.",
+    "vi": "Tạo AWS Builder ID, tài khoản dùng cho chứng chỉ AWS."
+   },
+   {
+    "en": "Exam scheduling goes through Pearson VUE: test center or online with OnVUE.",
+    "vi": "Việc đặt lịch thi qua Pearson VUE: trung tâm thi hoặc online với OnVUE."
+   },
+   {
+    "en": "For OnVUE you need a webcam and good internet; run the system test well before exam day.",
+    "vi": "OnVUE cần webcam và internet tốt; chạy system test từ sớm trước ngày thi."
+   },
+   {
+    "en": "Desk must be clear and you need photo ID; check in about 30 minutes early.",
+    "vi": "Bàn phải trống và cần ID có ảnh; check-in sớm khoảng 30 phút."
+   },
+   {
+    "en": "Launch the exam later from your dashboard via Manage my Pearson VUE account.",
+    "vi": "Sau đó vào dashboard, chọn Manage my Pearson VUE account để Launch bài thi."
+   }
+  ],
+  "services": [],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"aws.training/certification\"] --> B[\"AWS Builder ID\"]\n  B --> C[\"Exam Registration\"]\n  C --> D[\"Pearson VUE\"]\n  D --> E[\"Test center or OnVUE online\"]\n  E --> F[\"Pick date and pay\"]",
+   "vi": "flowchart LR\n  A[\"aws.training/certification\"] --> B[\"AWS Builder ID\"]\n  B --> C[\"Exam Registration\"]\n  C --> D[\"Pearson VUE\"]\n  D --> E[\"Trung tâm thi hoặc OnVUE online\"]\n  E --> F[\"Chọn ngày và thanh toán\"]"
+  }
+ },
+ "14-005": {
+  "tldr": {
+   "en": "Passing any AWS exam earns a 50 percent discount voucher for your next exam, which you claim in the certification portal.",
+   "vi": "Đậu một kỳ thi AWS sẽ nhận voucher giảm 50 phần trăm cho kỳ thi tiếp theo, nhận trong cổng certification."
+  },
+  "points": [
+   {
+    "en": "After you pass an exam, benefits appear as unclaimed with an expiry date.",
+    "vi": "Sau khi đậu, quyền lợi hiện là unclaimed kèm ngày hết hạn."
+   },
+   {
+    "en": "Click Claim Benefits to get a voucher code.",
+    "vi": "Bấm Claim Benefits để lấy mã voucher."
+   },
+   {
+    "en": "Enter the code in the promo box at checkout to apply the 50 percent discount.",
+    "vi": "Nhập mã vào ô promo ở bước thanh toán để được giảm 50 phần trăm."
+   }
+  ],
+  "services": [],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Pass an AWS exam\"] --> B[\"Unclaimed benefit\"]\n  B --> C[\"Claim Benefits\"]\n  C --> D[\"Voucher code\"]\n  D --> E[\"Apply at checkout\"]",
+   "vi": "flowchart LR\n  A[\"Đậu một kỳ thi AWS\"] --> B[\"Quyền lợi unclaimed\"]\n  B --> C[\"Claim Benefits\"]\n  C --> D[\"Mã voucher\"]\n  D --> E[\"Áp dụng khi thanh toán\"]"
+  }
+ },
+ "14-006": {
+  "tldr": {
+   "en": "Non-native English speakers can request an extra 30 minutes (ESL +30) in the exam accommodation page.",
+   "vi": "Người không phải native English có thể xin thêm 30 phút (ESL +30) ở trang exam accommodation."
+  },
+  "points": [
+   {
+    "en": "Under Exam Registration, choose Exam Accommodation and select ESL +30 minutes.",
+    "vi": "Trong Exam Registration, chọn Exam Accommodation và ESL +30 minutes."
+   },
+   {
+    "en": "Once approved it does not expire.",
+    "vi": "Sau khi được duyệt, nó không hết hạn."
+   },
+   {
+    "en": "Cancel any exam already scheduled, then schedule again so the extra time applies.",
+    "vi": "Hủy lịch thi đã đặt, rồi đặt lại để thời gian thêm được áp dụng."
+   },
+   {
+    "en": "Other accommodations can be requested through Pearson VUE.",
+    "vi": "Các accommodation khác có thể xin qua Pearson VUE."
+   }
+  ],
+  "services": [],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Exam Accommodation\"] --> B[\"ESL plus 30 minutes\"]\n  B --> C[\"Approved and never expires\"]\n  C --> D[\"Cancel old booking\"]\n  D --> E[\"Schedule again\"]",
+   "vi": "flowchart LR\n  A[\"Exam Accommodation\"] --> B[\"ESL cộng 30 phút\"]\n  B --> C[\"Được duyệt và không hết hạn\"]\n  C --> D[\"Hủy lịch cũ\"]\n  D --> E[\"Đặt lịch lại\"]"
+  }
+ }
+}

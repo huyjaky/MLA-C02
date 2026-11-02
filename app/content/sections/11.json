@@ -1,0 +1,222 @@
+{
+ "id": "11",
+ "order": 11,
+ "title": {
+  "en": "Management and Governance",
+  "vi": "Quản lý và Governance"
+ },
+ "lectures": [
+  {
+   "id": "11-001",
+   "title": {
+    "en": "Intro Management and Governance",
+    "vi": "Giới thiệu Quản lý và Governance"
+   },
+   "kind": "video",
+   "video": "11 - Management and Governance/001 Intro Management and Governance.mp4",
+   "transcript": true
+  },
+  {
+   "id": "11-002",
+   "title": {
+    "en": "Amazon CloudWatch - Metrics",
+    "vi": "Amazon CloudWatch - Metrics"
+   },
+   "kind": "video",
+   "video": "11 - Management and Governance/002 Amazon CloudWatch - Metrics.mp4",
+   "transcript": true
+  },
+  {
+   "id": "11-003",
+   "title": {
+    "en": "Amazon CloudWatch - Logs",
+    "vi": "Amazon CloudWatch - Logs"
+   },
+   "kind": "video",
+   "video": "11 - Management and Governance/003 Amazon CloudWatch - Logs.mp4",
+   "transcript": true
+  },
+  {
+   "id": "11-004",
+   "title": {
+    "en": "Amazon CloudWatch - Logs - Hands On",
+    "vi": "Amazon CloudWatch - Logs - Thực hành"
+   },
+   "kind": "video",
+   "video": "11 - Management and Governance/004 Amazon CloudWatch - Logs - Hands On.mp4",
+   "transcript": true
+  },
+  {
+   "id": "11-005",
+   "title": {
+    "en": "Amazon CloudWatch - Logs Unified Agent",
+    "vi": "Amazon CloudWatch - Logs Unified Agent"
+   },
+   "kind": "video",
+   "video": "11 - Management and Governance/005 Amazon CloudWatch - Logs Unified Agent.mp4",
+   "transcript": true
+  },
+  {
+   "id": "11-006",
+   "title": {
+    "en": "Amazon CloudWatch - Alarms",
+    "vi": "Amazon CloudWatch - Alarms"
+   },
+   "kind": "video",
+   "video": "11 - Management and Governance/006 Amazon CloudWatch - Alarms.mp4",
+   "transcript": true
+  },
+  {
+   "id": "11-007",
+   "title": {
+    "en": "Amazon CloudWatch - Alarms - Hands On",
+    "vi": "Amazon CloudWatch - Alarms - Thực hành"
+   },
+   "kind": "video",
+   "video": "11 - Management and Governance/007 Amazon CloudWatch - Alarms - Hands On.mp4",
+   "transcript": true
+  },
+  {
+   "id": "11-008",
+   "title": {
+    "en": "AWS X-Ray",
+    "vi": "AWS X-Ray"
+   },
+   "kind": "video",
+   "video": "11 - Management and Governance/008 AWS X-Ray.mp4",
+   "transcript": true
+  },
+  {
+   "id": "11-009",
+   "title": {
+    "en": "AWS X-Ray - Hands On",
+    "vi": "AWS X-Ray - Thực hành"
+   },
+   "kind": "video",
+   "video": "11 - Management and Governance/009 AWS X-Ray - Hands On.mp4",
+   "transcript": true,
+   "materials": [
+    "x-ray/eb-java-scorekeep-xray-simplified.yml"
+   ]
+  },
+  {
+   "id": "11-010",
+   "title": {
+    "en": "NOTE Amazon QuickSight is being rebranded as Amazon Quick Suite",
+    "vi": "LƯU Ý: Amazon QuickSight đang được đổi thương hiệu thành Amazon Quick Suite"
+   },
+   "kind": "note",
+   "transcript": false
+  },
+  {
+   "id": "11-011",
+   "title": {
+    "en": "Overview of Amazon Quicksight",
+    "vi": "Tổng quan về Amazon Quicksight"
+   },
+   "kind": "video",
+   "video": "11 - Management and Governance/011 Overview of Amazon Quicksight.mp4",
+   "transcript": true
+  },
+  {
+   "id": "11-012",
+   "title": {
+    "en": "Types of Visualizations, and When to Use Them",
+    "vi": "Các loại biểu đồ trực quan và khi nào dùng"
+   },
+   "kind": "video",
+   "video": "11 - Management and Governance/012 Types of Visualizations, and When to Use Them.mp4",
+   "transcript": true
+  },
+  {
+   "id": "11-013",
+   "title": {
+    "en": "Amazon CloudTrail",
+    "vi": "Amazon CloudTrail"
+   },
+   "kind": "video",
+   "video": "11 - Management and Governance/013 Amazon CloudTrail.mp4",
+   "transcript": true
+  },
+  {
+   "id": "11-014",
+   "title": {
+    "en": "Amazon CloudTrail - Hands On",
+    "vi": "Amazon CloudTrail - Thực hành"
+   },
+   "kind": "video",
+   "video": "11 - Management and Governance/014 Amazon CloudTrail - Hands On.mp4",
+   "transcript": true
+  },
+  {
+   "id": "11-015",
+   "title": {
+    "en": "AWS Config",
+    "vi": "AWS Config"
+   },
+   "kind": "video",
+   "video": "11 - Management and Governance/015 AWS Config.mp4",
+   "transcript": true
+  },
+  {
+   "id": "11-016",
+   "title": {
+    "en": "AWS Config - Hands On",
+    "vi": "AWS Config - Thực hành"
+   },
+   "kind": "video",
+   "video": "11 - Management and Governance/016 AWS Config - Hands On.mp4",
+   "transcript": true
+  },
+  {
+   "id": "11-017",
+   "title": {
+    "en": "CloudWatch vs. CloudTrail vs. Config",
+    "vi": "CloudWatch so với CloudTrail so với Config"
+   },
+   "kind": "video",
+   "video": "11 - Management and Governance/017 CloudWatch vs. CloudTrail vs. Config.mp4",
+   "transcript": true
+  },
+  {
+   "id": "11-018",
+   "title": {
+    "en": "AWS Budgets",
+    "vi": "AWS Budgets"
+   },
+   "kind": "video",
+   "video": "11 - Management and Governance/018 AWS Budgets.mp4",
+   "transcript": true
+  },
+  {
+   "id": "11-019",
+   "title": {
+    "en": "AWS Budgets - Hands On",
+    "vi": "AWS Budgets - Thực hành"
+   },
+   "kind": "video",
+   "video": "11 - Management and Governance/019 AWS Budgets - Hands On.mp4",
+   "transcript": true
+  },
+  {
+   "id": "11-020",
+   "title": {
+    "en": "AWS Cost Explorer",
+    "vi": "AWS Cost Explorer"
+   },
+   "kind": "video",
+   "video": "11 - Management and Governance/020 AWS Cost Explorer.mp4",
+   "transcript": true
+  },
+  {
+   "id": "11-021",
+   "title": {
+    "en": "AWS Trusted Advisor",
+    "vi": "AWS Trusted Advisor"
+   },
+   "kind": "video",
+   "video": "11 - Management and Governance/021 AWS Trusted Advisor.mp4",
+   "transcript": true
+  }
+ ]
+}

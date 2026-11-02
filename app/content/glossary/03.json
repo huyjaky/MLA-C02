@@ -1,0 +1,275 @@
+{
+ "section": "03",
+ "terms": [
+  {
+   "id": "amazon-emr",
+   "term": "Amazon EMR",
+   "lecture": "03-002",
+   "definition": {
+    "en": "Managed big data platform that runs Hadoop, Spark, Hive, Presto and other frameworks on a cluster of EC2 instances (master/primary, core and task nodes). Choose it for large-scale, customizable data processing and Spark workloads.",
+    "vi": "Nền tảng big data được quản lý, chạy Hadoop, Spark, Hive, Presto và các framework khác trên cluster EC2 (node master/primary, core và task). Chọn cho xử lý dữ liệu quy mô lớn, tùy biến và workload Spark."
+   }
+  },
+  {
+   "id": "emr-serverless",
+   "term": "EMR Serverless",
+   "lecture": "03-003",
+   "definition": {
+    "en": "Run Spark or Hive jobs on EMR without provisioning or sizing a cluster: workers are allocated automatically per job and you pay for what you use. Choose it for intermittent jobs with the least operational overhead.",
+    "vi": "Chạy job Spark hoặc Hive trên EMR mà không cần cấp phát hay định cỡ cluster: worker được cấp phát tự động theo job và bạn trả theo mức dùng. Chọn cho job không thường xuyên với công sức vận hành ít nhất."
+   }
+  },
+  {
+   "id": "emr-on-eks",
+   "term": "EMR on EKS",
+   "lecture": "03-003",
+   "definition": {
+    "en": "Submits Spark jobs to an existing Amazon EKS cluster so they share Kubernetes resources with other applications, with no separate EMR cluster to manage. Choose it when you already standardize on EKS.",
+    "vi": "Gửi job Spark lên một Amazon EKS cluster hiện có để dùng chung tài nguyên Kubernetes với các ứng dụng khác, không cần quản lý EMR cluster riêng. Chọn khi bạn đã chuẩn hóa trên EKS."
+   }
+  },
+  {
+   "id": "apache-spark",
+   "term": "Apache Spark",
+   "lecture": "03-004",
+   "definition": {
+    "en": "Distributed in-memory data processing engine that is far faster than MapReduce for iterative workloads. Components include Spark SQL, Spark Streaming, MLlib and GraphX; it is the main engine used on EMR for feature engineering at scale.",
+    "vi": "Engine xử lý dữ liệu phân tán trong bộ nhớ, nhanh hơn nhiều so với MapReduce cho workload lặp. Gồm Spark SQL, Spark Streaming, MLlib và GraphX; là engine chính trên EMR cho feature engineering quy mô lớn."
+   }
+  },
+  {
+   "id": "spark-mllib",
+   "term": "Spark MLlib",
+   "lecture": "03-004",
+   "definition": {
+    "en": "Spark's distributed machine learning library offering classification, regression, clustering (e.g. K-means), feature transformation and ML pipelines. Choose it for distributed ML and feature work inside Spark; GraphX is for graphs, not ML pipelines.",
+    "vi": "Thư viện machine learning phân tán của Spark cung cấp phân loại, hồi quy, phân cụm (ví dụ K-means), biến đổi feature và ML pipeline. Chọn cho ML và feature phân tán trong Spark; GraphX dành cho đồ thị, không phải ML pipeline."
+   }
+  },
+  {
+   "id": "curse-of-dimensionality",
+   "term": "Curse of dimensionality",
+   "lecture": "03-005",
+   "definition": {
+    "en": "As the number of features grows, data becomes sparse and models need exponentially more data and compute, hurting accuracy. Mitigate it with feature selection or dimensionality reduction such as PCA or t-SNE.",
+    "vi": "Khi số lượng feature tăng, dữ liệu trở nên thưa và model cần nhiều dữ liệu cùng tính toán theo cấp số nhân, làm giảm độ chính xác. Giảm thiểu bằng feature selection hoặc giảm chiều như PCA hoặc t-SNE."
+   }
+  },
+  {
+   "id": "tf-idf",
+   "term": "TF-IDF",
+   "lecture": "03-005",
+   "definition": {
+    "en": "Term Frequency times Inverse Document Frequency: a text feature that weights a word by how often it appears in a document while down-weighting words common across all documents. Use it to represent document relevance for search and text models.",
+    "vi": "Term Frequency nhân Inverse Document Frequency: feature văn bản gán trọng số cho từ theo tần suất xuất hiện trong tài liệu và giảm trọng số các từ phổ biến ở mọi tài liệu. Dùng để biểu diễn độ liên quan của tài liệu cho tìm kiếm và model văn bản."
+   }
+  },
+  {
+   "id": "imputation",
+   "term": "Imputing missing data",
+   "lecture": "03-008",
+   "definition": {
+    "en": "Fill missing values using mean, median (more robust to outliers), mode for categoricals, or model-based approaches such as KNN or regression; dropping rows loses data. Median is the simple baseline when outliers are present.",
+    "vi": "Điền giá trị thiếu bằng mean, median (bền vững hơn với outlier), mode cho categorical, hoặc các cách dựa trên model như KNN hoặc hồi quy; bỏ dòng sẽ mất dữ liệu. Median là baseline đơn giản khi có outlier."
+   }
+  },
+  {
+   "id": "unbalanced-data",
+   "term": "Unbalanced data",
+   "lecture": "03-009",
+   "definition": {
+    "en": "When the positive class is rare (e.g. fraud), accuracy is misleading and models learn to predict the majority class. Fix by oversampling the minority class, undersampling the majority, or generating synthetic samples with SMOTE; evaluate with precision, recall and F1 rather than accuracy.",
+    "vi": "Khi lớp positive hiếm (ví dụ gian lận), accuracy gây hiểu lầm và model học cách dự đoán lớp đa số. Khắc phục bằng oversampling lớp thiểu số, undersampling lớp đa số hoặc tạo mẫu tổng hợp bằng SMOTE; đánh giá bằng precision, recall và F1 thay vì accuracy."
+   }
+  },
+  {
+   "id": "smote",
+   "term": "SMOTE",
+   "lecture": "03-009",
+   "definition": {
+    "en": "Synthetic Minority Over-sampling Technique: creates new synthetic minority-class samples by interpolating between a sample and its nearest neighbors, rather than duplicating rows. Choose it to rebalance a rare-class dataset.",
+    "vi": "Synthetic Minority Over-sampling Technique: tạo mẫu tổng hợp mới cho lớp thiểu số bằng nội suy giữa một mẫu và các láng giềng gần nhất, thay vì nhân bản dòng. Chọn để cân bằng lại dataset có lớp hiếm."
+   }
+  },
+  {
+   "id": "outliers",
+   "term": "Handling outliers",
+   "lecture": "03-010",
+   "definition": {
+    "en": "Detect outliers with standard deviation or IQR rules (or Random Cut Forest) and remove them when they are understood and outside the target population (e.g. bots); otherwise keep or cap them. Median/robust statistics reduce their influence.",
+    "vi": "Phát hiện outlier bằng quy tắc độ lệch chuẩn hoặc IQR (hoặc Random Cut Forest) và loại bỏ khi chúng đã được hiểu rõ và nằm ngoài tập đối tượng mục tiêu (ví dụ bot); nếu không thì giữ lại hoặc giới hạn. Median/thống kê bền vững giảm ảnh hưởng của chúng."
+   }
+  },
+  {
+   "id": "one-hot-encoding",
+   "term": "One-hot encoding",
+   "lecture": "03-011",
+   "definition": {
+    "en": "Converts a nominal categorical feature into one binary indicator column per category, avoiding a false numeric order. Use it for categories with no natural order (e.g. cuisine type) when the model needs numeric input.",
+    "vi": "Chuyển feature categorical danh nghĩa thành một cột nhị phân cho mỗi category, tránh thứ tự số giả. Dùng cho category không có thứ tự tự nhiên (ví dụ loại ẩm thực) khi model cần đầu vào số."
+   }
+  },
+  {
+   "id": "feature-scaling",
+   "term": "Normalization and standardization (scaling)",
+   "lecture": "03-011",
+   "definition": {
+    "en": "Rescale numeric features to comparable ranges (min-max to 0-1, or z-score to mean 0 and standard deviation 1) so large-magnitude features do not dominate gradient-based models such as neural networks and distance-based models. Tree-based models do not need it.",
+    "vi": "Đưa các feature số về khoảng giá trị tương đương (min-max về 0-1, hoặc z-score về mean 0 và độ lệch chuẩn 1) để feature có độ lớn lớn không lấn át các model dựa trên gradient như neural network và model dựa trên khoảng cách. Model dạng cây không cần."
+   }
+  },
+  {
+   "id": "data-masking",
+   "term": "Data masking and anonymization",
+   "lecture": "03-013",
+   "definition": {
+    "en": "Protects PII by obscuring or replacing sensitive values (e.g. keeping only the last four digits), hashing, tokenizing, or removing them before analysis or training. Choose masking when part of the value must remain usable.",
+    "vi": "Bảo vệ PII bằng cách che hoặc thay thế giá trị nhạy cảm (ví dụ chỉ giữ bốn chữ số cuối), băm, tokenization hoặc loại bỏ trước khi phân tích hoặc huấn luyện. Chọn masking khi một phần giá trị vẫn cần dùng được."
+   }
+  },
+  {
+   "id": "data-integrity",
+   "term": "Data integrity for AI training",
+   "lecture": "03-014",
+   "definition": {
+    "en": "Ensure training data is accurate, complete, consistent and free of corruption or tampering, using validation, checksums, versioning, lineage and quality checks (e.g. Glue Data Quality). Poor integrity produces biased or unreliable models.",
+    "vi": "Đảm bảo dữ liệu huấn luyện chính xác, đầy đủ, nhất quán và không bị hỏng hoặc giả mạo, bằng validation, checksum, versioning, lineage và kiểm tra chất lượng (ví dụ Glue Data Quality). Tính toàn vẹn kém tạo ra model thiên lệch hoặc không đáng tin."
+   }
+  },
+  {
+   "id": "sagemaker-ai",
+   "term": "Amazon SageMaker AI",
+   "lecture": "03-016",
+   "definition": {
+    "en": "AWS's fully managed service to build, train and deploy ML models (renamed from SageMaker in 2025; the exam covers SageMaker AI, not Unified Studio). It covers data prep, training, tuning, hosting and monitoring.",
+    "vi": "Dịch vụ được quản lý hoàn toàn của AWS để xây dựng, huấn luyện và triển khai model ML (đổi tên từ SageMaker năm 2025; kỳ thi bao gồm SageMaker AI, không phải Unified Studio). Bao gồm chuẩn bị dữ liệu, huấn luyện, tuning, hosting và giám sát."
+   }
+  },
+  {
+   "id": "ground-truth",
+   "term": "SageMaker Ground Truth",
+   "lecture": "03-019",
+   "definition": {
+    "en": "Service for labeling training data using human labelers (private workforce, vendors or Mechanical Turk) with active learning to auto-label easy items and reduce cost. Choose it to create labeled datasets.",
+    "vi": "Dịch vụ gắn nhãn dữ liệu huấn luyện bằng người gắn nhãn (workforce riêng, vendor hoặc Mechanical Turk) kết hợp active learning để tự động gắn nhãn các mục dễ và giảm chi phí. Chọn để tạo dataset có nhãn."
+   }
+  },
+  {
+   "id": "data-wrangler",
+   "term": "SageMaker Data Wrangler",
+   "lecture": "03-020",
+   "definition": {
+    "en": "Visual tool inside SageMaker Studio/Canvas to import, explore, transform and visualize data with 300+ built-in transforms and no code, and export to pipelines or Feature Store. It can also run bias analysis. Its UI is being folded into Canvas.",
+    "vi": "Công cụ trực quan trong SageMaker Studio/Canvas để import, khám phá, biến đổi và trực quan hóa dữ liệu với hơn 300 phép biến đổi dựng sẵn mà không cần code, rồi xuất sang pipeline hoặc Feature Store. Cũng chạy được phân tích bias. Giao diện đang được gộp vào Canvas."
+   }
+  },
+  {
+   "id": "pretraining-bias",
+   "term": "Pre-training bias metrics (CI, DPL)",
+   "lecture": "03-023",
+   "definition": {
+    "en": "Metrics computed on the data before training, such as Class Imbalance (CI) and Difference in Proportions of Labels (DPL), to detect bias across facets. SageMaker Clarify computes them; mitigate by rebalancing data.",
+    "vi": "Các metric tính trên dữ liệu trước khi huấn luyện, như Class Imbalance (CI) và Difference in Proportions of Labels (DPL), để phát hiện bias giữa các facet. SageMaker Clarify tính chúng; giảm thiểu bằng cách cân bằng lại dữ liệu."
+   }
+  },
+  {
+   "id": "shap-pdp",
+   "term": "SHAP and Partial Dependence Plots",
+   "lecture": "03-024",
+   "definition": {
+    "en": "Explainability techniques: SHAP (Shapley values) attributes each prediction to feature contributions, while a PDP shows the marginal effect of a feature on predictions. SageMaker Clarify provides SHAP-based feature attributions.",
+    "vi": "Kỹ thuật giải thích model: SHAP (Shapley values) quy mỗi dự đoán về đóng góp của từng feature, còn PDP cho thấy ảnh hưởng biên của một feature lên dự đoán. SageMaker Clarify cung cấp feature attribution dựa trên SHAP."
+   }
+  },
+  {
+   "id": "feature-store",
+   "term": "SageMaker Feature Store",
+   "lecture": "03-025",
+   "definition": {
+    "en": "Central repository to store, share and reuse ML features, with an online store for low-latency inference and an offline store (S3) for training, keeping features consistent between training and serving. Choose it to avoid training/serving skew and duplicated feature work.",
+    "vi": "Kho trung tâm để lưu trữ, chia sẻ và tái sử dụng feature ML, có online store cho suy luận độ trễ thấp và offline store (S3) cho huấn luyện, giữ feature nhất quán giữa huấn luyện và phục vụ. Chọn để tránh training/serving skew và công việc feature trùng lặp."
+   }
+  },
+  {
+   "id": "sagemaker-canvas",
+   "term": "SageMaker Canvas",
+   "lecture": "03-026",
+   "definition": {
+    "en": "No-code visual interface that lets business analysts build ML models and generate predictions without writing code, including data preparation. Choose it for citizen-data-scientist scenarios.",
+    "vi": "Giao diện trực quan no-code cho phép business analyst xây dựng model ML và tạo dự đoán mà không cần viết code, gồm cả chuẩn bị dữ liệu. Chọn cho các kịch bản citizen data scientist."
+   }
+  },
+  {
+   "id": "aws-glue",
+   "term": "AWS Glue",
+   "lecture": "03-027",
+   "definition": {
+    "en": "Serverless ETL and data integration service with a Data Catalog, crawlers that infer schemas, and Spark-based jobs. Choose it for managed ETL and for cataloging S3 data so Athena, EMR and Redshift Spectrum can query it.",
+    "vi": "Dịch vụ ETL và tích hợp dữ liệu serverless với Data Catalog, crawler suy luận schema và job dựa trên Spark. Chọn cho ETL được quản lý và lập danh mục dữ liệu S3 để Athena, EMR và Redshift Spectrum truy vấn."
+   }
+  },
+  {
+   "id": "glue-data-quality",
+   "term": "AWS Glue Data Quality",
+   "lecture": "03-029",
+   "definition": {
+    "en": "A Glue step that evaluates incoming data against rules written in DQDL (Data Quality Definition Language) or recommended automatically, and can fail the job or log to CloudWatch when rules are violated.",
+    "vi": "Một bước trong Glue đánh giá dữ liệu đầu vào theo các quy tắc viết bằng DQDL (Data Quality Definition Language) hoặc được đề xuất tự động, và có thể làm job thất bại hoặc ghi log vào CloudWatch khi vi phạm quy tắc."
+   }
+  },
+  {
+   "id": "glue-databrew",
+   "term": "AWS Glue DataBrew",
+   "lecture": "03-030",
+   "definition": {
+    "en": "Visual, no-code data preparation tool with 250+ prebuilt transformations organized as recipes, plus data profiling and PII handling (e.g. masking, hashing, encryption). Choose it for analysts cleaning and normalizing data without code.",
+    "vi": "Công cụ chuẩn bị dữ liệu trực quan, no-code với hơn 250 phép biến đổi dựng sẵn tổ chức thành recipe, cùng data profiling và xử lý PII (ví dụ masking, hashing, mã hóa). Chọn cho analyst làm sạch và chuẩn hóa dữ liệu không cần code."
+   }
+  },
+  {
+   "id": "amazon-athena",
+   "term": "Amazon Athena",
+   "lecture": "03-033",
+   "definition": {
+    "en": "Serverless interactive SQL query service over data in S3 (based on Presto/Trino), priced by data scanned and using the Glue Data Catalog for table definitions. Choose it for ad hoc queries on data lakes.",
+    "vi": "Dịch vụ truy vấn SQL tương tác serverless trên dữ liệu S3 (dựa trên Presto/Trino), tính phí theo lượng dữ liệu quét và dùng Glue Data Catalog cho định nghĩa bảng. Chọn cho truy vấn ad hoc trên data lake."
+   }
+  },
+  {
+   "id": "athena-ctas",
+   "term": "Athena CTAS",
+   "lecture": "03-035",
+   "definition": {
+    "en": "CREATE TABLE AS SELECT creates a new table from query results, storing it in S3 in a chosen format (e.g. Parquet) with optional partitioning and compression. Use it to convert formats and cut scan cost.",
+    "vi": "CREATE TABLE AS SELECT tạo bảng mới từ kết quả truy vấn, lưu trong S3 ở định dạng tùy chọn (ví dụ Parquet) với partitioning và nén tùy chọn. Dùng để chuyển đổi định dạng và giảm chi phí quét."
+   }
+  },
+  {
+   "id": "athena-performance",
+   "term": "Athena performance and cost",
+   "lecture": "03-036",
+   "definition": {
+    "en": "Reduce scanned data and cost by using columnar formats (Parquet/ORC), compression, partitioning, bucketing and fewer, larger files. Queries are billed per data scanned.",
+    "vi": "Giảm dữ liệu quét và chi phí bằng định dạng columnar (Parquet/ORC), nén, partitioning, bucketing và ít file nhưng lớn hơn. Truy vấn được tính phí theo dữ liệu quét."
+   }
+  },
+  {
+   "id": "athena-acid",
+   "term": "Athena ACID transactions (Iceberg)",
+   "lecture": "03-037",
+   "definition": {
+    "en": "Athena supports ACID transactions through Apache Iceberg tables (table_type = ICEBERG), enabling safe concurrent row-level inserts, updates and deletes without custom locking, plus time travel to recover recently deleted data.",
+    "vi": "Athena hỗ trợ giao dịch ACID qua bảng Apache Iceberg (table_type = ICEBERG), cho phép insert, update, delete cấp dòng đồng thời an toàn mà không cần khóa tùy chỉnh, cùng time travel để khôi phục dữ liệu mới xóa."
+   }
+  },
+  {
+   "id": "athena-fine-grained",
+   "term": "Athena fine-grained access control",
+   "lecture": "03-038",
+   "definition": {
+    "en": "Control who can query which data using IAM policies and workgroups, plus Lake Formation permissions for database, table, column and row-level access. Choose Lake Formation when you need column- or row-level security.",
+    "vi": "Kiểm soát ai truy vấn được dữ liệu nào bằng IAM policy và workgroup, cùng quyền Lake Formation cho truy cập cấp database, bảng, cột và dòng. Chọn Lake Formation khi cần bảo mật cấp cột hoặc dòng."
+   }
+  }
+ ]
+}

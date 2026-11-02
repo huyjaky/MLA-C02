@@ -1,0 +1,176 @@
+{
+ "section": "11",
+ "terms": [
+  {
+   "id": "cloudwatch-metrics",
+   "term": "CloudWatch metrics and dimensions",
+   "lecture": "11-002",
+   "definition": {
+    "en": "Metrics are time-series data points per namespace; dimensions (up to 30) are name-value attributes such as instance ID or variant that identify a metric. Custom metrics can be pushed, with high resolution down to 1 second.",
+    "vi": "Metric là các điểm dữ liệu chuỗi thời gian theo namespace; dimension (tối đa 30) là thuộc tính name-value như instance ID hay variant để xác định metric. Có thể đẩy custom metric, độ phân giải cao tới 1 giây."
+   }
+  },
+  {
+   "id": "cloudwatch-metric-streams",
+   "term": "CloudWatch Metric Streams",
+   "lecture": "11-002",
+   "definition": {
+    "en": "Continuously stream selected metrics in near real time through Kinesis Data Firehose to S3, Datadog, Splunk and other destinations. Use it for low-latency metric export to third parties.",
+    "vi": "Liên tục stream các metric được chọn gần thời gian thực qua Kinesis Data Firehose tới S3, Datadog, Splunk và các đích khác. Dùng để xuất metric độ trễ thấp cho bên thứ ba."
+   }
+  },
+  {
+   "id": "cloudwatch-logs",
+   "term": "CloudWatch Logs",
+   "lecture": "11-003",
+   "definition": {
+    "en": "Log groups and log streams with configurable retention, encryption with KMS, and destinations such as S3, Kinesis, Firehose and Lambda. Logs Insights provides a query language for searching and aggregating logs.",
+    "vi": "Log group và log stream với retention cấu hình được, mã hóa bằng KMS, và đích như S3, Kinesis, Firehose và Lambda. Logs Insights cung cấp ngôn ngữ truy vấn để tìm kiếm và tổng hợp log."
+   }
+  },
+  {
+   "id": "logs-insights",
+   "term": "CloudWatch Logs Insights",
+   "lecture": "11-003",
+   "definition": {
+    "en": "Query language to search, filter, aggregate and visualize log data across multiple log groups, with queries saveable to dashboards. It queries data, it is not real time streaming.",
+    "vi": "Ngôn ngữ truy vấn để tìm kiếm, lọc, tổng hợp và trực quan hóa log trên nhiều log group, query có thể lưu vào dashboard. Nó truy vấn dữ liệu, không phải streaming thời gian thực."
+   }
+  },
+  {
+   "id": "logs-subscription-filter",
+   "term": "Logs subscription filter vs S3 export",
+   "lecture": "11-003",
+   "definition": {
+    "en": "A subscription filter sends matching log events in near real time to Lambda, Kinesis Data Streams or Firehose. An S3 export task is batch and can take up to 12 hours, so it is not real time.",
+    "vi": "Subscription filter gửi các log event khớp điều kiện gần thời gian thực tới Lambda, Kinesis Data Streams hoặc Firehose. S3 export task là batch và có thể mất tới 12 giờ nên không phải real time."
+   }
+  },
+  {
+   "id": "cloudwatch-unified-agent",
+   "term": "CloudWatch Unified Agent",
+   "lecture": "11-005",
+   "definition": {
+    "en": "Installed on EC2 or on-premises servers to collect logs plus system-level metrics such as RAM, disk and processes that default EC2 metrics do not include. Configure it through SSM Parameter Store.",
+    "vi": "Cài trên EC2 hoặc server on-premises để thu thập log và metric cấp hệ thống như RAM, disk, process mà metric EC2 mặc định không có. Cấu hình qua SSM Parameter Store."
+   }
+  },
+  {
+   "id": "cloudwatch-alarms",
+   "term": "CloudWatch Alarms",
+   "lecture": "11-006",
+   "definition": {
+    "en": "Alarms have states OK, INSUFFICIENT_DATA and ALARM and trigger actions: EC2 actions, Auto Scaling or SNS notifications. Composite alarms combine multiple alarms with AND/OR to reduce alert noise.",
+    "vi": "Alarm có các trạng thái OK, INSUFFICIENT_DATA và ALARM và kích hoạt hành động: EC2 action, Auto Scaling hoặc thông báo SNS. Composite alarm kết hợp nhiều alarm bằng AND/OR để giảm nhiễu cảnh báo."
+   }
+  },
+  {
+   "id": "ec2-instance-recovery",
+   "term": "EC2 instance recovery alarm action",
+   "lecture": "11-006",
+   "definition": {
+    "en": "A CloudWatch alarm on StatusCheckFailed_System can recover an instance onto new hardware, keeping its private/public IP, Elastic IP and metadata.",
+    "vi": "Alarm CloudWatch trên StatusCheckFailed_System có thể khôi phục instance sang phần cứng mới, giữ nguyên private/public IP, Elastic IP và metadata."
+   }
+  },
+  {
+   "id": "aws-x-ray",
+   "term": "AWS X-Ray",
+   "lecture": "11-008",
+   "definition": {
+    "en": "Distributed tracing service that follows a request across microservices, builds a service map and pinpoints latency and errors. Uses segments and subsegments, an SDK and a daemon. Choose it for end-to-end request troubleshooting.",
+    "vi": "Dịch vụ distributed tracing theo dõi một request qua các microservice, tạo service map và chỉ ra độ trễ và lỗi. Dùng segment và subsegment, SDK và daemon. Chọn cho việc xử lý sự cố request end-to-end."
+   }
+  },
+  {
+   "id": "quicksight-spice",
+   "term": "QuickSight and SPICE",
+   "lecture": "11-011",
+   "definition": {
+    "en": "QuickSight is serverless BI for interactive dashboards. SPICE is its in-memory, columnar calculation engine for fast queries on imported data. Now branded Quick Sight within Quick Suite.",
+    "vi": "QuickSight là BI serverless cho dashboard tương tác. SPICE là engine tính toán columnar, in-memory để truy vấn nhanh trên dữ liệu đã import. Hiện mang tên Quick Sight trong Quick Suite."
+   }
+  },
+  {
+   "id": "quicksight-q",
+   "term": "QuickSight Q",
+   "lecture": "11-011",
+   "definition": {
+    "en": "Machine-learning-powered feature that answers business questions typed in natural language against configured topics (curated datasets).",
+    "vi": "Tính năng chạy bằng machine learning, trả lời câu hỏi nghiệp vụ gõ bằng ngôn ngữ tự nhiên trên các topic (dataset đã chuẩn bị) đã cấu hình."
+   }
+  },
+  {
+   "id": "quicksight-visuals",
+   "term": "Choosing QuickSight visual types",
+   "lecture": "11-012",
+   "definition": {
+    "en": "Match the chart to the question: bar charts to compare categories, line charts for trends over time, pie/donut for parts of a whole, scatter plots for correlation, heat maps for intensity across two dimensions, KPIs for single values.",
+    "vi": "Chọn biểu đồ theo câu hỏi: bar chart để so sánh hạng mục, line chart cho xu hướng theo thời gian, pie/donut cho tỉ lệ thành phần, scatter plot cho tương quan, heat map cho cường độ theo hai chiều, KPI cho một giá trị."
+   }
+  },
+  {
+   "id": "aws-cloudtrail",
+   "term": "AWS CloudTrail",
+   "lecture": "11-013",
+   "definition": {
+    "en": "Records API calls and events made in your account via console, SDK, CLI and services, for governance, compliance and auditing. Event history is kept 90 days; send trails to S3 or CloudWatch Logs for longer. Use it to find who did what and when.",
+    "vi": "Ghi lại các lệnh gọi API và sự kiện trong account qua console, SDK, CLI và dịch vụ, phục vụ governance, tuân thủ và audit. Event history lưu 90 ngày; gửi trail tới S3 hoặc CloudWatch Logs để lưu lâu hơn. Dùng để biết ai làm gì và khi nào."
+   }
+  },
+  {
+   "id": "cloudtrail-event-types",
+   "term": "CloudTrail event types",
+   "lecture": "11-013",
+   "definition": {
+    "en": "Management events (control-plane operations, logged by default, read vs write), data events (e.g., S3 object or Lambda invoke, off by default) and Insights events that detect unusual write API activity.",
+    "vi": "Management event (thao tác control-plane, ghi mặc định, chia read và write), data event (ví dụ S3 object hoặc Lambda invoke, tắt mặc định) và Insights event phát hiện hoạt động ghi API bất thường."
+   }
+  },
+  {
+   "id": "aws-config",
+   "term": "AWS Config",
+   "lecture": "11-015",
+   "definition": {
+    "en": "Records resource configuration changes over time and evaluates resources against compliance rules (managed or custom), with remediation through SSM. Choose it to track configuration history and compliance, not performance or API callers.",
+    "vi": "Ghi lại thay đổi cấu hình tài nguyên theo thời gian và đánh giá tài nguyên theo các compliance rule (managed hoặc custom), có remediation qua SSM. Chọn để theo dõi lịch sử cấu hình và tuân thủ, không phải hiệu năng hay người gọi API."
+   }
+  },
+  {
+   "id": "cloudwatch-vs-cloudtrail-vs-config",
+   "term": "CloudWatch vs CloudTrail vs Config",
+   "lecture": "11-017",
+   "definition": {
+    "en": "CloudWatch: performance metrics, logs and alarms. CloudTrail: who made which API call. Config: what the resource configuration is and whether it is compliant. They are complementary.",
+    "vi": "CloudWatch: metric hiệu năng, log và alarm. CloudTrail: ai thực hiện lệnh gọi API nào. Config: cấu hình tài nguyên là gì và có tuân thủ hay không. Ba dịch vụ bổ trợ cho nhau."
+   }
+  },
+  {
+   "id": "aws-budgets",
+   "term": "AWS Budgets",
+   "lecture": "11-018",
+   "definition": {
+    "en": "Create usage, cost, reservation or Savings Plans budgets and send alerts when actual or forecasted spend exceeds thresholds (up to five notifications per budget). More granular than billing alarms.",
+    "vi": "Tạo budget theo usage, cost, reservation hoặc Savings Plans và gửi cảnh báo khi chi phí thực tế hoặc dự báo vượt ngưỡng (tối đa năm thông báo mỗi budget). Chi tiết hơn billing alarm."
+   }
+  },
+  {
+   "id": "aws-cost-explorer",
+   "term": "AWS Cost Explorer",
+   "lecture": "11-020",
+   "definition": {
+    "en": "Visualize and analyze cost and usage over time at monthly, hourly or resource level, get Savings Plans recommendations and forecast usage up to 18 months. It is the main billing analysis tool on the exam.",
+    "vi": "Trực quan hóa và phân tích chi phí và mức sử dụng theo tháng, giờ hoặc cấp resource, nhận gợi ý Savings Plans và dự báo mức dùng tới 18 tháng. Đây là công cụ phân tích billing chính của kỳ thi."
+   }
+  },
+  {
+   "id": "aws-trusted-advisor",
+   "term": "AWS Trusted Advisor",
+   "lecture": "11-021",
+   "definition": {
+    "en": "Account-level assessment with checks in cost optimization, performance, security, fault tolerance, service limits and operational excellence. Full checks need a Business or Enterprise support plan; core checks are free.",
+    "vi": "Đánh giá cấp account với các check về tối ưu chi phí, hiệu năng, bảo mật, fault tolerance, service limits và operational excellence. Full check cần gói support Business hoặc Enterprise; core check miễn phí."
+   }
+  }
+ ]
+}

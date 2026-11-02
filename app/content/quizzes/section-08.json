@@ -1,0 +1,486 @@
+{
+ "id": "section-08",
+ "kind": "section",
+ "section": "08",
+ "title": {
+  "en": "Developing Generative AI Applications with Bedrock",
+  "vi": "Xây dựng ứng dụng Generative AI với Bedrock"
+ },
+ "description": {
+  "en": "<p>Test your knowledge from this section of the course.</p>",
+  "vi": "<p>Kiểm tra kiến thức của bạn từ phần này của khóa học.</p>"
+ },
+ "passPercent": 70,
+ "questions": [
+  {
+   "id": 87793383,
+   "multi": false,
+   "question": {
+    "en": "<p>A production Lambda function invokes a Bedrock model and must follow least privilege without storing long-term bearer credentials. Which authentication approach should it use?</p>",
+    "vi": "<p>Một Lambda function production gọi model Bedrock và phải tuân thủ least privilege mà không lưu bearer credential dài hạn. Nên dùng cách xác thực nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use a long-term Bedrock API key</p>",
+     "vi": "<p>Dùng Bedrock API key dài hạn</p>"
+    },
+    {
+     "en": "<p>Use an IAM execution role</p>",
+     "vi": "<p>Dùng IAM execution role</p>"
+    },
+    {
+     "en": "<p>Use the AWS account root user</p>",
+     "vi": "<p>Dùng AWS account root user</p>"
+    },
+    {
+     "en": "<p>Use a hard-coded access key</p>",
+     "vi": "<p>Dùng access key hard-code</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Long-term API keys are intended for exploration and development rather than production workloads.</p>",
+     "vi": "<p>Sai. API key dài hạn dành cho khám phá và phát triển, không dành cho workload production.</p>"
+    },
+    {
+     "en": "<p>Correct. An IAM execution role supplies temporary credentials and supports least-privilege policies.</p>",
+     "vi": "<p>Đúng. IAM execution role cấp credential tạm thời và hỗ trợ policy least privilege.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Root should not be used for Bedrock application calls.</p>",
+     "vi": "<p>Sai. Không nên dùng root cho các lệnh gọi Bedrock của ứng dụng.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Hard-coded credentials create avoidable security risk.</p>",
+     "vi": "<p>Sai. Credential hard-code tạo ra rủi ro bảo mật hoàn toàn có thể tránh được.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87793399,
+   "multi": false,
+   "question": {
+    "en": "<p>An application must send prompts to a foundation model and receive generated responses. Which Bedrock API endpoint should it call?</p>",
+    "vi": "<p>Một ứng dụng cần gửi prompt tới foundation model và nhận phản hồi được sinh ra. Nó nên gọi Bedrock API endpoint nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Call the bedrock-agent control endpoint</p>",
+     "vi": "<p>Gọi endpoint điều khiển bedrock-agent</p>"
+    },
+    {
+     "en": "<p>Call the bedrock model-control endpoint</p>",
+     "vi": "<p>Gọi endpoint điều khiển model của bedrock</p>"
+    },
+    {
+     "en": "<p>Call the bedrock-agent-runtime endpoint</p>",
+     "vi": "<p>Gọi endpoint bedrock-agent-runtime</p>"
+    },
+    {
+     "en": "<p>Call the bedrock-runtime endpoint</p>",
+     "vi": "<p>Gọi endpoint bedrock-runtime</p>"
+    }
+   ],
+   "answer": [
+    3
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. The agent control endpoint manages agents and knowledge bases.</p>",
+     "vi": "<p>Sai. Endpoint điều khiển agent dùng để quản lý agent và knowledge base.</p>"
+    },
+    {
+     "en": "<p>Incorrect. The Bedrock control endpoint manages and customizes models.</p>",
+     "vi": "<p>Sai. Endpoint điều khiển của Bedrock dùng để quản lý và tùy chỉnh model.</p>"
+    },
+    {
+     "en": "<p>Incorrect. bedrock-agent-runtime invokes agents or retrieves from knowledge bases.</p>",
+     "vi": "<p>Sai. bedrock-agent-runtime dùng để gọi agent hoặc truy xuất từ knowledge base.</p>"
+    },
+    {
+     "en": "<p>Correct. bedrock-runtime performs model inference through operations such as Converse and InvokeModel.</p>",
+     "vi": "<p>Đúng. bedrock-runtime thực hiện model inference qua các operation như Converse và InvokeModel.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87793593,
+   "multi": false,
+   "question": {
+    "en": "<p>A company wants task-specific model behavior but can train only a small number of additional parameters. The base model must remain unchanged. Which technique should it choose?</p>",
+    "vi": "<p>Một công ty muốn model có hành vi riêng cho từng tác vụ nhưng chỉ huấn luyện được một lượng nhỏ tham số bổ sung. Model gốc phải giữ nguyên. Nên chọn kỹ thuật nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Choose full model retraining</p>",
+     "vi": "<p>Chọn huấn luyện lại toàn bộ model</p>"
+    },
+    {
+     "en": "<p>Choose fixed-size chunking</p>",
+     "vi": "<p>Chọn chunking kích thước cố định</p>"
+    },
+    {
+     "en": "<p>Choose retrieval-only indexing</p>",
+     "vi": "<p>Chọn lập chỉ mục chỉ để truy xuất</p>"
+    },
+    {
+     "en": "<p>Choose Low-Rank Adaptation</p>",
+     "vi": "<p>Chọn Low-Rank Adaptation</p>"
+    }
+   ],
+   "answer": [
+    3
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Full retraining updates far more parameters and costs more.</p>",
+     "vi": "<p>Sai. Huấn luyện lại toàn bộ cập nhật nhiều tham số hơn nhiều và tốn kém hơn.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Chunking prepares documents for retrieval rather than adapting model weights.</p>",
+     "vi": "<p>Sai. Chunking chuẩn bị tài liệu cho truy xuất, không điều chỉnh trọng số model.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Retrieval supplies context but does not create task-specific weights.</p>",
+     "vi": "<p>Sai. Truy xuất cung cấp ngữ cảnh nhưng không tạo ra trọng số riêng cho tác vụ.</p>"
+    },
+    {
+     "en": "<p>Correct. LoRA trains efficient low-rank weight additions while leaving the base model unchanged.</p>",
+     "vi": "<p>Đúng. LoRA huấn luyện các phần bổ sung low-rank hiệu quả và giữ nguyên model gốc.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87793621,
+   "multi": false,
+   "question": {
+    "en": "<p>A legal firm wants a model to absorb a large corpus of unlabeled internal documents. It does not have prompt-completion pairs. Which customization method fits this data?</p>",
+    "vi": "<p>Một công ty luật muốn model hấp thụ một kho lớn tài liệu nội bộ không gắn nhãn. Họ không có cặp prompt-completion. Phương pháp tùy chỉnh nào phù hợp với dữ liệu này?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use continued pre-training</p>",
+     "vi": "<p>Dùng continued pre-training</p>"
+    },
+    {
+     "en": "<p>Use supervised fine-tuning</p>",
+     "vi": "<p>Dùng supervised fine-tuning</p>"
+    },
+    {
+     "en": "<p>Use model reranking</p>",
+     "vi": "<p>Dùng model reranking</p>"
+    },
+    {
+     "en": "<p>Use prompt management</p>",
+     "vi": "<p>Dùng prompt management</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Correct. Continued pre-training adapts a model using unlabeled domain text.</p>",
+     "vi": "<p>Đúng. Continued pre-training điều chỉnh model bằng văn bản miền không gắn nhãn.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Supervised fine-tuning requires labeled prompt-completion examples.</p>",
+     "vi": "<p>Sai. Supervised fine-tuning cần các ví dụ prompt-completion có gắn nhãn.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Reranking reorders retrieved passages and does not train the model.</p>",
+     "vi": "<p>Sai. Reranking sắp xếp lại các đoạn đã truy xuất và không huấn luyện model.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Prompt Management stores reusable prompts rather than learning from a corpus.</p>",
+     "vi": "<p>Sai. Prompt Management lưu các prompt tái sử dụng, không học từ kho dữ liệu.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87793629,
+   "multi": false,
+   "question": {
+    "en": "<p>A contact center wants a smaller model with lower latency that approximates a large model on representative support tasks. Which approach should it use?</p>",
+    "vi": "<p>Một contact center muốn một model nhỏ hơn, độ trễ thấp hơn, xấp xỉ một model lớn trên các tác vụ hỗ trợ tiêu biểu. Nên dùng cách nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Apply semantic document chunking</p>",
+     "vi": "<p>Áp dụng semantic chunking cho tài liệu</p>"
+    },
+    {
+     "en": "<p>Perform model distillation</p>",
+     "vi": "<p>Thực hiện model distillation</p>"
+    },
+    {
+     "en": "<p>Increase the teacher temperature</p>",
+     "vi": "<p>Tăng temperature của teacher</p>"
+    },
+    {
+     "en": "<p>Add a larger context window</p>",
+     "vi": "<p>Thêm context window lớn hơn</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Chunking improves retrieval granularity, not model size.</p>",
+     "vi": "<p>Sai. Chunking cải thiện độ mịn truy xuất, không làm giảm kích thước model.</p>"
+    },
+    {
+     "en": "<p>Correct. Distillation uses a teacher's outputs to train a smaller task-focused student model.</p>",
+     "vi": "<p>Đúng. Distillation dùng đầu ra của teacher để huấn luyện một student model nhỏ hơn, tập trung vào tác vụ.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Temperature changes output randomness and does not create a smaller model.</p>",
+     "vi": "<p>Sai. Temperature thay đổi mức ngẫu nhiên của đầu ra và không tạo ra model nhỏ hơn.</p>"
+    },
+    {
+     "en": "<p>Incorrect. A larger context window can increase cost rather than reduce model size.</p>",
+     "vi": "<p>Sai. Context window lớn hơn có thể làm tăng chi phí chứ không giảm kích thước model.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87793671,
+   "multi": false,
+   "question": {
+    "en": "<p>A policy assistant must answer from documents that change every week. The company wants updates without retraining model weights and needs source-grounded context. Which design is MOST appropriate?</p>",
+    "vi": "<p>Một trợ lý chính sách phải trả lời từ các tài liệu thay đổi hàng tuần. Công ty muốn cập nhật mà không huấn luyện lại trọng số model và cần ngữ cảnh bám sát nguồn. Thiết kế nào phù hợp NHẤT?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use full fine-tuning after each change</p>",
+     "vi": "<p>Dùng full fine-tuning sau mỗi lần thay đổi</p>"
+    },
+    {
+     "en": "<p>Use continued pre-training each week</p>",
+     "vi": "<p>Dùng continued pre-training mỗi tuần</p>"
+    },
+    {
+     "en": "<p>Use a Bedrock Knowledge Base with RAG</p>",
+     "vi": "<p>Dùng Bedrock Knowledge Base với RAG</p>"
+    },
+    {
+     "en": "<p>Use a higher inference temperature</p>",
+     "vi": "<p>Dùng inference temperature cao hơn</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Repeated fine-tuning is slow and unnecessary for frequently changing facts.</p>",
+     "vi": "<p>Sai. Fine-tuning lặp lại vừa chậm vừa không cần thiết với các sự kiện thay đổi thường xuyên.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Continued pre-training embeds knowledge in weights and is cumbersome to refresh.</p>",
+     "vi": "<p>Sai. Continued pre-training nhúng kiến thức vào trọng số và rất bất tiện để làm mới.</p>"
+    },
+    {
+     "en": "<p>Correct. RAG retrieves current documents from a knowledge base and adds them to the model context.</p>",
+     "vi": "<p>Đúng. RAG truy xuất tài liệu hiện hành từ knowledge base và thêm vào ngữ cảnh của model.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Higher temperature increases randomness and does not add current knowledge.</p>",
+     "vi": "<p>Sai. Temperature cao hơn làm tăng độ ngẫu nhiên và không bổ sung kiến thức hiện hành.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87793679,
+   "multi": false,
+   "question": {
+    "en": "<p>A semantic retrieval system must find passages similar in meaning even when they do not share exact keywords. What should it store and compare?</p>",
+    "vi": "<p>Một hệ thống truy xuất ngữ nghĩa phải tìm các đoạn có nghĩa tương tự dù không chung từ khóa chính xác. Nó nên lưu và so sánh cái gì?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Store and compare embedding vectors</p>",
+     "vi": "<p>Lưu và so sánh embedding vector</p>"
+    },
+    {
+     "en": "<p>Store and compare object version IDs</p>",
+     "vi": "<p>Lưu và so sánh object version ID</p>"
+    },
+    {
+     "en": "<p>Store and compare IAM policy SIDs</p>",
+     "vi": "<p>Lưu và so sánh IAM policy SID</p>"
+    },
+    {
+     "en": "<p>Store and compare CloudWatch dimensions</p>",
+     "vi": "<p>Lưu và so sánh CloudWatch dimension</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Correct. Embeddings place semantically similar content near one another in vector space.</p>",
+     "vi": "<p>Đúng. Embedding đặt nội dung tương tự về ngữ nghĩa gần nhau trong không gian vector.</p>"
+    },
+    {
+     "en": "<p>Incorrect. S3 version IDs track object revisions, not semantic meaning.</p>",
+     "vi": "<p>Sai. S3 version ID theo dõi các phiên bản của object, không biểu diễn ý nghĩa ngữ nghĩa.</p>"
+    },
+    {
+     "en": "<p>Incorrect. IAM statement IDs do not represent document semantics.</p>",
+     "vi": "<p>Sai. IAM statement ID không biểu diễn ngữ nghĩa của tài liệu.</p>"
+    },
+    {
+     "en": "<p>Incorrect. CloudWatch dimensions identify metric attributes.</p>",
+     "vi": "<p>Sai. CloudWatch dimension xác định các thuộc tính của metric.</p>"
+    }
+   ]
+  },
+  {
+   "id": 184674693,
+   "multi": false,
+   "question": {
+    "en": "<p>A RAG corpus contains product region and access-level fields. The application should restrict retrieval before vector similarity search and avoid chunking those fields as prose. What should the team add?</p>",
+    "vi": "<p>Một kho RAG có các trường vùng sản phẩm và mức truy cập. Ứng dụng phải giới hạn truy xuất trước khi tìm kiếm tương đồng vector và tránh chunk các trường đó như văn xuôi. Nhóm nên bổ sung gì?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Add a larger output-token limit</p>",
+     "vi": "<p>Thêm giới hạn output token lớn hơn</p>"
+    },
+    {
+     "en": "<p>Add filterable document metadata</p>",
+     "vi": "<p>Thêm metadata tài liệu có thể lọc</p>"
+    },
+    {
+     "en": "<p>Add a higher model temperature</p>",
+     "vi": "<p>Thêm temperature cao hơn cho model</p>"
+    },
+    {
+     "en": "<p>Add more overlapping prompt examples</p>",
+     "vi": "<p>Thêm nhiều ví dụ prompt chồng lặp hơn</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Output length does not constrain which documents are retrieved.</p>",
+     "vi": "<p>Sai. Độ dài đầu ra không ràng buộc tài liệu nào được truy xuất.</p>"
+    },
+    {
+     "en": "<p>Correct. Metadata can remain separate from content and be used to filter and rank retrieval.</p>",
+     "vi": "<p>Đúng. Metadata có thể tách riêng khỏi nội dung và được dùng để lọc và xếp hạng truy xuất.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Temperature affects token sampling after retrieval.</p>",
+     "vi": "<p>Sai. Temperature ảnh hưởng đến việc lấy mẫu token sau khi truy xuất.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Few-shot examples affect prompting rather than corpus access filtering.</p>",
+     "vi": "<p>Sai. Ví dụ few-shot ảnh hưởng đến prompting, không phải lọc quyền truy cập kho dữ liệu.</p>"
+    }
+   ]
+  },
+  {
+   "id": 184674699,
+   "multi": false,
+   "question": {
+    "en": "<p>A small RAG system already stores relational records in Aurora PostgreSQL and needs vector similarity plus complex SQL filters in the same database. Which vector store is the BEST fit?</p>",
+    "vi": "<p>Một hệ thống RAG nhỏ đã lưu bản ghi quan hệ trong Aurora PostgreSQL và cần tìm kiếm tương đồng vector cùng bộ lọc SQL phức tạp trong cùng một database. Vector store nào phù hợp NHẤT?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use OpenSearch Serverless only</p>",
+     "vi": "<p>Chỉ dùng OpenSearch Serverless</p>"
+    },
+    {
+     "en": "<p>Use Amazon S3 Vectors only</p>",
+     "vi": "<p>Chỉ dùng Amazon S3 Vectors</p>"
+    },
+    {
+     "en": "<p>Use Aurora with pgvector</p>",
+     "vi": "<p>Dùng Aurora với pgvector</p>"
+    },
+    {
+     "en": "<p>Use an EFS file-system index</p>",
+     "vi": "<p>Dùng chỉ mục hệ thống tệp EFS</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. OpenSearch supports vector search but would separate data from the existing relational store.</p>",
+     "vi": "<p>Sai. OpenSearch hỗ trợ tìm kiếm vector nhưng sẽ tách dữ liệu khỏi kho quan hệ hiện có.</p>"
+    },
+    {
+     "en": "<p>Incorrect. S3 Vectors is cost-effective but does not provide the required relational SQL filtering.</p>",
+     "vi": "<p>Sai. S3 Vectors tiết kiệm chi phí nhưng không cung cấp lọc SQL quan hệ như yêu cầu.</p>"
+    },
+    {
+     "en": "<p>Correct. Aurora pgvector combines structured SQL data, vector columns, and similarity operators.</p>",
+     "vi": "<p>Đúng. Aurora pgvector kết hợp dữ liệu SQL có cấu trúc, cột vector và các toán tử tương đồng.</p>"
+    },
+    {
+     "en": "<p>Incorrect. EFS is file storage and is not a vector query engine.</p>",
+     "vi": "<p>Sai. EFS là lưu trữ tệp và không phải engine truy vấn vector.</p>"
+    }
+   ]
+  },
+  {
+   "id": 184674901,
+   "multi": false,
+   "question": {
+    "en": "<p>A knowledge base must retrieve precise child passages but provide broader parent context to the model after a match. Which Bedrock chunking strategy should it use?</p>",
+    "vi": "<p>Một knowledge base phải truy xuất chính xác các đoạn child nhưng cung cấp ngữ cảnh parent rộng hơn cho model sau khi khớp. Nên dùng chiến lược chunking nào của Bedrock?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use no chunking at ingestion</p>",
+     "vi": "<p>Không chunking khi ingest</p>"
+    },
+    {
+     "en": "<p>Use standard fixed-size chunking</p>",
+     "vi": "<p>Dùng fixed-size chunking chuẩn</p>"
+    },
+    {
+     "en": "<p>Use external keyword-only chunking</p>",
+     "vi": "<p>Dùng chunking chỉ theo từ khóa bên ngoài</p>"
+    },
+    {
+     "en": "<p>Use hierarchical chunking</p>",
+     "vi": "<p>Dùng hierarchical chunking</p>"
+    }
+   ],
+   "answer": [
+    3
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. No chunking treats an entire document as one unit and reduces retrieval precision.</p>",
+     "vi": "<p>Sai. Không chunking coi cả tài liệu là một đơn vị và làm giảm độ chính xác truy xuất.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Fixed-size chunking does not provide parent-child replacement behavior.</p>",
+     "vi": "<p>Sai. Fixed-size chunking không cung cấp cơ chế thay thế parent-child.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Keyword-only splitting does not implement the Bedrock parent-child strategy.</p>",
+     "vi": "<p>Sai. Tách chỉ theo từ khóa không triển khai chiến lược parent-child của Bedrock.</p>"
+    },
+    {
+     "en": "<p>Correct. Hierarchical chunking retrieves smaller child chunks and can return their larger parent context.</p>",
+     "vi": "<p>Đúng. Hierarchical chunking truy xuất các child chunk nhỏ hơn và có thể trả về ngữ cảnh parent lớn hơn của chúng.</p>"
+    }
+   ]
+  }
+ ]
+}

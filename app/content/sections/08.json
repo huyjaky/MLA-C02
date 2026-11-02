@@ -1,0 +1,477 @@
+{
+ "id": "08",
+ "order": 8,
+ "title": {
+  "en": "Building Generative AI Applications with Bedrock",
+  "vi": "Xây dựng ứng dụng Generative AI với Bedrock"
+ },
+ "lectures": [
+  {
+   "id": "08-001",
+   "title": {
+    "en": "Intro Building Generative AI Applications with Bedrock",
+    "vi": "Giới thiệu: Xây dựng ứng dụng Generative AI với Bedrock"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/001 Intro Building Generative AI Applications with Bedrock.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-002",
+   "title": {
+    "en": "Building Generative AI with Amazon Bedrock and Foundation Models",
+    "vi": "Xây dựng Generative AI với Amazon Bedrock và Foundation Model"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/002 Building Generative AI with Amazon Bedrock and Foundation Models.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-003",
+   "title": {
+    "en": "Bedrock Credentials API Keys vs. IAM",
+    "vi": "Thông tin xác thực Bedrock: API Key và IAM"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/003 Bedrock Credentials API Keys vs. IAM.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-004",
+   "title": {
+    "en": "A note on Bedrock model access",
+    "vi": "Lưu ý về quyền truy cập model trong Bedrock"
+   },
+   "kind": "note",
+   "transcript": false
+  },
+  {
+   "id": "08-005",
+   "title": {
+    "en": "Lab Chat, Text, and Image Foundation Models in the Bedrock Playground",
+    "vi": "Lab: Model chat, text và image trong Bedrock Playground"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/005 Lab Chat, Text, and Image Foundation Models in the Bedrock Playground.mp4",
+   "transcript": true,
+   "materials": [
+    "cfas-bylaws-rev-9.docx"
+   ]
+  },
+  {
+   "id": "08-006",
+   "title": {
+    "en": "Fine-Tuning Custom Models and Continuous Pre-Training with Bedrock",
+    "vi": "Fine-Tuning model tùy chỉnh và Continuous Pre-Training với Bedrock"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/006 Fine-Tuning Custom Models and Continuous Pre-Training with Bedrock.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-007",
+   "title": {
+    "en": "Low-Rank Adaptation (LoRA) - How Fine-Tuning Works",
+    "vi": "Low-Rank Adaptation (LoRA) - Fine-Tuning hoạt động như thế nào"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/007 Low-Rank Adaptation (LoRA) - How Fine-Tuning Works.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-008",
+   "title": {
+    "en": "Catastrophic Forgetting",
+    "vi": "Catastrophic Forgetting (quên thảm khốc)"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/008 Catastrophic Forgetting.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-009",
+   "title": {
+    "en": "Model Distillation",
+    "vi": "Model Distillation"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/009 Model Distillation.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-010",
+   "title": {
+    "en": "Retrieval-Augmented Generation (RAG) Fundamentals with Bedrock",
+    "vi": "Nền tảng Retrieval-Augmented Generation (RAG) với Bedrock"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/010 Retrieval-Augmented Generation (RAG) Fundamentals with Bedrock.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-011",
+   "title": {
+    "en": "Vector Stores and Embeddings with Amazon Bedrock Knowledge Bases",
+    "vi": "Vector Store và Embedding với Amazon Bedrock Knowledge Bases"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/011 Vector Stores and Embeddings with Amazon Bedrock Knowledge Bases.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-012",
+   "title": {
+    "en": "Optimizing your Vectors Store and Embeddings",
+    "vi": "Tối ưu Vector Store và Embedding"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/012 Optimizing your Vectors Store and Embeddings.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-013",
+   "title": {
+    "en": "Mulitmodal Models and Pipelines with Bedrock",
+    "vi": "Model và pipeline multimodal với Bedrock"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/013 Mulitmodal Models and Pipelines with Bedrock.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-014",
+   "title": {
+    "en": "Implementing RAG with Amazon Bedrock Knowledge Bases",
+    "vi": "Triển khai RAG với Amazon Bedrock Knowledge Bases"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/014 Implementing RAG with Amazon Bedrock Knowledge Bases.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-015",
+   "title": {
+    "en": "Lab Building and Querying a RAG System with Amazon Bedrock Knowledge Bases",
+    "vi": "Lab: Xây dựng và truy vấn hệ thống RAG với Amazon Bedrock Knowledge Bases"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/015 Lab Building and Querying a RAG System with Amazon Bedrock Knowledge Bases.mp4",
+   "transcript": true,
+   "materials": [
+    "book.txt"
+   ]
+  },
+  {
+   "id": "08-016",
+   "title": {
+    "en": "Remember to delete your OpenSearch collection!",
+    "vi": "Nhớ xóa OpenSearch collection của bạn!"
+   },
+   "kind": "note",
+   "transcript": false
+  },
+  {
+   "id": "08-017",
+   "title": {
+    "en": "Vector Stores for Bedrock OpenSearch, S3 Vectors, Aurora pgvector",
+    "vi": "Vector Store cho Bedrock: OpenSearch, S3 Vectors, Aurora pgvector"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/017 Vector Stores for Bedrock OpenSearch, S3 Vectors, Aurora pgvector.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-018",
+   "title": {
+    "en": "S3 Vectors - Hands On",
+    "vi": "S3 Vectors - Thực hành"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/018 S3 Vectors - Hands On.mp4",
+   "transcript": true,
+   "materials": [
+    "book.txt"
+   ]
+  },
+  {
+   "id": "08-019",
+   "title": {
+    "en": "Pre-Retrieval and Chunking Strategies",
+    "vi": "Pre-Retrieval và chiến lược Chunking"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/019 Pre-Retrieval and Chunking Strategies.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-020",
+   "title": {
+    "en": "Managing Chunking Strategies with Bedrock",
+    "vi": "Quản lý chiến lược Chunking với Bedrock"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/020 Managing Chunking Strategies with Bedrock.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-021",
+   "title": {
+    "en": "Re-Ranker Models in Amazon Bedrock",
+    "vi": "Re-Ranker Model trong Amazon Bedrock"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/021 Re-Ranker Models in Amazon Bedrock.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-022",
+   "title": {
+    "en": "Content Filtering with Amazon Bedrock Guardrails",
+    "vi": "Lọc nội dung với Amazon Bedrock Guardrails"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/022 Content Filtering with Amazon Bedrock Guardrails.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-023",
+   "title": {
+    "en": "Lab Building and Testing Guardrails with Amazon Bedrock",
+    "vi": "Lab: Xây dựng và kiểm thử Guardrails với Amazon Bedrock"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/023 Lab Building and Testing Guardrails with Amazon Bedrock.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-024",
+   "title": {
+    "en": "Intro to Prompt Engineering",
+    "vi": "Giới thiệu Prompt Engineering"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/024 Intro to Prompt Engineering.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-025",
+   "title": {
+    "en": "Anatomy of a Prompt",
+    "vi": "Cấu trúc của một Prompt"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/025 Anatomy of a Prompt.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-026",
+   "title": {
+    "en": "Prompt Best Practices",
+    "vi": "Best Practice cho Prompt"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/026 Prompt Best Practices.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-027",
+   "title": {
+    "en": "Types of Prompts",
+    "vi": "Các loại Prompt"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/027 Types of Prompts.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-028",
+   "title": {
+    "en": "Prompt Management with Amazon Bedrock",
+    "vi": "Prompt Management với Amazon Bedrock"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/028 Prompt Management with Amazon Bedrock.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-029",
+   "title": {
+    "en": "Basics of LLM Agents",
+    "vi": "Cơ bản về LLM Agent"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/029 Basics of LLM Agents.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-030",
+   "title": {
+    "en": "Multi-Agent Workflows",
+    "vi": "Workflow Multi-Agent"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/030 Multi-Agent Workflows.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-031",
+   "title": {
+    "en": "Short and Long-Term Agent Memory",
+    "vi": "Bộ nhớ ngắn hạn và dài hạn của Agent"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/031 Short and Long-Term Agent Memory.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-032",
+   "title": {
+    "en": "Amazon AgentCore Introduction",
+    "vi": "Giới thiệu Amazon AgentCore"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/032 Amazon AgentCore Introduction.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-033",
+   "title": {
+    "en": "AgentCore Memory and Tools",
+    "vi": "AgentCore Memory và Tools"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/033 AgentCore Memory and Tools.mp4",
+   "transcript": false
+  },
+  {
+   "id": "08-034",
+   "title": {
+    "en": "AgentCore Bedrock Import, Gateway, and Identity",
+    "vi": "AgentCore: Bedrock Import, Gateway và Identity"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/034 AgentCore Bedrock Import, Gateway, and Identity.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-035",
+   "title": {
+    "en": "AgentCore Policies",
+    "vi": "AgentCore Policies"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/035 AgentCore Policies.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-036",
+   "title": {
+    "en": "AgentCore Evaluators",
+    "vi": "AgentCore Evaluators"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/036 AgentCore Evaluators.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-037",
+   "title": {
+    "en": "Lab Amazon Bedrock AgentCore Harnesses",
+    "vi": "Lab: Amazon Bedrock AgentCore Harnesses"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/037 Lab Amazon Bedrock AgentCore Harnesses.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-038",
+   "title": {
+    "en": "Handling AgentCore Failure Modes",
+    "vi": "Xử lý các chế độ lỗi của AgentCore"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/038 Handling AgentCore Failure Modes.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-039",
+   "title": {
+    "en": "Other Amazon Bedrock Features (Model Evaluation, Bedrock Studio, Watermarks)",
+    "vi": "Các tính năng khác của Amazon Bedrock (Model Evaluation, Bedrock Studio, Watermark)"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/039 Other Amazon Bedrock Features (Model Evaluation, Bedrock Studio, Watermarks).mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-040",
+   "title": {
+    "en": "Model Context Protocol (MCP)",
+    "vi": "Model Context Protocol (MCP)"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/040 Model Context Protocol (MCP).mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-041",
+   "title": {
+    "en": "Humans in the Loop",
+    "vi": "Human in the Loop (con người trong vòng lặp)"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/041 Humans in the Loop.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-042",
+   "title": {
+    "en": "Cost-Effective Model Selection",
+    "vi": "Chọn model tiết kiệm chi phí"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/042 Cost-Effective Model Selection.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-043",
+   "title": {
+    "en": "Evaluation Techniques for Foundation Models",
+    "vi": "Kỹ thuật đánh giá Foundation Model"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/043 Evaluation Techniques for Foundation Models.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-044",
+   "title": {
+    "en": "Evaluating LLM_s with ROUGE, BLUE, and BERT scores",
+    "vi": "Đánh giá LLM bằng điểm ROUGE, BLEU và BERT"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/044 Evaluating LLM_s with ROUGE, BLUE, and BERT scores.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-045",
+   "title": {
+    "en": "Amazon Bedrock Model Evaluations",
+    "vi": "Amazon Bedrock Model Evaluations"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/045 Amazon Bedrock Model Evaluations.mp4",
+   "transcript": true
+  },
+  {
+   "id": "08-046",
+   "title": {
+    "en": "Deployment Validation Systems",
+    "vi": "Hệ thống xác thực triển khai (Deployment Validation)"
+   },
+   "kind": "video",
+   "video": "08 - Building Generative AI Applications with Bedrock/046 Deployment Validation Systems.mp4",
+   "transcript": true
+  }
+ ]
+}

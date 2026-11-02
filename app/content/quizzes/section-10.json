@@ -1,0 +1,486 @@
+{
+ "id": "section-10",
+ "kind": "section",
+ "section": "10",
+ "title": {
+  "en": "Security, Identity, and Compliance",
+  "vi": "Bảo mật, Danh tính và Tuân thủ"
+ },
+ "description": {
+  "en": "<p>Test your knowledge on this section of the course.</p>",
+  "vi": "<p>Kiểm tra kiến thức của bạn về phần này của khóa học.</p>"
+ },
+ "passPercent": 70,
+ "questions": [
+  {
+   "id": 87794685,
+   "multi": false,
+   "question": {
+    "en": "<p>A SageMaker execution role currently has full S3 access, but the job reads only CSV files under one bucket prefix. What should the security engineer do?</p>",
+    "vi": "<p>Một SageMaker execution role hiện có toàn quyền S3, nhưng job chỉ đọc các file CSV dưới một prefix của một bucket. Kỹ sư bảo mật nên làm gì?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Keep full access for operational simplicity</p>",
+     "vi": "<p>Giữ toàn quyền để vận hành đơn giản</p>"
+    },
+    {
+     "en": "<p>Replace the role with the root user</p>",
+     "vi": "<p>Thay role bằng root user</p>"
+    },
+    {
+     "en": "<p>Grant access to every company bucket</p>",
+     "vi": "<p>Cấp quyền truy cập mọi bucket của công ty</p>"
+    },
+    {
+     "en": "<p>Restrict actions and resources to the prefix</p>",
+     "vi": "<p>Giới hạn action và resource theo prefix đó</p>"
+    }
+   ],
+   "answer": [
+    3
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Broad access violates least privilege.</p>",
+     "vi": "<p>Sai. Quyền quá rộng vi phạm nguyên tắc least privilege.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Root should never be used for a SageMaker workload.</p>",
+     "vi": "<p>Sai. Không bao giờ dùng root cho workload SageMaker.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Expanding access increases risk.</p>",
+     "vi": "<p>Sai. Mở rộng quyền làm tăng rủi ro.</p>"
+    },
+    {
+     "en": "<p>Correct. The policy should allow only required S3 actions on the specific bucket and prefix.</p>",
+     "vi": "<p>Đúng. Policy chỉ nên cho phép các action S3 cần thiết trên bucket và prefix cụ thể.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87794693,
+   "multi": false,
+   "question": {
+    "en": "<p>A regulated training job must encrypt its training volume, model artifacts, and data stored under /opt/ml with a customer-controlled key. Which service should be used?</p>",
+    "vi": "<p>Một training job chịu quy định phải mã hóa training volume, model artifact và dữ liệu lưu dưới /opt/ml bằng key do khách hàng kiểm soát. Nên dùng dịch vụ nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use AWS KMS</p>",
+     "vi": "<p>Dùng AWS KMS</p>"
+    },
+    {
+     "en": "<p>Use AWS Shield</p>",
+     "vi": "<p>Dùng AWS Shield</p>"
+    },
+    {
+     "en": "<p>Use Amazon Inspector</p>",
+     "vi": "<p>Dùng Amazon Inspector</p>"
+    },
+    {
+     "en": "<p>Use Amazon Route 53</p>",
+     "vi": "<p>Dùng Amazon Route 53</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p>Correct. SageMaker jobs and storage can use KMS keys for encryption at rest.</p>",
+     "vi": "<p>Đúng. SageMaker job và storage có thể dùng KMS key để mã hóa at rest.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Shield protects against DDoS attacks.</p>",
+     "vi": "<p>Sai. Shield bảo vệ trước tấn công DDoS.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Inspector scans workloads for vulnerabilities.</p>",
+     "vi": "<p>Sai. Inspector quét workload để tìm lỗ hổng.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Route 53 provides DNS services.</p>",
+     "vi": "<p>Sai. Route 53 cung cấp dịch vụ DNS.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87794763,
+   "multi": false,
+   "question": {
+    "en": "<p>A distributed training job handles sensitive records, and compliance requires encryption between training nodes. Which SageMaker option should be enabled?</p>",
+    "vi": "<p>Một distributed training job xử lý dữ liệu nhạy cảm và quy định tuân thủ yêu cầu mã hóa giữa các training node. Nên bật tùy chọn SageMaker nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Enable public notebook access</p>",
+     "vi": "<p>Bật truy cập notebook công khai</p>"
+    },
+    {
+     "en": "<p>Enable inter-container encryption</p>",
+     "vi": "<p>Bật inter-container encryption</p>"
+    },
+    {
+     "en": "<p>Enable S3 static website hosting</p>",
+     "vi": "<p>Bật S3 static website hosting</p>"
+    },
+    {
+     "en": "<p>Enable unauthenticated model access</p>",
+     "vi": "<p>Bật truy cập model không xác thực</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Public notebook access increases exposure.</p>",
+     "vi": "<p>Sai. Truy cập notebook công khai làm tăng mức độ phơi nhiễm.</p>"
+    },
+    {
+     "en": "<p>Correct. Inter-container traffic encryption applies TLS to communication among training nodes.</p>",
+     "vi": "<p>Đúng. Inter-container traffic encryption áp dụng TLS cho giao tiếp giữa các training node.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Website hosting is unrelated to training traffic.</p>",
+     "vi": "<p>Sai. Website hosting không liên quan đến traffic training.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Unauthenticated access violates security requirements.</p>",
+     "vi": "<p>Sai. Truy cập không xác thực vi phạm yêu cầu bảo mật.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87794873,
+   "multi": false,
+   "question": {
+    "en": "<p>A private SageMaker notebook has no internet access but must reach the SageMaker API without traversing a NAT gateway. Which network component should be added?</p>",
+    "vi": "<p>Một SageMaker notebook riêng tư không có internet nhưng phải truy cập SageMaker API mà không đi qua NAT gateway. Nên thêm thành phần mạng nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Add an internet gateway route</p>",
+     "vi": "<p>Thêm route tới internet gateway</p>"
+    },
+    {
+     "en": "<p>Add a VPC peering mesh</p>",
+     "vi": "<p>Thêm mesh VPC peering</p>"
+    },
+    {
+     "en": "<p>Add an interface VPC endpoint</p>",
+     "vi": "<p>Thêm interface VPC endpoint</p>"
+    },
+    {
+     "en": "<p>Add a public Elastic IP</p>",
+     "vi": "<p>Thêm Elastic IP công khai</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. An internet gateway would create a public path.</p>",
+     "vi": "<p>Sai. Internet gateway tạo ra đường đi công khai.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Peering connects VPCs and does not directly expose the SageMaker service API.</p>",
+     "vi": "<p>Sai. Peering kết nối các VPC và không trực tiếp phơi bày SageMaker service API.</p>"
+    },
+    {
+     "en": "<p>Correct. An interface endpoint uses PrivateLink for private access to supported AWS service APIs.</p>",
+     "vi": "<p>Đúng. Interface endpoint dùng PrivateLink để truy cập riêng tư tới API của các dịch vụ AWS được hỗ trợ.</p>"
+    },
+    {
+     "en": "<p>Incorrect. A public IP defeats the private-access requirement.</p>",
+     "vi": "<p>Sai. IP công khai đi ngược yêu cầu truy cập riêng tư.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87794881,
+   "multi": false,
+   "question": {
+    "en": "<p>An EC2-based preprocessing service must read a specific S3 bucket without storing user credentials on the instance. Which identity should be assigned?</p>",
+    "vi": "<p>Một dịch vụ tiền xử lý chạy trên EC2 phải đọc một S3 bucket cụ thể mà không lưu credential của user trên instance. Nên gán danh tính nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Assign an IAM user password</p>",
+     "vi": "<p>Gán mật khẩu IAM user</p>"
+    },
+    {
+     "en": "<p>Assign a root access key</p>",
+     "vi": "<p>Gán root access key</p>"
+    },
+    {
+     "en": "<p>Assign a shared API token</p>",
+     "vi": "<p>Gán API token dùng chung</p>"
+    },
+    {
+     "en": "<p>Assign an EC2 IAM role</p>",
+     "vi": "<p>Gán EC2 IAM role</p>"
+    }
+   ],
+   "answer": [
+    3
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. User passwords are for interactive sign-in and should not be stored on instances.</p>",
+     "vi": "<p>Sai. Mật khẩu user dùng để đăng nhập tương tác và không nên lưu trên instance.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Root credentials must not be used by applications.</p>",
+     "vi": "<p>Sai. Ứng dụng không được dùng credential của root.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Shared static tokens are difficult to rotate and scope.</p>",
+     "vi": "<p>Sai. Token tĩnh dùng chung khó xoay vòng và khó giới hạn phạm vi.</p>"
+    },
+    {
+     "en": "<p>Correct. An instance role supplies temporary credentials to EC2 through an instance profile.</p>",
+     "vi": "<p>Đúng. Instance role cấp credential tạm thời cho EC2 thông qua instance profile.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87795055,
+   "multi": false,
+   "question": {
+    "en": "<p>An administrator's password is stolen. The company wants the account to remain protected by requiring a possession factor during sign-in. What should be enabled?</p>",
+    "vi": "<p>Mật khẩu của một administrator bị đánh cắp. Công ty muốn tài khoản vẫn được bảo vệ bằng cách yêu cầu một yếu tố sở hữu (possession factor) khi đăng nhập. Nên bật gì?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Enable multi-factor authentication</p>",
+     "vi": "<p>Bật multi-factor authentication</p>"
+    },
+    {
+     "en": "<p>Enable S3 bucket versioning</p>",
+     "vi": "<p>Bật S3 bucket versioning</p>"
+    },
+    {
+     "en": "<p>Enable EBS fast snapshot restore</p>",
+     "vi": "<p>Bật EBS fast snapshot restore</p>"
+    },
+    {
+     "en": "<p>Enable CloudWatch metric streams</p>",
+     "vi": "<p>Bật CloudWatch metric streams</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Correct. MFA requires both the password and a separate security device or authenticator.</p>",
+     "vi": "<p>Đúng. MFA yêu cầu cả mật khẩu và một thiết bị bảo mật hoặc authenticator riêng.</p>"
+    },
+    {
+     "en": "<p>Incorrect. S3 versioning protects objects, not sign-in.</p>",
+     "vi": "<p>Sai. S3 versioning bảo vệ object, không phải việc đăng nhập.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Fast snapshot restore concerns EBS performance.</p>",
+     "vi": "<p>Sai. Fast snapshot restore liên quan đến hiệu năng EBS.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Metric streams export monitoring data.</p>",
+     "vi": "<p>Sai. Metric streams xuất dữ liệu giám sát.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87795229,
+   "multi": false,
+   "question": {
+    "en": "<p>A compliance team needs to control exactly which roles may use an encryption key and audit every key operation. Which solution should it use?</p>",
+    "vi": "<p>Đội tuân thủ cần kiểm soát chính xác role nào được dùng một encryption key và audit mọi thao tác trên key. Nên dùng giải pháp nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use an S3 ACL without KMS</p>",
+     "vi": "<p>Dùng S3 ACL không có KMS</p>"
+    },
+    {
+     "en": "<p>Use a customer-managed KMS key</p>",
+     "vi": "<p>Dùng customer-managed KMS key</p>"
+    },
+    {
+     "en": "<p>Use an AWS-owned default key only</p>",
+     "vi": "<p>Chỉ dùng AWS-owned default key</p>"
+    },
+    {
+     "en": "<p>Use a plaintext environment variable</p>",
+     "vi": "<p>Dùng biến môi trường dạng plaintext</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. An ACL does not provide encryption-key control or key-use auditing.</p>",
+     "vi": "<p>Sai. ACL không cung cấp khả năng kiểm soát encryption key hay audit việc dùng key.</p>"
+    },
+    {
+     "en": "<p>Correct. A customer-managed KMS key supports key policies, IAM authorization, and CloudTrail audit records.</p>",
+     "vi": "<p>Đúng. Customer-managed KMS key hỗ trợ key policy, phân quyền IAM và bản ghi audit trên CloudTrail.</p>"
+    },
+    {
+     "en": "<p>Incorrect. AWS-owned keys provide the least customer control.</p>",
+     "vi": "<p>Sai. AWS-owned key cho khách hàng ít quyền kiểm soát nhất.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Plaintext variables expose secrets.</p>",
+     "vi": "<p>Sai. Biến plaintext làm lộ secret.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87795555,
+   "multi": false,
+   "question": {
+    "en": "<p>An encrypted EBS snapshot must be shared with another AWS account. Which key arrangement is required before sharing?</p>",
+    "vi": "<p>Một EBS snapshot đã mã hóa phải được chia sẻ với một AWS account khác. Cần sắp xếp key như thế nào trước khi chia sẻ?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Encrypt it with an AWS-owned key</p>",
+     "vi": "<p>Mã hóa bằng AWS-owned key</p>"
+    },
+    {
+     "en": "<p>Encrypt it with the default S3 key</p>",
+     "vi": "<p>Mã hóa bằng key S3 mặc định</p>"
+    },
+    {
+     "en": "<p>Encrypt it with a customer-managed key</p>",
+     "vi": "<p>Mã hóa bằng customer-managed key</p>"
+    },
+    {
+     "en": "<p>Encrypt it with an ephemeral data key only</p>",
+     "vi": "<p>Chỉ mã hóa bằng ephemeral data key</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. AWS-owned keys cannot be shared through customer key policies.</p>",
+     "vi": "<p>Sai. AWS-owned key không thể chia sẻ qua key policy của khách hàng.</p>"
+    },
+    {
+     "en": "<p>Incorrect. An S3 key is not the key for the EBS snapshot.</p>",
+     "vi": "<p>Sai. Key S3 không phải key của EBS snapshot.</p>"
+    },
+    {
+     "en": "<p>Correct. A customer-managed KMS key can authorize the target account through its key policy.</p>",
+     "vi": "<p>Đúng. Customer-managed KMS key có thể cấp quyền cho account đích thông qua key policy.</p>"
+    },
+    {
+     "en": "<p>Incorrect. An unmanaged ephemeral key does not support the cross-account snapshot workflow.</p>",
+     "vi": "<p>Sai. Ephemeral key không được quản lý không hỗ trợ quy trình snapshot cross-account.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87795727,
+   "multi": false,
+   "question": {
+    "en": "<p>A privacy team must automatically discover PII stored across S3 buckets and generate findings for remediation. Which service should it use?</p>",
+    "vi": "<p>Đội privacy phải tự động phát hiện PII lưu trên các S3 bucket và tạo finding để khắc phục. Nên dùng dịch vụ nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use Amazon Inspector</p>",
+     "vi": "<p>Dùng Amazon Inspector</p>"
+    },
+    {
+     "en": "<p>Use AWS Shield Advanced</p>",
+     "vi": "<p>Dùng AWS Shield Advanced</p>"
+    },
+    {
+     "en": "<p>Use AWS Secrets Manager</p>",
+     "vi": "<p>Dùng AWS Secrets Manager</p>"
+    },
+    {
+     "en": "<p>Use Amazon Macie</p>",
+     "vi": "<p>Dùng Amazon Macie</p>"
+    }
+   ],
+   "answer": [
+    3
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Inspector scans EC2, ECR, and Lambda for vulnerabilities.</p>",
+     "vi": "<p>Sai. Inspector quét EC2, ECR và Lambda để tìm lỗ hổng.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Shield protects internet-facing resources from DDoS attacks.</p>",
+     "vi": "<p>Sai. Shield bảo vệ tài nguyên hướng internet khỏi tấn công DDoS.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Secrets Manager stores and rotates known secrets.</p>",
+     "vi": "<p>Sai. Secrets Manager lưu và xoay vòng các secret đã biết.</p>"
+    },
+    {
+     "en": "<p>Correct. Macie uses ML and pattern matching to discover sensitive data in S3.</p>",
+     "vi": "<p>Đúng. Macie dùng ML và pattern matching để phát hiện dữ liệu nhạy cảm trong S3.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87795741,
+   "multi": false,
+   "question": {
+    "en": "<p>A security team needs continuous vulnerability and network-exposure findings for EC2 instances, Lambda functions, and ECR container images. Which service should it deploy?</p>",
+    "vi": "<p>Đội bảo mật cần finding liên tục về lỗ hổng và mức độ phơi nhiễm mạng cho EC2 instance, Lambda function và ECR container image. Nên triển khai dịch vụ nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Deploy Amazon Inspector</p>",
+     "vi": "<p>Triển khai Amazon Inspector</p>"
+    },
+    {
+     "en": "<p>Deploy Amazon Macie</p>",
+     "vi": "<p>Triển khai Amazon Macie</p>"
+    },
+    {
+     "en": "<p>Deploy Amazon Polly</p>",
+     "vi": "<p>Triển khai Amazon Polly</p>"
+    },
+    {
+     "en": "<p>Deploy AWS Budgets</p>",
+     "vi": "<p>Triển khai AWS Budgets</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Correct. Inspector scans EC2, Lambda, and ECR workloads for vulnerabilities and exposure.</p>",
+     "vi": "<p>Đúng. Inspector quét workload EC2, Lambda và ECR để tìm lỗ hổng và mức độ phơi nhiễm.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Macie discovers sensitive data in S3.</p>",
+     "vi": "<p>Sai. Macie phát hiện dữ liệu nhạy cảm trong S3.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Polly converts text to speech.</p>",
+     "vi": "<p>Sai. Polly chuyển văn bản thành giọng nói.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Budgets monitors cost and usage thresholds.</p>",
+     "vi": "<p>Sai. Budgets giám sát ngưỡng chi phí và mức sử dụng.</p>"
+    }
+   ]
+  }
+ ]
+}

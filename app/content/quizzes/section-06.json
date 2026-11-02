@@ -1,0 +1,486 @@
+{
+ "id": "section-06",
+ "kind": "section",
+ "section": "06",
+ "title": {
+  "en": "Model Tuning, Training, and Evaluation",
+  "vi": "Tinh chỉnh, huấn luyện và đánh giá mô hình"
+ },
+ "description": {
+  "en": "<p>Test your knowledge from this section.</p>",
+  "vi": "<p>Kiểm tra kiến thức của bạn trong phần này.</p>"
+ },
+ "passPercent": 70,
+ "questions": [
+  {
+   "id": 87791453,
+   "multi": false,
+   "question": {
+    "en": "<p>A neural network classifies each product into exactly one of eight categories. Which activation should be used in the final output layer?</p>",
+    "vi": "<p>Một neural network phân loại mỗi sản phẩm vào đúng một trong tám danh mục. Nên dùng activation nào ở lớp output cuối?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use a ReLU output layer</p>",
+     "vi": "<p>Dùng lớp output ReLU</p>"
+    },
+    {
+     "en": "<p>Use a tanh output layer</p>",
+     "vi": "<p>Dùng lớp output tanh</p>"
+    },
+    {
+     "en": "<p>Use a softmax output layer</p>",
+     "vi": "<p>Dùng lớp output softmax</p>"
+    },
+    {
+     "en": "<p>Use a linear output layer</p>",
+     "vi": "<p>Dùng lớp output linear</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. ReLU is a common hidden-layer activation but does not normalize multiclass probabilities.</p>",
+     "vi": "<p>Sai. ReLU là activation phổ biến cho hidden layer nhưng không chuẩn hóa thành xác suất đa lớp.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Tanh maps outputs between -1 and 1 and is not the standard exclusive multiclass output.</p>",
+     "vi": "<p>Sai. Tanh cho output trong khoảng -1 đến 1 và không phải output chuẩn cho phân loại đa lớp loại trừ nhau.</p>"
+    },
+    {
+     "en": "<p>Correct. Softmax converts logits into probabilities across mutually exclusive classes.</p>",
+     "vi": "<p>Đúng. Softmax chuyển logits thành xác suất trên các lớp loại trừ lẫn nhau.</p>"
+    },
+    {
+     "en": "<p>Incorrect. A linear output is appropriate for regression rather than exclusive multiclass classification.</p>",
+     "vi": "<p>Sai. Output linear phù hợp cho regression, không phải phân loại đa lớp loại trừ nhau.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87791525,
+   "multi": false,
+   "question": {
+    "en": "<p>A traffic system must recognize stop signs regardless of where each sign appears in an image. Which neural-network architecture is MOST appropriate?</p>",
+    "vi": "<p>Hệ thống giao thông cần nhận diện biển báo dừng bất kể biển xuất hiện ở vị trí nào trong ảnh. Kiến trúc neural network nào phù hợp NHẤT?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use a recurrent neural network</p>",
+     "vi": "<p>Dùng recurrent neural network</p>"
+    },
+    {
+     "en": "<p>Use a convolutional neural network</p>",
+     "vi": "<p>Dùng convolutional neural network</p>"
+    },
+    {
+     "en": "<p>Use a linear regression network</p>",
+     "vi": "<p>Dùng linear regression network</p>"
+    },
+    {
+     "en": "<p>Use a topic-modeling network</p>",
+     "vi": "<p>Dùng topic-modeling network</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. RNNs specialize in ordered sequences.</p>",
+     "vi": "<p>Sai. RNN chuyên cho chuỗi có thứ tự.</p>"
+    },
+    {
+     "en": "<p>Correct. CNNs learn location-invariant visual features and are well suited to images.</p>",
+     "vi": "<p>Đúng. CNN học các đặc trưng thị giác bất biến theo vị trí và rất phù hợp với ảnh.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Linear regression cannot learn the required spatial hierarchy.</p>",
+     "vi": "<p>Sai. Linear regression không thể học cấu trúc phân cấp không gian cần thiết.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Topic modeling applies to latent themes, not image features.</p>",
+     "vi": "<p>Sai. Topic modeling dùng cho các chủ đề tiềm ẩn, không phải đặc trưng ảnh.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87791587,
+   "multi": false,
+   "question": {
+    "en": "<p>A manufacturer has a small labeled dataset and a pretrained vision model learned from millions of similar images. Which approach should minimize training cost while adapting to the new defect classes?</p>",
+    "vi": "<p>Một nhà sản xuất có tập dữ liệu có nhãn nhỏ và một mô hình thị giác pretrained đã học từ hàng triệu ảnh tương tự. Cách nào giúp giảm tối đa chi phí huấn luyện khi thích nghi với các lớp lỗi mới?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Train a new model from random weights</p>",
+     "vi": "<p>Huấn luyện mô hình mới từ trọng số ngẫu nhiên</p>"
+    },
+    {
+     "en": "<p>Discard the pretrained feature layers</p>",
+     "vi": "<p>Bỏ các lớp đặc trưng đã pretrained</p>"
+    },
+    {
+     "en": "<p>Use only unsupervised K-means clustering</p>",
+     "vi": "<p>Chỉ dùng K-means clustering không giám sát</p>"
+    },
+    {
+     "en": "<p>Fine-tune the pretrained model</p>",
+     "vi": "<p>Fine-tune mô hình pretrained</p>"
+    }
+   ],
+   "answer": [
+    3
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Training from scratch needs more data and compute.</p>",
+     "vi": "<p>Sai. Huấn luyện từ đầu cần nhiều dữ liệu và tài nguyên tính toán hơn.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Discarding useful pretrained features defeats transfer learning.</p>",
+     "vi": "<p>Sai. Bỏ các đặc trưng pretrained hữu ích làm mất ý nghĩa của transfer learning.</p>"
+    },
+    {
+     "en": "<p>Incorrect. K-Means does not directly learn the labeled defect classes.</p>",
+     "vi": "<p>Sai. K-Means không trực tiếp học các lớp lỗi có nhãn.</p>"
+    },
+    {
+     "en": "<p>Correct. Fine-tuning incrementally adapts a pretrained model to a related labeled task.</p>",
+     "vi": "<p>Đúng. Fine-tuning điều chỉnh dần mô hình pretrained cho một tác vụ có nhãn liên quan.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87791607,
+   "multi": false,
+   "question": {
+    "en": "<p>A model's training loss oscillates and repeatedly overshoots a good solution. Which hyperparameter change is the MOST likely first fix?</p>",
+    "vi": "<p>Training loss của mô hình dao động và liên tục vượt quá nghiệm tốt. Thay đổi hyperparameter nào là cách sửa đầu tiên có khả năng cao NHẤT?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Decrease the learning rate</p>",
+     "vi": "<p>Giảm learning rate</p>"
+    },
+    {
+     "en": "<p>Increase the learning rate</p>",
+     "vi": "<p>Tăng learning rate</p>"
+    },
+    {
+     "en": "<p>Increase every feature value</p>",
+     "vi": "<p>Tăng giá trị mọi feature</p>"
+    },
+    {
+     "en": "<p>Remove the validation set</p>",
+     "vi": "<p>Bỏ validation set</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Correct. A lower learning rate reduces step size and can stop overshooting.</p>",
+     "vi": "<p>Đúng. Learning rate thấp hơn làm giảm kích thước bước và có thể chấm dứt hiện tượng vượt quá.</p>"
+    },
+    {
+     "en": "<p>Incorrect. A higher rate would usually make oscillation worse.</p>",
+     "vi": "<p>Sai. Learning rate cao hơn thường làm dao động tệ hơn.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Rescaling features upward can destabilize optimization further.</p>",
+     "vi": "<p>Sai. Nhân tăng thang đo feature có thể làm quá trình tối ưu mất ổn định hơn.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Removing validation hides generalization problems and does not fix optimization.</p>",
+     "vi": "<p>Sai. Bỏ validation che giấu vấn đề generalization và không sửa được tối ưu hóa.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87791619,
+   "multi": false,
+   "question": {
+    "en": "<p>A neural network repeatedly converges to poor local solutions when trained with very large batches. Which adjustment should the engineer test?</p>",
+    "vi": "<p>Một neural network liên tục hội tụ về các nghiệm cục bộ kém khi huấn luyện với batch rất lớn. Kỹ sư nên thử điều chỉnh nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use a larger batch size</p>",
+     "vi": "<p>Dùng batch size lớn hơn</p>"
+    },
+    {
+     "en": "<p>Use a smaller batch size</p>",
+     "vi": "<p>Dùng batch size nhỏ hơn</p>"
+    },
+    {
+     "en": "<p>Disable data shuffling</p>",
+     "vi": "<p>Tắt xáo trộn dữ liệu</p>"
+    },
+    {
+     "en": "<p>Set all weights to zero</p>",
+     "vi": "<p>Đặt mọi trọng số bằng không</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Larger batches can remain stuck in an undesirable solution.</p>",
+     "vi": "<p>Sai. Batch lớn hơn có thể vẫn kẹt ở nghiệm không mong muốn.</p>"
+    },
+    {
+     "en": "<p>Correct. Smaller batches introduce variability that can help escape local minima.</p>",
+     "vi": "<p>Đúng. Batch nhỏ hơn tạo ra độ biến thiên giúp thoát khỏi local minima.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Disabling shuffling can create ordering bias and does not address the issue.</p>",
+     "vi": "<p>Sai. Tắt shuffle có thể gây thiên lệch thứ tự và không giải quyết được vấn đề.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Identical zero weights prevent useful symmetry breaking.</p>",
+     "vi": "<p>Sai. Các trọng số bằng không giống hệt nhau ngăn việc phá vỡ đối xứng cần thiết.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87791637,
+   "multi": false,
+   "question": {
+    "en": "<p>Training loss continues to fall, but validation loss begins to rise after epoch 18. The team wants to prevent additional overfitting and save compute. What should it implement?</p>",
+    "vi": "<p>Training loss tiếp tục giảm nhưng validation loss bắt đầu tăng sau epoch 18. Nhóm muốn ngăn overfitting thêm và tiết kiệm tài nguyên tính toán. Nên triển khai gì?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Implement a higher learning rate</p>",
+     "vi": "<p>Triển khai learning rate cao hơn</p>"
+    },
+    {
+     "en": "<p>Implement feature duplication</p>",
+     "vi": "<p>Triển khai nhân đôi feature</p>"
+    },
+    {
+     "en": "<p>Implement early stopping</p>",
+     "vi": "<p>Triển khai early stopping</p>"
+    },
+    {
+     "en": "<p>Implement label shuffling</p>",
+     "vi": "<p>Triển khai xáo trộn nhãn</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. A higher learning rate does not directly stop validation overfitting.</p>",
+     "vi": "<p>Sai. Learning rate cao hơn không trực tiếp ngăn overfitting trên validation.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Duplicating features can worsen model complexity.</p>",
+     "vi": "<p>Sai. Nhân đôi feature có thể làm tăng độ phức tạp của mô hình.</p>"
+    },
+    {
+     "en": "<p>Correct. Early stopping halts training when validation performance no longer improves.</p>",
+     "vi": "<p>Đúng. Early stopping dừng huấn luyện khi hiệu năng validation không còn cải thiện.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Label shuffling destroys the target relationship.</p>",
+     "vi": "<p>Sai. Xáo trộn nhãn phá hủy mối quan hệ với target.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87791645,
+   "multi": false,
+   "question": {
+    "en": "<p>A very deep network trains slowly because gradients become extremely small in early layers. Which change is MOST likely to help?</p>",
+    "vi": "<p>Một mạng rất sâu huấn luyện chậm vì gradient ở các lớp đầu trở nên cực nhỏ. Thay đổi nào có khả năng giúp ích NHẤT?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Replace ReLU with a hard step</p>",
+     "vi": "<p>Thay ReLU bằng hard step</p>"
+    },
+    {
+     "en": "<p>Remove every residual connection</p>",
+     "vi": "<p>Bỏ mọi residual connection</p>"
+    },
+    {
+     "en": "<p>Increase the number of sigmoid layers</p>",
+     "vi": "<p>Tăng số lớp sigmoid</p>"
+    },
+    {
+     "en": "<p>Use ReLU with residual connections</p>",
+     "vi": "<p>Dùng ReLU với residual connection</p>"
+    }
+   ],
+   "answer": [
+    3
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. A hard step has unusable gradients for standard backpropagation.</p>",
+     "vi": "<p>Sai. Hard step có gradient không dùng được cho backpropagation chuẩn.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Residual connections help gradient flow through deep networks.</p>",
+     "vi": "<p>Sai. Residual connection giúp gradient lan truyền qua mạng sâu.</p>"
+    },
+    {
+     "en": "<p>Incorrect. More sigmoid layers can worsen vanishing gradients.</p>",
+     "vi": "<p>Sai. Thêm lớp sigmoid có thể làm vanishing gradient tệ hơn.</p>"
+    },
+    {
+     "en": "<p>Correct. ReLU and residual connections are established mitigations for vanishing gradients.</p>",
+     "vi": "<p>Đúng. ReLU và residual connection là các biện pháp giảm nhẹ vanishing gradient đã được công nhận.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87791653,
+   "multi": false,
+   "question": {
+    "en": "<p>A fraud model has 10,000 input features, but the team wants many unimportant coefficients driven exactly to zero for a sparse, smaller model. Which regularization should it use?</p>",
+    "vi": "<p>Một mô hình phát hiện gian lận có 10.000 input feature, nhưng nhóm muốn nhiều hệ số không quan trọng bị đưa về đúng bằng 0 để có mô hình thưa, nhỏ hơn. Nên dùng regularization nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use L1 regularization</p>",
+     "vi": "<p>Dùng L1 regularization</p>"
+    },
+    {
+     "en": "<p>Use L2 regularization</p>",
+     "vi": "<p>Dùng L2 regularization</p>"
+    },
+    {
+     "en": "<p>Use no regularization</p>",
+     "vi": "<p>Không dùng regularization</p>"
+    },
+    {
+     "en": "<p>Use label smoothing only</p>",
+     "vi": "<p>Chỉ dùng label smoothing</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Correct. L1 encourages sparse coefficients and performs feature selection.</p>",
+     "vi": "<p>Đúng. L1 khuyến khích hệ số thưa và thực hiện feature selection.</p>"
+    },
+    {
+     "en": "<p>Incorrect. L2 shrinks coefficients but generally keeps all features nonzero.</p>",
+     "vi": "<p>Sai. L2 co hệ số lại nhưng thường giữ mọi feature khác không.</p>"
+    },
+    {
+     "en": "<p>Incorrect. No regularization will not encourage sparsity.</p>",
+     "vi": "<p>Sai. Không regularization sẽ không khuyến khích tính thưa.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Label smoothing changes target confidence rather than selecting features.</p>",
+     "vi": "<p>Sai. Label smoothing thay đổi độ tự tin của target chứ không chọn feature.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87791661,
+   "multi": false,
+   "question": {
+    "en": "<p>A fraud-screening system must catch as many fraudulent transactions as possible, even if investigators receive more false alerts. Which primary metric should be optimized?</p>",
+    "vi": "<p>Hệ thống sàng lọc gian lận phải bắt được càng nhiều giao dịch gian lận càng tốt, kể cả khi điều tra viên nhận nhiều cảnh báo sai hơn. Nên tối ưu chỉ số chính nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Optimize classification precision</p>",
+     "vi": "<p>Tối ưu classification precision</p>"
+    },
+    {
+     "en": "<p>Optimize classification recall</p>",
+     "vi": "<p>Tối ưu classification recall</p>"
+    },
+    {
+     "en": "<p>Optimize regression RMSE</p>",
+     "vi": "<p>Tối ưu regression RMSE</p>"
+    },
+    {
+     "en": "<p>Optimize regression R-squared</p>",
+     "vi": "<p>Tối ưu regression R-squared</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Precision emphasizes reducing false positives.</p>",
+     "vi": "<p>Sai. Precision nhấn mạnh việc giảm false positive.</p>"
+    },
+    {
+     "en": "<p>Correct. Recall emphasizes finding positives and minimizing false negatives.</p>",
+     "vi": "<p>Đúng. Recall nhấn mạnh việc tìm ra các mẫu positive và giảm thiểu false negative.</p>"
+    },
+    {
+     "en": "<p>Incorrect. RMSE evaluates numeric regression error.</p>",
+     "vi": "<p>Sai. RMSE đánh giá sai số số học của regression.</p>"
+    },
+    {
+     "en": "<p>Incorrect. R-squared evaluates explained variance in regression.</p>",
+     "vi": "<p>Sai. R-squared đánh giá phương sai được giải thích trong regression.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87791727,
+   "multi": false,
+   "question": {
+    "en": "<p>A toxicology screening model should avoid incorrectly labeling safe samples as dangerous because follow-up tests are expensive. Which metric should receive the MOST emphasis?</p>",
+    "vi": "<p>Một mô hình sàng lọc độc chất nên tránh gán nhầm mẫu an toàn là nguy hiểm vì các xét nghiệm tiếp theo rất tốn kém. Chỉ số nào nên được nhấn mạnh NHẤT?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Emphasize model recall</p>",
+     "vi": "<p>Nhấn mạnh recall của mô hình</p>"
+    },
+    {
+     "en": "<p>Emphasize model latency</p>",
+     "vi": "<p>Nhấn mạnh latency của mô hình</p>"
+    },
+    {
+     "en": "<p>Emphasize model precision</p>",
+     "vi": "<p>Nhấn mạnh precision của mô hình</p>"
+    },
+    {
+     "en": "<p>Emphasize model R-squared</p>",
+     "vi": "<p>Nhấn mạnh R-squared của mô hình</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Recall prioritizes avoiding false negatives rather than false positives.</p>",
+     "vi": "<p>Sai. Recall ưu tiên tránh false negative chứ không phải false positive.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Latency does not measure classification correctness.</p>",
+     "vi": "<p>Sai. Latency không đo độ đúng của phân loại.</p>"
+    },
+    {
+     "en": "<p>Correct. Precision improves when false-positive predictions are reduced.</p>",
+     "vi": "<p>Đúng. Precision tăng khi các dự đoán false positive giảm.</p>"
+    },
+    {
+     "en": "<p>Incorrect. R-squared is a regression metric.</p>",
+     "vi": "<p>Sai. R-squared là chỉ số của regression.</p>"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,220 @@
+{
+ "id": "04",
+ "order": 4,
+ "title": {
+  "en": "AWS Managed AI Services",
+  "vi": "Các dịch vụ AI được quản lý của AWS"
+ },
+ "lectures": [
+  {
+   "id": "04-001",
+   "title": {
+    "en": "Intro AWS Managed AI Services",
+    "vi": "Giới thiệu các dịch vụ AI được quản lý của AWS"
+   },
+   "kind": "video",
+   "video": "04 - AWS Managed AI Services/001 Intro AWS Managed AI Services.mp4",
+   "transcript": true
+  },
+  {
+   "id": "04-002",
+   "title": {
+    "en": "Why AWS Managed Services",
+    "vi": "Vì sao dùng dịch vụ được quản lý của AWS"
+   },
+   "kind": "video",
+   "video": "04 - AWS Managed AI Services/002 Why AWS Managed Services.mp4",
+   "transcript": true
+  },
+  {
+   "id": "04-003",
+   "title": {
+    "en": "Amazon Comprehend",
+    "vi": "Amazon Comprehend"
+   },
+   "kind": "video",
+   "video": "04 - AWS Managed AI Services/003 Amazon Comprehend.mp4",
+   "transcript": true
+  },
+  {
+   "id": "04-004",
+   "title": {
+    "en": "Amazon Comprehend Custom Models",
+    "vi": "Mô hình tùy chỉnh trong Amazon Comprehend"
+   },
+   "kind": "video",
+   "video": "04 - AWS Managed AI Services/004 Amazon Comprehend Custom Models.mp4",
+   "transcript": true
+  },
+  {
+   "id": "04-005",
+   "title": {
+    "en": "Amazon Comprehend - Hands On",
+    "vi": "Amazon Comprehend - Thực hành"
+   },
+   "kind": "video",
+   "video": "04 - AWS Managed AI Services/005 Amazon Comprehend - Hands On.mp4",
+   "transcript": true
+  },
+  {
+   "id": "04-006",
+   "title": {
+    "en": "Amazon Translate",
+    "vi": "Amazon Translate"
+   },
+   "kind": "video",
+   "video": "04 - AWS Managed AI Services/006 Amazon Translate.mp4",
+   "transcript": true
+  },
+  {
+   "id": "04-007",
+   "title": {
+    "en": "Amazon Translate - Hands On",
+    "vi": "Amazon Translate - Thực hành"
+   },
+   "kind": "video",
+   "video": "04 - AWS Managed AI Services/007 Amazon Translate - Hands On.mp4",
+   "transcript": true
+  },
+  {
+   "id": "04-008",
+   "title": {
+    "en": "Amazon Transcribe",
+    "vi": "Amazon Transcribe"
+   },
+   "kind": "video",
+   "video": "04 - AWS Managed AI Services/008 Amazon Transcribe.mp4",
+   "transcript": true
+  },
+  {
+   "id": "04-009",
+   "title": {
+    "en": "Amazon Transcribe - Hands On",
+    "vi": "Amazon Transcribe - Thực hành"
+   },
+   "kind": "video",
+   "video": "04 - AWS Managed AI Services/009 Amazon Transcribe - Hands On.mp4",
+   "transcript": true
+  },
+  {
+   "id": "04-010",
+   "title": {
+    "en": "Amazon Polly",
+    "vi": "Amazon Polly"
+   },
+   "kind": "video",
+   "video": "04 - AWS Managed AI Services/010 Amazon Polly.mp4",
+   "transcript": true
+  },
+  {
+   "id": "04-011",
+   "title": {
+    "en": "Amazon Polly - Hands On",
+    "vi": "Amazon Polly - Thực hành"
+   },
+   "kind": "video",
+   "video": "04 - AWS Managed AI Services/011 Amazon Polly - Hands On.mp4",
+   "transcript": true
+  },
+  {
+   "id": "04-012",
+   "title": {
+    "en": "Amazon Rekognition",
+    "vi": "Amazon Rekognition"
+   },
+   "kind": "video",
+   "video": "04 - AWS Managed AI Services/012 Amazon Rekognition.mp4",
+   "transcript": true
+  },
+  {
+   "id": "04-013",
+   "title": {
+    "en": "Amazon Rekognition - Hands On",
+    "vi": "Amazon Rekognition - Thực hành"
+   },
+   "kind": "video",
+   "video": "04 - AWS Managed AI Services/013 Amazon Rekognition - Hands On.mp4",
+   "transcript": true
+  },
+  {
+   "id": "04-014",
+   "title": {
+    "en": "Amazon Lex",
+    "vi": "Amazon Lex"
+   },
+   "kind": "video",
+   "video": "04 - AWS Managed AI Services/014 Amazon Lex.mp4",
+   "transcript": true
+  },
+  {
+   "id": "04-015",
+   "title": {
+    "en": "Amazon Lex - Hands On",
+    "vi": "Amazon Lex - Thực hành"
+   },
+   "kind": "video",
+   "video": "04 - AWS Managed AI Services/015 Amazon Lex - Hands On.mp4",
+   "transcript": true
+  },
+  {
+   "id": "04-016",
+   "title": {
+    "en": "Amazon Personalize",
+    "vi": "Amazon Personalize"
+   },
+   "kind": "video",
+   "video": "04 - AWS Managed AI Services/016 Amazon Personalize.mp4",
+   "transcript": true
+  },
+  {
+   "id": "04-017",
+   "title": {
+    "en": "Amazon Textract",
+    "vi": "Amazon Textract"
+   },
+   "kind": "video",
+   "video": "04 - AWS Managed AI Services/017 Amazon Textract.mp4",
+   "transcript": true
+  },
+  {
+   "id": "04-018",
+   "title": {
+    "en": "Amazon Textract - Hands On",
+    "vi": "Amazon Textract - Thực hành"
+   },
+   "kind": "video",
+   "video": "04 - AWS Managed AI Services/018 Amazon Textract - Hands On.mp4",
+   "transcript": true
+  },
+  {
+   "id": "04-019",
+   "title": {
+    "en": "Amazon Quick",
+    "vi": "Amazon Quick"
+   },
+   "kind": "video",
+   "video": "04 - AWS Managed AI Services/019 Amazon Quick.mp4",
+   "transcript": true
+  },
+  {
+   "id": "04-020",
+   "title": {
+    "en": "Amazon_s Hardware for AI",
+    "vi": "Phần cứng AI của Amazon"
+   },
+   "kind": "video",
+   "video": "04 - AWS Managed AI Services/020 Amazon_s Hardware for AI.mp4",
+   "transcript": true
+  },
+  {
+   "id": "04-021",
+   "title": {
+    "en": "Amazon_s Hardware for AI - Hands On",
+    "vi": "Phần cứng AI của Amazon - Thực hành"
+   },
+   "kind": "video",
+   "video": "04 - AWS Managed AI Services/021 Amazon_s Hardware for AI - Hands On.mp4",
+   "transcript": true
+  }
+ ]
+}

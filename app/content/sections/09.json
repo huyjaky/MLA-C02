@@ -1,0 +1,452 @@
+{
+ "id": "09",
+ "order": 9,
+ "title": {
+  "en": "Machine Learning and AI Operations (MLOps AIOps) with AWS",
+  "vi": "Vận hành Machine Learning và AI (MLOps AIOps) với AWS"
+ },
+ "lectures": [
+  {
+   "id": "09-001",
+   "title": {
+    "en": "Intro MLOps",
+    "vi": "Giới thiệu MLOps"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/001 Intro MLOps.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-002",
+   "title": {
+    "en": "Optimizing Foundation Model Deployments",
+    "vi": "Tối ưu triển khai Foundation Model"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/002 Optimizing Foundation Model Deployments.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-003",
+   "title": {
+    "en": "Deployment Guardrails and Shadow Tests",
+    "vi": "Deployment Guardrails và Shadow Test"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/003 Deployment Guardrails and Shadow Tests.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-004",
+   "title": {
+    "en": "SageMaker_s Inner Details and Production Variants",
+    "vi": "Chi tiết bên trong SageMaker và Production Variant"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/004 SageMaker_s Inner Details and Production Variants.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-005",
+   "title": {
+    "en": "SageMaker Resource Management Instance Types and Spot Training",
+    "vi": "Quản lý tài nguyên SageMaker: Loại instance và Spot Training"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/005 SageMaker Resource Management Instance Types and Spot Training.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-006",
+   "title": {
+    "en": "SageMaker Resource Management Automatic Scaling",
+    "vi": "Quản lý tài nguyên SageMaker: Automatic Scaling"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/006 SageMaker Resource Management Automatic Scaling.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-007",
+   "title": {
+    "en": "Token Efficiency",
+    "vi": "Hiệu quả Token"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/007 Token Efficiency.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-008",
+   "title": {
+    "en": "Maximizing Resource Utilization and Throughput",
+    "vi": "Tối đa hóa mức sử dụng tài nguyên và throughput"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/008 Maximizing Resource Utilization and Throughput.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-009",
+   "title": {
+    "en": "SageMaker Deploying Models for Inference",
+    "vi": "SageMaker: Triển khai model để suy luận (inference)"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/009 SageMaker Deploying Models for Inference.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-010",
+   "title": {
+    "en": "SageMaker Serverless Inference and Inference Recommender",
+    "vi": "SageMaker Serverless Inference và Inference Recommender"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/010 SageMaker Serverless Inference and Inference Recommender.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-011",
+   "title": {
+    "en": "AI-Specific Cost Drivers",
+    "vi": "Các yếu tố chi phí đặc thù của AI"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/011 AI-Specific Cost Drivers.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-012",
+   "title": {
+    "en": "SageMaker Inference Pipelines",
+    "vi": "SageMaker Inference Pipelines"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/012 SageMaker Inference Pipelines.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-013",
+   "title": {
+    "en": "Model Performance Readiness and Drift Detection",
+    "vi": "Mức sẵn sàng hiệu năng model và phát hiện Drift"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/013 Model Performance Readiness and Drift Detection.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-014",
+   "title": {
+    "en": "Monitoring ML Models in Production",
+    "vi": "Giám sát model ML trong production"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/014 Monitoring ML Models in Production.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-015",
+   "title": {
+    "en": "MLOps with SageMaker, Kubernetes, SageMaker Projects, and SageMaker Pipelines",
+    "vi": "MLOps với SageMaker, Kubernetes, SageMaker Projects và SageMaker Pipelines"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/015 MLOps with SageMaker, Kubernetes, SageMaker Projects, and SageMaker Pipelines.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-016",
+   "title": {
+    "en": "What is Docker",
+    "vi": "Docker là gì"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/016 What is Docker.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-017",
+   "title": {
+    "en": "Amazon ECS",
+    "vi": "Amazon ECS"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/017 Amazon ECS.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-018",
+   "title": {
+    "en": "Amazon ECS - Create Cluster - Hands On",
+    "vi": "Amazon ECS - Tạo Cluster - Thực hành"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/018 Amazon ECS - Create Cluster - Hands On.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-019",
+   "title": {
+    "en": "Amazon ECS - Create Service - Hands On",
+    "vi": "Amazon ECS - Tạo Service - Thực hành"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/019 Amazon ECS - Create Service - Hands On.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-020",
+   "title": {
+    "en": "Amazon ECR",
+    "vi": "Amazon ECR"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/020 Amazon ECR.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-021",
+   "title": {
+    "en": "Amazon EKS",
+    "vi": "Amazon EKS"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/021 Amazon EKS.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-022",
+   "title": {
+    "en": "Amazon EKS - Hands On",
+    "vi": "Amazon EKS - Thực hành"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/022 Amazon EKS - Hands On.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-023",
+   "title": {
+    "en": "AWS Batch",
+    "vi": "AWS Batch"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/023 AWS Batch.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-024",
+   "title": {
+    "en": "AWS CloudFormation",
+    "vi": "AWS CloudFormation"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/024 AWS CloudFormation.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-025",
+   "title": {
+    "en": "AWS CloudFormation - Hands On",
+    "vi": "AWS CloudFormation - Thực hành"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/025 AWS CloudFormation - Hands On.mp4",
+   "transcript": true,
+   "materials": [
+    "cloudformation/0-just-ec2.yaml",
+    "cloudformation/1-ec2-with-sg-eip.yaml"
+   ]
+  },
+  {
+   "id": "09-026",
+   "title": {
+    "en": "AWS CDK",
+    "vi": "AWS CDK"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/026 AWS CDK.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-027",
+   "title": {
+    "en": "AWS CDK - Hands On",
+    "vi": "AWS CDK - Thực hành"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/027 AWS CDK - Hands On.mp4",
+   "transcript": true,
+   "materials": [
+    "cdk/steps.sh",
+    "cdk/lambda/index.py",
+    "cdk/lib/cdk-app-stack.js",
+    "cdk/images/kid_and_pigeons.jpeg",
+    "cdk/images/penguins.jpeg",
+    "cdk/images/swans.jpeg"
+   ]
+  },
+  {
+   "id": "09-028",
+   "title": {
+    "en": "AWS CodeDeploy",
+    "vi": "AWS CodeDeploy"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/028 AWS CodeDeploy.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-029",
+   "title": {
+    "en": "AWS CodeBuild",
+    "vi": "AWS CodeBuild"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/029 AWS CodeBuild.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-030",
+   "title": {
+    "en": "AWS CodePipeline",
+    "vi": "AWS CodePipeline"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/030 AWS CodePipeline.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-031",
+   "title": {
+    "en": "AWS CodeCommit and CodeConnections",
+    "vi": "AWS CodeCommit và CodeConnections"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/031 AWS CodeCommit and CodeConnections.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-032",
+   "title": {
+    "en": "CICD for AI Artifacts",
+    "vi": "CI/CD cho các artifact AI"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/032 CICD for AI Artifacts.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-033",
+   "title": {
+    "en": "Automating RAG Updates",
+    "vi": "Tự động cập nhật RAG"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/033 Automating RAG Updates.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-034",
+   "title": {
+    "en": "Prompt  GenAI Regression Testing in CICD",
+    "vi": "Kiểm thử hồi quy Prompt và GenAI trong CI/CD"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/034 Prompt  GenAI Regression Testing in CICD.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-035",
+   "title": {
+    "en": "Git Review Architecture and Commands",
+    "vi": "Kiến trúc và lệnh Git Review"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/035 Git Review Architecture and Commands.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-036",
+   "title": {
+    "en": "Gitflow, GitHub Flow",
+    "vi": "Gitflow, GitHub Flow"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/036 Gitflow, GitHub Flow.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-037",
+   "title": {
+    "en": "Amazon EventBridge",
+    "vi": "Amazon EventBridge"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/037 Amazon EventBridge.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-038",
+   "title": {
+    "en": "Amazon EventBridge - Hands On",
+    "vi": "Amazon EventBridge - Thực hành"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/038 Amazon EventBridge - Hands On.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-039",
+   "title": {
+    "en": "AWS Step Functions(1)",
+    "vi": "AWS Step Functions (1)"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/039 AWS Step Functions(1).mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-040",
+   "title": {
+    "en": "AWS Step Functions State Machines and States",
+    "vi": "AWS Step Functions: State Machine và State"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/040 AWS Step Functions State Machines and States.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-041",
+   "title": {
+    "en": "Amazon Managed Workflows for Apache Airflow (MWAA)",
+    "vi": "Amazon Managed Workflows for Apache Airflow (MWAA)"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/041 Amazon Managed Workflows for Apache Airflow (MWAA).mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-042",
+   "title": {
+    "en": "AWS Lake Formation",
+    "vi": "AWS Lake Formation"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/042 AWS Lake Formation.mp4",
+   "transcript": true
+  },
+  {
+   "id": "09-043",
+   "title": {
+    "en": "Lake Formation Data Filters",
+    "vi": "Data Filter trong Lake Formation"
+   },
+   "kind": "video",
+   "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/043 Lake Formation Data Filters.mp4",
+   "transcript": true
+  }
+ ]
+}

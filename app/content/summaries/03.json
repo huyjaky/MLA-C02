@@ -1,0 +1,1701 @@
+{
+ "03-001": {
+  "tldr": {
+   "en": "This section covers data transformation, data integrity and feature engineering: EMR, SageMaker Data Wrangler, Clarify, and the Glue suite.",
+   "vi": "Phần này nói về biến đổi dữ liệu, tính toàn vẹn dữ liệu và feature engineering: EMR, SageMaker Data Wrangler, Clarify và bộ công cụ Glue."
+  },
+  "points": [
+   {
+    "en": "Handling missing data, outliers and unbalanced data are general ML problems, not AWS specific.",
+    "vi": "Xử lý missing data, outliers và unbalanced data là vấn đề ML chung, không riêng AWS."
+   },
+   {
+    "en": "EMR processes data at scale; SageMaker Data Wrangler is the newer tool for data prep.",
+    "vi": "EMR xử lý dữ liệu quy mô lớn; SageMaker Data Wrangler là công cụ chuẩn bị dữ liệu mới hơn."
+   },
+   {
+    "en": "SageMaker Clarify detects class imbalance and finds the most important features.",
+    "vi": "SageMaker Clarify phát hiện class imbalance và xác định các feature quan trọng nhất."
+   },
+   {
+    "en": "Set a billing alarm and delete resources after labs to avoid surprise costs.",
+    "vi": "Đặt billing alarm và xóa tài nguyên sau lab để tránh chi phí bất ngờ."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon EMR",
+    "use": {
+     "en": "Process big data at scale.",
+     "vi": "Xử lý big data quy mô lớn."
+    }
+   },
+   {
+    "name": "SageMaker Data Wrangler",
+    "use": {
+     "en": "Prepare and transform data visually.",
+     "vi": "Chuẩn bị và biến đổi dữ liệu bằng giao diện trực quan."
+    }
+   },
+   {
+    "name": "SageMaker Clarify",
+    "use": {
+     "en": "Detect imbalance and rank feature importance.",
+     "vi": "Phát hiện mất cân bằng và xếp hạng độ quan trọng feature."
+    }
+   },
+   {
+    "name": "AWS Glue",
+    "use": {
+     "en": "Structure and transform data at scale.",
+     "vi": "Cấu trúc và biến đổi dữ liệu quy mô lớn."
+    }
+   }
+  ]
+ },
+ "03-002": {
+  "tldr": {
+   "en": "EMR is a managed Hadoop cluster on EC2 that distributes data preparation across many nodes, with Spark, Hive, Presto and more preinstalled.",
+   "vi": "EMR là cụm Hadoop được quản lý trên EC2, phân tán việc chuẩn bị dữ liệu trên nhiều node, có sẵn Spark, Hive, Presto..."
+  },
+  "points": [
+   {
+    "en": "Node types: master (coordinates), core (runs tasks and stores HDFS data), task (compute only, optional).",
+    "vi": "Các loại node: master (điều phối), core (chạy task và lưu HDFS), task (chỉ tính toán, tùy chọn)."
+   },
+   {
+    "en": "Task nodes are a good fit for Spot instances since they hold no HDFS data.",
+    "vi": "Task node phù hợp với Spot instance vì không lưu dữ liệu HDFS."
+   },
+   {
+    "en": "Transient clusters auto-terminate after their steps finish; long-running clusters suit ad hoc work.",
+    "vi": "Transient cluster tự tắt sau khi xong các step; long-running cluster hợp cho làm việc ad hoc."
+   },
+   {
+    "en": "HDFS is fast but ephemeral; use EMRFS to read and write S3 instead of HDFS.",
+    "vi": "HDFS nhanh nhưng tạm thời; dùng EMRFS để đọc ghi S3 thay cho HDFS."
+   },
+   {
+    "en": "Integrates with VPC, CloudWatch, IAM, CloudTrail, S3 and Data Pipeline.",
+    "vi": "Tích hợp với VPC, CloudWatch, IAM, CloudTrail, S3 và Data Pipeline."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon EMR",
+    "use": {
+     "en": "Managed Hadoop/Spark cluster for large-scale data prep before training.",
+     "vi": "Cụm Hadoop/Spark được quản lý để chuẩn bị dữ liệu lớn trước khi train."
+    }
+   },
+   {
+    "name": "Amazon S3",
+    "use": {
+     "en": "Persistent storage used instead of HDFS via EMRFS.",
+     "vi": "Lưu trữ bền vững dùng thay HDFS qua EMRFS."
+    }
+   },
+   {
+    "name": "HDFS",
+    "use": {
+     "en": "Fast local but ephemeral cluster storage; default block size 128 MB.",
+     "vi": "Lưu trữ cục bộ nhanh nhưng tạm thời; block mặc định 128 MB."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "HDFS stores files in 128 MB blocks by default, and the data disappears when the cluster terminates.",
+   "vi": "HDFS mặc định chia file thành block 128 MB và dữ liệu mất khi cluster bị terminate."
+  },
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Master node\"] --> B[\"Core nodes\"]\n  A --> C[\"Task nodes\"]\n  B --> D[\"HDFS storage\"]\n  C -->|\"compute only\"| B\n  B --> E[\"Amazon S3 via EMRFS\"]",
+   "vi": "flowchart TD\n  A[\"Master node\"] --> B[\"Core nodes\"]\n  A --> C[\"Task nodes\"]\n  B --> D[\"Lưu trữ HDFS\"]\n  C -->|\"chỉ tính toán\"| B\n  B --> E[\"Amazon S3 qua EMRFS\"]"
+  }
+ },
+ "03-003": {
+  "tldr": {
+   "en": "EMR Serverless lets EMR pick cluster capacity automatically; you just submit Spark or Hive jobs via job run requests.",
+   "vi": "EMR Serverless để EMR tự chọn dung lượng cluster; bạn chỉ gửi job Spark hoặc Hive qua job run request."
+  },
+  "points": [
+   {
+    "en": "Choose an EMR release and runtime (Spark, Hive, Presto), then submit scripts stored in S3.",
+    "vi": "Chọn EMR release và runtime (Spark, Hive, Presto), rồi gửi script lưu trên S3."
+   },
+   {
+    "en": "It avoids out-of-memory failures from guessing too little capacity for Spark jobs.",
+    "vi": "Tránh lỗi hết bộ nhớ do đoán thiếu dung lượng cho job Spark."
+   },
+   {
+    "en": "You can still set worker sizes and pre-initialize base capacity if you know your needs.",
+    "vi": "Vẫn có thể đặt kích thước worker và pre-initialize dung lượng nền nếu biết nhu cầu."
+   },
+   {
+    "en": "Needs an IAM job execution role with access to S3, Glue and KMS as required.",
+    "vi": "Cần IAM job execution role có quyền S3, Glue và KMS khi cần."
+   },
+   {
+    "en": "At the time of the lecture it was CLI only; it runs in one region across multiple AZs.",
+    "vi": "Thời điểm bài giảng chỉ hỗ trợ CLI; chạy trong một region trên nhiều AZ."
+   }
+  ],
+  "services": [
+   {
+    "name": "EMR Serverless",
+    "use": {
+     "en": "Run Spark/Hive/Presto jobs without sizing a cluster.",
+     "vi": "Chạy job Spark/Hive/Presto mà không cần định cỡ cluster."
+    }
+   },
+   {
+    "name": "AWS IAM",
+    "use": {
+     "en": "Job execution role grants the job access to S3, Glue, KMS.",
+     "vi": "Job execution role cấp quyền cho job truy cập S3, Glue, KMS."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"IAM user via CLI\"] --> B[\"EMR Serverless application\"]\n  C[\"Script in S3\"] -->|\"job run request\"| B\n  B --> D[\"Auto-scaled workers\"]\n  D --> E[\"Output and logs in S3\"]",
+   "vi": "flowchart LR\n  A[\"IAM user qua CLI\"] --> B[\"EMR Serverless application\"]\n  C[\"Script trong S3\"] -->|\"job run request\"| B\n  B --> D[\"Worker tự scale\"]\n  D --> E[\"Output và log trong S3\"]"
+  }
+ },
+ "03-004": {
+  "tldr": {
+   "en": "Hadoop is HDFS plus YARN plus MapReduce; Apache Spark has largely replaced MapReduce thanks to in-memory processing and DAG scheduling.",
+   "vi": "Hadoop gồm HDFS, YARN và MapReduce; Apache Spark đã thay thế phần lớn MapReduce nhờ xử lý in-memory và DAG."
+  },
+  "points": [
+   {
+    "en": "YARN manages cluster resources so frameworks other than MapReduce, like Spark, can run on Hadoop.",
+    "vi": "YARN quản lý tài nguyên cluster để các framework khác MapReduce như Spark chạy trên Hadoop."
+   },
+   {
+    "en": "MapReduce: mappers transform data into key-value pairs, reducers aggregate them into the final result.",
+    "vi": "MapReduce: mapper biến đổi dữ liệu thành cặp key-value, reducer tổng hợp thành kết quả cuối."
+   },
+   {
+    "en": "Spark uses in-memory caching and a directed acyclic graph; it suits transformation, not OLTP.",
+    "vi": "Spark dùng in-memory caching và directed acyclic graph; hợp để biến đổi dữ liệu, không dùng cho OLTP."
+   },
+   {
+    "en": "Spark components: Spark SQL (DataFrames), Spark Streaming, MLlib, GraphX, on top of Spark Core.",
+    "vi": "Thành phần Spark: Spark SQL (DataFrame), Spark Streaming, MLlib, GraphX, trên nền Spark Core."
+   },
+   {
+    "en": "A driver program uses SparkContext to send tasks to executors on cluster nodes.",
+    "vi": "Driver program dùng SparkContext để gửi task tới executor trên các node."
+   }
+  ],
+  "services": [
+   {
+    "name": "Apache Spark on EMR",
+    "use": {
+     "en": "Fast distributed data processing and MLlib for big data prep.",
+     "vi": "Xử lý phân tán nhanh và MLlib để chuẩn bị big data."
+    }
+   },
+   {
+    "name": "Spark Streaming",
+    "use": {
+     "en": "Real-time mini-batch analytics; can integrate with Kinesis.",
+     "vi": "Phân tích mini-batch thời gian thực; tích hợp được với Kinesis."
+    }
+   },
+   {
+    "name": "Spark MLlib",
+    "use": {
+     "en": "Machine learning library for Spark.",
+     "vi": "Thư viện machine learning cho Spark."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "YARN stands for Yet Another Resource Negotiator, introduced in Hadoop 2.0.",
+   "vi": "YARN là viết tắt của Yet Another Resource Negotiator, ra đời từ Hadoop 2.0."
+  },
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Spark driver and SparkContext\"] --> B[\"Cluster manager YARN\"]\n  B --> C[\"Executor 1\"]\n  B --> D[\"Executor 2\"]\n  C --> E[\"Tasks on data\"]\n  D --> E",
+   "vi": "flowchart TD\n  A[\"Spark driver và SparkContext\"] --> B[\"Cluster manager YARN\"]\n  B --> C[\"Executor 1\"]\n  B --> D[\"Executor 2\"]\n  C --> E[\"Task trên dữ liệu\"]\n  D --> E"
+  }
+ },
+ "03-005": {
+  "tldr": {
+   "en": "Feature engineering means selecting, transforming and creating features; too many features cause the curse of dimensionality and sparse data.",
+   "vi": "Feature engineering là chọn, biến đổi và tạo feature; quá nhiều feature gây curse of dimensionality và dữ liệu thưa."
+  },
+  "points": [
+   {
+    "en": "Features are the attributes you train with; pick the ones relevant to the target.",
+    "vi": "Feature là thuộc tính dùng để train; hãy chọn những feature liên quan đến mục tiêu."
+   },
+   {
+    "en": "Transform features by normalizing, scaling, encoding, or taking log or square of values.",
+    "vi": "Biến đổi feature bằng normalizing, scaling, encoding, hoặc lấy log hay bình phương."
+   },
+   {
+    "en": "Combine several features into one to reduce dimensionality or create new features.",
+    "vi": "Gộp nhiều feature thành một để giảm số chiều hoặc tạo feature mới."
+   },
+   {
+    "en": "More dimensions make data sparse and models huge and hard to converge.",
+    "vi": "Càng nhiều chiều dữ liệu càng thưa, model càng lớn và khó hội tụ."
+   },
+   {
+    "en": "PCA is a principled dimensionality reduction technique; domain knowledge and experimentation matter most.",
+    "vi": "PCA là kỹ thuật giảm chiều có cơ sở; kiến thức domain và thử nghiệm là quan trọng nhất."
+   }
+  ],
+  "services": [],
+  "funFact": {
+   "en": "The exam leans on feature engineering because it tests real-world experience, not just algorithm knowledge.",
+   "vi": "Kỳ thi nhấn mạnh feature engineering vì kiểm tra kinh nghiệm thực tế chứ không chỉ kiến thức thuật toán."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Raw features\"] --> B[\"Select relevant\"]\n  B --> C[\"Transform and scale\"]\n  C --> D[\"Create or combine\"]\n  D --> E[\"Fewer dense features\"]\n  E --> F[\"Better model\"]",
+   "vi": "flowchart LR\n  A[\"Feature thô\"] --> B[\"Chọn feature liên quan\"]\n  B --> C[\"Biến đổi và scale\"]\n  C --> D[\"Tạo hoặc gộp\"]\n  D --> E[\"Ít feature, dày đặc hơn\"]\n  E --> F[\"Model tốt hơn\"]"
+  }
+ },
+ "03-006": {
+  "tldr": {
+   "en": "TF-IDF scores how relevant a term is to a document by combining term frequency with inverse document frequency; Spark makes it feasible at scale.",
+   "vi": "TF-IDF đo mức độ liên quan của một từ với tài liệu bằng cách kết hợp term frequency và inverse document frequency; Spark giúp làm việc này ở quy mô lớn."
+  },
+  "points": [
+   {
+    "en": "TF counts how often a word appears in a document; DF counts how common it is across all documents.",
+    "vi": "TF đếm số lần từ xuất hiện trong tài liệu; DF đo độ phổ biến của từ trong mọi tài liệu."
+   },
+   {
+    "en": "TF-IDF is TF divided by DF, which equals TF times inverse DF; the log of IDF is used in practice.",
+    "vi": "TF-IDF là TF chia DF, tức TF nhân inverse DF; thực tế dùng log của IDF."
+   },
+   {
+    "en": "Plain TF-IDF is a bag of words: it ignores word relationships, synonyms, tenses and misspellings.",
+    "vi": "TF-IDF thuần là bag of words: bỏ qua quan hệ giữa các từ, từ đồng nghĩa, thì và lỗi chính tả."
+   },
+   {
+    "en": "Unigrams are single words, bigrams are pairs, trigrams are triples; n-grams capture word order.",
+    "vi": "Unigram là từ đơn, bigram là cặp từ, trigram là bộ ba; n-gram giữ thông tin thứ tự từ."
+   },
+   {
+    "en": "Lowercasing text is one simple normalization step before counting terms.",
+    "vi": "Chuyển chữ thường là một bước chuẩn hóa đơn giản trước khi đếm từ."
+   }
+  ],
+  "services": [
+   {
+    "name": "Apache Spark on EMR",
+    "use": {
+     "en": "Compute TF-IDF across a large corpus in parallel.",
+     "vi": "Tính TF-IDF trên kho văn bản lớn một cách song song."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "AWS includes a sample exam question that digs into how a TF-IDF matrix of n-grams is built.",
+   "vi": "AWS có một câu hỏi mẫu trong đề thi đi sâu vào cách xây TF-IDF matrix với n-gram."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Documents\"] --> B[\"Tokenize and lowercase\"]\n  B --> C[\"Term frequency\"]\n  B --> D[\"Document frequency\"]\n  C --> E[\"TF divided by DF\"]\n  D --> E\n  E --> F[\"TF-IDF score per term\"]",
+   "vi": "flowchart LR\n  A[\"Tài liệu\"] --> B[\"Tách từ và chữ thường\"]\n  B --> C[\"Term frequency\"]\n  B --> D[\"Document frequency\"]\n  C --> E[\"TF chia DF\"]\n  D --> E\n  E --> F[\"Điểm TF-IDF mỗi từ\"]"
+  }
+ },
+ "03-007": {
+  "tldr": {
+   "en": "Hands-on lab: build TF-IDF search over a Wikipedia subset using PySpark in an EMR Studio workspace backed by EMR Serverless.",
+   "vi": "Lab thực hành: xây tìm kiếm TF-IDF trên tập con Wikipedia bằng PySpark trong EMR Studio workspace chạy trên EMR Serverless."
+  },
+  "points": [
+   {
+    "en": "EMR Studio gives an interactive notebook workspace attached to an EMR Serverless application, no cluster to manage.",
+    "vi": "EMR Studio cung cấp notebook workspace tương tác gắn với EMR Serverless application, không cần quản lý cluster."
+   },
+   {
+    "en": "Hierarchy: EMR Serverless application runs Spark, a workspace holds the notebook, the studio contains workspaces.",
+    "vi": "Phân cấp: EMR Serverless application chạy Spark, workspace chứa notebook, studio chứa các workspace."
+   },
+   {
+    "en": "Sign in as an IAM user, not root; EMR Studio hit a bug with root accounts.",
+    "vi": "Đăng nhập bằng IAM user, không dùng root; EMR Studio gặp lỗi với tài khoản root."
+   },
+   {
+    "en": "The studio creates its own S3 bucket and service role by default; EMR Studio supports collaboration.",
+    "vi": "Studio tự tạo S3 bucket và service role mặc định; EMR Studio hỗ trợ cộng tác."
+   },
+   {
+    "en": "Clean up the application and resources afterward to avoid charges.",
+    "vi": "Dọn dẹp application và tài nguyên sau lab để tránh phát sinh chi phí."
+   }
+  ],
+  "services": [
+   {
+    "name": "EMR Studio",
+    "use": {
+     "en": "Interactive notebook environment for PySpark on EMR.",
+     "vi": "Môi trường notebook tương tác cho PySpark trên EMR."
+    }
+   },
+   {
+    "name": "EMR Serverless",
+    "use": {
+     "en": "Runs the Spark workload with no cluster sizing.",
+     "vi": "Chạy workload Spark mà không cần định cỡ cluster."
+    }
+   },
+   {
+    "name": "Amazon S3",
+    "use": {
+     "en": "Studio storage bucket for notebooks and data.",
+     "vi": "Bucket lưu notebook và dữ liệu của studio."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart TD\n  A[\"EMR Studio\"] --> B[\"Workspace with notebook\"]\n  B --> C[\"EMR Serverless application\"]\n  C --> D[\"PySpark TF-IDF job\"]\n  E[\"Amazon S3 data\"] --> D",
+   "vi": "flowchart TD\n  A[\"EMR Studio\"] --> B[\"Workspace chứa notebook\"]\n  B --> C[\"EMR Serverless application\"]\n  C --> D[\"Job PySpark TF-IDF\"]\n  E[\"Dữ liệu Amazon S3\"] --> D"
+  }
+ },
+ "03-008": {
+  "tldr": {
+   "en": "Imputing missing data: mean or median replacement is quick but crude; better options use correlations between features.",
+   "vi": "Điền dữ liệu thiếu: thay bằng mean hoặc median nhanh nhưng thô; cách tốt hơn dùng tương quan giữa các feature."
+  },
+  "points": [
+   {
+    "en": "Mean replacement fills a column's gaps with its average; use median when outliers skew the mean.",
+    "vi": "Mean replacement điền chỗ trống bằng trung bình cột; dùng median khi outlier làm lệch mean."
+   },
+   {
+    "en": "Mean imputation ignores relationships between features and does not work for categorical data.",
+    "vi": "Mean imputation bỏ qua quan hệ giữa các feature và không dùng được cho dữ liệu categorical."
+   },
+   {
+    "en": "Dropping rows is only fine if few rows are missing and dropping does not bias the data.",
+    "vi": "Bỏ dòng chỉ ổn khi thiếu ít và việc bỏ không làm lệch dữ liệu."
+   },
+   {
+    "en": "Better methods: KNN, deep learning, regression, MICE; getting more complete data beats any imputation.",
+    "vi": "Cách tốt hơn: KNN, deep learning, regression, MICE; có thêm dữ liệu đầy đủ còn tốt hơn mọi cách điền."
+   },
+   {
+    "en": "For categorical features, replace with the most frequent value or use a deep learning model.",
+    "vi": "Với feature categorical, thay bằng giá trị phổ biến nhất hoặc dùng mô hình deep learning."
+   }
+  ],
+  "services": [],
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Missing values\"] --> B[\"Few rows and no bias\"]\n  B -->|\"yes\"| C[\"Drop rows\"]\n  B -->|\"no\"| D[\"Impute\"]\n  D --> E[\"Mean or median\"]\n  D --> F[\"KNN or regression or MICE\"]",
+   "vi": "flowchart TD\n  A[\"Giá trị thiếu\"] --> B[\"Ít dòng và không gây lệch\"]\n  B -->|\"có\"| C[\"Bỏ dòng\"]\n  B -->|\"không\"| D[\"Impute\"]\n  D --> E[\"Mean hoặc median\"]\n  D --> F[\"KNN hoặc regression hoặc MICE\"]"
+  }
+ },
+ "03-009": {
+  "tldr": {
+   "en": "Unbalanced data (for example rare fraud) lets a model look accurate by always guessing the majority class; fix with oversampling, SMOTE or threshold tuning.",
+   "vi": "Dữ liệu mất cân bằng (ví dụ gian lận hiếm) khiến model trông chính xác bằng cách luôn đoán lớp đa số; xử lý bằng oversampling, SMOTE hoặc chỉnh threshold."
+  },
+  "points": [
+   {
+    "en": "Positive means the thing you detect (such as fraud), not a good outcome.",
+    "vi": "Positive là thứ bạn cần phát hiện (như gian lận), không phải kết quả tốt."
+   },
+   {
+    "en": "Oversampling copies minority samples; undersampling removes majority samples and discards information.",
+    "vi": "Oversampling nhân bản mẫu thiểu số; undersampling bỏ mẫu đa số nên mất thông tin."
+   },
+   {
+    "en": "SMOTE generates synthetic minority samples by averaging k-nearest neighbors, better than plain copies.",
+    "vi": "SMOTE tạo mẫu thiểu số tổng hợp bằng trung bình k-nearest neighbors, tốt hơn sao chép đơn thuần."
+   },
+   {
+    "en": "Adjusting the decision threshold is another fix: raise it to cut false positives.",
+    "vi": "Chỉnh decision threshold là cách khác: tăng để giảm false positive."
+   },
+   {
+    "en": "Mainly an issue for neural networks.",
+    "vi": "Chủ yếu là vấn đề với neural network."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Clarify",
+    "use": {
+     "en": "Detects class imbalance in training data.",
+     "vi": "Phát hiện class imbalance trong dữ liệu train."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "A model predicting never fraud would be right 99.99 percent of the time if fraud is 0.01 percent of rows.",
+   "vi": "Model luôn đoán không gian lận sẽ đúng 99,99 phần trăm nếu gian lận chỉ chiếm 0,01 phần trăm số dòng."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Unbalanced data\"] --> B[\"Oversample minority\"]\n  A --> C[\"Undersample majority\"]\n  A --> D[\"SMOTE\"]\n  A --> E[\"Adjust threshold\"]\n  D --> F[\"Synthetic samples from KNN\"]",
+   "vi": "flowchart LR\n  A[\"Dữ liệu mất cân bằng\"] --> B[\"Oversample lớp thiểu số\"]\n  A --> C[\"Undersample lớp đa số\"]\n  A --> D[\"SMOTE\"]\n  A --> E[\"Chỉnh threshold\"]\n  D --> F[\"Mẫu tổng hợp từ KNN\"]"
+  }
+ },
+ "03-010": {
+  "tldr": {
+   "en": "Outliers can be found with standard deviation or the IQR rule and removed only if they do not represent what you want to model.",
+   "vi": "Outlier có thể tìm bằng độ lệch chuẩn hoặc quy tắc IQR và chỉ nên loại bỏ nếu chúng không đại diện cho thứ bạn muốn mô hình hóa."
+  },
+  "points": [
+   {
+    "en": "Variance is the average squared distance from the mean; standard deviation is its square root.",
+    "vi": "Variance là trung bình bình phương khoảng cách tới mean; standard deviation là căn bậc hai của nó."
+   },
+   {
+    "en": "Flag points beyond one or two standard deviations; the cutoff is a judgment call.",
+    "vi": "Đánh dấu điểm vượt 1 hoặc 2 standard deviation; ngưỡng là quyết định chủ quan."
+   },
+   {
+    "en": "Box-and-whisker plots define outliers as beyond 1.5 times the interquartile range.",
+    "vi": "Box-and-whisker plot coi outlier là điểm vượt quá 1,5 lần interquartile range."
+   },
+   {
+    "en": "Remove outliers only if they are bots, errors or power users; keep them if you need the true mean.",
+    "vi": "Chỉ loại outlier nếu là bot, lỗi hoặc power user; giữ lại nếu cần mean thực."
+   },
+   {
+    "en": "Random Cut Forest is the AWS outlier detection algorithm, found in QuickSight, Kinesis Analytics and SageMaker.",
+    "vi": "Random Cut Forest là thuật toán phát hiện outlier của AWS, có trong QuickSight, Kinesis Analytics và SageMaker."
+   }
+  ],
+  "services": [
+   {
+    "name": "Random Cut Forest",
+    "use": {
+     "en": "AWS anomaly and outlier detection algorithm (QuickSight, Kinesis Analytics, SageMaker).",
+     "vi": "Thuật toán phát hiện bất thường và outlier của AWS (QuickSight, Kinesis Analytics, SageMaker)."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "One billionaire added to a normal income dataset squashes everyone else into a single bar of the histogram.",
+   "vi": "Chỉ một tỷ phú thêm vào tập thu nhập bình thường cũng nén mọi người còn lại vào một cột của histogram."
+  },
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Compute mean and standard deviation\"] --> B[\"Points beyond 1 or 2 sigma or 1.5 IQR\"]\n  B --> C[\"Understand the cause\"]\n  C -->|\"bots or errors\"| D[\"Remove\"]\n  C -->|\"valid data\"| E[\"Keep\"]",
+   "vi": "flowchart TD\n  A[\"Tính mean và standard deviation\"] --> B[\"Điểm vượt 1 hoặc 2 sigma hoặc 1.5 IQR\"]\n  B --> C[\"Tìm nguyên nhân\"]\n  C -->|\"bot hoặc lỗi\"| D[\"Loại bỏ\"]\n  C -->|\"dữ liệu hợp lệ\"| E[\"Giữ lại\"]"
+  }
+ },
+ "03-011": {
+  "tldr": {
+   "en": "Common feature prep steps: binning, transforms, one-hot encoding, scaling and normalizing, and shuffling.",
+   "vi": "Các bước chuẩn bị feature phổ biến: binning, transform, one-hot encoding, scaling và normalizing, và shuffling."
+  },
+  "points": [
+   {
+    "en": "Binning turns numbers into categories to hide measurement noise; quantile binning gives equal-sized bins.",
+    "vi": "Binning biến số thành category để che nhiễu đo lường; quantile binning cho các bin có kích thước bằng nhau."
+   },
+   {
+    "en": "Transforms like log, square or square root can make non-linear trends easier to learn.",
+    "vi": "Transform như log, bình phương hoặc căn bậc hai giúp model học xu hướng phi tuyến dễ hơn."
+   },
+   {
+    "en": "One-hot encoding makes one 0 or 1 slot per category, since neurons are on or off.",
+    "vi": "One-hot encoding tạo một ô 0 hoặc 1 cho mỗi category, vì neuron chỉ bật hoặc tắt."
+   },
+   {
+    "en": "Scale features to comparable ranges so large-magnitude features do not dominate; trees do not care.",
+    "vi": "Scale feature về cùng khoảng để feature giá trị lớn không áp đảo; decision tree thì không cần."
+   },
+   {
+    "en": "Shuffle training data to remove order-of-collection signals; reverse scaling on numeric predictions.",
+    "vi": "Shuffle dữ liệu train để loại tín hiệu từ thứ tự thu thập; đảo ngược scaling với dự đoán số."
+   }
+  ],
+  "services": [],
+  "funFact": {
+   "en": "YouTube feeds each numeric feature x as x, x squared and square root of x to learn super and sublinear trends.",
+   "vi": "YouTube đưa mỗi feature số x vào dưới dạng x, x bình phương và căn bậc hai của x để học xu hướng siêu và dưới tuyến tính."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Raw data\"] --> B[\"Binning\"]\n  B --> C[\"Transform\"]\n  C --> D[\"One-hot encoding\"]\n  D --> E[\"Scale and normalize\"]\n  E --> F[\"Shuffle\"]\n  F --> G[\"Training\"]",
+   "vi": "flowchart LR\n  A[\"Dữ liệu thô\"] --> B[\"Binning\"]\n  B --> C[\"Transform\"]\n  C --> D[\"One-hot encoding\"]\n  D --> E[\"Scale và normalize\"]\n  E --> F[\"Shuffle\"]\n  F --> G[\"Training\"]"
+  }
+ },
+ "03-012": {
+  "tldr": {
+   "en": "For AI models, text is tokenized into numbers, normalized, and filtered so training data is relevant and representative.",
+   "vi": "Với mô hình AI, văn bản được tokenize thành số, chuẩn hóa và lọc để dữ liệu train liên quan và có tính đại diện."
+  },
+  "points": [
+   {
+    "en": "Tokens can be words, subwords or phrases, and they become embedding vectors.",
+    "vi": "Token có thể là từ, subword hoặc cụm từ, và được chuyển thành embedding vector."
+   },
+   {
+    "en": "The tokenizer choice changes model behavior and token count, which affects cost.",
+    "vi": "Lựa chọn tokenizer ảnh hưởng hành vi model và số token, từ đó ảnh hưởng chi phí."
+   },
+   {
+    "en": "Normalize to lowercase, handle unwanted characters, and filter out irrelevant text.",
+    "vi": "Chuẩn hóa chữ thường, xử lý ký tự không mong muốn và lọc văn bản không liên quan."
+   },
+   {
+    "en": "Add domain-specific examples and represent underrepresented cases without changing meaning.",
+    "vi": "Thêm ví dụ theo domain và đại diện đủ các trường hợp ít gặp mà không đổi ý nghĩa."
+   },
+   {
+    "en": "SageMaker Data Wrangler has a tokenization transform; the exam tests concepts, not console steps.",
+    "vi": "SageMaker Data Wrangler có transform tokenization; đề thi hỏi khái niệm, không hỏi thao tác console."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Data Wrangler",
+    "use": {
+     "en": "Includes a tokenization feature and custom text transforms.",
+     "vi": "Có tính năng tokenization và các transform văn bản tùy chỉnh."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "You are often billed per token, so a tokenizer that splits text into more tokens costs more.",
+   "vi": "Thường bị tính phí theo token, nên tokenizer tách nhiều token hơn sẽ tốn hơn."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Raw text\"] --> B[\"Normalize and filter\"]\n  B --> C[\"Tokenize\"]\n  C --> D[\"Token IDs\"]\n  D --> E[\"Embedding vectors\"]",
+   "vi": "flowchart LR\n  A[\"Văn bản thô\"] --> B[\"Chuẩn hóa và lọc\"]\n  B --> C[\"Tokenize\"]\n  C --> D[\"Token ID\"]\n  D --> E[\"Embedding vector\"]"
+  }
+ },
+ "03-013": {
+  "tldr": {
+   "en": "Protect PII by masking, anonymizing, encrypting, hashing, or best of all not collecting it.",
+   "vi": "Bảo vệ PII bằng masking, anonymization, mã hóa, hashing, hoặc tốt nhất là không thu thập."
+  },
+  "points": [
+   {
+    "en": "Masking hides part of a value, like all but the last four digits of a card number.",
+    "vi": "Masking che một phần giá trị, như chỉ hiện 4 số cuối của thẻ."
+   },
+   {
+    "en": "Glue DataBrew and Redshift have built-in masking support, including masking policies in Redshift.",
+    "vi": "Glue DataBrew và Redshift hỗ trợ masking sẵn, gồm masking policy trong Redshift."
+   },
+   {
+    "en": "Anonymization replaces data with random values or shuffles a column so it is untraceable.",
+    "vi": "Anonymization thay dữ liệu bằng giá trị ngẫu nhiên hoặc xáo trộn cột để không truy ngược được."
+   },
+   {
+    "en": "Encryption can be deterministic (same output) or probabilistic; hashing is another option.",
+    "vi": "Mã hóa có thể deterministic (cùng đầu ra) hoặc probabilistic; hashing là lựa chọn khác."
+   },
+   {
+    "en": "Safest: delete sensitive fields during ETL or never import them.",
+    "vi": "An toàn nhất: xóa trường nhạy cảm trong ETL hoặc không import ngay từ đầu."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS Glue DataBrew",
+    "use": {
+     "en": "Built-in data masking transforms.",
+     "vi": "Có sẵn transform masking dữ liệu."
+    }
+   },
+   {
+    "name": "Amazon Redshift",
+    "use": {
+     "en": "Masking policies for sensitive columns.",
+     "vi": "Masking policy cho cột nhạy cảm."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart TD\n  A[\"PII in data\"] --> B[\"Delete or do not import\"]\n  A --> C[\"Mask\"]\n  A --> D[\"Anonymize or shuffle\"]\n  A --> E[\"Encrypt or hash\"]",
+   "vi": "flowchart TD\n  A[\"PII trong dữ liệu\"] --> B[\"Xóa hoặc không import\"]\n  A --> C[\"Mask\"]\n  A --> D[\"Anonymize hoặc shuffle\"]\n  A --> E[\"Mã hóa hoặc hash\"]"
+  }
+ },
+ "03-014": {
+  "tldr": {
+   "en": "Good AI training data must be structurally valid and semantically trustworthy: garbage in, garbage out.",
+   "vi": "Dữ liệu train AI tốt phải đúng cấu trúc và đáng tin về ngữ nghĩa: đầu vào rác thì đầu ra rác."
+  },
+  "points": [
+   {
+    "en": "Fine-tuning data is often JSON Lines with prompt and completion fields.",
+    "vi": "Dữ liệu fine-tuning thường là JSON Lines với các trường prompt và completion."
+   },
+   {
+    "en": "Remove malformed rows, missing fields, duplicates, contradictions and mislabeled examples.",
+    "vi": "Loại bỏ dòng lỗi định dạng, thiếu trường, trùng lặp, mâu thuẫn và nhãn sai."
+   },
+   {
+    "en": "Data should represent the production workload and exclude unsafe or PII content, which needs human review.",
+    "vi": "Dữ liệu phải đại diện workload production và loại nội dung không an toàn hoặc PII, cần con người kiểm tra."
+   },
+   {
+    "en": "Contradictory examples, like two return policies, make the model answer at random.",
+    "vi": "Ví dụ mâu thuẫn, như hai chính sách đổi trả, khiến model trả lời ngẫu nhiên."
+   },
+   {
+    "en": "Bedrock Guardrails screen at runtime, but clean data first.",
+    "vi": "Bedrock Guardrails lọc lúc runtime, nhưng hãy làm sạch dữ liệu trước."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock Guardrails",
+    "use": {
+     "en": "Runtime safeguards for model output, not a substitute for clean data.",
+     "vi": "Cơ chế bảo vệ runtime cho output model, không thay thế dữ liệu sạch."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Raw training data\"] --> B[\"Check format\"]\n  B --> C[\"Remove bad and duplicate rows\"]\n  C --> D[\"Strip unsafe and PII\"]\n  D --> E[\"Human spot checks\"]\n  E --> F[\"Fine-tuning\"]",
+   "vi": "flowchart LR\n  A[\"Dữ liệu train thô\"] --> B[\"Kiểm tra định dạng\"]\n  B --> C[\"Loại dòng lỗi và trùng\"]\n  C --> D[\"Loại nội dung không an toàn và PII\"]\n  D --> E[\"Kiểm tra mẫu bằng người\"]\n  E --> F[\"Fine-tuning\"]"
+  }
+ },
+ "03-016": {
+  "tldr": {
+   "en": "SageMaker AI covers the whole ML lifecycle: prepare data, train, evaluate, deploy and monitor, through notebooks, code or the console.",
+   "vi": "SageMaker AI bao phủ toàn bộ vòng đời ML: chuẩn bị dữ liệu, train, đánh giá, deploy và giám sát, qua notebook, code hoặc console."
+  },
+  "points": [
+   {
+    "en": "It predates generative AI and handles traditional ML and deep learning too.",
+    "vi": "Nó có từ trước generative AI và xử lý cả ML truyền thống lẫn deep learning."
+   },
+   {
+    "en": "Training reads data from S3 and training code from an ECR image, then writes model artifacts to S3.",
+    "vi": "Training đọc dữ liệu từ S3 và code train từ image ECR, rồi ghi model artifact vào S3."
+   },
+   {
+    "en": "Deployed models sit behind endpoints that client apps call; inference code also comes from ECR.",
+    "vi": "Model deploy nằm sau endpoint mà client gọi; code inference cũng lấy từ ECR."
+   },
+   {
+    "en": "Orchestrate with a SageMaker notebook in Python, or do much of it from the console UI.",
+    "vi": "Điều phối bằng SageMaker notebook với Python, hoặc làm nhiều việc từ giao diện console."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon SageMaker AI",
+    "use": {
+     "en": "End-to-end managed ML service for build, train and deploy.",
+     "vi": "Dịch vụ ML được quản lý end-to-end để build, train và deploy."
+    }
+   },
+   {
+    "name": "Amazon S3",
+    "use": {
+     "en": "Stores training data and model artifacts.",
+     "vi": "Lưu dữ liệu train và model artifact."
+    }
+   },
+   {
+    "name": "Amazon ECR",
+    "use": {
+     "en": "Hosts training and inference container images.",
+     "vi": "Lưu container image cho training và inference."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Training data in S3\"] --> B[\"Training job with ECR image\"]\n  B --> C[\"Model artifacts in S3\"]\n  C --> D[\"Hosted model with ECR inference code\"]\n  D --> E[\"Endpoint\"]\n  F[\"Client app\"] --> E",
+   "vi": "flowchart LR\n  A[\"Dữ liệu train trong S3\"] --> B[\"Training job với image ECR\"]\n  B --> C[\"Model artifact trong S3\"]\n  C --> D[\"Model hosted với code inference ECR\"]\n  D --> E[\"Endpoint\"]\n  F[\"Client app\"] --> E"
+  }
+ },
+ "03-017": {
+  "tldr": {
+   "en": "A SageMaker AI domain is the organizational unit that holds users, apps, shared storage on EFS and network settings.",
+   "vi": "SageMaker AI domain là đơn vị tổ chức chứa người dùng, ứng dụng, lưu trữ chung trên EFS và cấu hình mạng."
+  },
+  "points": [
+   {
+    "en": "A domain has one shared EFS volume, authorized users, and policy and VPC settings.",
+    "vi": "Một domain có một EFS volume dùng chung, người dùng được phép, và cấu hình policy và VPC."
+   },
+   {
+    "en": "User profiles represent people and own private apps like SageMaker Studio with a private EFS directory.",
+    "vi": "User profile đại diện người dùng và sở hữu app riêng như SageMaker Studio cùng thư mục EFS riêng."
+   },
+   {
+    "en": "Shared spaces give users a shared EFS directory and a communal Studio IDE.",
+    "vi": "Shared space cung cấp thư mục EFS dùng chung và Studio IDE chung."
+   },
+   {
+    "en": "By default a domain uses an AWS-managed internet VPC plus your own VPC for EFS traffic.",
+    "vi": "Mặc định domain dùng VPC internet do AWS quản lý cộng với VPC của bạn cho traffic EFS."
+   },
+   {
+    "en": "Choose VPC only mode to route all traffic through your own VPC for tighter control.",
+    "vi": "Chọn chế độ VPC only để mọi traffic đi qua VPC của bạn, kiểm soát chặt hơn."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker AI Domain",
+    "use": {
+     "en": "Container for users, apps, EFS storage and VPC settings; required before using Studio.",
+     "vi": "Vùng chứa người dùng, app, lưu trữ EFS và cấu hình VPC; bắt buộc trước khi dùng Studio."
+    }
+   },
+   {
+    "name": "Amazon EFS",
+    "use": {
+     "en": "Shared file storage carved up per user and shared space.",
+     "vi": "Lưu trữ file chung chia theo user và shared space."
+    }
+   },
+   {
+    "name": "Amazon VPC",
+    "use": {
+     "en": "Network control; VPC only mode keeps traffic private.",
+     "vi": "Kiểm soát mạng; chế độ VPC only giữ traffic riêng tư."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart TD\n  A[\"SageMaker domain\"] --> B[\"Shared EFS volume\"]\n  A --> C[\"User profile 1\"]\n  A --> D[\"User profile 2\"]\n  A --> E[\"Shared space\"]\n  A --> F[\"VPC settings\"]\n  C --> G[\"Private Studio app\"]",
+   "vi": "flowchart TD\n  A[\"SageMaker domain\"] --> B[\"EFS volume dùng chung\"]\n  A --> C[\"User profile 1\"]\n  A --> D[\"User profile 2\"]\n  A --> E[\"Shared space\"]\n  A --> F[\"Cấu hình VPC\"]\n  C --> G[\"Studio app riêng\"]"
+  }
+ },
+ "03-018": {
+  "tldr": {
+   "en": "SageMaker pipeline in practice: process data from S3, train with built-in or custom algorithms in containers, then deploy for real-time or batch inference.",
+   "vi": "Quy trình SageMaker thực tế: xử lý dữ liệu từ S3, train bằng thuật toán built-in hoặc tự viết trong container, rồi deploy cho inference real-time hoặc batch."
+  },
+  "points": [
+   {
+    "en": "Data sources include S3, FSx for Lustre, Athena, EMR, Redshift, Keyspaces and Spark.",
+    "vi": "Nguồn dữ liệu gồm S3, FSx for Lustre, Athena, EMR, Redshift, Keyspaces và Spark."
+   },
+   {
+    "en": "Built-in algorithms prefer formats like RecordIO protobuf or columnar data.",
+    "vi": "Thuật toán built-in ưa định dạng như RecordIO protobuf hoặc dữ liệu columnar."
+   },
+   {
+    "en": "Training options: built-in algorithms, XGBoost, TensorFlow, PyTorch, Hugging Face, scikit-learn, custom Docker, or Marketplace.",
+    "vi": "Lựa chọn training: thuật toán built-in, XGBoost, TensorFlow, PyTorch, Hugging Face, scikit-learn, Docker tự tạo, hoặc Marketplace."
+   },
+   {
+    "en": "Deploy to a persistent endpoint for real-time, or use Batch Transform for whole datasets without an endpoint.",
+    "vi": "Deploy lên endpoint thường trực cho real-time, hoặc dùng Batch Transform cho cả dataset không cần endpoint."
+   },
+   {
+    "en": "Also: Neo for edge devices, Elastic Inference, auto scaling, shadow testing and rollback.",
+    "vi": "Ngoài ra: Neo cho thiết bị edge, Elastic Inference, auto scaling, shadow testing và rollback."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Batch Transform",
+    "use": {
+     "en": "Get predictions for a full dataset with no endpoint.",
+     "vi": "Lấy dự đoán cho cả dataset mà không cần endpoint."
+    }
+   },
+   {
+    "name": "SageMaker Neo",
+    "use": {
+     "en": "Deploy trained models to edge devices.",
+     "vi": "Deploy model đã train lên thiết bị edge."
+    }
+   },
+   {
+    "name": "SageMaker shadow testing",
+    "use": {
+     "en": "Compare a new model against the live one safely.",
+     "vi": "So sánh model mới với model đang chạy một cách an toàn."
+    }
+   },
+   {
+    "name": "Amazon ECR",
+    "use": {
+     "en": "Holds processing, training and inference containers.",
+     "vi": "Chứa container cho processing, training và inference."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"S3 raw data\"] --> B[\"Processing container\"]\n  B --> C[\"S3 processed data\"]\n  C --> D[\"Training job\"]\n  D --> E[\"Model artifact in S3\"]\n  E --> F[\"Real-time endpoint\"]\n  E --> G[\"Batch Transform\"]",
+   "vi": "flowchart LR\n  A[\"Dữ liệu thô S3\"] --> B[\"Processing container\"]\n  B --> C[\"Dữ liệu đã xử lý S3\"]\n  C --> D[\"Training job\"]\n  D --> E[\"Model artifact trong S3\"]\n  E --> F[\"Endpoint real-time\"]\n  E --> G[\"Batch Transform\"]"
+  }
+ },
+ "03-019": {
+  "tldr": {
+   "en": "Supervised learning needs labels; annotations add richer detail. Get labels from existing data, humans or model-assisted labeling, and quality-check them.",
+   "vi": "Supervised learning cần nhãn; annotation thêm chi tiết phong phú hơn. Lấy nhãn từ dữ liệu có sẵn, con người hoặc model hỗ trợ, và kiểm tra chất lượng."
+  },
+  "points": [
+   {
+    "en": "A label is one target per input; annotations add detail like bounding boxes, pixel classes or entity tags.",
+    "vi": "Label là một đích cho mỗi input; annotation thêm chi tiết như bounding box, lớp theo pixel hoặc tag thực thể."
+   },
+   {
+    "en": "Tasks: image or text classification, multilabel, object detection, semantic segmentation, named entity recognition.",
+    "vi": "Các tác vụ: phân loại ảnh hoặc văn bản, multilabel, object detection, semantic segmentation, named entity recognition."
+   },
+   {
+    "en": "Cheapest labels come from existing business data such as purchases, churn or fraud flags.",
+    "vi": "Nhãn rẻ nhất đến từ dữ liệu kinh doanh sẵn có như mua hàng, churn hoặc cờ gian lận."
+   },
+   {
+    "en": "Model-assisted labeling uses Rekognition or Comprehend for a first pass; humans review uncertain cases (active learning).",
+    "vi": "Model hỗ trợ dùng Rekognition hoặc Comprehend cho lượt đầu; con người xem lại ca không chắc (active learning)."
+   },
+   {
+    "en": "Improve quality with clear guidelines, multiple annotators per item, and adjudication of disagreements.",
+    "vi": "Tăng chất lượng bằng hướng dẫn rõ ràng, nhiều annotator mỗi mẫu, và xử lý bất đồng."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Rekognition",
+    "use": {
+     "en": "First-pass image labels for model-assisted labeling.",
+     "vi": "Gán nhãn ảnh lượt đầu cho labeling có model hỗ trợ."
+    }
+   },
+   {
+    "name": "Amazon Comprehend",
+    "use": {
+     "en": "First-pass text labels such as sentiment or topics.",
+     "vi": "Gán nhãn văn bản lượt đầu như sentiment hoặc chủ đề."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "SageMaker Ground Truth and Mechanical Turk are now deprecated or in maintenance mode, so they are no longer fair game for the exam.",
+   "vi": "SageMaker Ground Truth và Mechanical Turk nay đã deprecated hoặc ở chế độ bảo trì, nên không còn nằm trong đề thi."
+  },
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Raw data\"] --> B[\"Existing business labels\"]\n  A --> C[\"Model-assisted first pass\"]\n  A --> D[\"Human annotators\"]\n  C --> D\n  B --> E[\"Quality check\"]\n  D --> E\n  E --> F[\"Labeled training set\"]",
+   "vi": "flowchart TD\n  A[\"Dữ liệu thô\"] --> B[\"Nhãn sẵn có từ nghiệp vụ\"]\n  A --> C[\"Model gán nhãn lượt đầu\"]\n  A --> D[\"Annotator con người\"]\n  C --> D\n  B --> E[\"Kiểm tra chất lượng\"]\n  D --> E\n  E --> F[\"Tập train đã gán nhãn\"]"
+  }
+ },
+ "03-020": {
+  "tldr": {
+   "en": "SageMaker Data Wrangler is a visual ETL tool in Studio that imports, visualizes and transforms data for ML, then exports the generated code.",
+   "vi": "SageMaker Data Wrangler là công cụ ETL trực quan trong Studio để import, trực quan hóa và biến đổi dữ liệu cho ML, rồi xuất code đã sinh."
+  },
+  "points": [
+   {
+    "en": "Imports from S3, Lake Formation, Athena, Feature Store, Redshift and JDBC sources like Salesforce.",
+    "vi": "Import từ S3, Lake Formation, Athena, Feature Store, Redshift và nguồn JDBC như Salesforce."
+   },
+   {
+    "en": "Over 300 built-in transforms, plus custom pandas, PySpark or PySpark SQL code.",
+    "vi": "Hơn 300 transform có sẵn, cộng code tùy chỉnh pandas, PySpark hoặc PySpark SQL."
+   },
+   {
+    "en": "Quick Model trains a model on a data subset to test how your transformations affect results.",
+    "vi": "Quick Model train model trên một phần dữ liệu để kiểm tra transform ảnh hưởng thế nào đến kết quả."
+   },
+   {
+    "en": "It generates code (Jupyter notebook, Processing, Pipelines, Feature Store) rather than running the pipeline itself.",
+    "vi": "Nó sinh code (Jupyter notebook, Processing, Pipelines, Feature Store) chứ không tự chạy pipeline."
+   },
+   {
+    "en": "Instance not available errors mean you need a Service Quotas increase for Studio Kernel Gateway apps.",
+    "vi": "Lỗi instance not available nghĩa là cần tăng quota trong Service Quotas cho Studio Kernel Gateway apps."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Data Wrangler",
+    "use": {
+     "en": "Visual data prep and feature engineering for ML; pick it for no-code ETL in Studio.",
+     "vi": "Chuẩn bị dữ liệu và feature engineering trực quan cho ML; chọn khi cần ETL no-code trong Studio."
+    }
+   },
+   {
+    "name": "SageMaker Feature Store",
+    "use": {
+     "en": "Can be a source and a destination of Data Wrangler output.",
+     "vi": "Có thể là nguồn và đích cho output của Data Wrangler."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"S3 or Athena or Redshift or JDBC\"] --> B[\"Data Wrangler\"]\n  B --> C[\"Visualize and transform\"]\n  C --> D[\"Quick Model\"]\n  C --> E[\"Export generated code\"]\n  E --> F[\"Processing or Pipelines or Feature Store\"]",
+   "vi": "flowchart LR\n  A[\"S3 hoặc Athena hoặc Redshift hoặc JDBC\"] --> B[\"Data Wrangler\"]\n  B --> C[\"Trực quan hóa và biến đổi\"]\n  C --> D[\"Quick Model\"]\n  C --> E[\"Xuất code đã sinh\"]\n  E --> F[\"Processing hoặc Pipelines hoặc Feature Store\"]"
+  }
+ },
+ "03-022": {
+  "tldr": {
+   "en": "Demo: in SageMaker Studio and Canvas, import S3 data, prepare it with Data Wrangler and chat-based prep, build a regression model and predict absenteeism, all without code.",
+   "vi": "Demo: trong SageMaker Studio và Canvas, import dữ liệu S3, chuẩn bị bằng Data Wrangler và chat, build model regression dự đoán số ngày nghỉ, hoàn toàn không cần code."
+  },
+  "points": [
+   {
+    "en": "You need a SageMaker domain and user profile before opening Studio; Studio hosts JupyterLab, RStudio and Canvas.",
+    "vi": "Cần domain và user profile SageMaker trước khi mở Studio; Studio chứa JupyterLab, RStudio và Canvas."
+   },
+   {
+    "en": "Import a CSV from S3, then run Get data insights to auto-detect missing values, duplicates and outliers.",
+    "vi": "Import CSV từ S3, rồi chạy Get data insights để tự phát hiện giá trị thiếu, trùng lặp và outlier."
+   },
+   {
+    "en": "Predicting a number such as days absent is a regression problem; Canvas builds the model via AutoML.",
+    "vi": "Dự đoán một con số như số ngày nghỉ là bài toán regression; Canvas build model bằng AutoML."
+   },
+   {
+    "en": "Canvas also offers ready-to-use models built on Rekognition, Comprehend and Textract, plus a Gen AI chat.",
+    "vi": "Canvas còn có model dùng sẵn dựa trên Rekognition, Comprehend và Textract, cùng chat Gen AI."
+   },
+   {
+    "en": "Log out and delete endpoints when done; Canvas instances keep charging.",
+    "vi": "Đăng xuất và xóa endpoint khi xong; instance của Canvas vẫn tính phí."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Studio",
+    "use": {
+     "en": "Integrated ML IDE with JupyterLab, RStudio, Canvas, Pipelines, JumpStart.",
+     "vi": "IDE ML tích hợp với JupyterLab, RStudio, Canvas, Pipelines, JumpStart."
+    }
+   },
+   {
+    "name": "SageMaker Canvas",
+    "use": {
+     "en": "No-code model building and data prep.",
+     "vi": "Build model và chuẩn bị dữ liệu không cần code."
+    }
+   },
+   {
+    "name": "SageMaker Data Wrangler",
+    "use": {
+     "en": "Data prep and insights inside Canvas.",
+     "vi": "Chuẩn bị dữ liệu và insights trong Canvas."
+    }
+   },
+   {
+    "name": "Amazon Rekognition",
+    "use": {
+     "en": "Ready-to-use image object detection in Canvas.",
+     "vi": "Phát hiện đối tượng trong ảnh dùng sẵn trong Canvas."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"CSV in S3\"] --> B[\"Canvas import\"]\n  B --> C[\"Data insights\"]\n  C --> D[\"Data Wrangler prep\"]\n  D --> E[\"Build regression model\"]\n  E --> F[\"Predict\"]",
+   "vi": "flowchart LR\n  A[\"CSV trong S3\"] --> B[\"Import vào Canvas\"]\n  B --> C[\"Data insights\"]\n  C --> D[\"Chuẩn bị bằng Data Wrangler\"]\n  D --> E[\"Build model regression\"]\n  E --> F[\"Dự đoán\"]"
+  }
+ },
+ "03-023": {
+  "tldr": {
+   "en": "Clarify measures bias in training data with metrics such as class imbalance (CI) and DPL; bias can be mitigated by fixing data, prompts or outputs.",
+   "vi": "Clarify đo bias trong dữ liệu train bằng các metric như class imbalance (CI) và DPL; có thể giảm bias bằng cách sửa dữ liệu, prompt hoặc output."
+  },
+  "points": [
+   {
+    "en": "A facet is a feature tied to a demographic group that you do not want to bias against.",
+    "vi": "Facet là feature gắn với một nhóm nhân khẩu học mà bạn không muốn model thiên vị."
+   },
+   {
+    "en": "Class imbalance (CI) means a group is under or overrepresented; DPL is the difference in proportion of labels.",
+    "vi": "Class imbalance (CI) là một nhóm bị thiếu hoặc thừa đại diện; DPL là chênh lệch tỷ lệ nhãn."
+   },
+   {
+    "en": "Other metrics: KL and JS divergence, LP norm, TVD, KS, and conditional demographic disparity (CDD).",
+    "vi": "Metric khác: KL và JS divergence, LP norm, TVD, KS và conditional demographic disparity (CDD)."
+   },
+   {
+    "en": "Hidden bias in training data shows up in LLM output; fix it by rebalancing or synthesizing data.",
+    "vi": "Bias ẩn trong dữ liệu train sẽ lộ ra ở output LLM; sửa bằng cách cân bằng lại hoặc tổng hợp dữ liệu."
+   },
+   {
+    "en": "Counterfactual data augmentation detects bias in outputs and adjusts them after the fact; disambiguation in prompts also helps.",
+    "vi": "Counterfactual data augmentation phát hiện bias ở output rồi điều chỉnh sau; làm rõ prompt cũng giúp."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Clarify",
+    "use": {
+     "en": "Detects bias in data and models; pick it for pre-training bias metrics.",
+     "vi": "Phát hiện bias trong dữ liệu và model; chọn cho metric bias trước khi train."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Biased outputs\"] --> B[\"Fix training data\"]\n  A --> C[\"Disambiguate prompt\"]\n  A --> D[\"System prompt for diversity\"]\n  A --> E[\"Counterfactual data augmentation\"]",
+   "vi": "flowchart TD\n  A[\"Output thiên lệch\"] --> B[\"Sửa dữ liệu train\"]\n  A --> C[\"Làm rõ prompt\"]\n  A --> D[\"System prompt về đa dạng\"]\n  A --> E[\"Counterfactual data augmentation\"]"
+  }
+ },
+ "03-024": {
+  "tldr": {
+   "en": "Clarify explains models with partial dependence plots and SHAP values showing how each feature drives predictions.",
+   "vi": "Clarify giải thích model bằng partial dependence plot và SHAP value cho thấy mỗi feature tác động thế nào đến dự đoán."
+  },
+  "points": [
+   {
+    "en": "A PDP shows how predictions change as one feature varies, and can reveal data gaps or imbalance.",
+    "vi": "PDP cho thấy dự đoán thay đổi ra sao khi một feature thay đổi, và có thể lộ khoảng trống hoặc mất cân bằng dữ liệu."
+   },
+   {
+    "en": "Shapley values from game theory measure each feature's impact by dropping features one by one.",
+    "vi": "Shapley value từ lý thuyết trò chơi đo tác động của feature bằng cách bỏ từng feature."
+   },
+   {
+    "en": "SHAP (Shapley additive explanations) approximates Shapley values efficiently; Clarify uses it.",
+    "vi": "SHAP (Shapley additive explanations) xấp xỉ Shapley value hiệu quả; Clarify dùng nó."
+   },
+   {
+    "en": "For time series, Clarify uses asymmetric Shapley values to measure impact across time steps.",
+    "vi": "Với time series, Clarify dùng asymmetric Shapley value để đo tác động qua các bước thời gian."
+   },
+   {
+    "en": "The API also returns raw data distributions per bucket, not only the plots.",
+    "vi": "API cũng trả dữ liệu phân phối thô theo từng bucket, không chỉ biểu đồ."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Clarify",
+    "use": {
+     "en": "Explainability with PDPs and SHAP; pick it for feature importance.",
+     "vi": "Giải thích model bằng PDP và SHAP; chọn khi cần độ quan trọng feature."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Shapley values come from game theory, yet Clarify uses SHAP because testing every feature combination by brute force is too costly.",
+   "vi": "Shapley value đến từ lý thuyết trò chơi, nhưng Clarify dùng SHAP vì thử mọi tổ hợp feature bằng vét cạn quá tốn kém."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Trained model and data\"] --> B[\"SageMaker Clarify\"]\n  B --> C[\"Partial dependence plots\"]\n  B --> D[\"SHAP values\"]\n  B --> E[\"Asymmetric Shapley for time series\"]",
+   "vi": "flowchart LR\n  A[\"Model và dữ liệu đã train\"] --> B[\"SageMaker Clarify\"]\n  B --> C[\"Partial dependence plot\"]\n  B --> D[\"SHAP value\"]\n  B --> E[\"Asymmetric Shapley cho time series\"]"
+  }
+ },
+ "03-025": {
+  "tldr": {
+   "en": "SageMaker Feature Store is a central, secure repository for ML features with an online store for low-latency reads and an offline store in S3.",
+   "vi": "SageMaker Feature Store là kho trung tâm, an toàn cho ML feature với online store đọc độ trễ thấp và offline store trong S3."
+  },
+  "points": [
+   {
+    "en": "Features are grouped in feature groups with record identifiers, feature names and event times.",
+    "vi": "Feature được nhóm trong feature group với record identifier, tên feature và event time."
+   },
+   {
+    "en": "PutRecord ingests streaming data; GetRecord reads features from the online store.",
+    "vi": "PutRecord nạp dữ liệu streaming; GetRecord đọc feature từ online store."
+   },
+   {
+    "en": "The offline store lives in S3 with an auto-created Glue Data Catalog, queryable by Athena or Data Wrangler.",
+    "vi": "Offline store nằm trong S3 với Glue Data Catalog tự tạo, truy vấn được bằng Athena hoặc Data Wrangler."
+   },
+   {
+    "en": "Sources include Data Wrangler, Glue, EMR, Kinesis, Kafka and SageMaker Pipelines; features are shared across models.",
+    "vi": "Nguồn gồm Data Wrangler, Glue, EMR, Kinesis, Kafka và SageMaker Pipelines; feature dùng chung giữa các model."
+   },
+   {
+    "en": "Encrypted at rest and in transit, KMS keys supported, IAM access control and PrivateLink.",
+    "vi": "Mã hóa at rest và in transit, hỗ trợ KMS key, kiểm soát truy cập IAM và PrivateLink."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Feature Store",
+    "use": {
+     "en": "Share and reuse ML features with online and offline stores.",
+     "vi": "Chia sẻ và tái sử dụng ML feature với online và offline store."
+    }
+   },
+   {
+    "name": "AWS Glue Data Catalog",
+    "use": {
+     "en": "Auto-created for the offline store in S3.",
+     "vi": "Tự tạo cho offline store trong S3."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Kinesis or Kafka or Data Wrangler or Glue\"] -->|\"PutRecord\"| B[\"Feature Store\"]\n  B --> C[\"Online store\"]\n  B --> D[\"Offline store in S3\"]\n  C -->|\"GetRecord\"| E[\"Real-time model\"]\n  D --> F[\"Athena and training\"]",
+   "vi": "flowchart LR\n  A[\"Kinesis hoặc Kafka hoặc Data Wrangler hoặc Glue\"] -->|\"PutRecord\"| B[\"Feature Store\"]\n  B --> C[\"Online store\"]\n  B --> D[\"Offline store trong S3\"]\n  C -->|\"GetRecord\"| E[\"Model real-time\"]\n  D --> F[\"Athena và training\"]"
+  }
+ },
+ "03-026": {
+  "tldr": {
+   "en": "SageMaker Canvas is the no-code AutoML environment for business analysts: give it CSV data, pick a target column and it builds the model.",
+   "vi": "SageMaker Canvas là môi trường AutoML no-code cho business analyst: đưa CSV, chọn cột đích và nó tự build model."
+  },
+  "points": [
+   {
+    "en": "Handles classification and regression, can join datasets, and auto-cleans missing values, outliers and duplicates.",
+    "vi": "Xử lý classification và regression, có thể join dataset, và tự làm sạch giá trị thiếu, outlier, trùng lặp."
+   },
+   {
+    "en": "Models and datasets can be shared and exported to SageMaker Studio for ML engineers.",
+    "vi": "Model và dataset có thể chia sẻ và xuất sang SageMaker Studio cho ML engineer."
+   },
+   {
+    "en": "Supports generative AI: Bedrock and JumpStart foundation models, with fine-tuning inside Canvas.",
+    "vi": "Hỗ trợ generative AI: foundation model của Bedrock và JumpStart, có fine-tuning ngay trong Canvas."
+   },
+   {
+    "en": "Expect it to appear once or twice on the exam.",
+    "vi": "Dự kiến xuất hiện một hai lần trong đề thi."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Canvas",
+    "use": {
+     "en": "No-code ML for non-engineers; pick it when users cannot code.",
+     "vi": "ML no-code cho người không biết code; chọn khi người dùng không viết code."
+    }
+   },
+   {
+    "name": "Amazon Bedrock",
+    "use": {
+     "en": "Foundation models available inside Canvas.",
+     "vi": "Foundation model dùng được trong Canvas."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"CSV data\"] --> B[\"Canvas\"]\n  B --> C[\"Auto-clean and AutoML\"]\n  C --> D[\"Model and predictions\"]\n  D --> E[\"Share to SageMaker Studio\"]",
+   "vi": "flowchart LR\n  A[\"Dữ liệu CSV\"] --> B[\"Canvas\"]\n  B --> C[\"Tự làm sạch và AutoML\"]\n  C --> D[\"Model và dự đoán\"]\n  D --> E[\"Chia sẻ sang SageMaker Studio\"]"
+  }
+ },
+ "03-027": {
+  "tldr": {
+   "en": "AWS Glue is a serverless metadata catalog plus Spark-based ETL service that gives structure to data in S3 so Athena, Redshift and EMR can query it.",
+   "vi": "AWS Glue là dịch vụ serverless gồm metadata catalog và ETL dựa trên Spark, tạo cấu trúc cho dữ liệu trong S3 để Athena, Redshift và EMR truy vấn."
+  },
+  "points": [
+   {
+    "en": "A Glue crawler scans S3, infers the schema and populates the Glue Data Catalog.",
+    "vi": "Glue crawler quét S3, suy ra schema và điền vào Glue Data Catalog."
+   },
+   {
+    "en": "Data stays in S3; the catalog just provides table definitions for SQL tools.",
+    "vi": "Dữ liệu vẫn nằm trong S3; catalog chỉ cung cấp table definition cho công cụ SQL."
+   },
+   {
+    "en": "Glue ETL jobs run on managed Apache Spark, triggered on events, on a schedule or on demand.",
+    "vi": "Job Glue ETL chạy trên Apache Spark được quản lý, kích hoạt theo sự kiện, lịch hoặc thủ công."
+   },
+   {
+    "en": "Organize S3 into partitions by how you query, such as year, month, date, device, or device first.",
+    "vi": "Tổ chức S3 thành partition theo cách truy vấn, như year, month, date, device, hoặc device trước."
+   },
+   {
+    "en": "Glue is a major exam topic because it connects many services together.",
+    "vi": "Glue là chủ đề lớn trong đề thi vì nó kết nối nhiều dịch vụ với nhau."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS Glue",
+    "use": {
+     "en": "Serverless ETL and Data Catalog; pick it to give schema to S3 data lakes.",
+     "vi": "ETL serverless và Data Catalog; chọn để tạo schema cho data lake S3."
+    }
+   },
+   {
+    "name": "Glue crawler",
+    "use": {
+     "en": "Scans S3 and infers schema into the Data Catalog.",
+     "vi": "Quét S3 và suy ra schema vào Data Catalog."
+    }
+   },
+   {
+    "name": "Amazon Athena",
+    "use": {
+     "en": "Queries the cataloged S3 data with SQL.",
+     "vi": "Truy vấn dữ liệu S3 đã catalog bằng SQL."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "AWS filled the gap left when machine learning content moved out of the Big Data exam with more Glue and Redshift content.",
+   "vi": "AWS bù chỗ trống khi nội dung machine learning tách khỏi đề Big Data bằng nhiều nội dung Glue và Redshift hơn."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Data in S3\"] --> B[\"Glue crawler\"]\n  B --> C[\"Glue Data Catalog\"]\n  C --> D[\"Athena\"]\n  C --> E[\"Redshift\"]\n  C --> F[\"EMR Hive\"]\n  A --> G[\"Glue ETL on Spark\"]",
+   "vi": "flowchart LR\n  A[\"Dữ liệu trong S3\"] --> B[\"Glue crawler\"]\n  B --> C[\"Glue Data Catalog\"]\n  C --> D[\"Athena\"]\n  C --> E[\"Redshift\"]\n  C --> F[\"EMR Hive\"]\n  A --> G[\"Glue ETL trên Spark\"]"
+  }
+ },
+ "03-028": {
+  "tldr": {
+   "en": "Glue Studio (visual ETL) lets you build ETL pipelines as a drag-and-drop DAG with many sources and targets, often without code.",
+   "vi": "Glue Studio (visual ETL) cho phép xây ETL pipeline bằng kéo thả dạng DAG với nhiều nguồn và đích, thường không cần code."
+  },
+  "points": [
+   {
+    "en": "Build workflows as a directed acyclic graph, including parallel branches from the same source.",
+    "vi": "Xây workflow dạng directed acyclic graph, gồm các nhánh song song từ cùng một nguồn."
+   },
+   {
+    "en": "Sources include S3, Kinesis, Kafka, JDBC and many third-party systems like Snowflake or BigQuery.",
+    "vi": "Nguồn gồm S3, Kinesis, Kafka, JDBC và nhiều hệ thống bên thứ ba như Snowflake hay BigQuery."
+   },
+   {
+    "en": "Transforms include change schema, filter, join, SQL, sampling and custom code.",
+    "vi": "Transform gồm đổi schema, filter, join, SQL, sampling và code tùy chỉnh."
+   },
+   {
+    "en": "Targets are S3 or the Glue Data Catalog; partitioning is supported out of the box.",
+    "vi": "Đích là S3 hoặc Glue Data Catalog; hỗ trợ partitioning sẵn."
+   },
+   {
+    "en": "A job dashboard shows run status and duration for troubleshooting.",
+    "vi": "Dashboard job hiển thị trạng thái và thời lượng chạy để xử lý sự cố."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS Glue Studio",
+    "use": {
+     "en": "Visual ETL job editor; pick it for no-code Spark ETL.",
+     "vi": "Trình soạn ETL job trực quan; chọn cho ETL Spark không cần code."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Source node in S3 or Kinesis or JDBC\"] --> B[\"Change schema\"]\n  B --> C[\"Filter\"]\n  C --> D[\"Target in S3 or Data Catalog\"]\n  A --> E[\"Parallel transform\"]\n  E --> D",
+   "vi": "flowchart LR\n  A[\"Node nguồn S3 hoặc Kinesis hoặc JDBC\"] --> B[\"Đổi schema\"]\n  B --> C[\"Filter\"]\n  C --> D[\"Đích S3 hoặc Data Catalog\"]\n  A --> E[\"Transform song song\"]\n  E --> D"
+  }
+ },
+ "03-029": {
+  "tldr": {
+   "en": "Glue Data Quality adds rule checks to a Glue job that can fail the job or log results to CloudWatch, with rules written in DQDL or auto-recommended.",
+   "vi": "Glue Data Quality thêm bước kiểm tra rule vào Glue job, có thể làm job fail hoặc ghi kết quả vào CloudWatch, rule viết bằng DQDL hoặc được đề xuất tự động."
+  },
+  "points": [
+   {
+    "en": "Rules are written in Data Quality Definition Language (DQDL) or inferred automatically from good data.",
+    "vi": "Rule viết bằng Data Quality Definition Language (DQDL) hoặc suy ra tự động từ dữ liệu tốt."
+   },
+   {
+    "en": "Example rules: row count range, column completeness, column length and standard deviation bounds.",
+    "vi": "Ví dụ rule: khoảng số dòng, độ đầy đủ cột, độ dài cột và giới hạn standard deviation."
+   },
+   {
+    "en": "Choose to fail the whole job on a violation, or just report to CloudWatch.",
+    "vi": "Chọn làm fail cả job khi vi phạm, hoặc chỉ báo cáo lên CloudWatch."
+   },
+   {
+    "en": "Tight thresholds can cause false positives.",
+    "vi": "Ngưỡng quá chặt có thể gây false positive."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS Glue Data Quality",
+    "use": {
+     "en": "Validate incoming data with rules inside Glue jobs.",
+     "vi": "Kiểm tra dữ liệu đầu vào bằng rule trong Glue job."
+    }
+   },
+   {
+    "name": "Amazon CloudWatch",
+    "use": {
+     "en": "Receives data quality results for alerting.",
+     "vi": "Nhận kết quả data quality để cảnh báo."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Source data\"] --> B[\"Glue job\"]\n  B --> C[\"Data quality check with DQDL rules\"]\n  C -->|\"pass\"| D[\"Target\"]\n  C -->|\"fail\"| E[\"Fail job or log to CloudWatch\"]",
+   "vi": "flowchart LR\n  A[\"Dữ liệu nguồn\"] --> B[\"Glue job\"]\n  B --> C[\"Kiểm tra data quality với rule DQDL\"]\n  C -->|\"đạt\"| D[\"Đích\"]\n  C -->|\"không đạt\"| E[\"Fail job hoặc ghi CloudWatch\"]"
+  }
+ },
+ "03-030": {
+  "tldr": {
+   "en": "Glue DataBrew is a visual, no-code data preparation tool with 250+ transformations organized into reusable recipes.",
+   "vi": "Glue DataBrew là công cụ chuẩn bị dữ liệu trực quan, không cần code, với hơn 250 transformation gom thành recipe tái sử dụng."
+  },
+  "points": [
+   {
+    "en": "Reads from S3, data warehouses or databases and writes output to S3.",
+    "vi": "Đọc từ S3, data warehouse hoặc database và ghi output vào S3."
+   },
+   {
+    "en": "A recipe is an ordered set of recipe actions that can be saved and reused across projects and datasets.",
+    "vi": "Recipe là tập recipe action có thứ tự, lưu và tái dùng qua nhiều project và dataset."
+   },
+   {
+    "en": "Supports data quality rules and datasets from custom SQL on Redshift and Snowflake.",
+    "vi": "Hỗ trợ data quality rule và dataset từ SQL tùy chỉnh trên Redshift và Snowflake."
+   },
+   {
+    "en": "Security: KMS with customer managed keys, SSL in transit, IAM, CloudWatch and CloudTrail.",
+    "vi": "Bảo mật: KMS với customer managed key, SSL in transit, IAM, CloudWatch và CloudTrail."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS Glue DataBrew",
+    "use": {
+     "en": "Visual data prep with 250+ transforms; pick it for no-code cleaning and normalizing.",
+     "vi": "Chuẩn bị dữ liệu trực quan với 250+ transform; chọn để làm sạch và chuẩn hóa không cần code."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "The nest-to-map recipe action can fold columns like age, weight and height into one JSON key-value column.",
+   "vi": "Recipe action nest-to-map có thể gộp các cột như age, weight, height thành một cột JSON key-value."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"S3 or database or warehouse\"] --> B[\"DataBrew project\"]\n  B --> C[\"Recipe of actions\"]\n  C --> D[\"Job on demand or scheduled\"]\n  D --> E[\"Output in S3\"]",
+   "vi": "flowchart LR\n  A[\"S3 hoặc database hoặc warehouse\"] --> B[\"DataBrew project\"]\n  B --> C[\"Recipe gồm các action\"]\n  C --> D[\"Job theo yêu cầu hoặc theo lịch\"]\n  D --> E[\"Output trong S3\"]"
+  }
+ },
+ "03-031": {
+  "tldr": {
+   "en": "Demo of DataBrew: open a sample project, build a recipe step (filter names starting with L), then export or schedule it as a job.",
+   "vi": "Demo DataBrew: mở project mẫu, tạo bước recipe (lọc tên bắt đầu bằng L), rồi xuất hoặc lên lịch thành job."
+  },
+  "points": [
+   {
+    "en": "A project needs an IAM role and starts an interactive session in about a minute.",
+    "vi": "Project cần IAM role và bắt đầu interactive session trong khoảng một phút."
+   },
+   {
+    "en": "Transform categories: clean, extract, impute missing values, dedupe, split, merge, pivot, join, union, scale.",
+    "vi": "Nhóm transform: clean, extract, impute giá trị thiếu, dedupe, split, merge, pivot, join, union, scale."
+   },
+   {
+    "en": "Job outputs include CSV, Parquet, Avro, ORC, XML and JSON, with Snappy, gzip and other compression.",
+    "vi": "Output của job gồm CSV, Parquet, Avro, ORC, XML và JSON, nén bằng Snappy, gzip và các loại khác."
+   },
+   {
+    "en": "Run jobs on demand or on a cron-style schedule.",
+    "vi": "Chạy job theo yêu cầu hoặc theo lịch kiểu cron."
+   },
+   {
+    "en": "Pricing in the demo: 1 dollar per interactive session, 0.48 dollar per node hour for jobs.",
+    "vi": "Giá trong demo: 1 đô la mỗi interactive session, 0,48 đô la mỗi node hour cho job."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS Glue DataBrew",
+    "use": {
+     "en": "Visual recipes for cleaning and scaling data without code.",
+     "vi": "Recipe trực quan để làm sạch và scale dữ liệu không cần code."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Create project with IAM role\"] --> B[\"Interactive session\"]\n  B --> C[\"Add recipe step\"]\n  C --> D[\"Preview and apply\"]\n  D --> E[\"Download CSV\"]\n  D --> F[\"Create job\"]\n  F --> G[\"Run on demand or schedule\"]",
+   "vi": "flowchart TD\n  A[\"Tạo project với IAM role\"] --> B[\"Interactive session\"]\n  B --> C[\"Thêm bước recipe\"]\n  C --> D[\"Xem trước và áp dụng\"]\n  D --> E[\"Tải CSV\"]\n  D --> F[\"Tạo job\"]\n  F --> G[\"Chạy theo yêu cầu hoặc lịch\"]"
+  }
+ },
+ "03-032": {
+  "tldr": {
+   "en": "DataBrew has transformations for each PII technique: substitution, shuffling, encryption, deletion, masking and hashing.",
+   "vi": "DataBrew có transformation cho từng kỹ thuật xử lý PII: thay thế, xáo trộn, mã hóa, xóa, masking và hashing."
+  },
+  "points": [
+   {
+    "en": "Substitute PII with random values or shuffle values across rows.",
+    "vi": "Thay PII bằng giá trị ngẫu nhiên hoặc xáo trộn giá trị giữa các dòng."
+   },
+   {
+    "en": "Deterministic encryption always gives the same output; probabilistic can differ; decrypt reverses it.",
+    "vi": "Mã hóa deterministic luôn cho cùng kết quả; probabilistic có thể khác; decrypt đảo ngược."
+   },
+   {
+    "en": "Delete or null out PII entirely; the best protection is not having it.",
+    "vi": "Xóa hoặc đặt null hoàn toàn PII; bảo vệ tốt nhất là không giữ nó."
+   },
+   {
+    "en": "Masking hides most characters, while hashing may map multiple values to the same hash.",
+    "vi": "Masking che phần lớn ký tự, còn hashing có thể ánh xạ nhiều giá trị về cùng một hash."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS Glue DataBrew",
+    "use": {
+     "en": "Transformations to mask, hash, encrypt, shuffle or delete PII.",
+     "vi": "Transformation để mask, hash, mã hóa, xáo trộn hoặc xóa PII."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart TD\n  A[\"PII column\"] --> B[\"Substitute or shuffle\"]\n  A --> C[\"Encrypt deterministic or probabilistic\"]\n  A --> D[\"Delete or null\"]\n  A --> E[\"Mask\"]\n  A --> F[\"Hash\"]",
+   "vi": "flowchart TD\n  A[\"Cột PII\"] --> B[\"Thay thế hoặc xáo trộn\"]\n  A --> C[\"Mã hóa deterministic hoặc probabilistic\"]\n  A --> D[\"Xóa hoặc null\"]\n  A --> E[\"Mask\"]\n  A --> F[\"Hash\"]"
+  }
+ },
+ "03-033": {
+  "tldr": {
+   "en": "Athena is a serverless interactive SQL query service that queries data directly in S3 with no loading step.",
+   "vi": "Athena là dịch vụ truy vấn SQL tương tác serverless, truy vấn trực tiếp dữ liệu trong S3 mà không cần nạp vào đâu."
+  },
+  "points": [
+   {
+    "en": "Supports CSV, TSV, JSON, ORC, Parquet and Avro; unstructured, semi-structured or structured data all work.",
+    "vi": "Hỗ trợ CSV, TSV, JSON, ORC, Parquet và Avro; dữ liệu phi cấu trúc, bán cấu trúc hay có cấu trúc đều được."
+   },
+   {
+    "en": "ORC and Parquet are columnar and splittable; Avro is splittable but not columnar.",
+    "vi": "ORC và Parquet là columnar và splittable; Avro splittable nhưng không columnar."
+   },
+   {
+    "en": "Compression supported: Snappy, zlib, LZO and gzip.",
+    "vi": "Nén được hỗ trợ: Snappy, zlib, LZO và gzip."
+   },
+   {
+    "en": "Use cases: ad hoc web log queries, staging data before Redshift, CloudTrail, CloudFront, VPC and ELB logs.",
+    "vi": "Trường hợp dùng: truy vấn ad hoc web log, kiểm tra dữ liệu staging trước Redshift, log CloudTrail, CloudFront, VPC và ELB."
+   },
+   {
+    "en": "ODBC and JDBC interfaces connect notebooks and QuickSight.",
+    "vi": "Giao diện ODBC và JDBC kết nối notebook và QuickSight."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Athena",
+    "use": {
+     "en": "Serverless SQL over S3 data; pick it for ad hoc queries and log analysis.",
+     "vi": "SQL serverless trên dữ liệu S3; chọn cho truy vấn ad hoc và phân tích log."
+    }
+   },
+   {
+    "name": "Amazon QuickSight",
+    "use": {
+     "en": "Visualizes Athena query results.",
+     "vi": "Trực quan hóa kết quả truy vấn Athena."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Athena began on top of Presto but has since evolved into its own engine.",
+   "vi": "Athena khởi đầu trên nền Presto nhưng nay đã phát triển thành engine riêng."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Data lake in S3\"] --> B[\"Athena SQL\"]\n  B --> C[\"QuickSight\"]\n  B --> D[\"Notebooks via JDBC or ODBC\"]\n  B --> E[\"Results in S3\"]",
+   "vi": "flowchart LR\n  A[\"Data lake trong S3\"] --> B[\"Athena SQL\"]\n  B --> C[\"QuickSight\"]\n  B --> D[\"Notebook qua JDBC hoặc ODBC\"]\n  B --> E[\"Kết quả trong S3\"]"
+  }
+ },
+ "03-034": {
+  "tldr": {
+   "en": "Athena uses the Glue Data Catalog for table definitions; workgroups control access and cost, and columnar formats and partitions cut the bill.",
+   "vi": "Athena dùng Glue Data Catalog cho table definition; workgroup kiểm soát truy cập và chi phí, còn định dạng columnar và partition giúp giảm hóa đơn."
+  },
+  "points": [
+   {
+    "en": "Glue crawlers populate the Data Catalog and Athena builds tables from it automatically; it also works as a Hive metastore.",
+    "vi": "Glue crawler điền Data Catalog và Athena tự tạo bảng từ đó; nó cũng hoạt động như Hive metastore."
+   },
+   {
+    "en": "Workgroups separate teams: data scan limits, query history, IAM policies, encryption, cost tracking, SNS alerts.",
+    "vi": "Workgroup tách các team: giới hạn dữ liệu quét, lịch sử truy vấn, IAM policy, mã hóa, theo dõi chi phí, cảnh báo SNS."
+   },
+   {
+    "en": "Cost is about 5 dollars per TB scanned; failed queries and DDL are free.",
+    "vi": "Chi phí khoảng 5 đô la mỗi TB quét; query lỗi và DDL miễn phí."
+   },
+   {
+    "en": "Columnar formats save 30 to 90 percent; partitioning also reduces data scanned.",
+    "vi": "Định dạng columnar tiết kiệm 30 đến 90 phần trăm; partitioning cũng giảm dữ liệu quét."
+   },
+   {
+    "en": "Encrypt results with SSE-S3, SSE-KMS or CSE-KMS; TLS in transit; cross-account access via bucket policy.",
+    "vi": "Mã hóa kết quả bằng SSE-S3, SSE-KMS hoặc CSE-KMS; TLS in transit; truy cập cross-account qua bucket policy."
+   },
+   {
+    "en": "Anti-patterns: formatted reports (use QuickSight) and heavy ETL (use Glue or Spark).",
+    "vi": "Anti-pattern: báo cáo định dạng đẹp (dùng QuickSight) và ETL nặng (dùng Glue hoặc Spark)."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Athena workgroups",
+    "use": {
+     "en": "Isolate teams for cost limits, access and query history.",
+     "vi": "Tách các team để giới hạn chi phí, truy cập và lịch sử truy vấn."
+    }
+   },
+   {
+    "name": "AWS Glue Data Catalog",
+    "use": {
+     "en": "Metadata store Athena reads table definitions from.",
+     "vi": "Kho metadata mà Athena đọc table definition."
+    }
+   },
+   {
+    "name": "AWS KMS",
+    "use": {
+     "en": "Encrypts Athena query results.",
+     "vi": "Mã hóa kết quả truy vấn Athena."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"S3 data\"] --> B[\"Glue crawler\"]\n  B --> C[\"Glue Data Catalog\"]\n  C --> D[\"Athena\"]\n  D --> E[\"Workgroup limits and IAM\"]\n  D --> F[\"Encrypted results in S3\"]",
+   "vi": "flowchart LR\n  A[\"Dữ liệu S3\"] --> B[\"Glue crawler\"]\n  B --> C[\"Glue Data Catalog\"]\n  C --> D[\"Athena\"]\n  D --> E[\"Giới hạn workgroup và IAM\"]\n  D --> F[\"Kết quả mã hóa trong S3\"]"
+  }
+ },
+ "03-035": {
+  "tldr": {
+   "en": "CTAS (CREATE TABLE AS SELECT) creates a new table from query results, handy for converting data to Parquet or ORC.",
+   "vi": "CTAS (CREATE TABLE AS SELECT) tạo bảng mới từ kết quả truy vấn, tiện để chuyển dữ liệu sang Parquet hoặc ORC."
+  },
+  "points": [
+   {
+    "en": "Create a subset table from any SELECT, similar to a materialized view in Redshift.",
+    "vi": "Tạo bảng con từ bất kỳ SELECT nào, tương tự materialized view trong Redshift."
+   },
+   {
+    "en": "Convert format with WITH format equals PARQUET and compression equals SNAPPY.",
+    "vi": "Chuyển định dạng bằng WITH format bằng PARQUET và compression bằng SNAPPY."
+   },
+   {
+    "en": "An external_location setting writes the converted data to a chosen S3 path.",
+    "vi": "Tham số external_location ghi dữ liệu đã chuyển vào đường dẫn S3 chỉ định."
+   },
+   {
+    "en": "A quick way to transform raw S3 data into a more performant format using only Athena.",
+    "vi": "Cách nhanh để biến dữ liệu S3 thô thành định dạng hiệu quả hơn chỉ bằng Athena."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Athena",
+    "use": {
+     "en": "CTAS converts S3 data to columnar format.",
+     "vi": "CTAS chuyển dữ liệu S3 sang định dạng columnar."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Old table CSV in S3\"] -->|\"CTAS with Parquet and Snappy\"| B[\"New table\"]\n  B --> C[\"Parquet files in S3\"]\n  C --> D[\"Faster cheaper Athena queries\"]",
+   "vi": "flowchart LR\n  A[\"Bảng cũ CSV trong S3\"] -->|\"CTAS với Parquet và Snappy\"| B[\"Bảng mới\"]\n  B --> C[\"File Parquet trong S3\"]\n  C --> D[\"Truy vấn Athena nhanh và rẻ hơn\"]"
+  }
+ },
+ "03-036": {
+  "tldr": {
+   "en": "Three levers for Athena performance: columnar formats, fewer larger files, and partitions that match your queries.",
+   "vi": "Ba đòn bẩy hiệu năng Athena: định dạng columnar, ít file lớn, và partition khớp với truy vấn."
+  },
+  "points": [
+   {
+    "en": "Use columnar formats like ORC or Parquet, produced by Glue or other ETL.",
+    "vi": "Dùng định dạng columnar như ORC hoặc Parquet, tạo bằng Glue hoặc ETL khác."
+   },
+   {
+    "en": "A small number of large files beats many small files.",
+    "vi": "Ít file lớn tốt hơn nhiều file nhỏ."
+   },
+   {
+    "en": "Partition S3 data to match common filters such as date ranges.",
+    "vi": "Partition dữ liệu S3 khớp với bộ lọc thường dùng như khoảng ngày."
+   },
+   {
+    "en": "Add partitions to existing data later with MSCK REPAIR TABLE.",
+    "vi": "Thêm partition cho dữ liệu hiện có sau này bằng MSCK REPAIR TABLE."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Athena",
+    "use": {
+     "en": "MSCK REPAIR TABLE registers new partitions.",
+     "vi": "MSCK REPAIR TABLE đăng ký partition mới."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Faster Athena\"] --> B[\"Columnar ORC or Parquet\"]\n  A --> C[\"Few large files\"]\n  A --> D[\"Partitions\"]\n  D --> E[\"MSCK REPAIR TABLE to add later\"]",
+   "vi": "flowchart TD\n  A[\"Athena nhanh hơn\"] --> B[\"Columnar ORC hoặc Parquet\"]\n  A --> C[\"Ít file lớn\"]\n  A --> D[\"Partition\"]\n  D --> E[\"MSCK REPAIR TABLE để thêm sau\"]"
+  }
+ },
+ "03-037": {
+  "tldr": {
+   "en": "Athena ACID transactions use Apache Iceberg so concurrent users can safely modify rows, with time travel; compact with OPTIMIZE when it slows down.",
+   "vi": "Athena ACID transaction dùng Apache Iceberg để nhiều người dùng sửa dòng đồng thời an toàn, có time travel; nén lại bằng OPTIMIZE khi chậm."
+  },
+  "points": [
+   {
+    "en": "Enable it by creating a table with table_type equals ICEBERG.",
+    "vi": "Bật bằng cách tạo bảng với table_type bằng ICEBERG."
+   },
+   {
+    "en": "Removes the need for custom record locking and works with EMR, Spark and other Iceberg tools.",
+    "vi": "Loại bỏ nhu cầu khóa record tùy chỉnh và hoạt động với EMR, Spark và công cụ Iceberg khác."
+   },
+   {
+    "en": "Time travel lets a plain SELECT recover recently deleted data.",
+    "vi": "Time travel cho phép SELECT thường khôi phục dữ liệu vừa xóa."
+   },
+   {
+    "en": "Lake Formation governed tables are the other way to get ACID on S3.",
+    "vi": "Governed table của Lake Formation là cách khác để có ACID trên S3."
+   },
+   {
+    "en": "If queries slow over time, run OPTIMIZE table REWRITE DATA USING BIN_PACK to compact.",
+    "vi": "Nếu truy vấn chậm dần, chạy OPTIMIZE table REWRITE DATA USING BIN_PACK để nén lại."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Athena",
+    "use": {
+     "en": "ACID tables via Apache Iceberg.",
+     "vi": "Bảng ACID qua Apache Iceberg."
+    }
+   },
+   {
+    "name": "AWS Lake Formation",
+    "use": {
+     "en": "Governed tables give ACID and auto-compaction.",
+     "vi": "Governed table cung cấp ACID và tự động compaction."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"CREATE TABLE with table_type ICEBERG\"] --> B[\"ACID row-level changes\"]\n  B --> C[\"Time travel with SELECT\"]\n  B --> D[\"Table slows over time\"]\n  D --> E[\"OPTIMIZE with BIN_PACK\"]",
+   "vi": "flowchart LR\n  A[\"CREATE TABLE với table_type ICEBERG\"] --> B[\"Thay đổi mức dòng có ACID\"]\n  B --> C[\"Time travel bằng SELECT\"]\n  B --> D[\"Bảng chậm dần\"]\n  D --> E[\"OPTIMIZE với BIN_PACK\"]"
+  }
+ },
+ "03-038": {
+  "tldr": {
+   "en": "Athena fine-grained access to the Glue Data Catalog uses IAM policies at database and table level for operations, not row or column security.",
+   "vi": "Athena fine-grained access tới Glue Data Catalog dùng IAM policy ở mức database và table cho các thao tác, không phải bảo mật mức dòng hay cột."
+  },
+  "points": [
+   {
+    "en": "Controls operations like create, alter, drop and show on databases and tables.",
+    "vi": "Kiểm soát thao tác như create, alter, drop và show trên database và table."
+   },
+   {
+    "en": "It is broader than Lake Formation data filters: no row, column or cell level security.",
+    "vi": "Rộng hơn data filter của Lake Formation: không có bảo mật mức dòng, cột hay ô."
+   },
+   {
+    "en": "You cannot restrict by table version.",
+    "vi": "Không thể giới hạn theo phiên bản table."
+   },
+   {
+    "en": "At minimum, an IAM policy must grant access to the database and Glue catalog in each region.",
+    "vi": "Tối thiểu, IAM policy phải cấp quyền truy cập database và Glue catalog ở mỗi region."
+   },
+   {
+    "en": "Map each operation to its underlying Glue IAM actions, for example DROP TABLE needs GetTable, GetPartitions, DeleteTable.",
+    "vi": "Ánh xạ mỗi thao tác sang IAM action của Glue, ví dụ DROP TABLE cần GetTable, GetPartitions, DeleteTable."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Athena",
+    "use": {
+     "en": "Database-level and table-level IAM control over catalog operations.",
+     "vi": "Kiểm soát IAM mức database và table cho thao tác catalog."
+    }
+   },
+   {
+    "name": "AWS Glue Data Catalog",
+    "use": {
+     "en": "Resources protected by IAM policies.",
+     "vi": "Tài nguyên được bảo vệ bởi IAM policy."
+    }
+   }
+  ]
+ }
+}

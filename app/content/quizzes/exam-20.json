@@ -1,0 +1,1083 @@
+{
+ "id": "exam-20",
+ "kind": "exam",
+ "section": null,
+ "title": {
+  "en": "20-Question Practice Exam: MLA-C01 AWS Certified Machine Learning Engineer - Associate",
+  "vi": "Bài thi thử 20 câu: AWS Certified Machine Learning Engineer - Associate (MLA-C01)"
+ },
+ "description": {
+  "en": "<p>These mock questions are based on the MLA-C01 version of the exam, which is retiring at the end of September 2026. For the new MLA-C02 exam, check out the second practice exam in this section. Check which one you're registered for.</p><p>This practice exam will give you some extra exposure to what sitting for the real exam will be like. It features a realistic mixture of domain coverage and complexity of the questions.</p><p>We highly recommend also taking the practice exams offered by AWS through AWS SkillBuilder. As of this writing, that is the only platform that simulates the new question types of matching, ordering, and case study that were introduced in this exam. </p><p>Additional practice exams are available separately within Udemy, including from Stephane. The more practice you get, the better.</p>",
+  "vi": "<p>Các câu hỏi mô phỏng này dựa trên phiên bản MLA-C01 của kỳ thi, sẽ ngừng vào cuối tháng 9/2026. Với kỳ thi MLA-C02 mới, hãy xem bài thi thử thứ hai trong phần này. Hãy kiểm tra bạn đã đăng ký thi phiên bản nào.</p><p>Bài thi thử này giúp bạn làm quen thêm với cảm giác của kỳ thi thật. Bài có sự phân bổ thực tế giữa các domain và độ khó của câu hỏi.</p><p>Chúng tôi cũng khuyến nghị bạn làm các bài thi thử do AWS cung cấp qua AWS SkillBuilder. Tại thời điểm viết, đó là nền tảng duy nhất mô phỏng các dạng câu hỏi mới gồm matching, ordering và case study được đưa vào kỳ thi này.</p><p>Các bài thi thử bổ sung có sẵn riêng trên Udemy, trong đó có của Stephane. Luyện càng nhiều càng tốt.</p>"
+ },
+ "passPercent": 70,
+ "questions": [
+  {
+   "id": 184673969,
+   "multi": false,
+   "question": {
+    "en": "<p>A retail company wants to store customer transaction data on AWS for analytical processing. The data is semi-structured and the analytics team requires efficient storage that supports schema evolution and provides high performance for batch and interactive analytics. Which data format should the company use?</p>",
+    "vi": "<p>Một công ty bán lẻ muốn lưu trữ dữ liệu giao dịch của khách hàng trên AWS để xử lý phân tích. Dữ liệu là semi-structured và nhóm phân tích cần định dạng lưu trữ hiệu quả, hỗ trợ schema evolution và cho hiệu năng cao cho cả batch và interactive analytics. Công ty nên dùng định dạng dữ liệu nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>JSON</p>",
+     "vi": "<p>JSON</p>"
+    },
+    {
+     "en": "<p>CSV</p>",
+     "vi": "<p>CSV</p>"
+    },
+    {
+     "en": "<p>Apache Parquet</p>",
+     "vi": "<p>Apache Parquet</p>"
+    },
+    {
+     "en": "<p>Apache ORC</p>",
+     "vi": "<p>Apache ORC</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "JSON is a popular data format for semi-structured data, but it may not provide the most efficient storage and performance for analytical processing. It does not inherently support schema evolution and may not be optimized for batch and interactive analytics compared to other formats.",
+     "vi": "JSON là định dạng phổ biến cho dữ liệu semi-structured, nhưng có thể không cho hiệu quả lưu trữ và hiệu năng tốt nhất cho xử lý phân tích. Nó không hỗ trợ schema evolution sẵn có và có thể không được tối ưu cho batch và interactive analytics so với các định dạng khác."
+    },
+    {
+     "en": "CSV is a simple and widely used data format, but it may not be the best choice for storing semi-structured data with schema evolution requirements. It may not provide the high performance needed for batch and interactive analytics compared to more optimized formats.",
+     "vi": "CSV là định dạng đơn giản và được dùng rộng rãi, nhưng có thể không phải lựa chọn tốt để lưu dữ liệu semi-structured có yêu cầu schema evolution. Nó có thể không đạt hiệu năng cao cần thiết cho batch và interactive analytics so với các định dạng được tối ưu hơn."
+    },
+    {
+     "en": "Apache Parquet is a columnar storage format that is well-suited for storing semi-structured data with schema evolution requirements. It provides efficient storage, high performance for batch and interactive analytics, and supports complex nested data structures. This makes it a suitable choice for the retail company's analytical processing needs.",
+     "vi": "Apache Parquet là định dạng lưu trữ dạng cột (columnar) phù hợp để lưu dữ liệu semi-structured có yêu cầu schema evolution. Nó cho hiệu quả lưu trữ, hiệu năng cao cho batch và interactive analytics, và hỗ trợ cấu trúc dữ liệu lồng nhau phức tạp. Vì vậy đây là lựa chọn phù hợp cho nhu cầu xử lý phân tích của công ty bán lẻ."
+    },
+    {
+     "en": "Apache ORC (Optimized Row Columnar) is another columnar storage format that is designed for high performance and efficient storage of data. While it can be a good choice for analytical processing, Apache Parquet is generally preferred for its wider adoption, better performance, and support for schema evolution in semi-structured data.",
+     "vi": "Apache ORC (Optimized Row Columnar) là một định dạng lưu trữ dạng cột khác, được thiết kế cho hiệu năng cao và lưu trữ dữ liệu hiệu quả. Dù có thể là lựa chọn tốt cho xử lý phân tích, Apache Parquet thường được ưu tiên hơn vì được áp dụng rộng rãi hơn, hiệu năng tốt hơn và hỗ trợ schema evolution cho dữ liệu semi-structured."
+    }
+   ],
+   "explanation": {
+    "en": "<p>Apache Parquet is a columnar storage format optimized for analytics. It supports efficient compression, encoding, and is suitable for both batch and interactive analytics on semi-structured data. It also supports schema evolution, which allows modifications to the data structure over time.</p>",
+    "vi": "<p>Apache Parquet là định dạng lưu trữ dạng cột được tối ưu cho phân tích. Nó hỗ trợ nén và encoding hiệu quả, phù hợp cho cả batch và interactive analytics trên dữ liệu semi-structured. Nó cũng hỗ trợ schema evolution, cho phép thay đổi cấu trúc dữ liệu theo thời gian.</p>"
+   },
+   "domain": "Transform data and perform feature engineering."
+  },
+  {
+   "id": 184673971,
+   "multi": true,
+   "question": {
+    "en": "<p>A machine learning team is building a predictive model using historical sales data stored in Amazon S3. The data must be prepared by handling missing values and outliers before training. Which AWS tools can be used to perform these data preparation tasks efficiently? (Select TWO)</p>",
+    "vi": "<p>Một nhóm machine learning đang xây dựng mô hình dự đoán dựa trên dữ liệu bán hàng lịch sử lưu trong Amazon S3. Dữ liệu phải được chuẩn bị bằng cách xử lý giá trị thiếu và outlier trước khi huấn luyện. Có thể dùng những công cụ AWS nào để thực hiện các tác vụ chuẩn bị dữ liệu này một cách hiệu quả? (Chọn HAI)</p>"
+   },
+   "options": [
+    {
+     "en": "<p>AWS Glue DataBrew</p>",
+     "vi": "<p>AWS Glue DataBrew</p>"
+    },
+    {
+     "en": "<p>Amazon Kinesis Data Analytics</p>",
+     "vi": "<p>Amazon Kinesis Data Analytics</p>"
+    },
+    {
+     "en": "<p>Amazon SageMaker Data Wrangler</p>",
+     "vi": "<p>Amazon SageMaker Data Wrangler</p>"
+    },
+    {
+     "en": "<p>AWS Lambda</p>",
+     "vi": "<p>AWS Lambda</p>"
+    },
+    {
+     "en": "<p>Amazon RDS</p>",
+     "vi": "<p>Amazon RDS</p>"
+    }
+   ],
+   "answer": [
+    2,
+    0
+   ],
+   "feedback": [
+    {
+     "en": "AWS Glue DataBrew is a visual data preparation tool that can be used to clean and normalize data, handle missing values, and remove outliers efficiently. It provides a user-friendly interface for data preparation tasks without the need for complex coding.",
+     "vi": "AWS Glue DataBrew là công cụ chuẩn bị dữ liệu trực quan, có thể dùng để làm sạch và chuẩn hóa dữ liệu, xử lý giá trị thiếu và loại bỏ outlier hiệu quả. Nó cung cấp giao diện thân thiện cho các tác vụ chuẩn bị dữ liệu mà không cần code phức tạp."
+    },
+    {
+     "en": "Amazon Kinesis Data Analytics is primarily used for real-time data processing and analytics, not for data preparation tasks such as handling missing values and outliers. It is not the most efficient tool for the specific requirements mentioned in the question.",
+     "vi": "Amazon Kinesis Data Analytics chủ yếu dùng cho xử lý và phân tích dữ liệu real-time, không dùng cho các tác vụ chuẩn bị dữ liệu như xử lý giá trị thiếu và outlier. Đây không phải công cụ hiệu quả nhất cho yêu cầu cụ thể nêu trong câu hỏi."
+    },
+    {
+     "en": "Amazon SageMaker Data Wrangler is a data preparation tool specifically designed for machine learning tasks. It allows users to clean, normalize, and preprocess data efficiently before training machine learning models. It is a suitable choice for handling missing values and outliers in historical sales data.",
+     "vi": "Amazon SageMaker Data Wrangler là công cụ chuẩn bị dữ liệu được thiết kế riêng cho các tác vụ machine learning. Nó cho phép làm sạch, chuẩn hóa và tiền xử lý dữ liệu hiệu quả trước khi huấn luyện mô hình ML. Đây là lựa chọn phù hợp để xử lý giá trị thiếu và outlier trong dữ liệu bán hàng lịch sử."
+    },
+    {
+     "en": "AWS Lambda is a serverless computing service that can be used to run code in response to events, but it is not specifically designed for data preparation tasks such as handling missing values and outliers. It is not the most efficient tool for the requirements mentioned in the question.",
+     "vi": "AWS Lambda là dịch vụ serverless để chạy code khi có sự kiện, nhưng không được thiết kế riêng cho các tác vụ chuẩn bị dữ liệu như xử lý giá trị thiếu và outlier. Đây không phải công cụ hiệu quả nhất cho các yêu cầu nêu trong câu hỏi."
+    },
+    {
+     "en": "Amazon RDS is a relational database service and is not specifically designed for data preparation tasks such as handling missing values and outliers in historical sales data stored in Amazon S3. It is not the most efficient tool for the specific requirements mentioned in the question.",
+     "vi": "Amazon RDS là dịch vụ cơ sở dữ liệu quan hệ và không được thiết kế riêng cho các tác vụ chuẩn bị dữ liệu như xử lý giá trị thiếu và outlier trong dữ liệu bán hàng lịch sử lưu trong Amazon S3. Đây không phải công cụ hiệu quả nhất cho các yêu cầu cụ thể này."
+    }
+   ],
+   "explanation": {
+    "en": "<p>AWS Glue DataBrew and Amazon SageMaker Data Wrangler are designed for data preparation, allowing users to clean, normalize, and transform data. They provide tools specifically for handling missing values, outliers, and other data preparation tasks needed for machine learning.</p>",
+    "vi": "<p>AWS Glue DataBrew và Amazon SageMaker Data Wrangler được thiết kế cho việc chuẩn bị dữ liệu, cho phép làm sạch, chuẩn hóa và biến đổi dữ liệu. Chúng cung cấp các công cụ chuyên dụng để xử lý giá trị thiếu, outlier và các tác vụ chuẩn bị dữ liệu khác cần cho machine learning.</p>"
+   },
+   "domain": "Transform data and perform feature engineering."
+  },
+  {
+   "id": 184673973,
+   "multi": false,
+   "question": {
+    "en": "<p>A company is developing an object recognition model to identify various products in images taken from store shelves. The data science team is using Amazon SageMaker Data Wrangler to prepare the image data for training. The images contain a variety of lighting conditions, angles, and background clutter. Which data transformations should the team apply in SageMaker Data Wrangler to improve the performance of the object recognition model?</p>",
+    "vi": "<p>Một công ty đang phát triển mô hình nhận dạng đối tượng để xác định nhiều sản phẩm trong ảnh chụp từ kệ hàng. Nhóm data science đang dùng Amazon SageMaker Data Wrangler để chuẩn bị dữ liệu ảnh cho huấn luyện. Ảnh có nhiều điều kiện ánh sáng, góc chụp và nền lộn xộn khác nhau. Nhóm nên áp dụng các phép biến đổi dữ liệu nào trong SageMaker Data Wrangler để cải thiện hiệu năng của mô hình nhận dạng đối tượng?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Resizing and cropping images to a fixed size, normalizing pixel values, and applying data augmentation techniques like flipping and rotation</p>",
+     "vi": "<p>Resize và crop ảnh về kích thước cố định, chuẩn hóa giá trị pixel, và áp dụng các kỹ thuật data augmentation như lật và xoay</p>"
+    },
+    {
+     "en": "<p>One-hot encoding of labels, scaling numerical features, and removing duplicate images</p>",
+     "vi": "<p>One-hot encoding cho nhãn, scale các feature số, và loại bỏ ảnh trùng lặp</p>"
+    },
+    {
+     "en": "<p>Converting images to grayscale, imputing missing pixel values, and aggregating images into a single dataset</p>",
+     "vi": "<p>Chuyển ảnh sang thang xám, impute giá trị pixel thiếu, và gộp các ảnh thành một dataset duy nhất</p>"
+    },
+    {
+     "en": "<p>Encoding categorical labels, standardizing image sizes, and applying text vectorization on image descriptions</p>",
+     "vi": "<p>Encode các nhãn categorical, chuẩn hóa kích thước ảnh, và áp dụng text vectorization trên mô tả ảnh</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "Resizing and cropping images to a fixed size helps standardize the input data for the model, while normalizing pixel values ensures consistency in the image data. Applying data augmentation techniques like flipping and rotation helps increase the diversity of the training data, which can improve the model's ability to generalize and perform well on unseen images.",
+     "vi": "Resize và crop ảnh về kích thước cố định giúp chuẩn hóa dữ liệu đầu vào cho mô hình, còn chuẩn hóa giá trị pixel đảm bảo tính nhất quán của dữ liệu ảnh. Áp dụng data augmentation như lật và xoay giúp tăng độ đa dạng của dữ liệu huấn luyện, từ đó cải thiện khả năng tổng quát hóa và hoạt động tốt trên ảnh chưa từng thấy."
+    },
+    {
+     "en": "One-hot encoding of labels, scaling numerical features, and removing duplicate images are important preprocessing steps, but they are not directly related to improving the performance of an object recognition model trained on image data with varying lighting conditions, angles, and background clutter.",
+     "vi": "One-hot encoding nhãn, scale feature số và loại bỏ ảnh trùng lặp là các bước tiền xử lý quan trọng, nhưng không liên quan trực tiếp đến việc cải thiện hiệu năng của mô hình nhận dạng đối tượng được huấn luyện trên ảnh có ánh sáng, góc chụp và nền lộn xộn khác nhau."
+    },
+    {
+     "en": "Converting images to grayscale, imputing missing pixel values, and aggregating images into a single dataset are valid preprocessing steps, but they may not specifically address the challenges posed by varying lighting conditions, angles, and background clutter in the image data for object recognition.",
+     "vi": "Chuyển ảnh sang thang xám, impute giá trị pixel thiếu và gộp ảnh thành một dataset là các bước tiền xử lý hợp lệ, nhưng có thể không giải quyết cụ thể các thách thức do ánh sáng, góc chụp và nền lộn xộn khác nhau trong dữ liệu ảnh cho nhận dạng đối tượng."
+    },
+    {
+     "en": "Encoding categorical labels, standardizing image sizes, and applying text vectorization on image descriptions are relevant preprocessing steps, but they do not directly address the specific challenges of improving the performance of an object recognition model on images with diverse lighting conditions, angles, and background clutter.",
+     "vi": "Encode nhãn categorical, chuẩn hóa kích thước ảnh và áp dụng text vectorization trên mô tả ảnh là các bước tiền xử lý có liên quan, nhưng không giải quyết trực tiếp các thách thức cụ thể để cải thiện hiệu năng mô hình nhận dạng đối tượng trên ảnh có ánh sáng, góc chụp đa dạng."
+    }
+   ],
+   "explanation": {
+    "en": "<p>For an object recognition problem, preparing image data typically involves resizing and cropping images to a consistent size suitable for the model input, normalizing pixel values to ensure consistent scale, and applying data augmentation techniques such as flipping, rotation, and brightness adjustments to improve model robustness to variations in lighting, angles, and backgrounds. This helps the model generalize better across different scenarios it might encounter in real-world applications.</p>",
+    "vi": "<p>Với bài toán nhận dạng đối tượng, việc chuẩn bị dữ liệu ảnh thường gồm resize và crop ảnh về kích thước nhất quán phù hợp với đầu vào của mô hình, chuẩn hóa giá trị pixel để có thang đo nhất quán, và áp dụng các kỹ thuật data augmentation như lật, xoay và điều chỉnh độ sáng để tăng độ bền vững của mô hình trước sự thay đổi về ánh sáng, góc chụp và nền. Điều này giúp mô hình tổng quát hóa tốt hơn trên các tình huống khác nhau trong ứng dụng thực tế.</p>"
+   },
+   "domain": "Transform data and perform feature engineering."
+  },
+  {
+   "id": 184673975,
+   "multi": false,
+   "question": {
+    "en": "<p>A healthcare startup is developing a machine learning model to predict the risk of various diseases based on patient data. The dataset includes demographic information, such as age, gender, and ethnicity, as well as medical history. The data science team suspects that there might be a bias in the dataset related to the distribution of disease labels across different demographic groups. They decide to use the Difference in Proportion of Labels (DPL) metric to analyze this bias before training the model.</p><p>Which type of analysis is best performed using the Difference in Proportion of Labels (DPL) metric, and why is it suitable for this scenario?</p>",
+    "vi": "<p>Một startup y tế đang phát triển mô hình machine learning để dự đoán nguy cơ mắc nhiều bệnh dựa trên dữ liệu bệnh nhân. Dataset gồm thông tin nhân khẩu học như tuổi, giới tính và dân tộc, cùng tiền sử bệnh. Nhóm data science nghi ngờ dataset có bias liên quan đến phân phối nhãn bệnh giữa các nhóm nhân khẩu học. Họ quyết định dùng metric Difference in Proportion of Labels (DPL) để phân tích bias này trước khi huấn luyện mô hình.</p><p>Loại phân tích nào phù hợp nhất với metric Difference in Proportion of Labels (DPL), và vì sao nó phù hợp với tình huống này?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>To evaluate the overall accuracy of the model predictions by comparing them to a baseline</p>",
+     "vi": "<p>Để đánh giá độ chính xác tổng thể của dự đoán mô hình bằng cách so sánh với baseline</p>"
+    },
+    {
+     "en": "<p>To measure the imbalance in the dataset by comparing the total count of disease labels</p>",
+     "vi": "<p>Để đo mức mất cân bằng trong dataset bằng cách so sánh tổng số lượng các nhãn bệnh</p>"
+    },
+    {
+     "en": "<p>To identify potential biases in the dataset by comparing the proportion of each disease label across different demographic groups</p>",
+     "vi": "<p>Để xác định bias tiềm ẩn trong dataset bằng cách so sánh tỷ lệ của từng nhãn bệnh giữa các nhóm nhân khẩu học</p>"
+    },
+    {
+     "en": "<p>To determine the optimal data augmentation techniques for balancing the dataset</p>",
+     "vi": "<p>Để xác định các kỹ thuật data augmentation tối ưu nhằm cân bằng dataset</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "The Difference in Proportion of Labels (DPL) metric is not used to evaluate the overall accuracy of model predictions compared to a baseline. It is specifically designed to analyze biases in the dataset related to the distribution of disease labels across different demographic groups, rather than assessing model performance.",
+     "vi": "Metric Difference in Proportion of Labels (DPL) không dùng để đánh giá độ chính xác tổng thể của dự đoán mô hình so với baseline. Nó được thiết kế riêng để phân tích bias trong dataset liên quan đến phân phối nhãn bệnh giữa các nhóm nhân khẩu học, chứ không đánh giá hiệu năng mô hình."
+    },
+    {
+     "en": "The Difference in Proportion of Labels (DPL) metric is not used to measure the imbalance in the dataset by comparing the total count of disease labels. It focuses on comparing the proportion of each disease label across different demographic groups to identify potential biases, rather than simply looking at the total count.",
+     "vi": "Metric Difference in Proportion of Labels (DPL) không dùng để đo mất cân bằng trong dataset bằng cách so sánh tổng số lượng nhãn bệnh. Nó tập trung so sánh tỷ lệ của từng nhãn bệnh giữa các nhóm nhân khẩu học để xác định bias tiềm ẩn, thay vì chỉ nhìn vào tổng số lượng."
+    },
+    {
+     "en": "The best use of the Difference in Proportion of Labels (DPL) metric is to identify potential biases in the dataset by comparing the proportion of each disease label across different demographic groups. This analysis helps the data science team understand if there are disparities in the distribution of disease labels among different demographic groups, which is crucial for addressing bias in the machine learning model.",
+     "vi": "Cách dùng tốt nhất của metric Difference in Proportion of Labels (DPL) là xác định bias tiềm ẩn trong dataset bằng cách so sánh tỷ lệ của từng nhãn bệnh giữa các nhóm nhân khẩu học. Phân tích này giúp nhóm data science hiểu liệu có chênh lệch trong phân phối nhãn bệnh giữa các nhóm nhân khẩu học hay không, điều rất quan trọng để xử lý bias trong mô hình machine learning."
+    },
+    {
+     "en": "The Difference in Proportion of Labels (DPL) metric is not used to determine the optimal data augmentation techniques for balancing the dataset. Its primary purpose is to analyze biases in the dataset related to the distribution of disease labels across different demographic groups, rather than focusing on data augmentation strategies.",
+     "vi": "Metric Difference in Proportion of Labels (DPL) không dùng để xác định kỹ thuật data augmentation tối ưu nhằm cân bằng dataset. Mục đích chính của nó là phân tích bias trong dataset liên quan đến phân phối nhãn bệnh giữa các nhóm nhân khẩu học, chứ không tập trung vào chiến lược data augmentation."
+    }
+   ],
+   "explanation": {
+    "en": "<p>The Difference in Proportion of Labels (DPL) is used to measure potential biases in a dataset by comparing the proportion of each label across different groups (such as demographic categories). In this healthcare scenario, DPL can help identify if certain demographic groups are underrepresented or overrepresented for specific disease labels, which could lead to biased model predictions. This metric is essential for ensuring fairness and accuracy in the model's outcomes across diverse populations.</p>",
+    "vi": "<p>Difference in Proportion of Labels (DPL) được dùng để đo bias tiềm ẩn trong dataset bằng cách so sánh tỷ lệ của từng nhãn giữa các nhóm khác nhau (như các nhóm nhân khẩu học). Trong tình huống y tế này, DPL có thể giúp xác định liệu một số nhóm nhân khẩu học có bị thiếu đại diện hoặc đại diện quá mức đối với các nhãn bệnh cụ thể hay không, điều có thể dẫn đến dự đoán thiên lệch của mô hình. Metric này rất cần thiết để đảm bảo tính công bằng và chính xác trong kết quả của mô hình trên các nhóm dân cư đa dạng.</p>"
+   },
+   "domain": "Transform data and perform feature engineering."
+  },
+  {
+   "id": 184673979,
+   "multi": false,
+   "question": {
+    "en": "<p>A financial trading firm is developing a machine learning system to detect anomalies in stock market transactions in real-time. The system must continuously ingest streaming data from trading activities, process the data with minimal delay, and generate metrics for immediate analysis and decision-making. The firm wants to use AWS services to ensure the pipeline can handle high throughput and provide real-time insights without buffering delays. Which combination of AWS services should the firm implement to achieve this requirement?</p>",
+    "vi": "<p>Một công ty giao dịch tài chính đang phát triển hệ thống machine learning để phát hiện bất thường trong các giao dịch chứng khoán theo thời gian thực. Hệ thống phải liên tục ingest dữ liệu streaming từ hoạt động giao dịch, xử lý dữ liệu với độ trễ tối thiểu, và tạo metric phục vụ phân tích và ra quyết định ngay lập tức. Công ty muốn dùng các dịch vụ AWS để đảm bảo pipeline xử lý được throughput cao và cung cấp insight real-time mà không có độ trễ do buffering. Công ty nên triển khai kết hợp dịch vụ AWS nào để đạt yêu cầu này?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Amazon Kinesis Data Firehose with Amazon S3 and AWS Glue</p>",
+     "vi": "<p>Amazon Kinesis Data Firehose với Amazon S3 và AWS Glue</p>"
+    },
+    {
+     "en": "<p>Amazon Kinesis Data Streams with Enhanced Fan-Out and AWS Lambda</p>",
+     "vi": "<p>Amazon Kinesis Data Streams với Enhanced Fan-Out và AWS Lambda</p>"
+    },
+    {
+     "en": "<p>Amazon Kinesis Data Streams with Managed Service for Apache Flink</p>",
+     "vi": "<p>Amazon Kinesis Data Streams với Managed Service for Apache Flink</p>"
+    },
+    {
+     "en": "<p>Amazon S3 with AWS Lambda and Amazon Redshift</p>",
+     "vi": "<p>Amazon S3 với AWS Lambda và Amazon Redshift</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "Amazon Kinesis Data Firehose is designed for loading streaming data into data stores like Amazon S3 and Redshift, but it does not provide real-time processing capabilities. AWS Glue is used for ETL tasks and data preparation, which may introduce delays in processing real-time data, making it less suitable for immediate analysis and decision-making in this scenario.",
+     "vi": "Amazon Kinesis Data Firehose được thiết kế để nạp dữ liệu streaming vào các data store như Amazon S3 và Redshift, nhưng không cung cấp khả năng xử lý real-time. AWS Glue dùng cho các tác vụ ETL và chuẩn bị dữ liệu, có thể gây độ trễ khi xử lý dữ liệu real-time, nên ít phù hợp cho phân tích và ra quyết định ngay lập tức trong tình huống này."
+    },
+    {
+     "en": "Amazon Kinesis Data Streams with Enhanced Fan-Out allows multiple consumers to read data from the stream simultaneously, which can help with high throughput requirements. However, using AWS Lambda for processing may introduce latency as it is event-driven and may not provide the real-time processing needed for immediate analysis and decision-making.",
+     "vi": "Amazon Kinesis Data Streams với Enhanced Fan-Out cho phép nhiều consumer đọc dữ liệu từ stream đồng thời, giúp đáp ứng yêu cầu throughput cao. Tuy nhiên, dùng AWS Lambda để xử lý có thể gây độ trễ vì nó hoạt động theo sự kiện (event-driven) và có thể không đáp ứng được xử lý real-time cần cho phân tích và ra quyết định ngay lập tức."
+    },
+    {
+     "en": "Amazon Kinesis Data Streams with Managed Service for Apache Flink provides a scalable, real-time data processing solution that can handle high throughput and provide immediate insights without buffering delays. Managed Service for Apache Flink offers advanced stream processing capabilities, making it a suitable choice for real-time anomaly detection in stock market transactions.",
+     "vi": "Amazon Kinesis Data Streams với Managed Service for Apache Flink cung cấp giải pháp xử lý dữ liệu real-time có khả năng mở rộng, xử lý được throughput cao và cho insight tức thì mà không có độ trễ do buffering. Managed Service for Apache Flink có khả năng stream processing nâng cao, là lựa chọn phù hợp cho việc phát hiện bất thường real-time trong giao dịch chứng khoán."
+    },
+    {
+     "en": "Amazon S3 is a storage service and may not provide the real-time processing capabilities needed for immediate analysis. AWS Lambda is event-driven and may introduce delays in processing real-time data. Amazon Redshift is a data warehousing solution and may not be optimized for real-time processing of streaming data, making this combination less suitable for the firm's requirements.",
+     "vi": "Amazon S3 là dịch vụ lưu trữ và có thể không cung cấp khả năng xử lý real-time cần cho phân tích tức thì. AWS Lambda hoạt động theo sự kiện và có thể gây độ trễ khi xử lý dữ liệu real-time. Amazon Redshift là giải pháp data warehouse và có thể không được tối ưu cho xử lý real-time dữ liệu streaming, nên tổ hợp này ít phù hợp với yêu cầu của công ty."
+    }
+   ],
+   "explanation": {
+    "en": "<p><strong>Amazon Kinesis Data Streams with Managed Service for Apache Flink</strong> is the correct combination for this scenario. Amazon Kinesis Data Streams is designed for real-time data ingestion with high throughput and minimal delay, particularly when using Enhanced Fan-Out, which allows each consumer to receive data with low latency. The Managed Service for Apache Flink (previously known as Kinesis Data Analytics) enables real-time processing of streaming data with no buffering, allowing for continuous metric generation and real-time anomaly detection. This setup is ideal for scenarios where immediate analysis and decision-making are critical, such as financial trading.</p>",
+    "vi": "<p><strong>Amazon Kinesis Data Streams với Managed Service for Apache Flink</strong> là tổ hợp đúng cho tình huống này. Amazon Kinesis Data Streams được thiết kế để ingest dữ liệu real-time với throughput cao và độ trễ tối thiểu, đặc biệt khi dùng Enhanced Fan-Out, giúp mỗi consumer nhận dữ liệu với độ trễ thấp. Managed Service for Apache Flink (trước đây là Kinesis Data Analytics) cho phép xử lý dữ liệu streaming real-time mà không có buffering, hỗ trợ tạo metric liên tục và phát hiện bất thường real-time. Thiết lập này lý tưởng cho những tình huống cần phân tích và ra quyết định ngay lập tức, như giao dịch tài chính.</p>"
+   },
+   "domain": "Transform data and perform feature engineering."
+  },
+  {
+   "id": 184673981,
+   "multi": false,
+   "question": {
+    "en": "<p>A customer service center records all phone calls for quality assurance purposes. The company wants to analyze these recordings to understand customer sentiment, identify frequently discussed topics, and extract key phrases related to customer complaints. The recordings are in various audio formats, and the company also wants to create text transcripts of these calls to store them in a searchable database for further analysis.</p><p>Which combination of AWS services and configurations will best meet these requirements?</p>",
+    "vi": "<p>Một trung tâm chăm sóc khách hàng ghi âm tất cả cuộc gọi điện thoại để phục vụ đảm bảo chất lượng. Công ty muốn phân tích các bản ghi này để hiểu cảm xúc (sentiment) của khách hàng, xác định các chủ đề được thảo luận thường xuyên và trích xuất các cụm từ khóa liên quan đến khiếu nại của khách hàng. Các bản ghi có nhiều định dạng âm thanh khác nhau, và công ty cũng muốn tạo bản chép lời (transcript) dạng text của các cuộc gọi để lưu vào một cơ sở dữ liệu có thể tìm kiếm phục vụ phân tích sau này.</p><p>Tổ hợp dịch vụ AWS và cấu hình nào đáp ứng tốt nhất các yêu cầu này?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use Amazon Transcribe to convert audio recordings to text, then use Amazon Comprehend to analyze sentiment, detect entities, and extract key phrases from the transcripts. Store the output in Amazon Elasticsearch for search capabilities.</p>",
+     "vi": "<p>Dùng Amazon Transcribe để chuyển bản ghi âm thành text, sau đó dùng Amazon Comprehend để phân tích sentiment, phát hiện entity và trích xuất key phrase từ các transcript. Lưu kết quả vào Amazon Elasticsearch để có khả năng tìm kiếm.</p>"
+    },
+    {
+     "en": "<p>Use Amazon Polly to convert audio recordings to text, then use Amazon Rekognition to analyze sentiment and extract key phrases from the transcripts. Store the output in Amazon S3 for archival.</p>",
+     "vi": "<p>Dùng Amazon Polly để chuyển bản ghi âm thành text, sau đó dùng Amazon Rekognition để phân tích sentiment và trích xuất key phrase từ các transcript. Lưu kết quả vào Amazon S3 để lưu trữ lâu dài.</p>"
+    },
+    {
+     "en": "<p>Use Amazon Kinesis to stream audio data in real time, use Amazon Transcribe to convert the stream to text, then use Amazon SageMaker to train a custom model to analyze the sentiment. Store the results in Amazon DynamoDB for quick lookups.</p>",
+     "vi": "<p>Dùng Amazon Kinesis để stream dữ liệu âm thanh theo thời gian thực, dùng Amazon Transcribe để chuyển stream thành text, sau đó dùng Amazon SageMaker để huấn luyện mô hình tùy chỉnh phân tích sentiment. Lưu kết quả vào Amazon DynamoDB để tra cứu nhanh.</p>"
+    },
+    {
+     "en": "<p>Use AWS Glue to convert audio recordings into text format, then use Amazon Translate to detect sentiment and extract key phrases from the transcripts. Store the output in Amazon RDS for relational queries.</p>",
+     "vi": "<p>Dùng AWS Glue để chuyển bản ghi âm thành định dạng text, sau đó dùng Amazon Translate để phát hiện sentiment và trích xuất key phrase từ các transcript. Lưu kết quả vào Amazon RDS để truy vấn quan hệ.</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "Using Amazon Transcribe to convert audio recordings to text ensures that the company can create searchable transcripts of the calls. Amazon Comprehend can then be used to analyze sentiment, detect entities, and extract key phrases from these transcripts, providing valuable insights into customer interactions. Storing the output in Amazon Elasticsearch allows for efficient search capabilities and further analysis of the data.",
+     "vi": "Dùng Amazon Transcribe để chuyển bản ghi âm thành text giúp công ty tạo được các transcript có thể tìm kiếm của cuộc gọi. Sau đó Amazon Comprehend có thể phân tích sentiment, phát hiện entity và trích xuất key phrase từ các transcript này, mang lại insight giá trị về tương tác với khách hàng. Lưu kết quả vào Amazon Elasticsearch cho phép tìm kiếm hiệu quả và phân tích dữ liệu sâu hơn."
+    },
+    {
+     "en": "Amazon Polly is used for text-to-speech conversion, not speech-to-text conversion, so it cannot be used to convert audio recordings to text. Amazon Rekognition is primarily used for image and video analysis, not text analysis. Storing the output in Amazon S3 for archival purposes may not provide the necessary search capabilities for further analysis.",
+     "vi": "Amazon Polly dùng để chuyển text thành giọng nói (text-to-speech), không phải chuyển giọng nói thành text, nên không thể dùng để chuyển bản ghi âm thành text. Amazon Rekognition chủ yếu dùng để phân tích ảnh và video, không phải phân tích text. Lưu kết quả vào Amazon S3 để lưu trữ lâu dài có thể không đáp ứng khả năng tìm kiếm cần thiết cho phân tích sau này."
+    },
+    {
+     "en": "While Amazon Kinesis can stream data in real time, it is not the best choice for converting audio data to text. Amazon Transcribe is specifically designed for speech-to-text conversion and would be more suitable for this task. Using Amazon SageMaker to train a custom model for sentiment analysis may be unnecessary complexity for this scenario, and storing the results in Amazon DynamoDB may not provide the search capabilities required for further analysis.",
+     "vi": "Dù Amazon Kinesis có thể stream dữ liệu theo thời gian thực, nó không phải lựa chọn tốt để chuyển dữ liệu âm thanh thành text. Amazon Transcribe được thiết kế riêng cho speech-to-text và phù hợp hơn cho tác vụ này. Dùng Amazon SageMaker để huấn luyện mô hình tùy chỉnh phân tích sentiment có thể là độ phức tạp không cần thiết trong tình huống này, và lưu kết quả vào Amazon DynamoDB có thể không cung cấp khả năng tìm kiếm cần cho phân tích sau này."
+    },
+    {
+     "en": "AWS Glue is used for ETL (extract, transform, load) processes, not for converting audio recordings into text format. Amazon Translate is used for language translation, not sentiment analysis or key phrase extraction. Storing the output in Amazon RDS may not be the best choice for storing and querying text data for further analysis.",
+     "vi": "AWS Glue dùng cho các quy trình ETL (extract, transform, load), không dùng để chuyển bản ghi âm thành định dạng text. Amazon Translate dùng để dịch ngôn ngữ, không phải phân tích sentiment hay trích xuất key phrase. Lưu kết quả vào Amazon RDS có thể không phải lựa chọn tốt nhất để lưu trữ và truy vấn dữ liệu text cho phân tích sau này."
+    }
+   ],
+   "explanation": {
+    "en": "<p>Amazon Transcribe is used to convert audio recordings into text, which allows you to process a variety of audio formats and create accurate transcripts. Amazon Comprehend can then analyze these transcripts to detect sentiment, identify entities, and extract key phrases. By storing the processed data in Amazon Elasticsearch, you enable powerful search capabilities and analysis, which is ideal for understanding customer feedback and trends in a scalable way.</p>",
+    "vi": "<p>Amazon Transcribe được dùng để chuyển bản ghi âm thành text, cho phép xử lý nhiều định dạng âm thanh và tạo transcript chính xác. Sau đó Amazon Comprehend có thể phân tích các transcript này để phát hiện sentiment, xác định entity và trích xuất key phrase. Lưu dữ liệu đã xử lý vào Amazon Elasticsearch giúp có khả năng tìm kiếm và phân tích mạnh mẽ, lý tưởng để hiểu phản hồi và xu hướng của khách hàng một cách có khả năng mở rộng.</p>"
+   },
+   "domain": "ML Model Development"
+  },
+  {
+   "id": 184673983,
+   "multi": false,
+   "question": {
+    "en": "<p>A retail company wants to predict the likelihood of customers making a purchase based on their online browsing behavior. The data available includes customer demographics, browsing history, product preferences, and time spent on different product pages. The dataset contains millions of records with both numerical and categorical features. The company needs a scalable solution that can handle large datasets efficiently and provide explainable results to understand feature importance.</p><p>Which SageMaker built-in algorithm should the company use, and what key configuration settings should be applied to optimize the model performance for this scenario?</p>",
+    "vi": "<p>Một công ty bán lẻ muốn dự đoán khả năng khách hàng mua hàng dựa trên hành vi duyệt web của họ. Dữ liệu có sẵn gồm nhân khẩu học khách hàng, lịch sử duyệt web, sở thích sản phẩm và thời gian dành cho các trang sản phẩm khác nhau. Dataset chứa hàng triệu bản ghi với cả feature số và categorical. Công ty cần một giải pháp có khả năng mở rộng, xử lý hiệu quả dataset lớn và cho kết quả có thể giải thích được để hiểu feature importance.</p><p>Công ty nên dùng thuật toán built-in nào của SageMaker, và nên áp dụng các cấu hình chính nào để tối ưu hiệu năng mô hình trong tình huống này?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use SageMaker XGBoost with the objective set to 'binary', max_depth set to 6, and scale_pos_weight adjusted based on the class imbalance. Use 'ml.m5.4xlarge' instances for both training and inference.</p>",
+     "vi": "<p>Dùng SageMaker XGBoost với objective là 'binary', max_depth là 6, và scale_pos_weight được điều chỉnh theo mức mất cân bằng lớp. Dùng instance 'ml.m5.4xlarge' cho cả huấn luyện và inference.</p>"
+    },
+    {
+     "en": "<p>Use SageMaker Linear Learner with the objective set to 'regression', learning rate set to 0.01, and batch size of 512. Use 'ml.c5.9xlarge' instances for training and 'ml.t2.medium' instances for inference.</p>",
+     "vi": "<p>Dùng SageMaker Linear Learner với objective là 'regression', learning rate là 0.01, và batch size là 512. Dùng instance 'ml.c5.9xlarge' cho huấn luyện và 'ml.t2.medium' cho inference.</p>"
+    },
+    {
+     "en": "<p>Use SageMaker k-means with k set to 3, distance metric set to 'cosine', and mini_batch_size of 1000. Use 'ml.p2.xlarge' instances for training.</p>",
+     "vi": "<p>Dùng SageMaker k-means với k là 3, distance metric là 'cosine', và mini_batch_size là 1000. Dùng instance 'ml.p2.xlarge' cho huấn luyện.</p>"
+    },
+    {
+     "en": "<p>Use SageMaker DeepAR with the context length set to 100, prediction length set to 10, and frequency set to 'D'. Use 'ml.m4.xlarge' instances for both training and inference.</p>",
+     "vi": "<p>Dùng SageMaker DeepAR với context length là 100, prediction length là 10, và frequency là 'D'. Dùng instance 'ml.m4.xlarge' cho cả huấn luyện và inference.</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "SageMaker XGBoost is a popular choice for binary classification tasks like predicting customer purchase likelihood. Setting the objective to 'binary' ensures the model is trained for binary classification. Adjusting max_depth to 6 helps prevent overfitting and improves model generalization. Scaling the pos_weight based on class imbalance helps address any bias in the dataset. Using 'ml.m5.4xlarge' instances for training and inference ensures efficient processing of large datasets.",
+     "vi": "SageMaker XGBoost là lựa chọn phổ biến cho các tác vụ phân loại nhị phân như dự đoán khả năng mua hàng. Đặt objective là 'binary' đảm bảo mô hình được huấn luyện cho phân loại nhị phân. Điều chỉnh max_depth là 6 giúp tránh overfitting và cải thiện khả năng tổng quát hóa. Điều chỉnh pos_weight theo mức mất cân bằng lớp giúp xử lý bias trong dataset. Dùng instance 'ml.m5.4xlarge' cho huấn luyện và inference đảm bảo xử lý hiệu quả dataset lớn."
+    },
+    {
+     "en": "<p>While SageMaker Linear Learner can handle large datasets, it is primarily designed for linear models, which may not capture the complex relationships in the browsing behavior data as effectively as XGBoost. Additionally, the 'regression' objective is incorrect for a classification problem.</p>",
+     "vi": "<p>Dù SageMaker Linear Learner có thể xử lý dataset lớn, nó chủ yếu được thiết kế cho các mô hình tuyến tính, có thể không nắm bắt các mối quan hệ phức tạp trong dữ liệu hành vi duyệt web hiệu quả bằng XGBoost. Ngoài ra, objective 'regression' không đúng cho bài toán phân loại.</p>"
+    },
+    {
+     "en": "<p>SageMaker k-means is an unsupervised learning algorithm used for clustering, not suitable for predicting purchase likelihood based on browsing data. Also, it does not provide feature importance or handle class imbalance in a supervised learning context.</p>",
+     "vi": "<p>SageMaker k-means là thuật toán học không giám sát dùng để phân cụm, không phù hợp để dự đoán khả năng mua hàng dựa trên dữ liệu duyệt web. Nó cũng không cung cấp feature importance hay xử lý mất cân bằng lớp trong ngữ cảnh học có giám sát.</p>"
+    },
+    {
+     "en": "<p>SageMaker DeepAR is a time-series forecasting algorithm, not suitable for a binary classification problem involving customer behavior prediction. The configuration settings (context length, prediction length, frequency) are specific to time-series data, not relevant to the scenario.</p>",
+     "vi": "<p>SageMaker DeepAR là thuật toán dự báo time-series, không phù hợp cho bài toán phân loại nhị phân dự đoán hành vi khách hàng. Các cấu hình (context length, prediction length, frequency) đặc thù cho dữ liệu time-series, không liên quan đến tình huống này.</p>"
+    }
+   ],
+   "explanation": {
+    "en": "<p>SageMaker XGBoost is well-suited for this classification problem because it can handle both numerical and categorical features, efficiently process large datasets, and provide feature importance for explainability. Setting the objective to 'binary' is appropriate for binary classification tasks. The <code>max_depth</code> of 6 provides a good balance between model complexity and performance, and adjusting <code>scale_pos_weight</code> helps to handle class imbalance if present. Using 'ml.m5.4xlarge' instances provides sufficient memory and CPU capacity for training and inference without over-provisioning.</p>",
+    "vi": "<p>SageMaker XGBoost rất phù hợp với bài toán phân loại này vì nó xử lý được cả feature số và categorical, xử lý hiệu quả dataset lớn và cung cấp feature importance để giải thích mô hình. Đặt objective là 'binary' phù hợp với các tác vụ phân loại nhị phân. <code>max_depth</code> là 6 cân bằng tốt giữa độ phức tạp và hiệu năng của mô hình, còn điều chỉnh <code>scale_pos_weight</code> giúp xử lý mất cân bằng lớp nếu có. Dùng instance 'ml.m5.4xlarge' cung cấp đủ bộ nhớ và CPU cho huấn luyện và inference mà không over-provision.</p>"
+   },
+   "domain": "ML Model Development"
+  },
+  {
+   "id": 184673985,
+   "multi": false,
+   "question": {
+    "en": "<p>A healthcare startup is developing a deep learning model using Amazon SageMaker to predict patient outcomes based on medical imaging data. They are using a deep neural network (DNN) with multiple hidden layers. After a few epochs of training, they notice that the accuracy on the training data starts to oscillate significantly, and the model is not improving. The team suspects that the model might be overfitting or learning too quickly due to high variance in the gradients during training.</p><p>Which regularization technique should the team apply to stabilize the training process and improve model performance?</p>",
+    "vi": "<p>Một startup y tế đang phát triển mô hình deep learning bằng Amazon SageMaker để dự đoán kết cục của bệnh nhân dựa trên dữ liệu hình ảnh y khoa. Họ dùng deep neural network (DNN) với nhiều hidden layer. Sau vài epoch huấn luyện, họ nhận thấy accuracy trên dữ liệu huấn luyện bắt đầu dao động mạnh và mô hình không cải thiện. Nhóm nghi ngờ mô hình có thể đang bị overfitting hoặc học quá nhanh do variance cao của gradient trong quá trình huấn luyện.</p><p>Nhóm nên áp dụng kỹ thuật regularization nào để ổn định quá trình huấn luyện và cải thiện hiệu năng mô hình?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Apply Dropout regularization with a dropout rate of 0.5 to the hidden layers and use a lower learning rate to reduce the variance in gradients.</p>",
+     "vi": "<p>Áp dụng Dropout regularization với dropout rate 0.5 cho các hidden layer và dùng learning rate thấp hơn để giảm variance của gradient.</p>"
+    },
+    {
+     "en": "<p>Apply L1 regularization to the weights with a penalty parameter of 0.01 to encourage sparsity and reduce overfitting.</p>",
+     "vi": "<p>Áp dụng L1 regularization lên các trọng số với tham số penalty 0.01 để khuyến khích tính thưa (sparsity) và giảm overfitting.</p>"
+    },
+    {
+     "en": "<p>Use Batch Normalization after each hidden layer to stabilize learning by normalizing the inputs to each layer and maintain a high learning rate.</p>",
+     "vi": "<p>Dùng Batch Normalization sau mỗi hidden layer để ổn định quá trình học bằng cách chuẩn hóa đầu vào của mỗi layer và giữ learning rate cao.</p>"
+    },
+    {
+     "en": "<p>Apply L2 regularization with a penalty parameter of 0.1 to reduce the magnitude of the weights and reduce overfitting, while keeping the learning rate high.</p>",
+     "vi": "<p>Áp dụng L2 regularization với tham số penalty 0.1 để giảm độ lớn của các trọng số và giảm overfitting, đồng thời giữ learning rate cao.</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Dropout regularization helps prevent overfitting by randomly setting a fraction of input units to zero at each update during training time, which forces the network to learn redundant representations. This reduces the likelihood of neurons co-adapting too much to specific features, thus stabilizing the training process. Lowering the learning rate can also help reduce the variance in the gradients, which prevents oscillations in the training accuracy.</p>",
+     "vi": "<p>Dropout regularization giúp ngăn overfitting bằng cách đặt ngẫu nhiên một phần các đơn vị đầu vào về 0 ở mỗi lần cập nhật trong quá trình huấn luyện, buộc mạng học các biểu diễn dư thừa. Điều này giảm khả năng các neuron đồng thích nghi (co-adapt) quá mức với những feature cụ thể, từ đó ổn định quá trình huấn luyện. Hạ learning rate cũng giúp giảm variance của gradient, ngăn dao động của accuracy khi huấn luyện.</p>"
+    },
+    {
+     "en": "<p>While L1 regularization encourages sparsity by adding a penalty proportional to the absolute value of the weights, it may not be sufficient to address the oscillating accuracy if the problem is due to high variance in the gradients rather than overfitting through large weights.</p>",
+     "vi": "<p>Dù L1 regularization khuyến khích tính thưa bằng cách thêm penalty tỷ lệ với giá trị tuyệt đối của trọng số, nó có thể không đủ để xử lý hiện tượng accuracy dao động nếu nguyên nhân là variance cao của gradient chứ không phải overfitting do trọng số lớn.</p>"
+    },
+    {
+     "en": "<p>Batch Normalization can stabilize the learning process by normalizing inputs to each layer, which is beneficial. However, it does not directly address the issue of overfitting or regularization. Also, maintaining a high learning rate might still cause high variance in gradients, leading to oscillations.</p>",
+     "vi": "<p>Batch Normalization có thể ổn định quá trình học bằng cách chuẩn hóa đầu vào của mỗi layer, điều này có lợi. Tuy nhiên, nó không trực tiếp giải quyết vấn đề overfitting hay regularization. Ngoài ra, giữ learning rate cao vẫn có thể gây variance cao của gradient, dẫn đến dao động.</p>"
+    },
+    {
+     "en": "<p>L2 regularization reduces overfitting by penalizing large weights, which can help in some cases, but it may not directly address the oscillation of training accuracy due to gradient variance. Also, keeping a high learning rate could continue to cause instability in training.</p>",
+     "vi": "<p>L2 regularization giảm overfitting bằng cách phạt các trọng số lớn, có thể hữu ích trong một số trường hợp, nhưng có thể không trực tiếp giải quyết dao động của training accuracy do variance của gradient. Ngoài ra, giữ learning rate cao có thể tiếp tục gây bất ổn khi huấn luyện.</p>"
+    }
+   ],
+   "explanation": {
+    "en": "<p>This question evaluates your understanding of regularization techniques and their application in stabilizing the training process of deep neural networks. The correct answer emphasizes the use of dropout regularization, which helps prevent overfitting by randomly dropping neurons during training, thereby forcing the network to learn more robust features. Lowering the learning rate helps reduce the variance in gradients, which is crucial when accuracy oscillates during training. This combination effectively addresses the oscillation in accuracy and improves overall model performance.</p>",
+    "vi": "<p>Câu hỏi này đánh giá hiểu biết của bạn về các kỹ thuật regularization và việc áp dụng chúng để ổn định quá trình huấn luyện deep neural network. Đáp án đúng nhấn mạnh việc dùng dropout regularization, giúp ngăn overfitting bằng cách loại bỏ ngẫu nhiên các neuron trong lúc huấn luyện, buộc mạng học các feature bền vững hơn. Hạ learning rate giúp giảm variance của gradient, điều then chốt khi accuracy dao động trong lúc huấn luyện. Sự kết hợp này xử lý hiệu quả hiện tượng dao động accuracy và cải thiện hiệu năng tổng thể của mô hình.</p>"
+   },
+   "domain": "ML Model Development"
+  },
+  {
+   "id": 184673987,
+   "multi": false,
+   "question": {
+    "en": "<p>A financial services company wants to develop a sophisticated chatbot to assist customers with their investment inquiries. The chatbot should be able to provide detailed responses tailored to the company’s specific product offerings, such as investment plans, retirement accounts, and market trends. The company has unique terminology and a specific style of communication that they want the chatbot to adopt to align with their brand voice. Additionally, the chatbot needs to be able to handle sensitive financial information securely and operate within the company’s compliance guidelines.</p><p>The company decides to use Amazon Bedrock to build this chatbot. Given these requirements, they want to use a language model that can be customized to their specific needs.</p><p>Which approach should the company use to build the chatbot using Amazon Bedrock, and what key configurations should be applied to achieve the desired outcome?</p>",
+    "vi": "<p>Một công ty dịch vụ tài chính muốn phát triển chatbot tinh vi để hỗ trợ khách hàng trong các thắc mắc về đầu tư. Chatbot phải đưa ra câu trả lời chi tiết, phù hợp với các sản phẩm cụ thể của công ty, như gói đầu tư, tài khoản hưu trí và xu hướng thị trường. Công ty có thuật ngữ riêng và phong cách giao tiếp đặc trưng mà họ muốn chatbot áp dụng để phù hợp với giọng thương hiệu. Ngoài ra, chatbot cần xử lý thông tin tài chính nhạy cảm một cách an toàn và hoạt động trong khuôn khổ các hướng dẫn tuân thủ của công ty.</p><p>Công ty quyết định dùng Amazon Bedrock để xây dựng chatbot này. Với các yêu cầu đó, họ muốn dùng một language model có thể tùy chỉnh theo nhu cầu cụ thể của mình.</p><p>Công ty nên dùng cách tiếp cận nào để xây dựng chatbot bằng Amazon Bedrock, và nên áp dụng các cấu hình chính nào để đạt kết quả mong muốn?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use a foundation model from Amazon Bedrock and fine-tune it with a dataset containing the company’s product information, FAQs, and example customer interactions. Set the model parameters to include custom vocabularies and domain-specific terminology to ensure accurate and relevant responses.</p>",
+     "vi": "<p>Dùng một foundation model từ Amazon Bedrock và fine-tune nó với dataset chứa thông tin sản phẩm, FAQ và các ví dụ tương tác khách hàng của công ty. Đặt các tham số mô hình để bao gồm từ vựng tùy chỉnh và thuật ngữ chuyên ngành nhằm đảm bảo câu trả lời chính xác và phù hợp.</p>"
+    },
+    {
+     "en": "<p>Use a foundation model from Amazon Bedrock and implement Retrieval-Augmented Generation (RAG) to pull information from a knowledge base of company documents. Configure the chatbot to fetch real-time data on market trends and use it to enhance responses.</p>",
+     "vi": "<p>Dùng một foundation model từ Amazon Bedrock và triển khai Retrieval-Augmented Generation (RAG) để lấy thông tin từ knowledge base chứa tài liệu của công ty. Cấu hình chatbot để lấy dữ liệu real-time về xu hướng thị trường và dùng nó để làm phong phú câu trả lời.</p>"
+    },
+    {
+     "en": "<p>Use Amazon Bedrock to deploy a pre-trained transformer model without fine-tuning and rely on Amazon Kendra to provide context-specific answers based on a search of company documents and FAQs.</p>",
+     "vi": "<p>Dùng Amazon Bedrock để deploy một transformer model đã được huấn luyện sẵn mà không fine-tune, và dựa vào Amazon Kendra để cung cấp câu trả lời theo ngữ cảnh dựa trên tìm kiếm tài liệu và FAQ của công ty.</p>"
+    },
+    {
+     "en": "<p>Build a custom language model from scratch using Amazon SageMaker, training it on the company’s historical chat data and product manuals, and deploy it using Bedrock for real-time customer interaction.</p>",
+     "vi": "<p>Xây dựng một custom language model từ đầu bằng Amazon SageMaker, huấn luyện trên dữ liệu chat lịch sử và tài liệu sản phẩm của công ty, rồi deploy bằng Bedrock cho tương tác khách hàng real-time.</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Using a foundation model from Amazon Bedrock and fine-tuning it with a dataset containing the company’s specific product information, FAQs, and customer interaction examples allows the chatbot to learn the company's unique terminology and communication style. Fine-tuning the model ensures that it provides detailed, accurate, and brand-aligned responses to customer queries. This approach allows for the customization of the chatbot without the need for external retrieval from knowledge bases.</p>",
+     "vi": "<p>Dùng một foundation model từ Amazon Bedrock và fine-tune nó với dataset chứa thông tin sản phẩm cụ thể, FAQ và ví dụ tương tác khách hàng của công ty cho phép chatbot học thuật ngữ và phong cách giao tiếp riêng của công ty. Fine-tuning đảm bảo mô hình đưa ra câu trả lời chi tiết, chính xác và đúng giọng thương hiệu cho các truy vấn của khách hàng. Cách tiếp cận này cho phép tùy chỉnh chatbot mà không cần truy xuất từ bên ngoài qua knowledge base.</p>"
+    },
+    {
+     "en": "<p>While using Retrieval-Augmented Generation (RAG) could enhance responses with real-time information from a knowledge base, the scenario specifies that the chatbot should be customized to the company’s brand voice and terminology. Fine-tuning a model directly on company-specific data is a more targeted approach for this requirement. Additionally, RAG is not necessary if the company wants to avoid the complexity of integrating a knowledge base.</p>",
+     "vi": "<p>Dù dùng Retrieval-Augmented Generation (RAG) có thể làm phong phú câu trả lời bằng thông tin real-time từ knowledge base, tình huống nêu rõ chatbot cần được tùy chỉnh theo giọng thương hiệu và thuật ngữ của công ty. Fine-tune mô hình trực tiếp trên dữ liệu riêng của công ty là cách tiếp cận có mục tiêu rõ hơn cho yêu cầu này. Ngoài ra, RAG không cần thiết nếu công ty muốn tránh độ phức tạp khi tích hợp knowledge base.</p>"
+    },
+    {
+     "en": "<p>Deploying a pre-trained transformer model without fine-tuning would not meet the company’s requirement for a customized brand voice and specific terminology. Amazon Kendra could provide context-specific answers, but it would not allow the chatbot to engage in natural conversations aligned with the company’s communication style.</p>",
+     "vi": "<p>Deploy một pre-trained transformer model mà không fine-tune sẽ không đáp ứng yêu cầu của công ty về giọng thương hiệu tùy chỉnh và thuật ngữ riêng. Amazon Kendra có thể cung cấp câu trả lời theo ngữ cảnh, nhưng không cho phép chatbot trò chuyện tự nhiên phù hợp với phong cách giao tiếp của công ty.</p>"
+    },
+    {
+     "en": "<p>Building a custom language model from scratch is unnecessary and resource-intensive for this use case. Amazon Bedrock provides pre-trained foundation models that can be fine-tuned, which is a more efficient approach than training a model from scratch.</p>",
+     "vi": "<p>Xây dựng custom language model từ đầu là không cần thiết và tốn nhiều tài nguyên cho trường hợp này. Amazon Bedrock cung cấp các foundation model đã huấn luyện sẵn có thể fine-tune, hiệu quả hơn việc huấn luyện mô hình từ đầu.</p>"
+    }
+   ],
+   "explanation": {
+    "en": "<p>This question tests your understanding of how to use Amazon Bedrock for building a customized chatbot and the importance of fine-tuning models to meet specific business needs. The correct answer focuses on leveraging Bedrock’s foundation models and fine-tuning them with company-specific data to create a chatbot that accurately reflects the company’s unique style and requirements, ensuring security and compliance in handling sensitive financial information.</p>",
+    "vi": "<p>Câu hỏi này kiểm tra hiểu biết của bạn về cách dùng Amazon Bedrock để xây dựng chatbot tùy chỉnh và tầm quan trọng của việc fine-tune mô hình để đáp ứng nhu cầu kinh doanh cụ thể. Đáp án đúng tập trung vào việc tận dụng các foundation model của Bedrock và fine-tune chúng bằng dữ liệu riêng của công ty để tạo chatbot phản ánh chính xác phong cách và yêu cầu riêng của công ty, đồng thời đảm bảo bảo mật và tuân thủ khi xử lý thông tin tài chính nhạy cảm.</p>"
+   },
+   "domain": "ML Model Development"
+  },
+  {
+   "id": 184673989,
+   "multi": false,
+   "question": {
+    "en": "<p>A healthcare company is developing a machine learning model using Amazon SageMaker to predict whether patients are at risk of developing a rare but serious disease. The dataset is highly imbalanced, with only 1% of the records indicating that a patient has the disease. The model needs to ensure that high-risk patients are correctly identified as positive cases, as missing these cases could result in severe consequences for patient health. On the other hand, it is also important to minimize false positives to avoid unnecessary stress and medical expenses for patients.</p><p>Which evaluation metric should the company use to best evaluate the performance of the model?</p>",
+    "vi": "<p>Một công ty y tế đang phát triển mô hình machine learning bằng Amazon SageMaker để dự đoán bệnh nhân có nguy cơ mắc một căn bệnh hiếm nhưng nghiêm trọng hay không. Dataset mất cân bằng nặng, chỉ 1% bản ghi cho thấy bệnh nhân mắc bệnh. Mô hình cần đảm bảo bệnh nhân nguy cơ cao được xác định đúng là ca dương tính, vì bỏ sót các ca này có thể gây hậu quả nghiêm trọng cho sức khỏe bệnh nhân. Mặt khác, cũng quan trọng là giảm thiểu false positive để tránh căng thẳng và chi phí y tế không cần thiết cho bệnh nhân.</p><p>Công ty nên dùng metric đánh giá nào để đánh giá tốt nhất hiệu năng của mô hình?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>F1 Score</p>",
+     "vi": "<p>F1 Score</p>"
+    },
+    {
+     "en": "<p>Accuracy</p>",
+     "vi": "<p>Accuracy</p>"
+    },
+    {
+     "en": "<p>AUC-ROC</p>",
+     "vi": "<p>AUC-ROC</p>"
+    },
+    {
+     "en": "<p>Mean Absolute Error (MAE)</p>",
+     "vi": "<p>Mean Absolute Error (MAE)</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>The F1 Score is the harmonic mean of precision and recall, making it a suitable metric when dealing with imbalanced datasets where both false positives and false negatives are important. In this scenario, identifying high-risk patients (true positives) while minimizing the number of false positives is crucial, making the F1 Score an appropriate choice as it balances these two aspects.</p>",
+     "vi": "<p>F1 Score là trung bình điều hòa (harmonic mean) của precision và recall, phù hợp khi làm việc với dataset mất cân bằng mà cả false positive và false negative đều quan trọng. Trong tình huống này, việc xác định bệnh nhân nguy cơ cao (true positive) đồng thời giảm thiểu số false positive là then chốt, nên F1 Score là lựa chọn phù hợp vì nó cân bằng hai khía cạnh này.</p>"
+    },
+    {
+     "en": "<p>Accuracy is not a suitable metric for this scenario because the dataset is highly imbalanced. In such cases, accuracy can be misleading as a high accuracy could simply reflect the model's ability to predict the majority class (patients without the disease) correctly, while failing to identify the minority class (patients with the disease).</p>",
+     "vi": "<p>Accuracy không phù hợp cho tình huống này vì dataset mất cân bằng nặng. Trong trường hợp đó, accuracy có thể gây hiểu lầm vì accuracy cao có thể chỉ phản ánh việc mô hình dự đoán đúng lớp đa số (bệnh nhân không mắc bệnh), trong khi không xác định được lớp thiểu số (bệnh nhân mắc bệnh).</p>"
+    },
+    {
+     "en": "<p>While AUC-ROC is a useful metric for evaluating model performance across different thresholds, it may not directly address the specific needs of balancing precision and recall in a healthcare context where both false negatives and false positives have significant implications.</p>",
+     "vi": "<p>Dù AUC-ROC là metric hữu ích để đánh giá hiệu năng mô hình trên các ngưỡng khác nhau, nó có thể không trực tiếp đáp ứng nhu cầu cụ thể là cân bằng precision và recall trong ngữ cảnh y tế, nơi cả false negative và false positive đều có hệ quả đáng kể.</p>"
+    },
+    {
+     "en": "<p>Mean Absolute Error (MAE) is typically used for regression tasks, not classification tasks. This metric is not appropriate for evaluating a binary classification model designed to predict whether a patient is at risk of a disease.</p>",
+     "vi": "<p>Mean Absolute Error (MAE) thường dùng cho các tác vụ regression, không phải classification. Metric này không phù hợp để đánh giá mô hình phân loại nhị phân được thiết kế để dự đoán bệnh nhân có nguy cơ mắc bệnh hay không.</p>"
+    }
+   ],
+   "explanation": {
+    "en": "<p>This question assesses your understanding of model evaluation metrics and their application in scenarios with imbalanced datasets and high-stakes decision-making, such as healthcare. The correct answer emphasizes the importance of the F1 Score in balancing precision and recall, which is critical in scenarios where both false negatives (missing high-risk patients) and false positives (incorrectly identifying low-risk patients as high-risk) must be carefully managed.</p>",
+    "vi": "<p>Câu hỏi này đánh giá hiểu biết của bạn về các metric đánh giá mô hình và việc áp dụng chúng trong các tình huống có dataset mất cân bằng và quyết định có rủi ro cao, như y tế. Đáp án đúng nhấn mạnh tầm quan trọng của F1 Score trong việc cân bằng precision và recall, điều then chốt khi cả false negative (bỏ sót bệnh nhân nguy cơ cao) và false positive (nhận định sai bệnh nhân nguy cơ thấp là nguy cơ cao) đều phải được quản lý cẩn thận.</p>"
+   },
+   "domain": "ML Model Development"
+  },
+  {
+   "id": 184673977,
+   "multi": true,
+   "question": {
+    "en": "<p>A media company is developing a deep learning model to automatically tag and classify videos based on their content. The training dataset consists of hundreds of terabytes of high-definition videos stored in a shared file system. The training jobs require high throughput and low-latency access to this large volume of data across multiple Amazon SageMaker instances. The data scientists want to ensure that the file system can handle this load efficiently. Which solutions could meet these requirements? (Select TWO)</p>",
+    "vi": "<p>Một công ty truyền thông đang phát triển mô hình deep learning để tự động gắn tag và phân loại video dựa trên nội dung. Dataset huấn luyện gồm hàng trăm terabyte video độ phân giải cao lưu trong một file system dùng chung. Các training job yêu cầu throughput cao và truy cập độ trễ thấp vào khối lượng dữ liệu lớn này trên nhiều instance Amazon SageMaker. Các data scientist muốn đảm bảo file system xử lý tải này hiệu quả. Những giải pháp nào có thể đáp ứng các yêu cầu này? (Chọn HAI)</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use Amazon FSx for Lustre</p>",
+     "vi": "<p>Dùng Amazon FSx for Lustre</p>"
+    },
+    {
+     "en": "<p>Store the video data in Amazon S3 and use S3 Select to load data selectively during training.</p>",
+     "vi": "<p>Lưu dữ liệu video trong Amazon S3 và dùng S3 Select để tải dữ liệu có chọn lọc trong lúc huấn luyện.</p>"
+    },
+    {
+     "en": "<p>Use Amazon EFS (Elastic File System) with Provisioned Throughput modes</p>",
+     "vi": "<p>Dùng Amazon EFS (Elastic File System) với chế độ Provisioned Throughput</p>"
+    },
+    {
+     "en": "<p>Move the data to SageMaker local storage volumes and configure distributed training for efficiency.</p>",
+     "vi": "<p>Chuyển dữ liệu sang các local storage volume của SageMaker và cấu hình distributed training để tăng hiệu quả.</p>"
+    },
+    {
+     "en": "<p>Deploy a custom-built on-premises file system connected to SageMaker through AWS Direct Connect.</p>",
+     "vi": "<p>Triển khai một file system on-premises tự xây dựng, kết nối với SageMaker qua AWS Direct Connect.</p>"
+    }
+   ],
+   "answer": [
+    0,
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p>Amazon FSx for Lustre is designed for high-performance workloads like machine learning and media processing. It can integrate with Amazon S3 for seamless data access and provides the low-latency, high-throughput capabilities needed for large-scale, high-definition video processing.</p>",
+     "vi": "<p>Amazon FSx for Lustre được thiết kế cho các workload hiệu năng cao như machine learning và xử lý media. Nó tích hợp được với Amazon S3 để truy cập dữ liệu liền mạch và cung cấp khả năng độ trễ thấp, throughput cao cần cho xử lý video độ phân giải cao quy mô lớn.</p>"
+    },
+    {
+     "en": "<p>While Amazon S3 is a cost-effective storage solution, it does not provide the low-latency, high-throughput performance required for this use case. S3 Select allows selective data retrieval but is not optimized for high-performance video data access across SageMaker instances.</p>",
+     "vi": "<p>Dù Amazon S3 là giải pháp lưu trữ tiết kiệm chi phí, nó không cung cấp hiệu năng độ trễ thấp, throughput cao mà trường hợp này yêu cầu. S3 Select cho phép truy xuất dữ liệu có chọn lọc nhưng không được tối ưu cho truy cập dữ liệu video hiệu năng cao trên nhiều instance SageMaker.</p>"
+    },
+    {
+     "en": "<p>Amazon EFS with Provisioned Throughput mode is suitable for shared file systems in distributed training jobs. It offers scalability, consistency, and sufficient performance for accessing large datasets.</p>",
+     "vi": "<p>Amazon EFS với chế độ Provisioned Throughput phù hợp cho các file system dùng chung trong distributed training job. Nó cung cấp khả năng mở rộng, tính nhất quán và hiệu năng đủ để truy cập các dataset lớn.</p>"
+    },
+    {
+     "en": "<p>SageMaker local storage volumes have limited capacity and are not designed to handle hundreds of terabytes of data. This approach would lead to inefficiencies and bottlenecks.</p>",
+     "vi": "<p>Các local storage volume của SageMaker có dung lượng hạn chế và không được thiết kế để xử lý hàng trăm terabyte dữ liệu. Cách tiếp cận này sẽ gây kém hiệu quả và nút thắt cổ chai.</p>"
+    },
+    {
+     "en": "<p>Using an on-premises file system increases complexity and latency, especially for high-throughput workloads. AWS offers native solutions like FSx for Lustre and EFS, which are better suited for this use case.</p>",
+     "vi": "<p>Dùng file system on-premises làm tăng độ phức tạp và độ trễ, đặc biệt với các workload throughput cao. AWS có các giải pháp native như FSx for Lustre và EFS phù hợp hơn cho trường hợp này.</p>"
+    }
+   ],
+   "explanation": {
+    "en": "<p>The primary requirements for this use case are high-throughput, low-latency access to hundreds of terabytes of video data across multiple SageMaker instances. <strong>Amazon FSx for Lustre</strong> and <strong>Amazon EFS with Provisioned Throughput mode</strong> are the optimal solutions because they provide scalable, high-performance shared file systems specifically designed for such workloads.</p><ul><li><p><strong>Amazon FSx for Lustre</strong> is highly efficient for machine learning applications requiring fast, parallel access to large datasets.</p></li><li><p><strong>Amazon EFS</strong> offers a managed, scalable, and consistent performance file system ideal for distributed training scenarios.</p></li></ul><p>Other options either lack the required performance (S3, local storage) or introduce unnecessary complexity (on-premises solutions).</p>",
+    "vi": "<p>Yêu cầu chính của trường hợp này là truy cập throughput cao, độ trễ thấp vào hàng trăm terabyte dữ liệu video trên nhiều instance SageMaker. <strong>Amazon FSx for Lustre</strong> và <strong>Amazon EFS với chế độ Provisioned Throughput</strong> là các giải pháp tối ưu vì chúng cung cấp file system dùng chung có khả năng mở rộng, hiệu năng cao, được thiết kế riêng cho các workload như vậy.</p><ul><li><p><strong>Amazon FSx for Lustre</strong> rất hiệu quả cho các ứng dụng machine learning cần truy cập song song nhanh vào dataset lớn.</p></li><li><p><strong>Amazon EFS</strong> cung cấp file system được quản lý, có khả năng mở rộng và hiệu năng nhất quán, lý tưởng cho các tình huống distributed training.</p></li></ul><p>Các lựa chọn khác hoặc thiếu hiệu năng cần thiết (S3, local storage) hoặc gây thêm độ phức tạp không cần thiết (giải pháp on-premises).</p>"
+   },
+   "domain": "Transform data and perform feature engineering."
+  },
+  {
+   "id": 184673991,
+   "multi": false,
+   "question": {
+    "en": "<p>A mobile gaming company has developed a machine learning model using Amazon SageMaker to predict the likelihood of users making in-app purchases. The model is integrated into the game to offer personalized promotions to users based on their predicted purchasing behavior. The company expects a high volume of prediction requests that need to be processed interactively as users interact with the game. However, user traffic fluctuates significantly throughout the day, with peak usage times in the evenings and low usage times in the early morning.</p><p>Which SageMaker inference deployment endpoint should the company use to deploy this model?</p>",
+    "vi": "<p>Một công ty game di động đã phát triển mô hình machine learning bằng Amazon SageMaker để dự đoán khả năng người dùng mua hàng trong ứng dụng (in-app purchase). Mô hình được tích hợp vào game để đưa ra các khuyến mãi cá nhân hóa cho người dùng dựa trên hành vi mua hàng dự đoán. Công ty dự kiến số lượng yêu cầu dự đoán lớn cần được xử lý tương tác khi người dùng chơi game. Tuy nhiên, lưu lượng người dùng dao động mạnh trong ngày, cao điểm vào buổi tối và thấp vào sáng sớm.</p><p>Công ty nên dùng SageMaker inference deployment endpoint nào để deploy mô hình này?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Serverless Inference</p>",
+     "vi": "<p>Serverless Inference</p>"
+    },
+    {
+     "en": "<p>Real-Time Inference</p>",
+     "vi": "<p>Real-Time Inference</p>"
+    },
+    {
+     "en": "<p>Asynchronous Inference</p>",
+     "vi": "<p>Asynchronous Inference</p>"
+    },
+    {
+     "en": "<p>Batch Transform</p>",
+     "vi": "<p>Batch Transform</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Serverless Inference is the most appropriate choice for this scenario because it automatically scales to handle the fluctuating traffic without the need for the company to manage underlying infrastructure. It provides a cost-effective solution, especially during low-traffic periods when fewer resources are needed. Additionally, it can handle real-time prediction requests during peak hours, ensuring low latency and immediate responses to user actions.</p>",
+     "vi": "<p>Serverless Inference là lựa chọn phù hợp nhất cho tình huống này vì nó tự động scale để xử lý lưu lượng dao động mà công ty không cần quản lý hạ tầng bên dưới. Nó là giải pháp tiết kiệm chi phí, đặc biệt trong các giai đoạn lưu lượng thấp khi cần ít tài nguyên hơn. Ngoài ra, nó có thể xử lý các yêu cầu dự đoán real-time vào giờ cao điểm, đảm bảo độ trễ thấp và phản hồi tức thì với hành động của người dùng.</p>"
+    },
+    {
+     "en": "<p>Real-Time Inference would provide the necessary low-latency predictions, but it requires provisioning and managing infrastructure to handle traffic spikes, which can lead to higher costs during fluctuating demand.</p>",
+     "vi": "<p>Real-Time Inference sẽ cho dự đoán độ trễ thấp cần thiết, nhưng nó yêu cầu provisioning và quản lý hạ tầng để xử lý các đợt tăng đột biến lưu lượng, có thể dẫn đến chi phí cao hơn khi nhu cầu dao động.</p>"
+    },
+    {
+     "en": "<p>Asynchronous Inference is not ideal for this scenario because it is designed for use cases where requests can be processed in batches and are not time-sensitive. The gaming company requires immediate predictions to enhance user experience, making real-time capabilities essential.</p>",
+     "vi": "<p>Asynchronous Inference không lý tưởng cho tình huống này vì nó được thiết kế cho các trường hợp yêu cầu có thể được xử lý theo lô và không nhạy cảm về thời gian. Công ty game cần dự đoán tức thì để nâng cao trải nghiệm người dùng, nên khả năng real-time là thiết yếu.</p>"
+    },
+    {
+     "en": "<p>Batch Transform is not suitable for this scenario because it processes data in large batches rather than providing real-time predictions. It is used for tasks that do not require immediate results, such as scheduled data processing jobs.</p>",
+     "vi": "<p>Batch Transform không phù hợp cho tình huống này vì nó xử lý dữ liệu theo các lô lớn thay vì cung cấp dự đoán real-time. Nó dùng cho các tác vụ không cần kết quả tức thì, như các job xử lý dữ liệu theo lịch.</p>"
+    }
+   ],
+   "explanation": {
+    "en": "<p>This question assesses your ability to choose the most appropriate SageMaker inference deployment endpoint based on specific requirements such as real-time prediction needs, fluctuating traffic, and cost management. The correct answer highlights Serverless Inference as the best choice for applications with varying traffic patterns that require immediate responses, offering scalability and cost efficiency.</p>",
+    "vi": "<p>Câu hỏi này đánh giá khả năng chọn SageMaker inference deployment endpoint phù hợp nhất dựa trên các yêu cầu cụ thể như nhu cầu dự đoán real-time, lưu lượng dao động và quản lý chi phí. Đáp án đúng nêu bật Serverless Inference là lựa chọn tốt nhất cho các ứng dụng có mẫu lưu lượng thay đổi và cần phản hồi tức thì, mang lại khả năng mở rộng và hiệu quả chi phí.</p>"
+   },
+   "domain": "Deployment and Orchestration of ML Workflows"
+  },
+  {
+   "id": 184673993,
+   "multi": true,
+   "question": {
+    "en": "<p>A financial services company wants to automate its machine learning (ML) workflows to quickly respond to new training data arriving in its Amazon S3 bucket. The company needs to retrain its ML models whenever new data is added to the bucket. To automate this, they want to set up a continuous integration and continuous deployment (CI/CD) pipeline using AWS services. The solution should automatically trigger the ML model training pipeline and perform necessary preprocessing whenever new data is uploaded.</p><p>Which combination of services and configurations should the company use to achieve this? (Select TWO.)</p>",
+    "vi": "<p>Một công ty dịch vụ tài chính muốn tự động hóa các workflow machine learning (ML) để phản ứng nhanh với dữ liệu huấn luyện mới đến trong Amazon S3 bucket của họ. Công ty cần huấn luyện lại các mô hình ML mỗi khi có dữ liệu mới được thêm vào bucket. Để tự động hóa, họ muốn thiết lập một pipeline continuous integration và continuous deployment (CI/CD) bằng các dịch vụ AWS. Giải pháp phải tự động kích hoạt ML model training pipeline và thực hiện tiền xử lý cần thiết mỗi khi dữ liệu mới được upload.</p><p>Công ty nên dùng tổ hợp dịch vụ và cấu hình nào để đạt được điều này? (Chọn HAI.)</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use <strong>Amazon SageMaker Pipelines</strong> to define and manage the ML workflow, including data preprocessing, model training, and evaluation steps.</p>",
+     "vi": "<p>Dùng <strong>Amazon SageMaker Pipelines</strong> để định nghĩa và quản lý ML workflow, bao gồm các bước tiền xử lý dữ liệu, huấn luyện mô hình và đánh giá.</p>"
+    },
+    {
+     "en": "<p>Configure <strong>Amazon S3 Event Notifications</strong> to directly trigger the SageMaker Pipeline when new data is uploaded to the S3 bucket.</p>",
+     "vi": "<p>Cấu hình <strong>Amazon S3 Event Notifications</strong> để kích hoạt trực tiếp SageMaker Pipeline khi dữ liệu mới được upload lên S3 bucket.</p>"
+    },
+    {
+     "en": "<p>Set up <strong>Amazon EventBridge</strong> to monitor the S3 bucket for object creation events and use it to trigger a SageMaker Pipeline execution.</p>",
+     "vi": "<p>Thiết lập <strong>Amazon EventBridge</strong> để theo dõi S3 bucket về các sự kiện tạo object và dùng nó để kích hoạt một lần thực thi SageMaker Pipeline.</p>"
+    },
+    {
+     "en": "<p>Use <strong>AWS Step Functions</strong> to coordinate the SageMaker Pipeline and handle the flow of the different steps in the ML process.</p>",
+     "vi": "<p>Dùng <strong>AWS Step Functions</strong> để điều phối SageMaker Pipeline và xử lý luồng của các bước khác nhau trong quy trình ML.</p>"
+    },
+    {
+     "en": "<p>Implement <strong>AWS CodePipeline</strong> to manage the CI/CD pipeline and integrate it with Amazon SageMaker to handle ML model deployments.</p>",
+     "vi": "<p>Triển khai <strong>AWS CodePipeline</strong> để quản lý CI/CD pipeline và tích hợp nó với Amazon SageMaker để xử lý việc deploy mô hình ML.</p>"
+    }
+   ],
+   "answer": [
+    0,
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p><strong>Amazon SageMaker Pipelines</strong> is a service specifically designed for managing and orchestrating machine learning workflows. It allows users to define end-to-end ML workflows, including steps for data preprocessing, model training, and model evaluation, making it an ideal choice for automating the ML process in response to new data.</p>",
+     "vi": "<p><strong>Amazon SageMaker Pipelines</strong> là dịch vụ được thiết kế riêng để quản lý và điều phối các machine learning workflow. Nó cho phép định nghĩa workflow ML end-to-end, bao gồm các bước tiền xử lý dữ liệu, huấn luyện và đánh giá mô hình, là lựa chọn lý tưởng để tự động hóa quy trình ML khi có dữ liệu mới.</p>"
+    },
+    {
+     "en": "<p><strong>Amazon S3 Event Notifications</strong> can be used to trigger AWS Lambda functions, SQS queues, or SNS topics when objects are created or deleted in an S3 bucket. However, it does not directly support triggering a SageMaker Pipeline. Using EventBridge to monitor S3 events and then trigger the pipeline is a more appropriate solution.</p>",
+     "vi": "<p><strong>Amazon S3 Event Notifications</strong> có thể dùng để kích hoạt các hàm AWS Lambda, SQS queue hoặc SNS topic khi object được tạo hoặc xóa trong S3 bucket. Tuy nhiên, nó không hỗ trợ trực tiếp việc kích hoạt SageMaker Pipeline. Dùng EventBridge để theo dõi sự kiện S3 rồi kích hoạt pipeline là giải pháp phù hợp hơn.</p>"
+    },
+    {
+     "en": "<p><strong>Amazon EventBridge</strong> can be configured to listen for specific events, such as the creation of new objects in an S3 bucket. When new data is uploaded, EventBridge can trigger a rule that starts a SageMaker Pipeline execution. This setup allows for flexible and scalable automation, making it suitable for triggering ML workflows based on data changes.</p>",
+     "vi": "<p><strong>Amazon EventBridge</strong> có thể được cấu hình để lắng nghe các sự kiện cụ thể, như việc tạo object mới trong S3 bucket. Khi dữ liệu mới được upload, EventBridge có thể kích hoạt một rule để bắt đầu một lần thực thi SageMaker Pipeline. Thiết lập này cho phép tự động hóa linh hoạt và có khả năng mở rộng, phù hợp để kích hoạt các ML workflow dựa trên thay đổi dữ liệu.</p>"
+    },
+    {
+     "en": "<p><strong>AWS Step Functions</strong> is a serverless function orchestrator that can coordinate multiple AWS services into serverless workflows. While it can orchestrate SageMaker workflows, it is more suited for handling complex, multi-service workflows. In this scenario, SageMaker Pipelines alone is sufficient to manage the ML workflow, as it is tailored specifically for ML tasks.</p>",
+     "vi": "<p><strong>AWS Step Functions</strong> là dịch vụ điều phối hàm serverless, có thể phối hợp nhiều dịch vụ AWS thành các workflow serverless. Dù nó có thể điều phối các workflow SageMaker, nó phù hợp hơn để xử lý các workflow phức tạp, nhiều dịch vụ. Trong tình huống này, riêng SageMaker Pipelines đã đủ để quản lý ML workflow, vì nó được thiết kế riêng cho các tác vụ ML.</p>"
+    },
+    {
+     "en": "<p><strong>AWS CodePipeline</strong> is a CI/CD service that automates the build, test, and deploy phases of applications. While it can integrate with SageMaker for deploying models, the scenario described focuses on automating the ML workflow triggered by new data, which is better handled by SageMaker Pipelines and EventBridge.</p>",
+     "vi": "<p><strong>AWS CodePipeline</strong> là dịch vụ CI/CD tự động hóa các giai đoạn build, test và deploy của ứng dụng. Dù nó có thể tích hợp với SageMaker để deploy mô hình, tình huống mô tả tập trung vào việc tự động hóa ML workflow được kích hoạt bởi dữ liệu mới, điều mà SageMaker Pipelines và EventBridge xử lý tốt hơn.</p>"
+    }
+   ],
+   "explanation": {
+    "en": "<p>To set up a CI/CD pipeline for machine learning that triggers model training upon new data arrival, using <strong>Amazon SageMaker Pipelines</strong> in combination with <strong>Amazon EventBridge</strong> is the most effective solution. SageMaker Pipelines provides a robust platform for managing ML workflows, while EventBridge allows for flexible event-driven triggers, ensuring that the ML workflow can be initiated automatically whenever new data is added to the S3 bucket.</p>",
+    "vi": "<p>Để thiết lập CI/CD pipeline cho machine learning kích hoạt huấn luyện mô hình khi có dữ liệu mới đến, dùng <strong>Amazon SageMaker Pipelines</strong> kết hợp với <strong>Amazon EventBridge</strong> là giải pháp hiệu quả nhất. SageMaker Pipelines cung cấp nền tảng mạnh mẽ để quản lý ML workflow, còn EventBridge cho phép các trigger theo sự kiện linh hoạt, đảm bảo ML workflow có thể được khởi chạy tự động mỗi khi dữ liệu mới được thêm vào S3 bucket.</p>"
+   },
+   "domain": "Deployment and Orchestration of ML Workflows"
+  },
+  {
+   "id": 184673995,
+   "multi": false,
+   "question": {
+    "en": "<p>A company focused on sustainable technology is training a deep learning model using Amazon SageMaker to develop a computer vision application. The training process involves a large dataset of high-resolution images and requires significant computational resources. The company’s primary goal is to minimize energy consumption and carbon footprint while still achieving efficient training performance.</p><p>Which instance type should the company select for their training job in Amazon SageMaker to maximize energy efficiency and meet their sustainability goals?</p>",
+    "vi": "<p>Một công ty tập trung vào công nghệ bền vững đang huấn luyện mô hình deep learning bằng Amazon SageMaker để phát triển ứng dụng computer vision. Quá trình huấn luyện dùng dataset lớn gồm ảnh độ phân giải cao và cần tài nguyên tính toán đáng kể. Mục tiêu chính của công ty là giảm thiểu tiêu thụ năng lượng và carbon footprint trong khi vẫn đạt hiệu năng huấn luyện hiệu quả.</p><p>Công ty nên chọn loại instance nào cho training job trong Amazon SageMaker để tối đa hóa hiệu quả năng lượng và đạt mục tiêu bền vững?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>ml.p4d.24xlarge</p>",
+     "vi": "<p>ml.p4d.24xlarge</p>"
+    },
+    {
+     "en": "<p>ml.trn1.2xlarge</p>",
+     "vi": "<p>ml.trn1.2xlarge</p>"
+    },
+    {
+     "en": "<p>ml.inf1.24xlarge</p>",
+     "vi": "<p>ml.inf1.24xlarge</p>"
+    },
+    {
+     "en": "<p>ml.c6g.large</p>",
+     "vi": "<p>ml.c6g.large</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "The ml.p4d.24xlarge instance type is optimized for high-performance computing and is equipped with powerful GPUs. While it may offer fast training performance, it consumes a significant amount of energy due to the high computational power, making it less suitable for minimizing energy consumption and meeting sustainability goals.",
+     "vi": "Loại instance ml.p4d.24xlarge được tối ưu cho điện toán hiệu năng cao và trang bị GPU mạnh. Dù có thể cho hiệu năng huấn luyện nhanh, nó tiêu thụ nhiều năng lượng do sức mạnh tính toán cao, nên ít phù hợp để giảm thiểu tiêu thụ năng lượng và đạt mục tiêu bền vững."
+    },
+    {
+     "en": "The ml.trn1.2xlarge instance type is designed for training deep learning models and offers a balance between computational power and energy efficiency. It provides sufficient resources for training a deep learning model with high-resolution images while minimizing energy consumption, making it the ideal choice for the company's sustainability goals.",
+     "vi": "Loại instance ml.trn1.2xlarge được thiết kế để huấn luyện các mô hình deep learning và cân bằng giữa sức mạnh tính toán và hiệu quả năng lượng. Nó cung cấp đủ tài nguyên để huấn luyện mô hình deep learning với ảnh độ phân giải cao trong khi giảm thiểu tiêu thụ năng lượng, là lựa chọn lý tưởng cho mục tiêu bền vững của công ty."
+    },
+    {
+     "en": "The ml.inf1.24xlarge instance type is optimized for inference tasks rather than training. It may not provide the necessary computational resources for efficient training of a deep learning model with high-resolution images. Selecting this instance type could lead to longer training times and higher energy consumption, which goes against the company's sustainability goals.",
+     "vi": "Loại instance ml.inf1.24xlarge được tối ưu cho các tác vụ inference thay vì huấn luyện. Nó có thể không cung cấp đủ tài nguyên tính toán để huấn luyện hiệu quả mô hình deep learning với ảnh độ phân giải cao. Chọn loại instance này có thể dẫn đến thời gian huấn luyện lâu hơn và tiêu thụ năng lượng cao hơn, đi ngược mục tiêu bền vững của công ty."
+    },
+    {
+     "en": "<p>The ml.c6g.large instance type is a general-purpose CPU instance type that may not offer the computational power required for training a deep learning model with high-resolution images efficiently. It may result in longer training times and higher energy consumption compared to more specialized instance types designed for deep learning tasks.</p>",
+     "vi": "<p>Loại instance ml.c6g.large là instance CPU đa dụng, có thể không cung cấp đủ sức mạnh tính toán để huấn luyện hiệu quả mô hình deep learning với ảnh độ phân giải cao. Nó có thể dẫn đến thời gian huấn luyện lâu hơn và tiêu thụ năng lượng cao hơn so với các loại instance chuyên biệt hơn được thiết kế cho các tác vụ deep learning.</p>"
+    }
+   ],
+   "explanation": {
+    "en": "<p>For a company aiming to train deep learning models with a focus on sustainability and energy efficiency, <strong>ml.trn1.2xlarge</strong> instances powered by AWS Trainium processors are the best choice. These instances are specifically designed for deep learning training and offer significant improvements in energy efficiency, helping the company achieve its sustainability goals while maintaining high performance.</p>",
+    "vi": "<p>Với một công ty muốn huấn luyện mô hình deep learning và tập trung vào tính bền vững và hiệu quả năng lượng, các instance <strong>ml.trn1.2xlarge</strong> chạy bộ xử lý AWS Trainium là lựa chọn tốt nhất. Các instance này được thiết kế riêng cho huấn luyện deep learning và cải thiện đáng kể hiệu quả năng lượng, giúp công ty đạt mục tiêu bền vững trong khi vẫn giữ hiệu năng cao.</p>"
+   },
+   "domain": "Deployment and Orchestration of ML Workflows"
+  },
+  {
+   "id": 184673997,
+   "multi": false,
+   "question": {
+    "en": "<p>A healthcare company has developed a new version of its machine learning model that predicts patient readmission risk. The model is deployed on Amazon SageMaker, and the company wants to roll out this new version carefully to ensure it does not negatively impact the existing predictions made by the current model in production. The new model needs to be evaluated for its performance in a real-world setting with actual user traffic, but any potential errors should be minimized to avoid affecting patient care.</p><p>The company wants to gradually introduce the new model to a small percentage of the traffic initially and then increase this percentage if the model performs well. It also needs a rollback strategy in case the new model performs worse than expected.</p><p>Which deployment strategy should the company choose to deploy the new model version?</p>",
+    "vi": "<p>Một công ty y tế đã phát triển phiên bản mới của mô hình machine learning dự đoán nguy cơ tái nhập viện của bệnh nhân. Mô hình được deploy trên Amazon SageMaker, và công ty muốn triển khai phiên bản mới này một cách cẩn thận để đảm bảo nó không ảnh hưởng tiêu cực đến các dự đoán hiện có của mô hình đang chạy production. Mô hình mới cần được đánh giá hiệu năng trong môi trường thực tế với lưu lượng người dùng thật, nhưng mọi lỗi tiềm ẩn phải được giảm thiểu để không ảnh hưởng đến việc chăm sóc bệnh nhân.</p><p>Công ty muốn đưa mô hình mới vào dần dần, ban đầu với một tỷ lệ nhỏ lưu lượng rồi tăng tỷ lệ này nếu mô hình hoạt động tốt. Công ty cũng cần chiến lược rollback trong trường hợp mô hình mới hoạt động kém hơn mong đợi.</p><p>Công ty nên chọn chiến lược deployment nào để deploy phiên bản mô hình mới?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>All-at-Once Deployment</p>",
+     "vi": "<p>All-at-Once Deployment</p>"
+    },
+    {
+     "en": "<p>Canary Deployment</p>",
+     "vi": "<p>Canary Deployment</p>"
+    },
+    {
+     "en": "<p>Blue/Green Deployment</p>",
+     "vi": "<p>Blue/Green Deployment</p>"
+    },
+    {
+     "en": "<p>Linear Deployment</p>",
+     "vi": "<p>Linear Deployment</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p><strong>All-at-Once Deployment</strong> involves deploying the new model version to all users at once. This approach carries a high risk if the new model version has any issues, as it would immediately affect all users. It does not allow for a gradual rollout or provide a quick rollback strategy, making it inappropriate for scenarios where minimizing risk and carefully evaluating the new model are critical.</p>",
+     "vi": "<p><strong>All-at-Once Deployment</strong> là deploy phiên bản mô hình mới cho tất cả người dùng cùng một lúc. Cách này có rủi ro cao nếu phiên bản mới có vấn đề, vì nó ảnh hưởng ngay đến toàn bộ người dùng. Nó không cho phép triển khai dần hay cung cấp chiến lược rollback nhanh, nên không phù hợp khi việc giảm thiểu rủi ro và đánh giá cẩn thận mô hình mới là then chốt.</p>"
+    },
+    {
+     "en": "<p><strong>Canary Deployment</strong> is the most suitable strategy for this scenario. It allows the company to initially direct a small percentage of traffic to the new model version while monitoring its performance. If the new model performs well, the percentage of traffic can be gradually increased. This approach minimizes risk and allows for a controlled rollout, with the ability to quickly revert to the previous model version if issues arise.</p>",
+     "vi": "<p><strong>Canary Deployment</strong> là chiến lược phù hợp nhất cho tình huống này. Nó cho phép công ty ban đầu chuyển một tỷ lệ nhỏ lưu lượng sang phiên bản mô hình mới trong khi theo dõi hiệu năng. Nếu mô hình mới hoạt động tốt, tỷ lệ lưu lượng có thể được tăng dần. Cách tiếp cận này giảm thiểu rủi ro và cho phép triển khai có kiểm soát, với khả năng nhanh chóng quay về phiên bản mô hình trước nếu có vấn đề.</p>"
+    },
+    {
+     "en": "<p><strong>Blue/Green Deployment</strong> involves deploying the new model version in a separate environment and switching all traffic to the new model once it has been tested. While this method allows for easy rollback, it does not offer a gradual, real-world traffic testing process and instead requires a full cutover, which could introduce risks if the new model is not fully vetted with live traffic.</p>",
+     "vi": "<p><strong>Blue/Green Deployment</strong> là deploy phiên bản mô hình mới trong một môi trường riêng và chuyển toàn bộ lưu lượng sang mô hình mới sau khi đã kiểm thử. Dù phương pháp này cho phép rollback dễ dàng, nó không cung cấp quy trình kiểm thử dần với lưu lượng thực và thay vào đó yêu cầu chuyển đổi hoàn toàn, có thể gây rủi ro nếu mô hình mới chưa được kiểm chứng đầy đủ với lưu lượng thực.</p>"
+    },
+    {
+     "en": "<p><strong>Linear Deployment</strong> involves incrementally increasing the traffic to the new model version over a set period based on a fixed schedule, regardless of real-time performance monitoring. While it offers a controlled rollout, it lacks the dynamic adjustment based on the new model’s performance, which can be crucial for high-risk applications like healthcare.</p>",
+     "vi": "<p><strong>Linear Deployment</strong> là tăng dần lưu lượng sang phiên bản mô hình mới trong một khoảng thời gian đặt trước theo lịch cố định, bất kể việc theo dõi hiệu năng real-time. Dù nó cho phép triển khai có kiểm soát, nó thiếu khả năng điều chỉnh động dựa trên hiệu năng của mô hình mới, điều có thể rất quan trọng với các ứng dụng rủi ro cao như y tế.</p>"
+    }
+   ],
+   "explanation": {
+    "en": "<p>For deploying a new version of a machine learning model in a high-risk environment, such as healthcare, where patient safety is a priority, <strong>Canary Deployment</strong> is the best choice. It allows for a gradual introduction of the new model to actual traffic, closely monitoring its performance and quickly reverting to the previous version if necessary, thereby minimizing potential negative impacts on users.</p>",
+    "vi": "<p>Để deploy phiên bản mô hình machine learning mới trong môi trường rủi ro cao, như y tế, nơi an toàn của bệnh nhân là ưu tiên, <strong>Canary Deployment</strong> là lựa chọn tốt nhất. Nó cho phép đưa mô hình mới vào lưu lượng thực một cách dần dần, theo dõi sát hiệu năng và nhanh chóng quay về phiên bản trước nếu cần, nhờ đó giảm thiểu tác động tiêu cực tiềm ẩn đến người dùng.</p>"
+   },
+   "domain": "Deployment and Orchestration of ML Workflows"
+  },
+  {
+   "id": 184673999,
+   "multi": false,
+   "question": {
+    "en": "<p>A marketing company uses a machine learning model deployed on Amazon SageMaker to predict customer churn based on behavioral data. Recently, the company has noticed a significant drop in the model's performance metrics, such as accuracy and F1 score. After investigating, the data science team suspects that a change in the distribution of incoming data, possibly due to a new marketing campaign targeting different demographics, is affecting the model's performance.</p><p>The team wants to analyze the impact of this change in data distribution on the model's predictions and ensure that the model remains unbiased across various demographic groups.</p><p>Which tool or feature of Amazon SageMaker should the team use to address this issue?</p>",
+    "vi": "<p>Một công ty marketing dùng mô hình machine learning được deploy trên Amazon SageMaker để dự đoán customer churn dựa trên dữ liệu hành vi. Gần đây, công ty nhận thấy các metric hiệu năng của mô hình, như accuracy và F1 score, giảm đáng kể. Sau khi điều tra, nhóm data science nghi ngờ rằng sự thay đổi trong phân phối dữ liệu đầu vào, có thể do chiến dịch marketing mới nhắm đến các nhóm nhân khẩu học khác, đang ảnh hưởng đến hiệu năng của mô hình.</p><p>Nhóm muốn phân tích tác động của sự thay đổi phân phối dữ liệu này đến các dự đoán của mô hình và đảm bảo mô hình vẫn không thiên lệch giữa các nhóm nhân khẩu học khác nhau.</p><p>Nhóm nên dùng công cụ hoặc tính năng nào của Amazon SageMaker để giải quyết vấn đề này?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>SageMaker Model Monitor</p>",
+     "vi": "<p>SageMaker Model Monitor</p>"
+    },
+    {
+     "en": "<p>SageMaker Debugger</p>",
+     "vi": "<p>SageMaker Debugger</p>"
+    },
+    {
+     "en": "<p>SageMaker Clarify</p>",
+     "vi": "<p>SageMaker Clarify</p>"
+    },
+    {
+     "en": "<p>SageMaker Autopilot</p>",
+     "vi": "<p>SageMaker Autopilot</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p><strong>SageMaker Model Monitor</strong> is useful for detecting data quality issues and model bias over time, such as missing data or unexpected changes in data types. However, it does not specifically address the need to analyze the impact of a change in data distribution on model fairness and performance across demographic groups.</p>",
+     "vi": "<p><strong>SageMaker Model Monitor</strong> hữu ích để phát hiện các vấn đề chất lượng dữ liệu và bias của mô hình theo thời gian, như dữ liệu thiếu hoặc thay đổi bất ngờ về kiểu dữ liệu. Tuy nhiên, nó không đáp ứng cụ thể nhu cầu phân tích tác động của thay đổi phân phối dữ liệu đến tính công bằng và hiệu năng của mô hình giữa các nhóm nhân khẩu học.</p>"
+    },
+    {
+     "en": "<p><strong>SageMaker Debugger</strong> helps in identifying training issues such as vanishing gradients, exploding gradients, and tensor saturation. This tool is more relevant for debugging model training processes rather than analyzing changes in data distribution and their impact on model fairness.</p>",
+     "vi": "<p><strong>SageMaker Debugger</strong> giúp xác định các vấn đề khi huấn luyện như vanishing gradient, exploding gradient và tensor saturation. Công cụ này phù hợp hơn cho việc debug quá trình huấn luyện mô hình thay vì phân tích thay đổi phân phối dữ liệu và tác động của nó đến tính công bằng của mô hình.</p>"
+    },
+    {
+     "en": "<p><strong>SageMaker Clarify</strong> is specifically designed to detect bias in datasets and model predictions. It can be used to analyze how changes in data distribution affect the model's predictions and to ensure that the model remains fair across different demographic groups. This makes it the most suitable tool for the scenario described, where the impact of a data shift on model performance and fairness needs to be assessed.</p>",
+     "vi": "<p><strong>SageMaker Clarify</strong> được thiết kế riêng để phát hiện bias trong dataset và dự đoán của mô hình. Nó có thể dùng để phân tích thay đổi phân phối dữ liệu ảnh hưởng thế nào đến dự đoán của mô hình và đảm bảo mô hình vẫn công bằng giữa các nhóm nhân khẩu học khác nhau. Điều này làm nó thành công cụ phù hợp nhất cho tình huống mô tả, nơi cần đánh giá tác động của data shift đến hiệu năng và tính công bằng của mô hình.</p>"
+    },
+    {
+     "en": "<p><strong>SageMaker Autopilot</strong> automates the process of creating and deploying machine learning models but does not provide the necessary tools to analyze changes in data distribution and their impact on model bias or fairness.</p>",
+     "vi": "<p><strong>SageMaker Autopilot</strong> tự động hóa quá trình tạo và deploy mô hình machine learning nhưng không cung cấp công cụ cần thiết để phân tích thay đổi phân phối dữ liệu và tác động của nó đến bias hay tính công bằng của mô hình.</p>"
+    }
+   ],
+   "explanation": {
+    "en": "<p>When there is a change in the distribution of data that might affect model performance, <strong>SageMaker Clarify</strong> is the best choice because it provides comprehensive tools for analyzing the impact of data distribution changes on model bias and fairness. It helps ensure that the model predictions remain unbiased across different demographic groups, which is crucial for maintaining ethical and effective machine learning practices in diverse applications.</p>",
+    "vi": "<p>Khi có sự thay đổi trong phân phối dữ liệu có thể ảnh hưởng hiệu năng mô hình, <strong>SageMaker Clarify</strong> là lựa chọn tốt nhất vì nó cung cấp bộ công cụ toàn diện để phân tích tác động của thay đổi phân phối dữ liệu đến bias và tính công bằng của mô hình. Nó giúp đảm bảo dự đoán của mô hình vẫn không thiên lệch giữa các nhóm nhân khẩu học khác nhau, điều thiết yếu để duy trì các thực hành machine learning có đạo đức và hiệu quả trong nhiều ứng dụng đa dạng.</p>"
+   },
+   "domain": "ML Solution Monitoring, Maintenance, and Security"
+  },
+  {
+   "id": 184674001,
+   "multi": false,
+   "question": {
+    "en": "<p>An e-commerce company uses an Amazon SageMaker endpoint to provide real-time product recommendations to users. Recently, the company's data science team noticed that the recommendation service is occasionally returning errors and taking longer to respond during peak traffic times. To ensure that the service maintains high availability and performance, the team needs to diagnose and troubleshoot these issues effectively.</p><p>Which AWS service should the team primarily use to monitor the SageMaker endpoint, detect anomalies, and set up automatic alerts for any performance degradation or errors?</p>",
+    "vi": "<p>Một công ty thương mại điện tử dùng Amazon SageMaker endpoint để cung cấp gợi ý sản phẩm real-time cho người dùng. Gần đây, nhóm data science nhận thấy dịch vụ gợi ý thỉnh thoảng trả về lỗi và phản hồi chậm hơn vào giờ cao điểm. Để đảm bảo dịch vụ duy trì tính sẵn sàng và hiệu năng cao, nhóm cần chẩn đoán và khắc phục các vấn đề này một cách hiệu quả.</p><p>Nhóm nên dùng chính dịch vụ AWS nào để giám sát SageMaker endpoint, phát hiện bất thường và thiết lập cảnh báo tự động cho mọi suy giảm hiệu năng hoặc lỗi?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>AWS CloudTrail</p>",
+     "vi": "<p>AWS CloudTrail</p>"
+    },
+    {
+     "en": "<p>Amazon CloudWatch</p>",
+     "vi": "<p>Amazon CloudWatch</p>"
+    },
+    {
+     "en": "<p>AWS X-Ray</p>",
+     "vi": "<p>AWS X-Ray</p>"
+    },
+    {
+     "en": "<p>AWS Config</p>",
+     "vi": "<p>AWS Config</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p><strong>AWS CloudTrail</strong> is used for logging API calls and tracking user activity for security and auditing purposes. While it can provide insights into who accessed the endpoint and what actions they took, it does not provide detailed performance monitoring or alerting for runtime errors and latency issues.</p>",
+     "vi": "<p><strong>AWS CloudTrail</strong> dùng để ghi log các lệnh gọi API và theo dõi hoạt động người dùng cho mục đích bảo mật và kiểm toán. Dù nó có thể cho biết ai đã truy cập endpoint và họ đã thực hiện hành động gì, nó không cung cấp giám sát hiệu năng chi tiết hay cảnh báo cho lỗi runtime và các vấn đề về độ trễ.</p>"
+    },
+    {
+     "en": "<p><strong>Amazon CloudWatch</strong> is the best tool for this scenario. It provides real-time monitoring of AWS resources, including SageMaker endpoints. The team can use CloudWatch to set up detailed logging, track performance metrics such as latency and error rates, and create alarms to automatically notify them when the service is not performing as expected. This allows for proactive management and quick response to any issues affecting the recommendation service.</p>",
+     "vi": "<p><strong>Amazon CloudWatch</strong> là công cụ tốt nhất cho tình huống này. Nó cung cấp giám sát real-time các tài nguyên AWS, bao gồm SageMaker endpoint. Nhóm có thể dùng CloudWatch để thiết lập logging chi tiết, theo dõi các metric hiệu năng như độ trễ và tỷ lệ lỗi, và tạo alarm để tự động thông báo khi dịch vụ không hoạt động như mong đợi. Điều này cho phép quản lý chủ động và phản ứng nhanh với mọi vấn đề ảnh hưởng đến dịch vụ gợi ý.</p>"
+    },
+    {
+     "en": "<p><strong>AWS X-Ray</strong> is useful for tracing requests through an application and identifying performance bottlenecks in microservices architectures. However, it is not specifically designed for monitoring SageMaker endpoints or setting up alarms for model performance and errors in real-time.</p>",
+     "vi": "<p><strong>AWS X-Ray</strong> hữu ích để trace các request qua một ứng dụng và xác định nút thắt hiệu năng trong kiến trúc microservices. Tuy nhiên, nó không được thiết kế riêng để giám sát SageMaker endpoint hay thiết lập alarm cho hiệu năng mô hình và lỗi real-time.</p>"
+    },
+    {
+     "en": "<p><strong>AWS Config</strong> is a service that tracks configuration changes and evaluates compliance against best practices and internal policies. While helpful for ensuring correct configuration of AWS resources, it does not provide the necessary tools for real-time monitoring of service performance or for setting up alerts based on specific performance metrics.</p>",
+     "vi": "<p><strong>AWS Config</strong> là dịch vụ theo dõi thay đổi cấu hình và đánh giá mức tuân thủ so với best practice và chính sách nội bộ. Dù hữu ích để đảm bảo cấu hình đúng cho tài nguyên AWS, nó không cung cấp công cụ cần thiết để giám sát hiệu năng dịch vụ real-time hay thiết lập cảnh báo dựa trên các metric hiệu năng cụ thể.</p>"
+    }
+   ],
+   "explanation": {
+    "en": "<p>To effectively troubleshoot and maintain high availability and performance for a SageMaker endpoint, <strong>Amazon CloudWatch</strong> is the most appropriate service. It allows the team to monitor real-time performance, set up logs to capture error details, and create alarms to automatically detect and respond to issues as they occur. This proactive approach is crucial for ensuring that the recommendation service remains reliable and performs well under varying traffic conditions.</p>",
+    "vi": "<p>Để khắc phục sự cố hiệu quả và duy trì tính sẵn sàng và hiệu năng cao cho SageMaker endpoint, <strong>Amazon CloudWatch</strong> là dịch vụ phù hợp nhất. Nó cho phép nhóm giám sát hiệu năng real-time, thiết lập log để ghi lại chi tiết lỗi, và tạo alarm để tự động phát hiện và phản ứng với sự cố khi chúng xảy ra. Cách tiếp cận chủ động này rất quan trọng để đảm bảo dịch vụ gợi ý luôn đáng tin cậy và hoạt động tốt dưới nhiều điều kiện lưu lượng khác nhau.</p>"
+   },
+   "domain": "ML Solution Monitoring, Maintenance, and Security"
+  },
+  {
+   "id": 184674003,
+   "multi": false,
+   "question": {
+    "en": "<p>A technology startup is developing a machine learning-based application using Amazon SageMaker. The application requires frequent model training on large datasets, but the workloads are not time-sensitive and can be interrupted if necessary. The startup is looking to optimize its infrastructure costs, as it has a limited budget and wants to maximize cost savings without compromising on the ability to scale when needed.</p><p>Given these requirements, which purchasing option should the startup choose to optimize its costs for training machine learning models on Amazon SageMaker?</p>",
+    "vi": "<p>Một startup công nghệ đang phát triển ứng dụng dựa trên machine learning bằng Amazon SageMaker. Ứng dụng cần huấn luyện mô hình thường xuyên trên dataset lớn, nhưng workload không nhạy cảm về thời gian và có thể bị gián đoạn nếu cần. Startup muốn tối ưu chi phí hạ tầng vì ngân sách hạn chế và muốn tối đa hóa tiết kiệm chi phí mà không làm mất khả năng scale khi cần.</p><p>Với các yêu cầu này, startup nên chọn tùy chọn mua (purchasing option) nào để tối ưu chi phí huấn luyện mô hình machine learning trên Amazon SageMaker?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>On-Demand Instances</p>",
+     "vi": "<p>On-Demand Instances</p>"
+    },
+    {
+     "en": "<p>Spot Instances</p>",
+     "vi": "<p>Spot Instances</p>"
+    },
+    {
+     "en": "<p>Reserved Instances</p>",
+     "vi": "<p>Reserved Instances</p>"
+    },
+    {
+     "en": "<p>SageMaker Savings Plans</p>",
+     "vi": "<p>SageMaker Savings Plans</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p><strong>On-Demand Instances</strong> allow you to pay for compute capacity by the hour or second with no long-term commitment. While this option provides flexibility and scalability, it is not the most cost-effective solution for non-time-sensitive workloads where interruptions are acceptable. It is better suited for short-term, unpredictable workloads that require immediate availability.</p>",
+     "vi": "<p><strong>On-Demand Instances</strong> cho phép trả tiền cho năng lực tính toán theo giờ hoặc theo giây, không cam kết dài hạn. Dù tùy chọn này linh hoạt và có khả năng scale, nó không phải giải pháp tiết kiệm chi phí nhất cho các workload không nhạy cảm về thời gian và chấp nhận gián đoạn. Nó phù hợp hơn cho các workload ngắn hạn, khó dự đoán, cần sẵn sàng ngay lập tức.</p>"
+    },
+    {
+     "en": "<p><strong>Spot Instances</strong> offer a cost-effective solution for running workloads that can tolerate interruptions. Since the startup’s model training jobs are not time-sensitive and can be interrupted, Spot Instances are ideal. They provide significant cost savings (up to 90% off On-Demand prices) by utilizing unused EC2 capacity, making them the best choice for optimizing costs under the given conditions.</p>",
+     "vi": "<p><strong>Spot Instances</strong> là giải pháp tiết kiệm chi phí cho các workload chịu được gián đoạn. Vì các training job của startup không nhạy cảm về thời gian và có thể bị gián đoạn, Spot Instances là lý tưởng. Chúng giúp tiết kiệm đáng kể (tới 90% so với giá On-Demand) bằng cách tận dụng năng lực EC2 chưa dùng, là lựa chọn tốt nhất để tối ưu chi phí trong điều kiện đã cho.</p>"
+    },
+    {
+     "en": "<p><strong>Reserved Instances</strong> require a commitment to use specific instance types for a one- or three-year period. While they offer savings for predictable, long-term usage, they are not ideal for workloads that are flexible in timing and can be interrupted, as is the case with the startup’s needs.</p>",
+     "vi": "<p><strong>Reserved Instances</strong> yêu cầu cam kết dùng các loại instance cụ thể trong thời hạn một hoặc ba năm. Dù chúng tiết kiệm cho mức sử dụng dài hạn, có thể dự đoán, chúng không lý tưởng cho các workload linh hoạt về thời gian và có thể bị gián đoạn, như nhu cầu của startup.</p>"
+    },
+    {
+     "en": "<p><strong>SageMaker Savings Plans</strong> offer a flexible way to save costs by committing to a specific dollar amount of usage over a one- or three-year term, applying to various instance types. While they provide savings and flexibility, they are more suited for workloads with consistent and predictable usage patterns. For workloads that can tolerate interruptions and need to minimize costs, Spot Instances are more appropriate.</p>",
+     "vi": "<p><strong>SageMaker Savings Plans</strong> cung cấp cách tiết kiệm chi phí linh hoạt bằng cách cam kết một mức chi tiêu theo đô la trong thời hạn một hoặc ba năm, áp dụng cho nhiều loại instance. Dù chúng mang lại tiết kiệm và linh hoạt, chúng phù hợp hơn cho các workload có mẫu sử dụng ổn định và có thể dự đoán. Với các workload chịu được gián đoạn và cần giảm thiểu chi phí, Spot Instances phù hợp hơn.</p>"
+    }
+   ],
+   "explanation": {
+    "en": "<p>For a startup looking to optimize costs for non-time-sensitive model training workloads that can handle interruptions, <strong>Spot Instances</strong> are the most cost-effective choice. They allow the startup to take advantage of spare AWS capacity at a significant discount, aligning with the company's need to save on infrastructure costs without requiring guaranteed availability at all times.</p>",
+    "vi": "<p>Với một startup muốn tối ưu chi phí cho các workload huấn luyện mô hình không nhạy cảm về thời gian và chịu được gián đoạn, <strong>Spot Instances</strong> là lựa chọn tiết kiệm chi phí nhất. Chúng cho phép startup tận dụng năng lực dư thừa của AWS với mức giảm giá lớn, phù hợp với nhu cầu tiết kiệm chi phí hạ tầng của công ty mà không đòi hỏi tính sẵn sàng được đảm bảo mọi lúc.</p>"
+   },
+   "domain": "ML Solution Monitoring, Maintenance, and Security"
+  },
+  {
+   "id": 184674005,
+   "multi": false,
+   "question": {
+    "en": "<p>A healthcare organization is deploying a machine learning model on Amazon SageMaker to analyze patient data and predict potential health risks. Due to strict regulatory requirements, the organization must ensure that all data processing and model hosting occurs within a secure, isolated environment that prevents unauthorized access and protects sensitive patient information. The organization also wants to limit access to the model only to specific trusted IP addresses and other AWS services that are part of its internal network.</p><p>Which AWS configuration should the organization implement to meet these security and isolation requirements?</p>",
+    "vi": "<p>Một tổ chức y tế đang deploy mô hình machine learning trên Amazon SageMaker để phân tích dữ liệu bệnh nhân và dự đoán các rủi ro sức khỏe tiềm ẩn. Do các yêu cầu pháp lý nghiêm ngặt, tổ chức phải đảm bảo mọi xử lý dữ liệu và hosting mô hình diễn ra trong một môi trường an toàn, cô lập, ngăn truy cập trái phép và bảo vệ thông tin nhạy cảm của bệnh nhân. Tổ chức cũng muốn giới hạn quyền truy cập mô hình chỉ cho một số địa chỉ IP tin cậy và các dịch vụ AWS khác thuộc mạng nội bộ của họ.</p><p>Tổ chức nên triển khai cấu hình AWS nào để đáp ứng các yêu cầu bảo mật và cô lập này?</p>"
+   },
+   "options": [
+    {
+     "en": "<p><strong>Deploy the SageMaker model in a public subnet with an open security group</strong>, allowing easy access from the internet for real-time predictions.</p>",
+     "vi": "<p><strong>Deploy mô hình SageMaker trong public subnet với security group mở</strong>, cho phép truy cập dễ dàng từ internet để dự đoán real-time.</p>"
+    },
+    {
+     "en": "<p><strong>Deploy the SageMaker model in a private subnet within a Virtual Private Cloud (VPC)</strong> and use security groups to restrict inbound traffic to specific IP addresses and allow access only from other services within the VPC.</p>",
+     "vi": "<p><strong>Deploy mô hình SageMaker trong private subnet bên trong Virtual Private Cloud (VPC)</strong> và dùng security group để giới hạn inbound traffic từ các địa chỉ IP cụ thể và chỉ cho phép truy cập từ các dịch vụ khác trong VPC.</p>"
+    },
+    {
+     "en": "<p><strong>Use AWS Lambda with an API Gateway</strong> to provide access to the SageMaker model, controlling access through API keys and Lambda execution roles.</p>",
+     "vi": "<p><strong>Dùng AWS Lambda với API Gateway</strong> để cung cấp truy cập đến mô hình SageMaker, kiểm soát truy cập bằng API key và Lambda execution role.</p>"
+    },
+    {
+     "en": "<p><strong>Deploy the SageMaker model with a direct connection to Amazon S3</strong>, and use AWS Identity and Access Management (IAM) policies to control access to the data stored in S3.</p>",
+     "vi": "<p><strong>Deploy mô hình SageMaker với kết nối trực tiếp đến Amazon S3</strong>, và dùng chính sách AWS Identity and Access Management (IAM) để kiểm soát truy cập dữ liệu lưu trong S3.</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p><strong>Deploying the SageMaker model in a public subnet with an open security group</strong> would expose the model to the internet, which does not meet the strict isolation and security requirements of the healthcare organization. This approach does not adequately protect sensitive patient information or comply with regulatory standards that require isolation from public access.</p>",
+     "vi": "<p><strong>Deploy mô hình SageMaker trong public subnet với security group mở</strong> sẽ để lộ mô hình ra internet, không đáp ứng yêu cầu cô lập và bảo mật nghiêm ngặt của tổ chức y tế. Cách này không bảo vệ đầy đủ thông tin nhạy cảm của bệnh nhân hay tuân thủ các tiêu chuẩn pháp lý yêu cầu cô lập khỏi truy cập công khai.</p>"
+    },
+    {
+     "en": "<p><strong>Deploying the SageMaker model in a private subnet within a VPC</strong> ensures that the model is isolated from the public internet and can only be accessed by resources within the VPC. Using security groups to restrict inbound traffic to specific IP addresses further enhances security by allowing access only from trusted sources. This configuration meets the organization’s needs for security, isolation, and compliance with regulatory requirements.</p>",
+     "vi": "<p><strong>Deploy mô hình SageMaker trong private subnet bên trong VPC</strong> đảm bảo mô hình được cô lập khỏi internet công cộng và chỉ có thể được truy cập bởi các tài nguyên trong VPC. Dùng security group để giới hạn inbound traffic từ các địa chỉ IP cụ thể giúp tăng cường bảo mật bằng cách chỉ cho phép truy cập từ các nguồn tin cậy. Cấu hình này đáp ứng nhu cầu bảo mật, cô lập và tuân thủ quy định của tổ chức.</p>"
+    },
+    {
+     "en": "<p><strong>Using AWS Lambda with an API Gateway</strong> could provide controlled access to the SageMaker model, but it does not offer the same level of isolation as deploying the model in a private subnet within a VPC. The API Gateway, while useful for managing access, still exposes the model to the internet, which does not align with the organization's strict isolation needs.</p>",
+     "vi": "<p><strong>Dùng AWS Lambda với API Gateway</strong> có thể cung cấp truy cập có kiểm soát đến mô hình SageMaker, nhưng không cung cấp mức cô lập tương đương việc deploy mô hình trong private subnet bên trong VPC. API Gateway, dù hữu ích để quản lý truy cập, vẫn để lộ mô hình ra internet, không phù hợp với nhu cầu cô lập nghiêm ngặt của tổ chức.</p>"
+    },
+    {
+     "en": "<p><strong>Deploying the SageMaker model with a direct connection to Amazon S3</strong> and using IAM policies primarily controls access to the data stored in S3, not the model itself. This approach does not address the requirement for isolating the model within a secure network environment or controlling access to the model based on IP addresses.</p>",
+     "vi": "<p><strong>Deploy mô hình SageMaker với kết nối trực tiếp đến Amazon S3</strong> và dùng chính sách IAM chủ yếu kiểm soát truy cập dữ liệu lưu trong S3, không phải bản thân mô hình. Cách này không giải quyết yêu cầu cô lập mô hình trong một môi trường mạng an toàn hay kiểm soát truy cập mô hình dựa trên địa chỉ IP.</p>"
+    }
+   ],
+   "explanation": {
+    "en": "<p>To isolate a machine learning system and ensure it meets strict security and compliance requirements, <strong>deploying the SageMaker model in a private subnet within a VPC</strong> and using <strong>security groups</strong> to control access is the best approach. This configuration ensures that sensitive patient data is protected and that access is restricted to only trusted IP addresses and internal AWS services, aligning with the organization’s regulatory obligations and security policies.</p>",
+    "vi": "<p>Để cô lập một hệ thống machine learning và đảm bảo nó đáp ứng các yêu cầu bảo mật và tuân thủ nghiêm ngặt, <strong>deploy mô hình SageMaker trong private subnet bên trong VPC</strong> và dùng <strong>security group</strong> để kiểm soát truy cập là cách tiếp cận tốt nhất. Cấu hình này đảm bảo dữ liệu nhạy cảm của bệnh nhân được bảo vệ và quyền truy cập chỉ giới hạn cho các địa chỉ IP tin cậy và các dịch vụ AWS nội bộ, phù hợp với nghĩa vụ pháp lý và chính sách bảo mật của tổ chức.</p>"
+   },
+   "domain": "ML Solution Monitoring, Maintenance, and Security"
+  },
+  {
+   "id": 184674007,
+   "multi": false,
+   "question": {
+    "en": "<p>A retail company has deployed several machine learning models using Amazon SageMaker to provide personalized product recommendations to customers on their website. The company has noticed that the accuracy of the recommendations seems to be degrading over time, potentially due to changes in customer behavior and preferences. The data science team wants to implement a solution to continuously monitor the models in production, detect any deviations in data quality or model performance, and automatically alert the team when significant issues are detected.</p><p>Which AWS service should the team use to achieve this goal?</p>",
+    "vi": "<p>Một công ty bán lẻ đã deploy nhiều mô hình machine learning bằng Amazon SageMaker để cung cấp gợi ý sản phẩm cá nhân hóa cho khách hàng trên website. Công ty nhận thấy độ chính xác của các gợi ý có vẻ suy giảm theo thời gian, có thể do thay đổi trong hành vi và sở thích của khách hàng. Nhóm data science muốn triển khai giải pháp để giám sát liên tục các mô hình trong production, phát hiện mọi sai lệch về chất lượng dữ liệu hoặc hiệu năng mô hình, và tự động cảnh báo cho nhóm khi phát hiện vấn đề đáng kể.</p><p>Nhóm nên dùng dịch vụ AWS nào để đạt mục tiêu này?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Amazon CloudWatch</p>",
+     "vi": "<p>Amazon CloudWatch</p>"
+    },
+    {
+     "en": "<p>AWS Lambda</p>",
+     "vi": "<p>AWS Lambda</p>"
+    },
+    {
+     "en": "<p>Amazon SageMaker Model Monitor</p>",
+     "vi": "<p>Amazon SageMaker Model Monitor</p>"
+    },
+    {
+     "en": "<p>AWS Glue</p>",
+     "vi": "<p>AWS Glue</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p><strong>Amazon CloudWatch</strong> is useful for monitoring AWS service logs and metrics and setting up alarms for infrastructure performance. However, it does not provide specific tools for monitoring the data quality or detecting drift in machine learning models, which is essential for this scenario.</p>",
+     "vi": "<p><strong>Amazon CloudWatch</strong> hữu ích để giám sát log và metric của dịch vụ AWS và thiết lập alarm cho hiệu năng hạ tầng. Tuy nhiên, nó không cung cấp công cụ cụ thể để giám sát chất lượng dữ liệu hay phát hiện drift trong mô hình machine learning, điều thiết yếu trong tình huống này.</p>"
+    },
+    {
+     "en": "<p><strong>AWS Lambda</strong> can execute code in response to events or on a schedule and could theoretically be used to check model performance. However, this approach would require custom scripts and lacks the built-in capabilities and specific focus on machine learning model monitoring that SageMaker Model Monitor provides.</p>",
+     "vi": "<p><strong>AWS Lambda</strong> có thể thực thi code khi có sự kiện hoặc theo lịch và về lý thuyết có thể dùng để kiểm tra hiệu năng mô hình. Tuy nhiên, cách này đòi hỏi script tùy chỉnh và thiếu các khả năng built-in cũng như sự tập trung chuyên biệt vào giám sát mô hình machine learning mà SageMaker Model Monitor cung cấp.</p>"
+    },
+    {
+     "en": "<p><strong>Amazon SageMaker Model Monitor</strong> is the ideal choice for this scenario. It is specifically designed to continuously monitor machine learning models in production, detect data quality issues such as data drift or bias, and alert users when predefined thresholds are breached. This allows the team to proactively address issues affecting model performance and accuracy.</p>",
+     "vi": "<p><strong>Amazon SageMaker Model Monitor</strong> là lựa chọn lý tưởng cho tình huống này. Nó được thiết kế riêng để giám sát liên tục các mô hình machine learning trong production, phát hiện các vấn đề chất lượng dữ liệu như data drift hay bias, và cảnh báo người dùng khi vượt ngưỡng định sẵn. Điều này cho phép nhóm chủ động xử lý các vấn đề ảnh hưởng đến hiệu năng và độ chính xác của mô hình.</p>"
+    },
+    {
+     "en": "<p><strong>AWS Glue</strong> is primarily a data integration service used for ETL processes. While it can help in data preprocessing, it is not designed to monitor model performance or data quality in real-time in production environments.</p>",
+     "vi": "<p><strong>AWS Glue</strong> chủ yếu là dịch vụ tích hợp dữ liệu dùng cho các quy trình ETL. Dù nó có thể hỗ trợ tiền xử lý dữ liệu, nó không được thiết kế để giám sát hiệu năng mô hình hay chất lượng dữ liệu real-time trong môi trường production.</p>"
+    }
+   ],
+   "explanation": {
+    "en": "<p>To continuously monitor models in production and detect changes in data quality or performance, <strong>Amazon SageMaker Model Monitor</strong> is the most suitable service. It provides comprehensive tools for monitoring input data and model predictions, detecting drift or bias, and alerting the team to significant changes, which is essential for maintaining model accuracy and performance over time.</p>",
+    "vi": "<p>Để giám sát liên tục các mô hình trong production và phát hiện thay đổi về chất lượng dữ liệu hoặc hiệu năng, <strong>Amazon SageMaker Model Monitor</strong> là dịch vụ phù hợp nhất. Nó cung cấp bộ công cụ toàn diện để giám sát dữ liệu đầu vào và dự đoán của mô hình, phát hiện drift hoặc bias, và cảnh báo nhóm về các thay đổi đáng kể, điều thiết yếu để duy trì độ chính xác và hiệu năng mô hình theo thời gian.</p>"
+   },
+   "domain": "ML Solution Monitoring, Maintenance, and Security"
+  }
+ ]
+}

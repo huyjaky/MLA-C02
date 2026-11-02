@@ -1,0 +1,486 @@
+{
+ "id": "section-12",
+ "kind": "section",
+ "section": "12",
+ "title": {
+  "en": "Machine Learning Best Practices",
+  "vi": "Thực hành tốt nhất cho Machine Learning"
+ },
+ "description": {
+  "en": "<p>Test your knowledge from this section of the course.</p>",
+  "vi": "<p>Kiểm tra kiến thức của bạn về phần này của khóa học.</p>"
+ },
+ "passPercent": 70,
+ "questions": [
+  {
+   "id": 87796197,
+   "multi": false,
+   "question": {
+    "en": "<p>A hiring model approves qualified applicants at different rates across demographic groups. Which responsible AI dimension is MOST directly at risk?</p>",
+    "vi": "<p>Một mô hình tuyển dụng chấp nhận các ứng viên đủ điều kiện với tỉ lệ khác nhau giữa các nhóm nhân khẩu học. Khía cạnh responsible AI nào bị đe dọa TRỰC TIẾP NHẤT?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Fairness</p>",
+     "vi": "<p>Fairness</p>"
+    },
+    {
+     "en": "<p>Controllability</p>",
+     "vi": "<p>Controllability</p>"
+    },
+    {
+     "en": "<p>Veracity</p>",
+     "vi": "<p>Veracity</p>"
+    },
+    {
+     "en": "<p>Transparency</p>",
+     "vi": "<p>Transparency</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Correct. Fairness concerns unjustified disparities in data or model outcomes across groups.</p>",
+     "vi": "<p>Đúng. Fairness liên quan đến chênh lệch không chính đáng trong dữ liệu hoặc kết quả mô hình giữa các nhóm.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Controllability concerns the ability to direct and constrain system behavior.</p>",
+     "vi": "<p>Sai. Controllability liên quan đến khả năng điều khiển và giới hạn hành vi của hệ thống.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Veracity concerns truthfulness and reliability.</p>",
+     "vi": "<p>Sai. Veracity liên quan đến tính trung thực và độ tin cậy.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Transparency concerns disclosure and visibility into the system.</p>",
+     "vi": "<p>Sai. Transparency liên quan đến việc công bố và hiển thị thông tin về hệ thống.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87796207,
+   "multi": false,
+   "question": {
+    "en": "<p>A loan applicant disputes a denial and the bank must identify which input features most influenced that individual prediction. Which approach BEST supports the requirement?</p>",
+    "vi": "<p>Một người xin vay khiếu nại việc bị từ chối và ngân hàng phải xác định các input feature ảnh hưởng nhiều nhất đến dự đoán riêng đó. Cách tiếp cận nào hỗ trợ yêu cầu này TỐT NHẤT?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use random undersampling</p>",
+     "vi": "<p>Dùng random undersampling</p>"
+    },
+    {
+     "en": "<p>Use SHAP feature attribution</p>",
+     "vi": "<p>Dùng SHAP feature attribution</p>"
+    },
+    {
+     "en": "<p>Use a larger endpoint instance</p>",
+     "vi": "<p>Dùng endpoint instance lớn hơn</p>"
+    },
+    {
+     "en": "<p>Use S3 lifecycle transitions</p>",
+     "vi": "<p>Dùng S3 lifecycle transitions</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Undersampling changes class balance and does not explain a prediction.</p>",
+     "vi": "<p>Sai. Undersampling thay đổi cân bằng lớp và không giải thích dự đoán.</p>"
+    },
+    {
+     "en": "<p>Correct. SHAP assigns feature-attribution values to individual or aggregate predictions.</p>",
+     "vi": "<p>Đúng. SHAP gán giá trị feature attribution cho từng dự đoán riêng lẻ hoặc tổng hợp.</p>"
+    },
+    {
+     "en": "<p>Incorrect. A larger instance improves capacity, not explainability.</p>",
+     "vi": "<p>Sai. Instance lớn hơn cải thiện dung lượng, không phải khả năng giải thích.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Lifecycle transitions manage stored objects.</p>",
+     "vi": "<p>Sai. Lifecycle transition quản lý các object đã lưu.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87796213,
+   "multi": false,
+   "question": {
+    "en": "<p>A clinical model contains sensitive patient data and must prevent unauthorized disclosure while preserving confidentiality. Which responsible AI dimension is MOST relevant?</p>",
+    "vi": "<p>Một mô hình lâm sàng chứa dữ liệu bệnh nhân nhạy cảm và phải ngăn việc tiết lộ trái phép, đồng thời giữ tính bảo mật. Khía cạnh responsible AI nào liên quan NHẤT?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Improve system safety</p>",
+     "vi": "<p>Cải thiện system safety</p>"
+    },
+    {
+     "en": "<p>Improve AI governance</p>",
+     "vi": "<p>Cải thiện AI governance</p>"
+    },
+    {
+     "en": "<p>Improve privacy and security</p>",
+     "vi": "<p>Cải thiện privacy và security</p>"
+    },
+    {
+     "en": "<p>Improve system controllability</p>",
+     "vi": "<p>Cải thiện system controllability</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Safety focuses on avoiding harmful system behavior more broadly.</p>",
+     "vi": "<p>Sai. Safety tập trung vào việc tránh hành vi gây hại của hệ thống nói chung.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Governance defines oversight and accountability structures.</p>",
+     "vi": "<p>Sai. Governance xác định cấu trúc giám sát và trách nhiệm giải trình.</p>"
+    },
+    {
+     "en": "<p>Correct. Privacy and Security covers protection of sensitive data and access.</p>",
+     "vi": "<p>Đúng. Privacy and Security bao gồm bảo vệ dữ liệu nhạy cảm và quyền truy cập.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Controllability concerns directing or stopping system behavior.</p>",
+     "vi": "<p>Sai. Controllability liên quan đến việc điều khiển hoặc dừng hành vi hệ thống.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87796221,
+   "multi": false,
+   "question": {
+    "en": "<p>An industrial robot must enter a safe state when model confidence is low so it does not injure workers. Which responsible AI dimension is the PRIMARY concern?</p>",
+    "vi": "<p>Một robot công nghiệp phải chuyển sang trạng thái an toàn khi độ tin cậy của mô hình thấp để không gây thương tích cho công nhân. Khía cạnh responsible AI nào là mối quan tâm CHÍNH?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Explainability</p>",
+     "vi": "<p>Explainability</p>"
+    },
+    {
+     "en": "<p>Transparency</p>",
+     "vi": "<p>Transparency</p>"
+    },
+    {
+     "en": "<p>Fairness</p>",
+     "vi": "<p>Fairness</p>"
+    },
+    {
+     "en": "<p>Safety</p>",
+     "vi": "<p>Safety</p>"
+    }
+   ],
+   "answer": [
+    3
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Explainability may help diagnose behavior but does not itself prevent physical harm.</p>",
+     "vi": "<p>Sai. Explainability có thể giúp chẩn đoán hành vi nhưng tự nó không ngăn được tổn hại vật lý.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Transparency concerns disclosure and communication.</p>",
+     "vi": "<p>Sai. Transparency liên quan đến công bố và truyền đạt thông tin.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Fairness concerns equitable treatment.</p>",
+     "vi": "<p>Sai. Fairness liên quan đến đối xử công bằng.</p>"
+    },
+    {
+     "en": "<p>Correct. Safety focuses on preventing harmful outcomes and managing risk.</p>",
+     "vi": "<p>Đúng. Safety tập trung vào ngăn ngừa hậu quả có hại và quản lý rủi ro.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87796231,
+   "multi": false,
+   "question": {
+    "en": "<p>Operators need an emergency stop and enforceable limits on which actions an autonomous system may take. Which responsible AI dimension does this BEST illustrate?</p>",
+    "vi": "<p>Người vận hành cần nút dừng khẩn cấp và các giới hạn có hiệu lực về những hành động mà hệ thống tự hành được phép thực hiện. Khía cạnh responsible AI nào minh họa ĐIỀU NÀY TỐT NHẤT?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Controllability</p>",
+     "vi": "<p>Controllability</p>"
+    },
+    {
+     "en": "<p>Veracity</p>",
+     "vi": "<p>Veracity</p>"
+    },
+    {
+     "en": "<p>Fairness</p>",
+     "vi": "<p>Fairness</p>"
+    },
+    {
+     "en": "<p>Explainability</p>",
+     "vi": "<p>Explainability</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Correct. Controllability concerns the ability to constrain, override, or stop a system.</p>",
+     "vi": "<p>Đúng. Controllability liên quan đến khả năng giới hạn, ghi đè hoặc dừng hệ thống.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Veracity concerns accuracy and truthfulness.</p>",
+     "vi": "<p>Sai. Veracity liên quan đến độ chính xác và tính trung thực.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Fairness concerns group disparities.</p>",
+     "vi": "<p>Sai. Fairness liên quan đến chênh lệch giữa các nhóm.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Explainability concerns understanding model decisions.</p>",
+     "vi": "<p>Sai. Explainability liên quan đến việc hiểu các quyết định của mô hình.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87796257,
+   "multi": false,
+   "question": {
+    "en": "<p>A news assistant confidently invents citations when inputs are slightly rephrased. Which responsible AI dimension is MOST directly deficient?</p>",
+    "vi": "<p>Một trợ lý tin tức tự tin bịa ra các trích dẫn khi input được diễn đạt lại đôi chút. Khía cạnh responsible AI nào thiếu sót TRỰC TIẾP NHẤT?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Improve model governance</p>",
+     "vi": "<p>Cải thiện model governance</p>"
+    },
+    {
+     "en": "<p>Improve veracity and robustness</p>",
+     "vi": "<p>Cải thiện veracity và robustness</p>"
+    },
+    {
+     "en": "<p>Improve privacy and security</p>",
+     "vi": "<p>Cải thiện privacy và security</p>"
+    },
+    {
+     "en": "<p>Improve system controllability</p>",
+     "vi": "<p>Cải thiện system controllability</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Governance provides oversight but is not the specific behavior described.</p>",
+     "vi": "<p>Sai. Governance cung cấp giám sát nhưng không phải hành vi cụ thể được mô tả.</p>"
+    },
+    {
+     "en": "<p>Correct. Fabrication and sensitivity to minor input changes indicate poor truthfulness and robustness.</p>",
+     "vi": "<p>Đúng. Việc bịa đặt và nhạy cảm với thay đổi nhỏ của input cho thấy tính trung thực và robustness kém.</p>"
+    },
+    {
+     "en": "<p>Incorrect. No sensitive-data disclosure is described.</p>",
+     "vi": "<p>Sai. Không có việc tiết lộ dữ liệu nhạy cảm nào được mô tả.</p>"
+    },
+    {
+     "en": "<p>Incorrect. The issue is unreliable output rather than operator control.</p>",
+     "vi": "<p>Sai. Vấn đề là output không đáng tin cậy chứ không phải quyền điều khiển của người vận hành.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87796261,
+   "multi": false,
+   "question": {
+    "en": "<p>A company assigns owners, approval gates, audit records, and periodic risk reviews for every production model. Which responsible AI dimension does this MOST directly implement?</p>",
+    "vi": "<p>Một công ty chỉ định người chịu trách nhiệm, các cổng phê duyệt, bản ghi audit và đánh giá rủi ro định kỳ cho mọi mô hình production. Khía cạnh responsible AI nào được triển khai TRỰC TIẾP NHẤT?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Fairness</p>",
+     "vi": "<p>Fairness</p>"
+    },
+    {
+     "en": "<p>Safety</p>",
+     "vi": "<p>Safety</p>"
+    },
+    {
+     "en": "<p>Governance</p>",
+     "vi": "<p>Governance</p>"
+    },
+    {
+     "en": "<p>Veracity</p>",
+     "vi": "<p>Veracity</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Fairness is one risk that governance may oversee, but the controls described are broader.</p>",
+     "vi": "<p>Sai. Fairness là một rủi ro mà governance có thể giám sát, nhưng các kiểm soát được mô tả rộng hơn.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Safety is a model-behavior objective, not the complete oversight framework.</p>",
+     "vi": "<p>Sai. Safety là mục tiêu về hành vi mô hình, không phải toàn bộ khung giám sát.</p>"
+    },
+    {
+     "en": "<p>Correct. Governance establishes accountability, approvals, auditability, and continuing oversight.</p>",
+     "vi": "<p>Đúng. Governance thiết lập trách nhiệm giải trình, phê duyệt, khả năng audit và giám sát liên tục.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Veracity concerns truthful and reliable outputs.</p>",
+     "vi": "<p>Sai. Veracity liên quan đến output trung thực và đáng tin cậy.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87796277,
+   "multi": false,
+   "question": {
+    "en": "<p>Users are not told that a support response was generated by AI or what data sources shaped it. Which responsible AI dimension should the team improve?</p>",
+    "vi": "<p>Người dùng không được thông báo rằng một phản hồi hỗ trợ do AI tạo ra hoặc nguồn dữ liệu nào đã định hình nó. Đội nên cải thiện khía cạnh responsible AI nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Controllability</p>",
+     "vi": "<p>Controllability</p>"
+    },
+    {
+     "en": "<p>Safety</p>",
+     "vi": "<p>Safety</p>"
+    },
+    {
+     "en": "<p>Fairness</p>",
+     "vi": "<p>Fairness</p>"
+    },
+    {
+     "en": "<p>Transparency</p>",
+     "vi": "<p>Transparency</p>"
+    }
+   ],
+   "answer": [
+    3
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Controllability concerns directing system actions.</p>",
+     "vi": "<p>Sai. Controllability liên quan đến việc điều khiển hành động của hệ thống.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Safety focuses on harm prevention.</p>",
+     "vi": "<p>Sai. Safety tập trung vào ngăn ngừa tổn hại.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Fairness concerns unequal outcomes.</p>",
+     "vi": "<p>Sai. Fairness liên quan đến kết quả không đồng đều.</p>"
+    },
+    {
+     "en": "<p>Correct. Transparency requires appropriate disclosure of AI involvement, data, and system behavior.</p>",
+     "vi": "<p>Đúng. Transparency yêu cầu công bố phù hợp về sự tham gia của AI, dữ liệu và hành vi của hệ thống.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87796287,
+   "multi": false,
+   "question": {
+    "en": "<p>An ML team must reproduce a prior experiment and show auditors the parameters, metrics, artifacts, and model version used. Which course-recommended approach should it use?</p>",
+    "vi": "<p>Một đội ML phải tái hiện một thí nghiệm trước đó và cho auditor thấy các tham số, metric, artifact và phiên bản mô hình đã dùng. Nên dùng cách tiếp cận nào mà khóa học khuyến nghị?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Track the workflow with SageMaker MLflow</p>",
+     "vi": "<p>Theo dõi workflow bằng SageMaker MLflow</p>"
+    },
+    {
+     "en": "<p>Store only the final model in an email</p>",
+     "vi": "<p>Chỉ lưu mô hình cuối cùng trong email</p>"
+    },
+    {
+     "en": "<p>Rely on notebook command history alone</p>",
+     "vi": "<p>Chỉ dựa vào lịch sử lệnh của notebook</p>"
+    },
+    {
+     "en": "<p>Recreate the experiment from memory</p>",
+     "vi": "<p>Tái tạo thí nghiệm theo trí nhớ</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Correct. Managed MLflow tracks experiments, metrics, artifacts, and models for reproducibility and auditability.</p>",
+     "vi": "<p>Đúng. Managed MLflow theo dõi experiment, metric, artifact và model để đảm bảo khả năng tái hiện và audit.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Email does not provide structured experiment lineage.</p>",
+     "vi": "<p>Sai. Email không cung cấp lineage thí nghiệm có cấu trúc.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Command history omits much of the required metadata and artifact management.</p>",
+     "vi": "<p>Sai. Lịch sử lệnh thiếu nhiều metadata và việc quản lý artifact cần thiết.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Memory is neither reproducible nor auditable.</p>",
+     "vi": "<p>Sai. Trí nhớ không thể tái hiện cũng không thể audit.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87796293,
+   "multi": false,
+   "question": {
+    "en": "<p>A high-stakes benefits model is uncertain on borderline cases. Consequences justify expert judgment before action. Which workflow pattern should be used?</p>",
+    "vi": "<p>Một mô hình quyết định phúc lợi có rủi ro cao không chắc chắn ở các ca biên. Hậu quả đủ lớn để cần phán đoán của chuyên gia trước khi hành động. Nên dùng mẫu workflow nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use automatic approval for all cases</p>",
+     "vi": "<p>Tự động phê duyệt mọi ca</p>"
+    },
+    {
+     "en": "<p>Use human review for uncertain cases</p>",
+     "vi": "<p>Dùng human review cho các ca không chắc chắn</p>"
+    },
+    {
+     "en": "<p>Use a larger batch size for inference</p>",
+     "vi": "<p>Dùng batch size lớn hơn cho inference</p>"
+    },
+    {
+     "en": "<p>Use random output selection</p>",
+     "vi": "<p>Chọn output ngẫu nhiên</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Automatic approval ignores the stated uncertainty and consequence.</p>",
+     "vi": "<p>Sai. Tự động phê duyệt bỏ qua sự không chắc chắn và hậu quả đã nêu.</p>"
+    },
+    {
+     "en": "<p>Correct. Human review is appropriate when risk, uncertainty, or consequences justify expert intervention.</p>",
+     "vi": "<p>Đúng. Human review phù hợp khi rủi ro, sự không chắc chắn hoặc hậu quả đòi hỏi chuyên gia can thiệp.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Batch size changes throughput, not decision oversight.</p>",
+     "vi": "<p>Sai. Batch size thay đổi throughput, không phải việc giám sát quyết định.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Random selection is unsafe and unprincipled.</p>",
+     "vi": "<p>Sai. Chọn ngẫu nhiên là không an toàn và thiếu nguyên tắc.</p>"
+    }
+   ]
+  }
+ ]
+}

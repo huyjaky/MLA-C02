@@ -1,0 +1,527 @@
+{
+ "id": "02",
+ "order": 2,
+ "title": {
+  "en": "Data Ingestion and Storage",
+  "vi": "Thu thập và lưu trữ dữ liệu"
+ },
+ "lectures": [
+  {
+   "id": "02-001",
+   "title": {
+    "en": "Intro Data Ingestion and Storage",
+    "vi": "Giới thiệu thu thập và lưu trữ dữ liệu"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/001 Intro Data Ingestion and Storage.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-002",
+   "title": {
+    "en": "Types of Data",
+    "vi": "Các loại dữ liệu"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/002 Types of Data.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-003",
+   "title": {
+    "en": "Properties of Data (The Three V_s)",
+    "vi": "Các thuộc tính của dữ liệu (3 chữ V)"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/003 Properties of Data (The Three V_s).mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-004",
+   "title": {
+    "en": "Data Warehouses, Lakes, and Lakehouses",
+    "vi": "Data Warehouse, Data Lake và Lakehouse"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/004 Data Warehouses, Lakes, and Lakehouses.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-005",
+   "title": {
+    "en": "Data Mesh",
+    "vi": "Data Mesh"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/005 Data Mesh.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-006",
+   "title": {
+    "en": "ETL & ETL Pipelines and Orchestration",
+    "vi": "ETL, ETL Pipeline và điều phối (Orchestration)"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/006 ETL & ETL Pipelines and Orchestration.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-007",
+   "title": {
+    "en": "Common Data Sources and Data Formats",
+    "vi": "Nguồn dữ liệu và định dạng dữ liệu phổ biến"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/007 Common Data Sources and Data Formats.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-008",
+   "title": {
+    "en": "Amazon S3",
+    "vi": "Amazon S3"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/008 Amazon S3.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-009",
+   "title": {
+    "en": "Amazon S3 - Hands On",
+    "vi": "Amazon S3 - Thực hành"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/009 Amazon S3 - Hands On.mp4",
+   "transcript": true,
+   "materials": [
+    "s3/coffee.jpg",
+    "s3/beach.jpg",
+    "s3/index.html"
+   ]
+  },
+  {
+   "id": "02-010",
+   "title": {
+    "en": "Amazon S3 Security - Bucket Policy",
+    "vi": "Bảo mật Amazon S3 - Bucket Policy"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/010 Amazon S3 Security - Bucket Policy.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-011",
+   "title": {
+    "en": "Amazon S3 Security - Bucket Policy - Hands On",
+    "vi": "Bảo mật Amazon S3 - Bucket Policy - Thực hành"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/011 Amazon S3 Security - Bucket Policy - Hands On.mp4",
+   "transcript": true,
+   "materials": [
+    "s3/coffee.jpg",
+    "s3/beach.jpg",
+    "s3/index.html"
+   ]
+  },
+  {
+   "id": "02-012",
+   "title": {
+    "en": "Amazon S3 - Versioning",
+    "vi": "Amazon S3 - Versioning"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/012 Amazon S3 - Versioning.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-013",
+   "title": {
+    "en": "Amazon S3 - Versioning - Hands On",
+    "vi": "Amazon S3 - Versioning - Thực hành"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/013 Amazon S3 - Versioning - Hands On.mp4",
+   "transcript": true,
+   "materials": [
+    "s3/coffee.jpg",
+    "s3/beach.jpg",
+    "s3/index.html"
+   ]
+  },
+  {
+   "id": "02-014",
+   "title": {
+    "en": "Amazon S3 - Replication",
+    "vi": "Amazon S3 - Replication"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/014 Amazon S3 - Replication.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-015",
+   "title": {
+    "en": "Amazon S3 - Replication - Notes",
+    "vi": "Amazon S3 - Replication - Ghi chú"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/015 Amazon S3 - Replication - Notes.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-016",
+   "title": {
+    "en": "Amazon S3 - Replication - Hands On",
+    "vi": "Amazon S3 - Replication - Thực hành"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/016 Amazon S3 - Replication - Hands On.mp4",
+   "transcript": true,
+   "materials": [
+    "s3/coffee.jpg",
+    "s3/beach.jpg",
+    "s3/index.html"
+   ]
+  },
+  {
+   "id": "02-017",
+   "title": {
+    "en": "Amazon S3 - Storage Classes",
+    "vi": "Amazon S3 - Storage Classes"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/017 Amazon S3 - Storage Classes.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-018",
+   "title": {
+    "en": "Amazon S3 - Storage Classes - Hands On",
+    "vi": "Amazon S3 - Storage Classes - Thực hành"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/018 Amazon S3 - Storage Classes - Hands On.mp4",
+   "transcript": true,
+   "materials": [
+    "s3/coffee.jpg",
+    "s3/beach.jpg",
+    "s3/index.html"
+   ]
+  },
+  {
+   "id": "02-019",
+   "title": {
+    "en": "Amazon S3 - Lifecycle Rules",
+    "vi": "Amazon S3 - Lifecycle Rules"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/019 Amazon S3 - Lifecycle Rules.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-020",
+   "title": {
+    "en": "Amazon S3 - Lifecycle Rules - Hands On",
+    "vi": "Amazon S3 - Lifecycle Rules - Thực hành"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/020 Amazon S3 - Lifecycle Rules - Hands On.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-021",
+   "title": {
+    "en": "Amazon S3 - Event Notifications",
+    "vi": "Amazon S3 - Event Notifications"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/021 Amazon S3 - Event Notifications.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-022",
+   "title": {
+    "en": "Amazon S3 - Event Notifications - Hands On",
+    "vi": "Amazon S3 - Event Notifications - Thực hành"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/022 Amazon S3 - Event Notifications - Hands On.mp4",
+   "transcript": true,
+   "materials": [
+    "s3/coffee.jpg",
+    "s3/beach.jpg",
+    "s3/index.html"
+   ]
+  },
+  {
+   "id": "02-023",
+   "title": {
+    "en": "Amazon S3 - Performance",
+    "vi": "Amazon S3 - Hiệu năng"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/023 Amazon S3 - Performance.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-024",
+   "title": {
+    "en": "Amazon S3 - Encryption",
+    "vi": "Amazon S3 - Mã hóa"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/024 Amazon S3 - Encryption.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-025",
+   "title": {
+    "en": "About DSSE-KMS",
+    "vi": "Về DSSE-KMS"
+   },
+   "kind": "note",
+   "transcript": false
+  },
+  {
+   "id": "02-026",
+   "title": {
+    "en": "Amazon S3 - Encryption - Hands On",
+    "vi": "Amazon S3 - Mã hóa - Thực hành"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/026 Amazon S3 - Encryption - Hands On.mp4",
+   "transcript": true,
+   "materials": [
+    "s3/coffee.jpg",
+    "s3/beach.jpg",
+    "s3/index.html"
+   ]
+  },
+  {
+   "id": "02-027",
+   "title": {
+    "en": "Amazon S3 - Default Encryption",
+    "vi": "Amazon S3 - Default Encryption"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/027 Amazon S3 - Default Encryption.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-028",
+   "title": {
+    "en": "Amazon S3 - Access Points",
+    "vi": "Amazon S3 - Access Points"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/028 Amazon S3 - Access Points.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-029",
+   "title": {
+    "en": "Amazon S3 - Object Lambda",
+    "vi": "Amazon S3 - Object Lambda"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/029 Amazon S3 - Object Lambda.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-030",
+   "title": {
+    "en": "Amazon EBS",
+    "vi": "Amazon EBS"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/030 Amazon EBS.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-031",
+   "title": {
+    "en": "Amazon EBS - Hands On",
+    "vi": "Amazon EBS - Thực hành"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/031 Amazon EBS - Hands On.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-032",
+   "title": {
+    "en": "Amazon EBS Elastic Volumes",
+    "vi": "Amazon EBS Elastic Volumes"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/032 Amazon EBS Elastic Volumes.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-033",
+   "title": {
+    "en": "Amazon EFS",
+    "vi": "Amazon EFS"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/033 Amazon EFS.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-034",
+   "title": {
+    "en": "Amazon EFS - Hands On",
+    "vi": "Amazon EFS - Thực hành"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/034 Amazon EFS - Hands On.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-035",
+   "title": {
+    "en": "Amazon EFS vs. Amazon EBS",
+    "vi": "Amazon EFS so với Amazon EBS"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/035 Amazon EFS vs. Amazon EBS.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-036",
+   "title": {
+    "en": "Amazon FSx",
+    "vi": "Amazon FSx"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/036 Amazon FSx.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-037",
+   "title": {
+    "en": "Amazon FSx - Hands On",
+    "vi": "Amazon FSx - Thực hành"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/037 Amazon FSx - Hands On.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-038",
+   "title": {
+    "en": "Amazon Kinesis Data Streams",
+    "vi": "Amazon Kinesis Data Streams"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/038 Amazon Kinesis Data Streams.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-039",
+   "title": {
+    "en": "Amazon Kinesis Data Streams - Hands On",
+    "vi": "Amazon Kinesis Data Streams - Thực hành"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/039 Amazon Kinesis Data Streams - Hands On.mp4",
+   "transcript": true,
+   "materials": [
+    "kinesis/kinesis-data-streams.sh"
+   ]
+  },
+  {
+   "id": "02-040",
+   "title": {
+    "en": "Amazon Data Firehose",
+    "vi": "Amazon Data Firehose"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/040 Amazon Data Firehose.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-041",
+   "title": {
+    "en": "Kinesis Tuning and Troubleshooting",
+    "vi": "Tinh chỉnh và xử lý sự cố Kinesis"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/041 Kinesis Tuning and Troubleshooting.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-042",
+   "title": {
+    "en": "Amazon Managed Service for Apache Flink",
+    "vi": "Amazon Managed Service for Apache Flink"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/042 Amazon Managed Service for Apache Flink.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-043",
+   "title": {
+    "en": "Managed Service for Apache Flink - Hands On",
+    "vi": "Managed Service for Apache Flink - Thực hành"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/043 Managed Service for Apache Flink - Hands On.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-044",
+   "title": {
+    "en": "Kinesis Analytics Costs_ RANDOM_CUT_FOREST",
+    "vi": "Chi phí Kinesis Analytics: RANDOM_CUT_FOREST"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/044 Kinesis Analytics Costs_ RANDOM_CUT_FOREST.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-045",
+   "title": {
+    "en": "Amazon MSK",
+    "vi": "Amazon MSK"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/045 Amazon MSK.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-046",
+   "title": {
+    "en": "Amazon MSK - Connect",
+    "vi": "Amazon MSK - Connect"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/046 Amazon MSK - Connect.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-047",
+   "title": {
+    "en": "Amazon MSK - Serverless",
+    "vi": "Amazon MSK - Serverless"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/047 Amazon MSK - Serverless.mp4",
+   "transcript": true
+  },
+  {
+   "id": "02-048",
+   "title": {
+    "en": "Amazon Kinesis vs. Amazon MSK",
+    "vi": "Amazon Kinesis so với Amazon MSK"
+   },
+   "kind": "video",
+   "video": "02 - Data Ingestion and Storage/048 Amazon Kinesis vs. Amazon MSK.mp4",
+   "transcript": true
+  }
+ ]
+}

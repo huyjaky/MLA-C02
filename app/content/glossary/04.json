@@ -1,0 +1,257 @@
+{
+ "section": "04",
+ "terms": [
+  {
+   "id": "amazon-comprehend",
+   "term": "Amazon Comprehend",
+   "lecture": "04-003",
+   "definition": {
+    "en": "Fully managed, serverless NLP service that finds insights in text: language, key phrases, entities, sentiment, syntax (tokenization, part of speech) and topics. Choose it for text analytics such as analyzing customer emails; it accepts text, PDF, Word and images.",
+    "vi": "Dịch vụ NLP serverless, được quản lý hoàn toàn, tìm insight trong văn bản: ngôn ngữ, key phrase, entity, sentiment, cú pháp (tokenization, part of speech) và chủ đề. Chọn khi cần phân tích văn bản như email khách hàng; hỗ trợ text, PDF, Word và ảnh."
+   }
+  },
+  {
+   "id": "comprehend-ner",
+   "term": "Named entity recognition (NER)",
+   "lecture": "04-003",
+   "definition": {
+    "en": "Built-in Comprehend capability that extracts predefined general-purpose entities such as people, places, organizations and dates from text. If the entity types are business-specific, use custom entity recognition instead.",
+    "vi": "Khả năng có sẵn của Comprehend để trích xuất các entity chung định sẵn như người, địa điểm, tổ chức, ngày tháng từ văn bản. Nếu loại entity đặc thù của doanh nghiệp thì dùng custom entity recognition."
+   }
+  },
+  {
+   "id": "comprehend-custom-classification",
+   "term": "Comprehend custom classification",
+   "lecture": "04-003",
+   "definition": {
+    "en": "You supply labeled training documents in S3 and Comprehend trains a custom classifier for your own categories (for example support, billing, complaint). Supports real-time (synchronous) and asynchronous analysis. Choose it to route documents into business-defined classes.",
+    "vi": "Bạn cung cấp tài liệu huấn luyện đã gán nhãn trong S3 và Comprehend huấn luyện bộ phân loại tùy chỉnh cho các danh mục riêng (ví dụ support, billing, complaint). Hỗ trợ phân tích real-time (đồng bộ) và bất đồng bộ. Chọn khi cần định tuyến tài liệu vào các lớp do doanh nghiệp định nghĩa."
+   }
+  },
+  {
+   "id": "comprehend-custom-entity-recognition",
+   "term": "Comprehend custom entity recognition",
+   "lecture": "04-003",
+   "definition": {
+    "en": "Train Comprehend with a list of entities and documents containing them so it extracts domain-specific terms and noun phrases such as policy numbers or customer-escalation phrases. Works in real time or asynchronously.",
+    "vi": "Huấn luyện Comprehend bằng danh sách entity và tài liệu chứa chúng để trích xuất thuật ngữ và cụm danh từ đặc thù như số hợp đồng bảo hiểm hoặc cụm từ báo hiệu khiếu nại leo thang. Chạy real-time hoặc bất đồng bộ."
+   }
+  },
+  {
+   "id": "comprehend-model-sharing",
+   "term": "Sharing Comprehend custom models across accounts",
+   "lecture": "04-004",
+   "definition": {
+    "en": "Comprehend versions custom models automatically. To share one, attach an IAM policy to the model version authorizing the other account; that account imports it from the Comprehend console using the model ARN, in the same Region, plus the KMS key if the model is encrypted.",
+    "vi": "Comprehend tự quản lý version cho custom model. Để chia sẻ, gắn IAM policy vào model version để cấp quyền cho account khác; account đó import model từ console Comprehend bằng ARN của model, trong cùng Region, kèm KMS key nếu model được mã hóa."
+   }
+  },
+  {
+   "id": "amazon-translate",
+   "term": "Amazon Translate",
+   "lecture": "04-006",
+   "definition": {
+    "en": "Managed neural machine translation service for natural, accurate translation of large volumes of text. Choose it to localize websites and applications for international users.",
+    "vi": "Dịch vụ dịch máy neural được quản lý, dịch tự nhiên và chính xác khối lượng văn bản lớn. Chọn khi cần bản địa hóa website và ứng dụng cho người dùng quốc tế."
+   }
+  },
+  {
+   "id": "amazon-transcribe",
+   "term": "Amazon Transcribe",
+   "lecture": "04-008",
+   "definition": {
+    "en": "Converts speech to text using automatic speech recognition (ASR). Features include PII redaction, automatic language identification for multilingual audio, custom vocabularies, custom language models and toxicity detection. Used for call transcription, captions/subtitles and searchable media metadata.",
+    "vi": "Chuyển giọng nói thành văn bản bằng automatic speech recognition (ASR). Có redaction PII, tự nhận diện ngôn ngữ cho âm thanh đa ngôn ngữ, custom vocabulary, custom language model và toxicity detection. Dùng để phiên âm cuộc gọi, tạo phụ đề và metadata có thể tìm kiếm cho media."
+   }
+  },
+  {
+   "id": "transcribe-custom-vocabulary",
+   "term": "Transcribe custom vocabulary",
+   "lecture": "04-008",
+   "definition": {
+    "en": "A list of domain-specific words, phrases, brand names or acronyms, optionally with pronunciation hints, that improves recognition of specific terms. It teaches new words, not context.",
+    "vi": "Danh sách từ, cụm từ, tên thương hiệu hoặc từ viết tắt đặc thù, có thể kèm gợi ý phát âm, giúp nhận dạng tốt hơn các thuật ngữ cụ thể. Nó dạy từ mới chứ không dạy ngữ cảnh."
+   }
+  },
+  {
+   "id": "transcribe-custom-language-model",
+   "term": "Transcribe custom language model",
+   "lecture": "04-008",
+   "definition": {
+    "en": "Trained on your own domain-specific text so Transcribe learns the context in which words appear (for example 'microservices' rather than 'my crow services'). Use together with a custom vocabulary for highest accuracy.",
+    "vi": "Được huấn luyện trên dữ liệu văn bản đặc thù của bạn để Transcribe học ngữ cảnh xuất hiện của từ (ví dụ 'microservices' thay vì 'my crow services'). Dùng cùng custom vocabulary để có độ chính xác cao nhất."
+   }
+  },
+  {
+   "id": "transcribe-toxicity-detection",
+   "term": "Transcribe toxicity detection",
+   "lecture": "04-008",
+   "definition": {
+    "en": "ML feature that combines audio cues (tone, pitch) and text cues (profanity, hate speech) to flag toxic speech. Categories include sexual harassment, hate speech, threats, abuse, profanity, insult and graphic. Mentioned as exam-relevant.",
+    "vi": "Tính năng ML kết hợp tín hiệu âm thanh (giọng điệu, cao độ) và tín hiệu văn bản (chửi thề, hate speech) để gắn cờ lời nói độc hại. Các loại gồm sexual harassment, hate speech, threats, abuse, profanity, insult và graphic. Được nhấn mạnh là có thể ra thi."
+   }
+  },
+  {
+   "id": "amazon-polly",
+   "term": "Amazon Polly",
+   "lecture": "04-010",
+   "definition": {
+    "en": "Turns text into lifelike speech using deep learning (the opposite of Transcribe). Use it to build applications that talk. Advanced features: lexicons, SSML, multiple voice engines and speech marks.",
+    "vi": "Chuyển văn bản thành giọng nói tự nhiên bằng deep learning (ngược với Transcribe). Dùng để xây ứng dụng biết nói. Tính năng nâng cao: lexicon, SSML, nhiều voice engine và speech mark."
+   }
+  },
+  {
+   "id": "polly-lexicon",
+   "term": "Polly lexicon",
+   "lecture": "04-010",
+   "definition": {
+    "en": "Custom pronunciation rules that define how specific text is read or expanded, for example reading 'W3C' as 'World Wide Web Consortium' or 'AWS' as 'Amazon Web Services'.",
+    "vi": "Quy tắc phát âm tùy chỉnh định nghĩa cách đọc hoặc mở rộng một đoạn văn bản cụ thể, ví dụ đọc 'W3C' thành 'World Wide Web Consortium' hoặc 'AWS' thành 'Amazon Web Services'."
+   }
+  },
+  {
+   "id": "polly-ssml",
+   "term": "SSML (Speech Synthesis Markup Language)",
+   "lecture": "04-010",
+   "definition": {
+    "en": "Markup used with Polly to control how text is spoken: pauses/breaks, whispering, abbreviations, emphasis and so on.",
+    "vi": "Markup dùng với Polly để điều khiển cách đọc văn bản: ngắt nghỉ, thì thầm, từ viết tắt, nhấn mạnh, v.v."
+   }
+  },
+  {
+   "id": "polly-speech-marks",
+   "term": "Polly speech marks",
+   "lecture": "04-010",
+   "definition": {
+    "en": "Metadata returned alongside the audio that tells where a word or sentence starts and ends. Useful for lip-syncing and highlighting words as they are spoken.",
+    "vi": "Metadata trả về cùng với audio cho biết một từ hoặc câu bắt đầu và kết thúc ở đâu. Hữu ích cho lip-sync và tô sáng từ khi đang được đọc."
+   }
+  },
+  {
+   "id": "amazon-rekognition",
+   "term": "Amazon Rekognition",
+   "lecture": "04-012",
+   "definition": {
+    "en": "Managed computer-vision service that finds objects, people, text and scenes in images and videos: labeling, face detection/analysis/search/verification, celebrity recognition, text detection, face liveness, content moderation and pathing.",
+    "vi": "Dịch vụ computer vision được quản lý, tìm đối tượng, người, văn bản và cảnh trong ảnh và video: gán nhãn, phát hiện/phân tích/tìm kiếm/xác minh khuôn mặt, nhận diện người nổi tiếng, phát hiện văn bản, face liveness, kiểm duyệt nội dung và pathing."
+   }
+  },
+  {
+   "id": "rekognition-custom-labels",
+   "term": "Rekognition Custom Labels",
+   "lecture": "04-012",
+   "definition": {
+    "en": "Train a custom image model with only a few hundred (or fewer) labeled images stored in S3 to recognize your own products or logos. Choose it when the target is not a standard Rekognition label.",
+    "vi": "Huấn luyện mô hình ảnh tùy chỉnh chỉ với vài trăm ảnh (hoặc ít hơn) đã gán nhãn trong S3 để nhận diện sản phẩm hoặc logo của bạn. Chọn khi đối tượng cần tìm không phải nhãn chuẩn của Rekognition."
+   }
+  },
+  {
+   "id": "rekognition-content-moderation",
+   "term": "Rekognition content moderation",
+   "lecture": "04-012",
+   "definition": {
+    "en": "Automatically detects inappropriate, unwanted or offensive images/videos via the DetectModerationLabels API, cutting human review to roughly 1-5% of content. Uncertain items can be sent to Amazon Augmented AI (A2I) for human review.",
+    "vi": "Tự động phát hiện hình ảnh/video không phù hợp, không mong muốn hoặc phản cảm qua API DetectModerationLabels, giảm lượng review thủ công còn khoảng 1-5% nội dung. Các mục không chắc chắn có thể gửi tới Amazon Augmented AI (A2I) để người duyệt."
+   }
+  },
+  {
+   "id": "rekognition-moderation-adapter",
+   "term": "Custom moderation adapter",
+   "lecture": "04-012",
+   "definition": {
+    "en": "Extends Rekognition moderation by training on your own labeled images to improve accuracy or handle a specific moderation use case; results from human review can be fed back into training.",
+    "vi": "Mở rộng moderation của Rekognition bằng cách huấn luyện trên ảnh đã gán nhãn của bạn để tăng độ chính xác hoặc xử lý use case kiểm duyệt riêng; kết quả duyệt thủ công có thể được đưa ngược lại vào huấn luyện."
+   }
+  },
+  {
+   "id": "amazon-lex",
+   "term": "Amazon Lex",
+   "lecture": "04-014",
+   "definition": {
+    "en": "Builds voice and text chatbots (conversational AI, multiple languages). Lex recognizes the user's intent, collects required input parameters as slots, and invokes AWS Lambda to fulfill the intent; also integrates with Amazon Connect, Comprehend and Kendra.",
+    "vi": "Xây chatbot bằng giọng nói và văn bản (conversational AI, nhiều ngôn ngữ). Lex nhận diện intent của người dùng, thu thập các tham số đầu vào cần thiết dưới dạng slot, và gọi AWS Lambda để thực thi intent; tích hợp với Amazon Connect, Comprehend và Kendra."
+   }
+  },
+  {
+   "id": "lex-intents-slots",
+   "term": "Lex intents and slots",
+   "lecture": "04-014",
+   "definition": {
+    "en": "An intent is what the user wants to do (for example book a hotel). Slots are the input parameters (city, check-in date) that the bot asks for conversationally before invoking the Lambda function that fulfills the intent.",
+    "vi": "Intent là điều người dùng muốn làm (ví dụ đặt khách sạn). Slot là các tham số đầu vào (thành phố, ngày nhận phòng) mà bot hỏi dần qua hội thoại trước khi gọi hàm Lambda thực thi intent."
+   }
+  },
+  {
+   "id": "amazon-personalize",
+   "term": "Amazon Personalize",
+   "lecture": "04-016",
+   "definition": {
+    "en": "Fully managed ML service for real-time personalized recommendations, using the same technology as Amazon.com. Reads interaction data from S3 or via API and exposes a personalized API. Whenever the exam asks for recommendations, think Personalize (not forecasting).",
+    "vi": "Dịch vụ ML được quản lý hoàn toàn cho đề xuất cá nhân hóa real-time, dùng cùng công nghệ với Amazon.com. Đọc dữ liệu tương tác từ S3 hoặc qua API và cung cấp API cá nhân hóa. Khi đề thi hỏi về đề xuất, nghĩ tới Personalize (không phải forecasting)."
+   }
+  },
+  {
+   "id": "personalize-recipes",
+   "term": "Personalize recipes",
+   "lecture": "04-016",
+   "definition": {
+    "en": "Recipes are pre-built algorithms for specific use cases; you still supply training configuration. Examples: User-Personalization-v2 (items for a user), Personalized-Ranking-v2 (re-rank a supplied list), Trending-Now and Popularity-Count (popular items), RELATED_ITEMS (similar items), next best action, and user segments via Item-Affinity.",
+    "vi": "Recipe là các thuật toán dựng sẵn cho use case cụ thể; bạn vẫn phải cung cấp cấu hình huấn luyện. Ví dụ: User-Personalization-v2 (đề xuất mục cho người dùng), Personalized-Ranking-v2 (xếp hạng lại danh sách cho trước), Trending-Now và Popularity-Count (mục phổ biến), RELATED_ITEMS (mục tương tự), next best action, và phân khúc người dùng qua Item-Affinity."
+   }
+  },
+  {
+   "id": "amazon-textract",
+   "term": "Amazon Textract",
+   "lecture": "04-017",
+   "definition": {
+    "en": "Extracts printed text, handwriting and structured data (forms, tables) from scanned documents, PDFs and images. Typical uses: invoices, medical records, insurance claims, tax forms, IDs and passports.",
+    "vi": "Trích xuất chữ in, chữ viết tay và dữ liệu có cấu trúc (form, bảng) từ tài liệu quét, PDF và ảnh. Dùng điển hình: hóa đơn, hồ sơ y tế, yêu cầu bồi thường bảo hiểm, tờ khai thuế, giấy tờ tùy thân và hộ chiếu."
+   }
+  },
+  {
+   "id": "amazon-quick",
+   "term": "Amazon Quick",
+   "lecture": "04-019",
+   "definition": {
+    "en": "Successor to Amazon Q Business: an agentic AI assistant that connects to company documents, apps, databases and the internet to research, analyze and act. Built on Bedrock, your data is not used to train models. Uses Quick Index (managed RAG), IAM Identity Center for access control, plus QuickSight, Quick Flow/Automate and custom apps.",
+    "vi": "Kế nhiệm Amazon Q Business: trợ lý AI dạng agent kết nối tài liệu, ứng dụng, cơ sở dữ liệu của công ty và internet để nghiên cứu, phân tích và hành động. Xây trên Bedrock, dữ liệu của bạn không dùng để huấn luyện mô hình. Dùng Quick Index (RAG được quản lý), IAM Identity Center để kiểm soát truy cập, cùng QuickSight, Quick Flow/Automate và app tùy chỉnh."
+   }
+  },
+  {
+   "id": "quick-index",
+   "term": "Quick Index",
+   "lecture": "04-019",
+   "definition": {
+    "en": "Fully managed RAG layer in Amazon Quick that indexes company knowledge such as S3, SharePoint, OneDrive, Google Drive, Confluence and web pages so agents can answer from internal data.",
+    "vi": "Lớp RAG được quản lý hoàn toàn trong Amazon Quick, lập chỉ mục tri thức công ty như S3, SharePoint, OneDrive, Google Drive, Confluence và trang web để agent trả lời từ dữ liệu nội bộ."
+   }
+  },
+  {
+   "id": "quick-iam-identity-center",
+   "term": "IAM Identity Center with Amazon Quick",
+   "lecture": "04-019",
+   "definition": {
+    "en": "Users authenticate through IAM Identity Center (optionally federated with an external IdP such as Google or Active Directory) so Amazon Quick only exposes documents each user is allowed to access.",
+    "vi": "Người dùng xác thực qua IAM Identity Center (có thể liên kết với IdP bên ngoài như Google hoặc Active Directory) để Amazon Quick chỉ hiển thị các tài liệu mà mỗi người được phép truy cập."
+   }
+  },
+  {
+   "id": "aws-trainium",
+   "term": "AWS Trainium (Trn1)",
+   "lecture": "04-020",
+   "definition": {
+    "en": "AWS-designed ML chip for training deep-learning models with 100B+ parameters. Trn1 EC2 instances have 16 Trainium accelerators and advertise about 50% lower training cost; lowest environmental footprint.",
+    "vi": "Chip ML do AWS thiết kế để huấn luyện mô hình deep learning với 100B+ tham số. EC2 Trn1 có 16 accelerator Trainium và được quảng bá giảm khoảng 50% chi phí huấn luyện; có dấu chân môi trường thấp nhất."
+   }
+  },
+  {
+   "id": "aws-inferentia",
+   "term": "AWS Inferentia (Inf1/Inf2)",
+   "lecture": "04-020",
+   "definition": {
+    "en": "AWS-designed ML chip for inference. Inf1/Inf2 EC2 instances offer up to 4x the throughput and up to 70% lower cost than comparable GPU instances, and a low environmental footprint.",
+    "vi": "Chip ML do AWS thiết kế cho inference. EC2 Inf1/Inf2 cho throughput cao hơn tới 4 lần và chi phí thấp hơn tới 70% so với instance GPU tương đương, cùng dấu chân môi trường thấp."
+   }
+  }
+ ]
+}

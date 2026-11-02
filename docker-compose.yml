@@ -1,0 +1,34 @@
+# docker compose up -d --build   ->  http://localhost:8080
+# Host paths come from .env (same file the dev setup uses); relative paths start at this folder.
+services:
+  study:
+    build: ./app
+    image: mla-c01-study:latest
+    container_name: mla-c01-study
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: 8080
+      COURSE_DIR: /course
+      MATERIALS_DIR: /materials
+      SLIDES_FILE: /slides/slides.pdf
+      SLIDES_NAME: ${SLIDES_FILE}
+      DB_FILE: /data/study.db
+    volumes:
+      - type: bind
+        source: ${COURSE_DIR:?set COURSE_DIR in .env}
+        target: /course
+        read_only: true
+      - type: bind
+        source: ${MATERIALS_DIR:?set MATERIALS_DIR in .env}
+        target: /materials
+        read_only: true
+      - type: bind
+        source: ${SLIDES_FILE:?set SLIDES_FILE in .env}
+        target: /slides/slides.pdf
+        read_only: true
+      # accounts + progress; the same folder the dev server uses (DB_FILE=data/study.db)
+      - type: bind
+        source: ./data
+        target: /data

@@ -1,0 +1,40 @@
+{
+ "id": "12",
+ "order": 12,
+ "title": {
+  "en": "Machine Learning Best Practices",
+  "vi": "Thực hành tốt nhất cho Machine Learning"
+ },
+ "lectures": [
+  {
+   "id": "12-001",
+   "title": {
+    "en": "Intro Machine Learning Best Practices",
+    "vi": "Giới thiệu Thực hành tốt nhất cho Machine Learning"
+   },
+   "kind": "video",
+   "video": "12 - Machine Learning Best Practices/001 Intro Machine Learning Best Practices.mp4",
+   "transcript": true
+  },
+  {
+   "id": "12-002",
+   "title": {
+    "en": "AWS Tools for Responsible AI",
+    "vi": "Các công cụ AWS cho Responsible AI"
+   },
+   "kind": "video",
+   "video": "12 - Machine Learning Best Practices/002 AWS Tools for Responsible AI.mp4",
+   "transcript": true
+  },
+  {
+   "id": "12-003",
+   "title": {
+    "en": "AWS Well-Architected Machine Learning Lens",
+    "vi": "AWS Well-Architected Machine Learning Lens"
+   },
+   "kind": "video",
+   "video": "12 - Machine Learning Best Practices/003 AWS Well-Architected Machine Learning Lens.mp4",
+   "transcript": true
+  }
+ ]
+}

@@ -1,0 +1,149 @@
+{
+ "id": "07",
+ "order": 7,
+ "title": {
+  "en": "Generative AI Model Fundamentals",
+  "vi": "Nền tảng mô hình Generative AI"
+ },
+ "lectures": [
+  {
+   "id": "07-001",
+   "title": {
+    "en": "Intro Generative AI Model Fundamentals",
+    "vi": "Giới thiệu: Nền tảng mô hình Generative AI"
+   },
+   "kind": "video",
+   "video": "07 - Generative AI Model Fundamentals/001 Intro Generative AI Model Fundamentals.mp4",
+   "transcript": true
+  },
+  {
+   "id": "07-002",
+   "title": {
+    "en": "The Transformer Architecture",
+    "vi": "Kiến trúc Transformer"
+   },
+   "kind": "video",
+   "video": "07 - Generative AI Model Fundamentals/002 The Transformer Architecture.mp4",
+   "transcript": true
+  },
+  {
+   "id": "07-003",
+   "title": {
+    "en": "Self-Attention and Attention-Based Neural Networks",
+    "vi": "Self-Attention và mạng neural dựa trên Attention"
+   },
+   "kind": "video",
+   "video": "07 - Generative AI Model Fundamentals/003 Self-Attention and Attention-Based Neural Networks.mp4",
+   "transcript": true
+  },
+  {
+   "id": "07-004",
+   "title": {
+    "en": "Applications of Transformers",
+    "vi": "Ứng dụng của Transformer"
+   },
+   "kind": "video",
+   "video": "07 - Generative AI Model Fundamentals/004 Applications of Transformers.mp4",
+   "transcript": true
+  },
+  {
+   "id": "07-005",
+   "title": {
+    "en": "Generative Pre-Trained Transformers How they Work, Part 1",
+    "vi": "Generative Pre-Trained Transformer (GPT) hoạt động thế nào, Phần 1"
+   },
+   "kind": "video",
+   "video": "07 - Generative AI Model Fundamentals/005 Generative Pre-Trained Transformers How they Work, Part 1.mp4",
+   "transcript": true
+  },
+  {
+   "id": "07-006",
+   "title": {
+    "en": "Generative Pre-Trained Transformers How they Work, Part 2",
+    "vi": "Generative Pre-Trained Transformer (GPT) hoạt động thế nào, Phần 2"
+   },
+   "kind": "video",
+   "video": "07 - Generative AI Model Fundamentals/006 Generative Pre-Trained Transformers How they Work, Part 2.mp4",
+   "transcript": true
+  },
+  {
+   "id": "07-007",
+   "title": {
+    "en": "LLM Key Terms and Controls (tokens, embeddings, temperature, etc.)",
+    "vi": "Thuật ngữ và tham số điều khiển LLM (token, embedding, temperature, v.v.)"
+   },
+   "kind": "video",
+   "video": "07 - Generative AI Model Fundamentals/007 LLM Key Terms and Controls -tokens embeddings temperature etc.mp4",
+   "transcript": true
+  },
+  {
+   "id": "07-008",
+   "title": {
+    "en": "Fine-Tuning and Transfer Learning with Transformers",
+    "vi": "Fine-Tuning và Transfer Learning với Transformer"
+   },
+   "kind": "video",
+   "video": "07 - Generative AI Model Fundamentals/008 Fine-Tuning and Transfer Learning with Transformers.mp4",
+   "transcript": true
+  },
+  {
+   "id": "07-009",
+   "title": {
+    "en": "Lab Tokenization and Positional Encoding with SageMaker Notebooks",
+    "vi": "Lab: Tokenization và Positional Encoding với SageMaker Notebook"
+   },
+   "kind": "video",
+   "video": "07 - Generative AI Model Fundamentals/009 Lab Tokenization and Positional Encoding with SageMaker Notebooks.mp4",
+   "transcript": true,
+   "materials": [
+    "Transformers_MLCourse_SageMaker.ipynb"
+   ]
+  },
+  {
+   "id": "07-010",
+   "title": {
+    "en": "Lab Multi-Headed, Masked Self-Attention in SageMaker",
+    "vi": "Lab: Multi-Headed, Masked Self-Attention trong SageMaker"
+   },
+   "kind": "video",
+   "video": "07 - Generative AI Model Fundamentals/010 Lab Multi-Headed, Masked Self-Attention in SageMaker.mp4",
+   "transcript": true,
+   "materials": [
+    "Transformers_MLCourse_SageMaker.ipynb"
+   ]
+  },
+  {
+   "id": "07-011",
+   "title": {
+    "en": "Lab Using GPT within a SageMaker Notebook",
+    "vi": "Lab: Dùng GPT trong SageMaker Notebook"
+   },
+   "kind": "video",
+   "video": "07 - Generative AI Model Fundamentals/011 Lab Using GPT within a SageMaker Notebook.mp4",
+   "transcript": true,
+   "materials": [
+    "Transformers_MLCourse_SageMaker.ipynb"
+   ]
+  },
+  {
+   "id": "07-012",
+   "title": {
+    "en": "AWS Foundation Models and SageMaker JumpStart with Generative AI",
+    "vi": "Foundation Model của AWS và SageMaker JumpStart với Generative AI"
+   },
+   "kind": "video",
+   "video": "07 - Generative AI Model Fundamentals/012 AWS Foundation Models and SageMaker JumpStart with Generative AI.mp4",
+   "transcript": true
+  },
+  {
+   "id": "07-013",
+   "title": {
+    "en": "Lab Using Amazon SageMaker JumpStart with Huggingface",
+    "vi": "Lab: Dùng Amazon SageMaker JumpStart với Huggingface"
+   },
+   "kind": "video",
+   "video": "07 - Generative AI Model Fundamentals/013 Lab Using Amazon SageMaker JumpStart with Huggingface.mp4",
+   "transcript": true
+  }
+ ]
+}

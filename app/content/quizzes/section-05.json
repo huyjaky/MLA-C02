@@ -1,0 +1,486 @@
+{
+ "id": "section-05",
+ "kind": "section",
+ "section": "05",
+ "title": {
+  "en": "SageMaker Built-In Algorithms",
+  "vi": "Các thuật toán tích hợp sẵn của SageMaker"
+ },
+ "description": {
+  "en": "<p>Test your knowledge on what you learned in this section.</p>",
+  "vi": "<p>Kiểm tra kiến thức của bạn về những gì đã học trong phần này.</p>"
+ },
+ "passPercent": 70,
+ "questions": [
+  {
+   "id": 87790887,
+   "multi": false,
+   "question": {
+    "en": "<p>A property insurer needs a simple baseline that predicts a numeric repair cost from tabular features and may later be adapted for binary classification. Which SageMaker built-in algorithm should it choose?</p>",
+    "vi": "<p>Một công ty bảo hiểm tài sản cần một baseline đơn giản dự đoán chi phí sửa chữa dạng số từ các feature dạng bảng và có thể được điều chỉnh sau này cho phân loại nhị phân. Nên chọn thuật toán tích hợp sẵn nào của SageMaker?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Choose SageMaker Linear Learner</p>",
+     "vi": "<p>Chọn SageMaker Linear Learner</p>"
+    },
+    {
+     "en": "<p>Choose SageMaker Random Cut Forest</p>",
+     "vi": "<p>Chọn SageMaker Random Cut Forest</p>"
+    },
+    {
+     "en": "<p>Choose SageMaker Neural Topic Model</p>",
+     "vi": "<p>Chọn SageMaker Neural Topic Model</p>"
+    },
+    {
+     "en": "<p>Choose SageMaker Object Detection</p>",
+     "vi": "<p>Chọn SageMaker Object Detection</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Correct. Linear Learner supports linear regression as well as binary and multiclass classification.</p>",
+     "vi": "<p>Đúng. Linear Learner hỗ trợ hồi quy tuyến tính cũng như phân loại nhị phân và đa lớp.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Random Cut Forest detects anomalies without supervision.</p>",
+     "vi": "<p>Sai. Random Cut Forest phát hiện bất thường theo kiểu không giám sát.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Neural Topic Model discovers document topics.</p>",
+     "vi": "<p>Sai. Neural Topic Model khám phá chủ đề của tài liệu.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Object Detection locates and labels objects in images.</p>",
+     "vi": "<p>Sai. Object Detection xác định vị trí và gán nhãn đối tượng trong ảnh.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87790893,
+   "multi": false,
+   "question": {
+    "en": "<p>A loan-risk team has labeled tabular data with nonlinear feature interactions. It wants a fast ensemble of trees in which each new tree corrects errors from prior trees. Which algorithm should it use?</p>",
+    "vi": "<p>Một nhóm đánh giá rủi ro cho vay có dữ liệu dạng bảng đã gán nhãn với các tương tác phi tuyến giữa các feature. Họ muốn một ensemble cây nhanh, trong đó mỗi cây mới sửa lỗi của các cây trước. Nên dùng thuật toán nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use SageMaker K-Means</p>",
+     "vi": "<p>Dùng SageMaker K-Means</p>"
+    },
+    {
+     "en": "<p>Use SageMaker XGBoost</p>",
+     "vi": "<p>Dùng SageMaker XGBoost</p>"
+    },
+    {
+     "en": "<p>Use SageMaker PCA</p>",
+     "vi": "<p>Dùng SageMaker PCA</p>"
+    },
+    {
+     "en": "<p>Use SageMaker DeepAR</p>",
+     "vi": "<p>Dùng SageMaker DeepAR</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. K-Means is an unsupervised clustering algorithm.</p>",
+     "vi": "<p>Sai. K-Means là thuật toán phân cụm không giám sát.</p>"
+    },
+    {
+     "en": "<p>Correct. XGBoost builds boosted decision trees sequentially to reduce prior errors.</p>",
+     "vi": "<p>Đúng. XGBoost xây các cây quyết định boosting tuần tự để giảm lỗi của các cây trước.</p>"
+    },
+    {
+     "en": "<p>Incorrect. PCA performs unsupervised dimensionality reduction.</p>",
+     "vi": "<p>Sai. PCA thực hiện giảm chiều dữ liệu không giám sát.</p>"
+    },
+    {
+     "en": "<p>Incorrect. DeepAR forecasts related time series.</p>",
+     "vi": "<p>Sai. DeepAR dự báo các chuỗi thời gian liên quan.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87791003,
+   "multi": false,
+   "question": {
+    "en": "<p>A localization vendor must train a model that consumes a sequence of source-language tokens and produces a sequence of translated tokens. Which SageMaker algorithm is designed for this task?</p>",
+    "vi": "<p>Một nhà cung cấp dịch vụ bản địa hóa phải huấn luyện mô hình nhận chuỗi token ngôn ngữ nguồn và tạo ra chuỗi token đã dịch. Thuật toán SageMaker nào được thiết kế cho tác vụ này?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use SageMaker BlazingText</p>",
+     "vi": "<p>Dùng SageMaker BlazingText</p>"
+    },
+    {
+     "en": "<p>Use SageMaker Object2Vec</p>",
+     "vi": "<p>Dùng SageMaker Object2Vec</p>"
+    },
+    {
+     "en": "<p>Use SageMaker Seq2Seq</p>",
+     "vi": "<p>Dùng SageMaker Seq2Seq</p>"
+    },
+    {
+     "en": "<p>Use SageMaker K-Nearest Neighbors</p>",
+     "vi": "<p>Dùng SageMaker K-Nearest Neighbors</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. BlazingText provides word embeddings and text classification.</p>",
+     "vi": "<p>Sai. BlazingText cung cấp word embedding và phân loại văn bản.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Object2Vec creates embeddings for object pairs.</p>",
+     "vi": "<p>Sai. Object2Vec tạo embedding cho các cặp đối tượng.</p>"
+    },
+    {
+     "en": "<p>Correct. Seq2Seq maps an input token sequence to an output token sequence for translation and summarization.</p>",
+     "vi": "<p>Đúng. Seq2Seq ánh xạ chuỗi token đầu vào sang chuỗi token đầu ra cho dịch thuật và tóm tắt.</p>"
+    },
+    {
+     "en": "<p>Incorrect. KNN predicts from nearby labeled samples rather than generating sequences.</p>",
+     "vi": "<p>Sai. KNN dự đoán dựa trên các mẫu có nhãn lân cận chứ không sinh ra chuỗi.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87791195,
+   "multi": false,
+   "question": {
+    "en": "<p>A grocery chain wants one forecasting model to learn seasonality across thousands of related product-demand series. Which SageMaker built-in algorithm should be selected?</p>",
+    "vi": "<p>Một chuỗi cửa hàng tạp hóa muốn một mô hình dự báo duy nhất học tính mùa vụ trên hàng nghìn chuỗi nhu cầu sản phẩm có liên quan. Nên chọn thuật toán tích hợp sẵn nào của SageMaker?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Select SageMaker Factorization Machines</p>",
+     "vi": "<p>Chọn SageMaker Factorization Machines</p>"
+    },
+    {
+     "en": "<p>Select SageMaker Random Cut Forest</p>",
+     "vi": "<p>Chọn SageMaker Random Cut Forest</p>"
+    },
+    {
+     "en": "<p>Select SageMaker Linear Learner</p>",
+     "vi": "<p>Chọn SageMaker Linear Learner</p>"
+    },
+    {
+     "en": "<p>Select SageMaker DeepAR</p>",
+     "vi": "<p>Chọn SageMaker DeepAR</p>"
+    }
+   ],
+   "answer": [
+    3
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Factorization Machines model sparse pairwise interactions for recommendation and prediction.</p>",
+     "vi": "<p>Sai. Factorization Machines mô hình hóa các tương tác cặp thưa cho đề xuất và dự đoán.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Random Cut Forest scores anomalies rather than forecasting future values.</p>",
+     "vi": "<p>Sai. Random Cut Forest chấm điểm bất thường chứ không dự báo giá trị tương lai.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Linear Learner does not specialize in related time-series seasonality.</p>",
+     "vi": "<p>Sai. Linear Learner không chuyên về tính mùa vụ của các chuỗi thời gian liên quan.</p>"
+    },
+    {
+     "en": "<p>Correct. DeepAR uses recurrent networks to forecast many related one-dimensional time series.</p>",
+     "vi": "<p>Đúng. DeepAR dùng mạng recurrent để dự báo nhiều chuỗi thời gian một chiều có liên quan.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87791251,
+   "multi": false,
+   "question": {
+    "en": "<p>A search company needs dense word embeddings so semantically similar words are close in vector space. Which SageMaker built-in algorithm should it use?</p>",
+    "vi": "<p>Một công ty tìm kiếm cần word embedding dày để các từ tương đồng về ngữ nghĩa nằm gần nhau trong không gian vector. Nên dùng thuật toán tích hợp sẵn nào của SageMaker?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use SageMaker BlazingText</p>",
+     "vi": "<p>Dùng SageMaker BlazingText</p>"
+    },
+    {
+     "en": "<p>Use SageMaker Image Classification</p>",
+     "vi": "<p>Dùng SageMaker Image Classification</p>"
+    },
+    {
+     "en": "<p>Use SageMaker IP Insights</p>",
+     "vi": "<p>Dùng SageMaker IP Insights</p>"
+    },
+    {
+     "en": "<p>Use SageMaker Linear Learner</p>",
+     "vi": "<p>Dùng SageMaker Linear Learner</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Correct. BlazingText implements word2vec-style embeddings and supervised text classification.</p>",
+     "vi": "<p>Đúng. BlazingText triển khai embedding kiểu word2vec và phân loại văn bản có giám sát.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Image Classification labels visual content.</p>",
+     "vi": "<p>Sai. Image Classification gán nhãn nội dung hình ảnh.</p>"
+    },
+    {
+     "en": "<p>Incorrect. IP Insights models IP-address usage patterns.</p>",
+     "vi": "<p>Sai. IP Insights mô hình hóa các mẫu sử dụng địa chỉ IP.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Linear Learner fits linear classification or regression models.</p>",
+     "vi": "<p>Sai. Linear Learner khớp các mô hình phân loại hoặc hồi quy tuyến tính.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87791327,
+   "multi": false,
+   "question": {
+    "en": "<p>A music service wants low-dimensional embeddings for arbitrary songs and listeners to find nearest neighbors and similar items. The objects are not individual words. Which algorithm should it use?</p>",
+    "vi": "<p>Một dịch vụ âm nhạc muốn có embedding chiều thấp cho các bài hát và người nghe bất kỳ để tìm láng giềng gần nhất và các mục tương tự. Các đối tượng này không phải là từ đơn lẻ. Nên dùng thuật toán nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use SageMaker Neural Topic Model</p>",
+     "vi": "<p>Dùng SageMaker Neural Topic Model</p>"
+    },
+    {
+     "en": "<p>Use SageMaker Object2Vec</p>",
+     "vi": "<p>Dùng SageMaker Object2Vec</p>"
+    },
+    {
+     "en": "<p>Use SageMaker Semantic Segmentation</p>",
+     "vi": "<p>Dùng SageMaker Semantic Segmentation</p>"
+    },
+    {
+     "en": "<p>Use SageMaker Linear Learner</p>",
+     "vi": "<p>Dùng SageMaker Linear Learner</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Neural Topic Model groups documents by latent topics.</p>",
+     "vi": "<p>Sai. Neural Topic Model nhóm tài liệu theo các chủ đề tiềm ẩn.</p>"
+    },
+    {
+     "en": "<p>Correct. Object2Vec generalizes word2vec-style embeddings to arbitrary objects.</p>",
+     "vi": "<p>Đúng. Object2Vec mở rộng embedding kiểu word2vec cho các đối tượng bất kỳ.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Semantic Segmentation labels image pixels.</p>",
+     "vi": "<p>Sai. Semantic Segmentation gán nhãn cho từng pixel của ảnh.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Linear Learner does not learn arbitrary-object embeddings.</p>",
+     "vi": "<p>Sai. Linear Learner không học embedding cho đối tượng bất kỳ.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87791331,
+   "multi": false,
+   "question": {
+    "en": "<p>A warehouse robot must identify every pallet and person in an image and return a bounding box and confidence score for each. Which built-in algorithm should be used?</p>",
+    "vi": "<p>Một robot kho hàng phải nhận diện từng pallet và từng người trong ảnh và trả về bounding box cùng confidence score cho mỗi đối tượng. Nên dùng thuật toán tích hợp sẵn nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use SageMaker Image Classification</p>",
+     "vi": "<p>Dùng SageMaker Image Classification</p>"
+    },
+    {
+     "en": "<p>Use SageMaker Semantic Segmentation</p>",
+     "vi": "<p>Dùng SageMaker Semantic Segmentation</p>"
+    },
+    {
+     "en": "<p>Use SageMaker Object Detection</p>",
+     "vi": "<p>Dùng SageMaker Object Detection</p>"
+    },
+    {
+     "en": "<p>Use SageMaker Principal Components</p>",
+     "vi": "<p>Dùng SageMaker Principal Components</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Image Classification labels the whole image without locations.</p>",
+     "vi": "<p>Sai. Image Classification gán nhãn cho cả ảnh mà không có vị trí.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Semantic Segmentation assigns a class to each pixel rather than bounding boxes.</p>",
+     "vi": "<p>Sai. Semantic Segmentation gán lớp cho từng pixel chứ không dùng bounding box.</p>"
+    },
+    {
+     "en": "<p>Correct. Object Detection finds and classifies multiple objects with bounding boxes and confidence scores.</p>",
+     "vi": "<p>Đúng. Object Detection tìm và phân loại nhiều đối tượng kèm bounding box và confidence score.</p>"
+    },
+    {
+     "en": "<p>Incorrect. PCA reduces tabular feature dimensions.</p>",
+     "vi": "<p>Sai. PCA giảm số chiều của các feature dạng bảng.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87791341,
+   "multi": false,
+   "question": {
+    "en": "<p>A wildlife application must decide whether each photograph contains a bear, deer, or fox. It does not need object coordinates. Which algorithm is the BEST fit?</p>",
+    "vi": "<p>Một ứng dụng về động vật hoang dã phải quyết định mỗi bức ảnh chứa gấu, hươu hay cáo. Ứng dụng không cần tọa độ đối tượng. Thuật toán nào phù hợp NHẤT?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use SageMaker object detection</p>",
+     "vi": "<p>Dùng SageMaker object detection</p>"
+    },
+    {
+     "en": "<p>Use SageMaker anomaly detection</p>",
+     "vi": "<p>Dùng SageMaker anomaly detection</p>"
+    },
+    {
+     "en": "<p>Use SageMaker K-means clustering</p>",
+     "vi": "<p>Dùng SageMaker K-means clustering</p>"
+    },
+    {
+     "en": "<p>Use SageMaker image classifier</p>",
+     "vi": "<p>Dùng SageMaker image classifier</p>"
+    }
+   ],
+   "answer": [
+    3
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Object Detection adds bounding boxes that the use case does not require.</p>",
+     "vi": "<p>Sai. Object Detection thêm bounding box mà use case này không cần.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Random Cut Forest detects anomalies in numeric data.</p>",
+     "vi": "<p>Sai. Random Cut Forest phát hiện bất thường trong dữ liệu số.</p>"
+    },
+    {
+     "en": "<p>Incorrect. K-Means clusters unlabeled feature vectors.</p>",
+     "vi": "<p>Sai. K-Means phân cụm các vector feature không có nhãn.</p>"
+    },
+    {
+     "en": "<p>Correct. Image Classification assigns one or more labels to a complete image.</p>",
+     "vi": "<p>Đúng. Image Classification gán một hoặc nhiều nhãn cho toàn bộ ảnh.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87791349,
+   "multi": false,
+   "question": {
+    "en": "<p>A medical imaging system must classify each pixel in an MRI as tumor, healthy tissue, or background and produce a mask. Which algorithm should the team select?</p>",
+    "vi": "<p>Một hệ thống chẩn đoán hình ảnh y tế phải phân loại từng pixel trong ảnh MRI là khối u, mô khỏe mạnh hoặc nền, và tạo ra mask. Nhóm nên chọn thuật toán nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Select SageMaker Semantic Segmentation</p>",
+     "vi": "<p>Chọn SageMaker Semantic Segmentation</p>"
+    },
+    {
+     "en": "<p>Select SageMaker Image Classification</p>",
+     "vi": "<p>Chọn SageMaker Image Classification</p>"
+    },
+    {
+     "en": "<p>Select SageMaker Object Detection</p>",
+     "vi": "<p>Chọn SageMaker Object Detection</p>"
+    },
+    {
+     "en": "<p>Select SageMaker Neural Topic Model</p>",
+     "vi": "<p>Chọn SageMaker Neural Topic Model</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Correct. Semantic Segmentation performs pixel-level classification and produces a segmentation mask.</p>",
+     "vi": "<p>Đúng. Semantic Segmentation thực hiện phân loại ở mức pixel và tạo ra segmentation mask.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Image Classification labels the image as a whole.</p>",
+     "vi": "<p>Sai. Image Classification gán nhãn cho toàn bộ ảnh.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Object Detection produces bounding boxes, not a pixel mask.</p>",
+     "vi": "<p>Sai. Object Detection tạo bounding box chứ không phải pixel mask.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Neural Topic Model operates on document collections.</p>",
+     "vi": "<p>Sai. Neural Topic Model hoạt động trên tập tài liệu.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87791417,
+   "multi": false,
+   "question": {
+    "en": "<p>A wind farm has unlabeled sensor readings and needs an anomaly score for unexpected spikes and breaks in periodic behavior. Which SageMaker algorithm should it use?</p>",
+    "vi": "<p>Một trang trại điện gió có các số đo cảm biến chưa gán nhãn và cần điểm bất thường cho các đỉnh đột biến và sự gián đoạn của hành vi tuần hoàn. Nên dùng thuật toán SageMaker nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use SageMaker DeepAR forecasting</p>",
+     "vi": "<p>Dùng SageMaker DeepAR forecasting</p>"
+    },
+    {
+     "en": "<p>Use SageMaker Random Cut Forest</p>",
+     "vi": "<p>Dùng SageMaker Random Cut Forest</p>"
+    },
+    {
+     "en": "<p>Use SageMaker XGBoost classifier</p>",
+     "vi": "<p>Dùng SageMaker XGBoost classifier</p>"
+    },
+    {
+     "en": "<p>Use SageMaker KNN classification</p>",
+     "vi": "<p>Dùng SageMaker KNN classification</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. DeepAR forecasts future time-series values rather than primarily scoring anomalies.</p>",
+     "vi": "<p>Sai. DeepAR dự báo giá trị chuỗi thời gian tương lai chứ không chủ yếu chấm điểm bất thường.</p>"
+    },
+    {
+     "en": "<p>Correct. Random Cut Forest is an unsupervised anomaly-detection algorithm for spikes and unusual points.</p>",
+     "vi": "<p>Đúng. Random Cut Forest là thuật toán phát hiện bất thường không giám sát cho các đỉnh đột biến và điểm bất thường.</p>"
+    },
+    {
+     "en": "<p>Incorrect. XGBoost requires labeled targets for supervised learning.</p>",
+     "vi": "<p>Sai. XGBoost cần target có nhãn cho học có giám sát.</p>"
+    },
+    {
+     "en": "<p>Incorrect. KNN needs labeled neighbors for supervised classification or regression.</p>",
+     "vi": "<p>Sai. KNN cần các láng giềng có nhãn cho phân loại hoặc hồi quy có giám sát.</p>"
+    }
+   ]
+  }
+ ]
+}

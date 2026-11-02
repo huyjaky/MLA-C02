@@ -1,0 +1,275 @@
+{
+ "section": "06",
+ "terms": [
+  {
+   "id": "softmax",
+   "term": "Softmax",
+   "lecture": "06-004",
+   "definition": {
+    "en": "Output-layer activation for multiclass classification where classes are mutually exclusive; it turns logits into probabilities that sum to 1. Choose it for single-label multiclass outputs (sigmoid for multi-label, linear for regression).",
+    "vi": "Activation ở output layer cho phân loại đa lớp loại trừ nhau; chuyển logits thành xác suất có tổng bằng 1. Chọn cho bài toán đa lớp một nhãn (sigmoid cho multi-label, linear cho regression)."
+   }
+  },
+  {
+   "id": "relu",
+   "term": "ReLU",
+   "lecture": "06-004",
+   "definition": {
+    "en": "Rectified Linear Unit: outputs max(0, x). The default hidden-layer activation: cheap to compute and it mitigates vanishing gradients compared with sigmoid/tanh.",
+    "vi": "Rectified Linear Unit: output max(0, x). Là activation mặc định cho hidden layer: tính nhanh và giảm vanishing gradient so với sigmoid/tanh."
+   }
+  },
+  {
+   "id": "cnn",
+   "term": "Convolutional Neural Network (CNN)",
+   "lecture": "06-005",
+   "definition": {
+    "en": "Network that uses convolutional filters to learn location-invariant features, with feature extraction followed by pooling. Pick it for image classification and object detection, and for data with a spatial pattern wherever it appears.",
+    "vi": "Mạng dùng filter tích chập để học đặc trưng bất biến theo vị trí, trích xuất đặc trưng rồi pooling. Chọn cho phân loại ảnh, object detection và dữ liệu có mẫu không gian xuất hiện ở bất kỳ vị trí nào."
+   }
+  },
+  {
+   "id": "rnn",
+   "term": "Recurrent Neural Network (RNN)",
+   "lecture": "06-006",
+   "definition": {
+    "en": "Network with feedback loops that keeps a hidden state across steps, suited to sequences and time series (text, translation, forecasting). Processes steps sequentially and is prone to vanishing gradients; LSTM/GRU are common variants.",
+    "vi": "Mạng có vòng phản hồi, giữ hidden state qua các bước, phù hợp chuỗi và time series (văn bản, dịch, dự báo). Xử lý tuần tự và dễ bị vanishing gradient; LSTM/GRU là biến thể phổ biến."
+   }
+  },
+  {
+   "id": "learning-rate",
+   "term": "Learning rate",
+   "lecture": "06-007",
+   "definition": {
+    "en": "Step size of each gradient descent update. Too high makes the loss oscillate or diverge (overshooting); too low makes training slow or stall. First fix for oscillating loss is to lower it.",
+    "vi": "Kích thước bước của mỗi lần cập nhật gradient descent. Quá cao thì loss dao động hoặc phân kỳ (overshoot); quá thấp thì huấn luyện chậm hoặc kẹt. Loss dao động thì giảm learning rate trước."
+   }
+  },
+  {
+   "id": "batch-size",
+   "term": "Batch size",
+   "lecture": "06-007",
+   "definition": {
+    "en": "Number of samples per training update. Smaller batches add noise that helps escape local minima; very large batches can converge to poor solutions. Too small a batch can make optimization unstable.",
+    "vi": "Số mẫu cho mỗi lần cập nhật. Batch nhỏ thêm nhiễu giúp thoát local minima; batch rất lớn có thể hội tụ về nghiệm kém. Batch quá nhỏ có thể làm tối ưu hóa không ổn định."
+   }
+  },
+  {
+   "id": "dropout",
+   "term": "Dropout",
+   "lecture": "06-008",
+   "definition": {
+    "en": "Regularization that randomly disables a fraction of neurons at each training step so the network cannot over-rely on specific neurons, reducing overfitting. Used only during training.",
+    "vi": "Regularization tắt ngẫu nhiên một phần neuron ở mỗi bước huấn luyện để mạng không phụ thuộc quá mức vào neuron cụ thể, giảm overfitting. Chỉ dùng khi huấn luyện."
+   }
+  },
+  {
+   "id": "early-stopping",
+   "term": "Early stopping",
+   "lecture": "06-008",
+   "definition": {
+    "en": "Stop training when validation loss stops improving (training loss keeps falling while validation loss rises, a sign of overfitting). Prevents overfitting and saves compute.",
+    "vi": "Dừng huấn luyện khi validation loss không còn cải thiện (training loss vẫn giảm nhưng validation loss tăng là dấu hiệu overfitting). Ngăn overfitting và tiết kiệm tài nguyên."
+   }
+  },
+  {
+   "id": "l1-regularization",
+   "term": "L1 regularization (Lasso)",
+   "lecture": "06-009",
+   "definition": {
+    "en": "Adds the sum of absolute weights to the loss; drives many weights exactly to zero, giving sparse models and implicit feature selection. Choose it when you want to reduce features.",
+    "vi": "Cộng tổng giá trị tuyệt đối của trọng số vào loss; đưa nhiều trọng số về đúng 0, tạo mô hình thưa và feature selection ngầm. Chọn khi muốn giảm số feature."
+   }
+  },
+  {
+   "id": "l2-regularization",
+   "term": "L2 regularization (Ridge / weight decay)",
+   "lecture": "06-009",
+   "definition": {
+    "en": "Adds the sum of squared weights to the loss; shrinks weights toward zero but rarely to exactly zero, so all features are kept. Choose it when all features matter and you want smoother weights.",
+    "vi": "Cộng tổng bình phương trọng số vào loss; co trọng số về gần 0 nhưng hiếm khi đúng 0, nên giữ mọi feature. Chọn khi mọi feature đều quan trọng và muốn trọng số mượt hơn."
+   }
+  },
+  {
+   "id": "vanishing-gradient",
+   "term": "Vanishing gradient problem",
+   "lecture": "06-010",
+   "definition": {
+    "en": "In deep networks and RNNs, gradients shrink toward zero in early layers so training stalls. Mitigate with ReLU, residual connections, LSTM/GRU and other architectural fixes; sigmoid/tanh worsen it. Exploding gradients usually come from poor input normalization.",
+    "vi": "Ở mạng sâu và RNN, gradient co về 0 ở các lớp đầu nên huấn luyện bị đình trệ. Giảm nhẹ bằng ReLU, residual connection, LSTM/GRU; sigmoid/tanh làm tệ hơn. Exploding gradient thường do không chuẩn hóa input tốt."
+   }
+  },
+  {
+   "id": "confusion-matrix",
+   "term": "Confusion matrix",
+   "lecture": "06-011",
+   "definition": {
+    "en": "Table of true/false positives and negatives for a classifier (TP, FP, TN, FN); the basis for precision, recall, F1 and specificity.",
+    "vi": "Bảng TP, FP, TN, FN của bộ phân loại; là cơ sở tính precision, recall, F1 và specificity."
+   }
+  },
+  {
+   "id": "precision",
+   "term": "Precision",
+   "lecture": "06-012",
+   "definition": {
+    "en": "TP / (TP + FP): of predicted positives, how many are truly positive. Emphasize it when false positives are costly (e.g. expensive follow-up tests).",
+    "vi": "TP / (TP + FP): trong số dự đoán positive, bao nhiêu thực sự positive. Ưu tiên khi false positive tốn kém (vd. xét nghiệm tiếp theo đắt)."
+   }
+  },
+  {
+   "id": "recall",
+   "term": "Recall (sensitivity)",
+   "lecture": "06-012",
+   "definition": {
+    "en": "TP / (TP + FN): of actual positives, how many were found. Emphasize it when missing a positive is costly (fraud, disease detection), even at the cost of more false alarms.",
+    "vi": "TP / (TP + FN): trong số positive thật, tìm được bao nhiêu. Ưu tiên khi bỏ sót positive tốn kém (gian lận, phát hiện bệnh), chấp nhận thêm cảnh báo sai."
+   }
+  },
+  {
+   "id": "f1-score",
+   "term": "F1 score",
+   "lecture": "06-012",
+   "definition": {
+    "en": "Harmonic mean of precision and recall. Use it when you need a balance between the two, especially with imbalanced classes where accuracy is misleading.",
+    "vi": "Trung bình điều hòa của precision và recall. Dùng khi cần cân bằng cả hai, nhất là khi lớp mất cân bằng và accuracy gây hiểu nhầm."
+   }
+  },
+  {
+   "id": "auc-roc",
+   "term": "AUC-ROC",
+   "lecture": "06-012",
+   "definition": {
+    "en": "Area under the ROC curve (true positive rate vs false positive rate across thresholds); 0.5 is random, 1.0 is perfect. Threshold-independent measure of a binary classifier's ability to separate classes.",
+    "vi": "Diện tích dưới đường ROC (TPR so với FPR qua các ngưỡng); 0.5 là ngẫu nhiên, 1.0 là hoàn hảo. Đo khả năng phân tách lớp của bộ phân loại nhị phân, không phụ thuộc ngưỡng."
+   }
+  },
+  {
+   "id": "rmse",
+   "term": "RMSE",
+   "lecture": "06-013",
+   "definition": {
+    "en": "Root mean squared error for regression, in the units of the target; penalizes large errors more than MAE. Lower is better.",
+    "vi": "Căn bậc hai của sai số bình phương trung bình cho regression, cùng đơn vị với target; phạt lỗi lớn nặng hơn MAE. Càng thấp càng tốt."
+   }
+  },
+  {
+   "id": "r-squared",
+   "term": "R-squared",
+   "lecture": "06-013",
+   "definition": {
+    "en": "Proportion of the target's variance explained by the regression model (up to 1; higher is better). Not a classification metric.",
+    "vi": "Tỷ lệ phương sai của target được mô hình regression giải thích (tối đa 1; càng cao càng tốt). Không phải chỉ số phân loại."
+   }
+  },
+  {
+   "id": "bagging-boosting",
+   "term": "Bagging vs boosting",
+   "lecture": "06-014",
+   "definition": {
+    "en": "Bagging trains models in parallel on bootstrap samples (random sampling with replacement) and votes (e.g. Random Forest), reducing variance. Boosting trains models serially, weighting hard examples (e.g. XGBoost), reducing bias and generally more accurate but prone to overfitting.",
+    "vi": "Bagging huấn luyện song song các mô hình trên mẫu bootstrap (lấy mẫu có hoàn lại) rồi bỏ phiếu (vd. Random Forest), giảm variance. Boosting huấn luyện tuần tự, tăng trọng số mẫu khó (vd. XGBoost), giảm bias và thường chính xác hơn nhưng dễ overfit."
+   }
+  },
+  {
+   "id": "amt",
+   "term": "Automatic Model Tuning (AMT)",
+   "lecture": "06-015",
+   "definition": {
+    "en": "SageMaker feature that launches many training jobs to search hyperparameter ranges for the best objective metric. Strategies include random, Bayesian, grid and Hyperband; trial-and-error is automated instead of hand-tuned.",
+    "vi": "Tính năng SageMaker chạy nhiều training job để tìm hyperparameter cho objective metric tốt nhất. Các chiến lược gồm random, Bayesian, grid và Hyperband; tự động hóa việc thử-sai."
+   }
+  },
+  {
+   "id": "amt-early-stopping-warm-start",
+   "term": "AMT early stopping and warm start",
+   "lecture": "06-016",
+   "definition": {
+    "en": "Early stopping (set to Auto) ends tuning jobs that are not improving, saving compute; it needs algorithms that emit the objective metric each epoch. Warm start reuses results of one or more previous tuning jobs as a starting point or to resume.",
+    "vi": "Early stopping (đặt Auto) dừng các tuning job không cải thiện, tiết kiệm tài nguyên; cần thuật toán phát objective metric mỗi epoch. Warm start dùng kết quả từ một hay nhiều tuning job trước làm điểm bắt đầu hoặc để tiếp tục."
+   }
+  },
+  {
+   "id": "sagemaker-autopilot",
+   "term": "SageMaker Autopilot",
+   "lecture": "06-017",
+   "definition": {
+    "en": "AutoML service that automatically explores preprocessing, algorithms and hyperparameters on tabular data and produces candidate models with explainability. Use it when you want a good model with minimal ML effort.",
+    "vi": "Dịch vụ AutoML tự động thử tiền xử lý, thuật toán và hyperparameter trên dữ liệu bảng, tạo các mô hình ứng viên kèm giải thích. Dùng khi muốn mô hình tốt với ít công sức ML."
+   }
+  },
+  {
+   "id": "sagemaker-experiments",
+   "term": "SageMaker Experiments",
+   "lecture": "06-018",
+   "definition": {
+    "en": "Organizes, tracks and compares training runs (parameters, metrics, artifacts) so you can reproduce and choose the best model.",
+    "vi": "Tổ chức, theo dõi và so sánh các lần huấn luyện (tham số, metric, artifact) để tái lập và chọn mô hình tốt nhất."
+   }
+  },
+  {
+   "id": "debug-training-patterns",
+   "term": "Diagnosing training problems from loss curves",
+   "lecture": "06-019",
+   "definition": {
+    "en": "Loss plateaus early: learning rate too low, vanishing gradient, underfitting or bad data. Loss oscillating or diverging: learning rate too high or batch too small. Loss NaN/infinite: exploding gradients, usually poor normalization. Validation stalls while training improves: overfitting.",
+    "vi": "Loss đứng sớm: learning rate quá thấp, vanishing gradient, underfitting hoặc dữ liệu xấu. Loss dao động/phân kỳ: learning rate quá cao hoặc batch quá nhỏ. Loss NaN/vô cực: exploding gradient, thường do chuẩn hóa kém. Validation đứng còn training tăng: overfitting."
+   }
+  },
+  {
+   "id": "model-registry",
+   "term": "SageMaker Model Registry",
+   "lecture": "06-020",
+   "definition": {
+    "en": "Catalog for model versions in model groups, with metadata and approval status, used to manage and deploy models through CI/CD.",
+    "vi": "Danh mục các phiên bản mô hình trong model group, kèm metadata và trạng thái phê duyệt, dùng để quản lý và triển khai mô hình qua CI/CD."
+   }
+  },
+  {
+   "id": "checkpointing",
+   "term": "SageMaker checkpointing",
+   "lecture": "06-024",
+   "definition": {
+    "en": "Snapshots of training state synced from /opt/ml/checkpoints to an S3 URI (checkpoint_s3_uri, checkpoint_local_path) so a failed or interrupted job (e.g. Spot) can resume and be analyzed at points in time.",
+    "vi": "Snapshot trạng thái huấn luyện đồng bộ từ /opt/ml/checkpoints lên S3 (checkpoint_s3_uri, checkpoint_local_path) để job lỗi hoặc bị ngắt (vd. Spot) có thể tiếp tục và được phân tích tại từng thời điểm."
+   }
+  },
+  {
+   "id": "data-vs-model-parallelism",
+   "term": "Data parallelism vs model parallelism",
+   "lecture": "06-025",
+   "definition": {
+    "en": "Data parallelism splits the training data across instances/GPUs, each with a copy of the model. Model parallelism splits the model itself when it does not fit in one GPU's memory. Max out a single multi-GPU instance first, since cross-instance parallelism adds overhead.",
+    "vi": "Data parallelism chia dữ liệu huấn luyện cho các instance/GPU, mỗi nơi có bản sao mô hình. Model parallelism chia chính mô hình khi nó không vừa bộ nhớ một GPU. Tận dụng tối đa một instance nhiều GPU trước vì song song giữa các instance có overhead."
+   }
+  },
+  {
+   "id": "smp-library",
+   "term": "SageMaker model parallelism library",
+   "lecture": "06-026",
+   "definition": {
+    "en": "PyTorch-focused library using optimizer state sharding (needs a stateful optimizer, useful above ~1B parameters), activation checkpointing and activation offloading to fit very large models and free GPU memory.",
+    "vi": "Thư viện hướng PyTorch dùng optimizer state sharding (cần stateful optimizer, hữu ích trên ~1B tham số), activation checkpointing và activation offloading để chứa mô hình rất lớn và giải phóng bộ nhớ GPU."
+   }
+  },
+  {
+   "id": "efa",
+   "term": "Elastic Fabric Adapter (EFA)",
+   "lecture": "06-027",
+   "definition": {
+    "en": "Network device for SageMaker instances giving HPC-like inter-node bandwidth; used with NVIDIA GPUs and NCCL (needs the AWS OFI NCCL plugin). With sharded data parallelism it forms MiCS for training models beyond 1 trillion parameters.",
+    "vi": "Thiết bị mạng cho instance SageMaker, cho băng thông giữa node như HPC; dùng với GPU NVIDIA và NCCL (cần AWS OFI NCCL plugin). Cùng sharded data parallelism tạo thành MiCS để huấn luyện mô hình trên 1 nghìn tỷ tham số."
+   }
+  },
+  {
+   "id": "training-compiler",
+   "term": "SageMaker Training Compiler",
+   "lecture": "06-023",
+   "definition": {
+    "en": "Compiles and optimizes training for GPU instances (enabled via compiler_config=TrainingCompilerConfig() in a DLC estimator) for up to ~50% speed-up. Being phased out; no bring-your-own container.",
+    "vi": "Biên dịch và tối ưu huấn luyện cho GPU (bật bằng compiler_config=TrainingCompilerConfig() trong estimator dùng DLC), tăng tốc đến ~50%. Đang bị loại dần; không hỗ trợ bring-your-own container."
+   }
+  }
+ ]
+}

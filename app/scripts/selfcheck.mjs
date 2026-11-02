@@ -1,0 +1,61 @@
+// Assert-based self-check for the framework-free domain classes: `npm run check`
+import assert from 'node:assert/strict'
+import { LeitnerScheduler } from '../src/core/LeitnerScheduler.js'
+import { QuizSession } from '../src/core/QuizSession.js'
+import { TranscriptTrack } from '../src/core/TranscriptTrack.js'
+import { Localizer } from '../src/core/Localizer.js'
+
+const now = 1_000_000
+assert.equal(LeitnerScheduler.review(undefined, true, now).box, 2)
+assert.equal(LeitnerScheduler.review({ box: 5 }, true, now).box, 5)
+assert.equal(LeitnerScheduler.review({ box: 4 }, false, now).box, 1)
+const sched = new LeitnerScheduler({ a: { box: 3, due: now + 1 }, b: { box: 1, due: 0 } })
+const three = [{ id: 'a' }, { id: 'b' }, { id: 'c' }]
+assert.deepEqual(sched.queue(three, now).map((c) => c.id), ['c', 'b'])
+assert.deepEqual(sched.counts(three), [1, 1, 0, 1, 0, 0])
+
+const questions = [
+  { id: 1, multi: false, options: ['x', 'y'], answer: [1], domain: 'D1' },
+  { id: 2, multi: true, options: ['x', 'y', 'z'], answer: [0, 2], domain: 'D1' },
+]
+const s = new QuizSession({ id: 'q', questions, passPercent: 50 })
+s.choose(0)
+s.choose(1)
+assert.deepEqual([...s.selectionOf(questions[0])], [1], 'single choice replaces')
+s.goTo(1)
+for (const i of [0, 2, 2, 2]) s.choose(i)
+assert.ok(s.isCorrect(questions[1]), 'multi-select toggles')
+const r = s.submit()
+assert.equal(r.percent, 100)
+assert.deepEqual(r.byDomain, { D1: { correct: 2, total: 2 } })
+s.choose(1)
+assert.ok(s.isCorrect(questions[1]), 'answers lock after submit')
+
+// an unfinished run survives a save/restore round trip, exam clock included
+const run = new QuizSession({ id: 'q', questions, mode: 'exam', passPercent: 50 })
+run.choose(1)
+run.toggleFlag()
+run.goTo(1)
+run.choose(2)
+const saved = JSON.parse(JSON.stringify(run.snapshot(run.startedAt + 90_000)))
+const back = QuizSession.restore({ id: 'q', questions, passPercent: 50 }, saved, 5_000_000)
+assert.equal(back.mode, 'exam')
+assert.equal(back.index, 1)
+assert.deepEqual([...back.selectionOf(questions[0])], [1])
+assert.deepEqual([...back.selectionOf(questions[1])], [2])
+assert.ok(back.flagged.has(1), 'flags restored with numeric ids')
+assert.equal(Math.round(back.secondsLeft(5_000_000)), back.duration - 90, 'clock resumes, not reset')
+const pruned = QuizSession.restore({ id: 'q', questions: [questions[1]] }, saved)
+assert.equal(pruned.answeredCount, 1, 'answers to removed questions are dropped')
+
+const t = new TranscriptTrack([[0, 2, 'a'], [2.5, 4, 'b'], [10, 12, 'c']])
+assert.equal(t.textAt(1), 'a')
+assert.equal(t.textAt(4.2), 'b')
+assert.equal(t.textAt(7), '')
+assert.equal(new TranscriptTrack().indexAt(3), -1)
+
+const l = new Localizer('vi', { en: { hi: 'Hi {name}' }, vi: {} })
+assert.equal(l.ui('hi', { name: 'A' }), 'Hi A')
+assert.equal(l.text({ en: 'E', vi: '' }), 'E')
+assert.equal(Localizer.clock(3725), '1:02:05')
+console.log('selfcheck OK')

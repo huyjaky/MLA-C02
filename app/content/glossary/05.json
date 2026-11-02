@@ -1,0 +1,221 @@
+{
+ "section": "05",
+ "terms": [
+  {
+   "id": "sagemaker-architecture",
+   "term": "SageMaker training and deployment architecture",
+   "lecture": "05-002",
+   "definition": {
+    "en": "Training data sits in S3; SageMaker provisions training hosts that pull the training-code Docker image from ECR, then saves the model artifacts to S3. For inference it pulls an inference image from ECR and serves requests from endpoints. Deploy via a persistent endpoint, batch transform, inference pipelines, SageMaker Neo (edge), autoscaling or shadow testing.",
+    "vi": "Dữ liệu huấn luyện nằm trong S3; SageMaker cấp phát các training host, kéo Docker image chứa code huấn luyện từ ECR, rồi lưu model artifact vào S3. Với inference, nó kéo inference image từ ECR và phục vụ request qua endpoint. Triển khai bằng persistent endpoint, batch transform, inference pipeline, SageMaker Neo (edge), autoscaling hoặc shadow testing."
+   }
+  },
+  {
+   "id": "s3-file-mode",
+   "term": "S3 File mode",
+   "lecture": "05-003",
+   "definition": {
+    "en": "Default input mode: copies the whole training dataset from S3 to local storage of the training container before training. Fine for small data but you must wait for the copy and have enough disk space.",
+    "vi": "Chế độ input mặc định: sao chép toàn bộ dataset huấn luyện từ S3 về ổ đĩa cục bộ của training container trước khi huấn luyện. Ổn với dữ liệu nhỏ nhưng phải chờ copy xong và cần đủ dung lượng đĩa."
+   }
+  },
+  {
+   "id": "s3-fast-file-mode",
+   "term": "S3 Fast File mode and Pipe mode",
+   "lecture": "05-003",
+   "definition": {
+    "en": "Fast File mode streams data from S3 without downloading it first, so training starts sooner and needs no space for the full dataset; unlike Pipe mode it also supports random access, so it is the preferred streaming choice. Pipe mode streams sequentially and is mostly replaced by Fast File.",
+    "vi": "Fast File mode stream dữ liệu từ S3 mà không cần tải trước, nên training bắt đầu sớm hơn và không cần chỗ chứa toàn bộ dataset; khác Pipe mode, nó hỗ trợ cả random access nên là lựa chọn streaming được ưu tiên. Pipe mode stream tuần tự và phần lớn đã được Fast File thay thế."
+   }
+  },
+  {
+   "id": "fsx-lustre-efs-express",
+   "term": "FSx for Lustre, EFS and S3 Express One Zone as training inputs",
+   "lecture": "05-003",
+   "definition": {
+    "en": "FSx for Lustre gives hundreds of GB/s throughput and millions of IOPS at low latency (large LLM training); single AZ and requires a VPC. EFS can be used if data is already there (VPC required). S3 Express One Zone is a faster single-AZ storage class usable with File, Fast File and Pipe modes.",
+    "vi": "FSx for Lustre cho throughput hàng trăm GB/s và hàng triệu IOPS với độ trễ thấp (huấn luyện LLM lớn); chỉ một AZ và yêu cầu VPC. EFS dùng được nếu dữ liệu đã nằm ở đó (cần VPC). S3 Express One Zone là storage class single-AZ nhanh hơn, dùng được với chế độ File, Fast File và Pipe."
+   }
+  },
+  {
+   "id": "recordio-protobuf",
+   "term": "RecordIO-protobuf format",
+   "lecture": "05-004",
+   "definition": {
+    "en": "Preferred, most performant input format for many SageMaker built-in algorithms (Float32 data, works with Pipe mode). Most also accept CSV, where the first column is the label. Factorization Machines requires RecordIO-protobuf because the data is sparse.",
+    "vi": "Định dạng input được ưu tiên, hiệu năng cao nhất cho nhiều thuật toán tích hợp sẵn của SageMaker (dữ liệu Float32, dùng được với Pipe mode). Phần lớn cũng nhận CSV, với cột đầu là label. Factorization Machines bắt buộc dùng RecordIO-protobuf vì dữ liệu thưa."
+   }
+  },
+  {
+   "id": "linear-learner",
+   "term": "Linear Learner",
+   "lecture": "05-004",
+   "definition": {
+    "en": "Supervised algorithm for linear regression and binary or multiclass classification (linear threshold function). Normalize (or let it normalize) and shuffle the data. Trains multiple models in parallel with SGD/Adam/Adagrad, supports L1/L2 regularization (L2 = weight decay); key hyperparameters: balance_multiclass_weights, learning rate, batch size, L1, L2. Use CPU or GPU; more machines help, more GPUs per machine do not.",
+    "vi": "Thuật toán có giám sát cho hồi quy tuyến tính và phân loại nhị phân hoặc đa lớp (linear threshold function). Cần normalize (hoặc để nó tự normalize) và shuffle dữ liệu. Huấn luyện song song nhiều mô hình bằng SGD/Adam/Adagrad, hỗ trợ regularization L1/L2 (L2 = weight decay); hyperparameter chính: balance_multiclass_weights, learning rate, batch size, L1, L2. Dùng CPU hoặc GPU; thêm máy có ích, thêm GPU trên một máy thì không."
+   }
+  },
+  {
+   "id": "xgboost",
+   "term": "XGBoost",
+   "lecture": "05-005",
+   "definition": {
+    "en": "Extreme Gradient Boosting: boosted decision trees where each new tree corrects previous errors using gradient descent; fast and strong on tabular data for classification and regression. Accepts CSV, libsvm, RecordIO-protobuf and Parquet. CPU training is memory-bound (use M5); GPU needs tree_method=gpu_hist, distributed GPU also needs use_dask_gpu_training=true and fully replicated distribution (CSV/Parquet only).",
+    "vi": "Extreme Gradient Boosting: các cây quyết định boosting, mỗi cây mới sửa lỗi của cây trước bằng gradient descent; nhanh và mạnh với dữ liệu dạng bảng cho phân loại và hồi quy. Nhận CSV, libsvm, RecordIO-protobuf và Parquet. Huấn luyện CPU bị giới hạn bởi bộ nhớ (dùng M5); GPU cần tree_method=gpu_hist, GPU phân tán cần thêm use_dask_gpu_training=true và distribution fully replicated (chỉ CSV/Parquet)."
+   }
+  },
+  {
+   "id": "xgboost-hyperparameters",
+   "term": "XGBoost hyperparameters",
+   "lecture": "05-005",
+   "definition": {
+    "en": "subsample and eta (step-size shrinkage) prevent overfitting; gamma = minimum loss reduction to split; alpha/lambda = L1/L2 regularization (larger = more conservative); max_depth too high overfits; eval_metric sets the optimization metric (e.g. error, RMSE, AUC); scale_pos_weight handles imbalanced classes (about sum of negatives / sum of positives).",
+    "vi": "subsample và eta (step-size shrinkage) chống overfitting; gamma = mức giảm loss tối thiểu để tách nhánh; alpha/lambda = regularization L1/L2 (lớn hơn = mô hình thận trọng hơn); max_depth quá cao sẽ overfit; eval_metric đặt metric tối ưu (vd error, RMSE, AUC); scale_pos_weight xử lý lớp mất cân bằng (xấp xỉ tổng negative / tổng positive)."
+   }
+  },
+  {
+   "id": "lightgbm",
+   "term": "LightGBM (and CatBoost)",
+   "lecture": "05-006",
+   "definition": {
+    "en": "Gradient boosting decision tree algorithm built on XGBoost's ideas (GOSS and Exclusive Feature Bundling); CatBoost is a similar built-in. Handles classification, regression and ranking; training data must be CSV. Tunables: learning_rate, num_leaves, feature_fraction, bagging_fraction/bagging_freq, max_depth, min_data_in_leaf (helps overfitting). CPU only and memory-bound, so prefer M5 over C5.",
+    "vi": "Thuật toán gradient boosting decision tree phát triển từ ý tưởng của XGBoost (GOSS và Exclusive Feature Bundling); CatBoost là thuật toán tích hợp tương tự. Xử lý phân loại, hồi quy và ranking; dữ liệu huấn luyện phải là CSV. Tham số tinh chỉnh: learning_rate, num_leaves, feature_fraction, bagging_fraction/bagging_freq, max_depth, min_data_in_leaf (giúp chống overfitting). Chỉ chạy CPU và bị giới hạn bộ nhớ, nên ưu tiên M5 hơn C5."
+   }
+  },
+  {
+   "id": "seq2seq",
+   "term": "Seq2Seq",
+   "lecture": "05-007",
+   "definition": {
+    "en": "Maps an input token sequence to an output token sequence: machine translation, text summarization, speech to text. Built on RNNs or CNNs with attention. Input is RecordIO-protobuf with integer tokens plus a vocabulary file. Evaluate with BLEU score and perplexity. GPU only, single machine (multi-GPU on that machine is OK); pre-trained models exist.",
+    "vi": "Ánh xạ chuỗi token đầu vào sang chuỗi token đầu ra: dịch máy, tóm tắt văn bản, speech to text. Xây trên RNN hoặc CNN có attention. Input là RecordIO-protobuf với token dạng số nguyên cùng file vocabulary. Đánh giá bằng BLEU score và perplexity. Chỉ GPU, một máy duy nhất (nhiều GPU trên máy đó thì được); có sẵn mô hình pre-trained."
+   }
+  },
+  {
+   "id": "deepar",
+   "term": "DeepAR",
+   "lecture": "05-008",
+   "definition": {
+    "en": "RNN-based forecasting of one-dimensional time series that can train on many related time series at once and learn seasonality. Input is JSON Lines (optionally gzip) or Parquet with start timestamp and target values, plus optional dynamic and categorical features. Always train and test with the full time series; keep prediction length under about 400; context_length is how many points the model sees before predicting. Start with CPU; inference is CPU only.",
+    "vi": "Dự báo chuỗi thời gian một chiều dựa trên RNN, có thể huấn luyện trên nhiều chuỗi thời gian liên quan cùng lúc và học tính mùa vụ. Input là JSON Lines (có thể gzip) hoặc Parquet với timestamp bắt đầu và giá trị target, kèm dynamic và categorical feature tùy chọn. Luôn huấn luyện và test với toàn bộ chuỗi thời gian; giữ prediction length dưới khoảng 400; context_length là số điểm mô hình nhìn trước khi dự đoán. Bắt đầu với CPU; inference chỉ hỗ trợ CPU."
+   }
+  },
+  {
+   "id": "blazingtext",
+   "term": "BlazingText",
+   "lecture": "05-009",
+   "definition": {
+    "en": "Two modes: supervised text classification (for sentences, not whole documents) and unsupervised Word2vec word embeddings (similar words are close in vector space; words only). Supervised input: one sentence per line, prefixed with __label__ and tokenized/lowercased. Word2vec modes: cbow, skip-gram, batch_skip-gram (the only one that scales across multiple CPU instances).",
+    "vi": "Hai chế độ: phân loại văn bản có giám sát (cho câu, không phải cả tài liệu) và Word2vec word embedding không giám sát (các từ tương đồng nằm gần nhau trong không gian vector; chỉ cho từ). Input chế độ supervised: mỗi dòng một câu, bắt đầu bằng __label__ và đã tokenize/lowercase. Các mode Word2vec: cbow, skip-gram, batch_skip-gram (chỉ batch_skip-gram mở rộng được trên nhiều instance CPU)."
+   }
+  },
+  {
+   "id": "object2vec",
+   "term": "Object2Vec",
+   "lecture": "05-010",
+   "definition": {
+    "en": "General-purpose embedding algorithm (generalizes Word2vec) for arbitrary objects such as users, items, documents; used for nearest neighbors, clustering, genre prediction and recommenders. Input is pairs of integer-tokenized objects through two encoder channels (average-pooled embeddings, CNN or BiLSTM) feeding a comparator. Single machine training (multi-GPU allowed).",
+    "vi": "Thuật toán embedding đa dụng (tổng quát hóa Word2vec) cho đối tượng bất kỳ như user, item, tài liệu; dùng cho nearest neighbors, clustering, dự đoán thể loại và recommender. Input là các cặp đối tượng đã tokenize thành số nguyên qua hai kênh encoder (average-pooled embedding, CNN hoặc BiLSTM) đưa vào một comparator. Huấn luyện trên một máy (cho phép nhiều GPU)."
+   }
+  },
+  {
+   "id": "object-detection",
+   "term": "Object Detection",
+   "lecture": "05-011",
+   "definition": {
+    "en": "Finds and classifies multiple objects in an image and returns bounding boxes with confidence scores. Two versions: MXNet (SSD with VGG16/ResNet50; RecordIO or JPEG/PNG plus JSON annotations) and TensorFlow (many models from the TF Model Garden). Supports transfer learning; train on GPU instances.",
+    "vi": "Tìm và phân loại nhiều đối tượng trong ảnh, trả về bounding box kèm confidence score. Hai phiên bản: MXNet (SSD với VGG16/ResNet50; RecordIO hoặc JPEG/PNG kèm annotation JSON) và TensorFlow (nhiều mô hình từ TF Model Garden). Hỗ trợ transfer learning; huấn luyện trên instance GPU."
+   }
+  },
+  {
+   "id": "image-classification",
+   "term": "Image Classification",
+   "lecture": "05-012",
+   "definition": {
+    "en": "Assigns one or more labels to a whole image without locating objects (contrast with Object Detection). MXNet and TensorFlow versions; full training or transfer learning from pre-trained weights (default MXNet input 3x224x224). Train on GPU instances; inference can use CPU (M5) or GPU.",
+    "vi": "Gán một hoặc nhiều nhãn cho toàn bộ ảnh mà không xác định vị trí đối tượng (đối lập với Object Detection). Có phiên bản MXNet và TensorFlow; huấn luyện từ đầu hoặc transfer learning từ trọng số pre-trained (input mặc định của MXNet là 3x224x224). Huấn luyện trên GPU; inference dùng được CPU (M5) hoặc GPU."
+   }
+  },
+  {
+   "id": "semantic-segmentation",
+   "term": "Semantic Segmentation",
+   "lecture": "05-013",
+   "definition": {
+    "en": "Pixel-level classification that outputs a segmentation mask labeling every pixel (self-driving cars, medical imaging, robot sensing). Built on MXNet/Gluon CV with FCN, PSP or DeepLab v3 algorithms and ResNet50/101 backbones. Training: GPU only and single machine; supports Pipe mode.",
+    "vi": "Phân loại ở mức pixel, xuất segmentation mask gán nhãn cho từng pixel (xe tự lái, chẩn đoán hình ảnh y tế, robot sensing). Xây trên MXNet/Gluon CV với các thuật toán FCN, PSP hoặc DeepLab v3 và backbone ResNet50/101. Huấn luyện: chỉ GPU và một máy; hỗ trợ Pipe mode."
+   }
+  },
+  {
+   "id": "random-cut-forest",
+   "term": "Random Cut Forest (RCF)",
+   "lecture": "05-014",
+   "definition": {
+    "en": "Amazon's unsupervised anomaly-detection algorithm: builds a forest of trees on randomly sampled data and assigns an anomaly score per point based on how much a new point changes tree complexity. Also in Kinesis Data Analytics for streams. Hyperparameters: num_trees (more reduces noise) and num_samples_per_tree (1/num_samples_per_tree should approximate the anomaly ratio). CPU only.",
+    "vi": "Thuật toán phát hiện bất thường không giám sát của Amazon: xây rừng cây trên dữ liệu lấy mẫu ngẫu nhiên và gán anomaly score cho mỗi điểm dựa trên mức độ điểm mới làm thay đổi độ phức tạp của cây. Cũng có trong Kinesis Data Analytics cho dữ liệu streaming. Hyperparameter: num_trees (nhiều hơn giảm nhiễu) và num_samples_per_tree (1/num_samples_per_tree nên xấp xỉ tỷ lệ bất thường). Chỉ CPU."
+   }
+  },
+  {
+   "id": "neural-topic-model",
+   "term": "Neural Topic Model (NTM)",
+   "lecture": "05-015",
+   "definition": {
+    "en": "Unsupervised, neural-network (neural variational inference) topic modeling that groups documents into a number of latent topics you choose; topics are not human-labeled. Input is tokenized word counts (RecordIO-protobuf or CSV) plus a vocabulary file. Key hyperparameter: number of topics. GPU recommended for training, CPU fine for inference.",
+    "vi": "Topic modeling không giám sát dùng neural network (neural variational inference), nhóm tài liệu vào số chủ đề tiềm ẩn do bạn chọn; chủ đề không có nhãn người đọc được. Input là số lần xuất hiện từ đã tokenize (RecordIO-protobuf hoặc CSV) cùng file vocabulary. Hyperparameter chính: số lượng topic. Nên dùng GPU để huấn luyện, CPU đủ cho inference."
+   }
+  },
+  {
+   "id": "lda",
+   "term": "Latent Dirichlet Allocation (LDA)",
+   "lecture": "05-016",
+   "definition": {
+    "en": "Unsupervised, non-deep-learning topic modeling (also usable for clustering customers or other co-occurrence data). Tune num_topics and alpha0. Evaluated with per-word log-likelihood. Training is CPU only on a single instance; Pipe mode requires RecordIO format.",
+    "vi": "Topic modeling không giám sát, không dùng deep learning (cũng dùng được để phân cụm khách hàng hoặc dữ liệu co-occurrence khác). Tinh chỉnh num_topics và alpha0. Đánh giá bằng per-word log-likelihood. Huấn luyện chỉ CPU trên một instance; Pipe mode yêu cầu định dạng RecordIO."
+   }
+  },
+  {
+   "id": "knn",
+   "term": "K-Nearest Neighbors (KNN)",
+   "lecture": "05-017",
+   "definition": {
+    "en": "Supervised classification (most frequent label of the k nearest points) or regression (average value). SageMaker samples data, applies dimensionality reduction (sign or fjlt) to avoid the curse of dimensionality, and builds an index. Key hyperparameters: k and sample_size. Trains on CPU or GPU; GPU gives higher throughput for large batches, CPU lower latency.",
+    "vi": "Phân loại có giám sát (nhãn phổ biến nhất của k điểm gần nhất) hoặc hồi quy (giá trị trung bình). SageMaker lấy mẫu dữ liệu, giảm chiều (sign hoặc fjlt) để tránh curse of dimensionality, và xây index. Hyperparameter chính: k và sample_size. Huấn luyện trên CPU hoặc GPU; GPU cho throughput cao hơn với batch lớn, CPU độ trễ thấp hơn."
+   }
+  },
+  {
+   "id": "k-means",
+   "term": "K-Means",
+   "lecture": "05-018",
+   "definition": {
+    "en": "Unsupervised clustering into k groups of similar points (web-scale in SageMaker). Training uses ShardedByS3Key distribution to scale across machines. Extensions: extra_center_factor (works with K = k x x centers then reduces) and k-means++ init. Choose k with the elbow method on within-cluster sum of squares. Primarily CPU; if GPU, one GPU per instance.",
+    "vi": "Phân cụm không giám sát thành k nhóm các điểm tương tự (quy mô web trong SageMaker). Huấn luyện dùng distribution ShardedByS3Key để mở rộng trên nhiều máy. Bản mở rộng: extra_center_factor (làm việc với K = k x x tâm rồi rút gọn) và khởi tạo k-means++. Chọn k bằng elbow method trên within-cluster sum of squares. Chủ yếu CPU; nếu dùng GPU thì mỗi instance một GPU."
+   }
+  },
+  {
+   "id": "pca",
+   "term": "Principal Component Analysis (PCA)",
+   "lecture": "05-019",
+   "definition": {
+    "en": "Unsupervised dimensionality reduction: projects data into fewer components that capture the most variance, using covariance matrix and SVD. Modes: regular (sparse or moderate-size data) and randomized (large number of observations/features). Hyperparameters: algorithm_mode, subtract_mean. Choose it to cut the number of features.",
+    "vi": "Giảm chiều dữ liệu không giám sát: chiếu dữ liệu vào ít component hơn nhưng giữ nhiều phương sai nhất, dùng ma trận hiệp phương sai và SVD. Các mode: regular (dữ liệu thưa hoặc cỡ vừa) và randomized (số lượng quan sát/feature lớn). Hyperparameter: algorithm_mode, subtract_mean. Chọn khi cần giảm số lượng feature."
+   }
+  },
+  {
+   "id": "factorization-machines",
+   "term": "Factorization Machines",
+   "lecture": "05-020",
+   "definition": {
+    "en": "Supervised classification or regression on sparse data, limited to pairwise interactions (such as user-item); classic for recommenders and click prediction. Input must be RecordIO-protobuf Float32 (CSV is impractical for sparse data). CPU is recommended; GPU only helps for dense data.",
+    "vi": "Phân loại hoặc hồi quy có giám sát trên dữ liệu thưa, giới hạn ở tương tác theo cặp (như user-item); kinh điển cho recommender và dự đoán click. Input phải là RecordIO-protobuf Float32 (CSV không thực tế với dữ liệu thưa). Khuyến nghị CPU; GPU chỉ có ích với dữ liệu dày."
+   }
+  },
+  {
+   "id": "ip-insights",
+   "term": "IP Insights",
+   "lecture": "05-021",
+   "definition": {
+    "en": "Unsupervised neural-network algorithm that learns usage patterns of IP addresses to flag suspicious behavior in web logs, such as logins or resource creation from anomalous IPs. Input is CSV of entity (username/account ID) and IP address; it generates negative samples by random pairing. Hyperparameters: num_entity_vectors (hash size, about 2x unique entities) and vector_dim. GPU recommended.",
+    "vi": "Thuật toán neural network không giám sát học các mẫu sử dụng của địa chỉ IP để gắn cờ hành vi đáng ngờ trong web log, như đăng nhập hoặc tạo tài nguyên từ IP bất thường. Input là CSV gồm entity (username/account ID) và địa chỉ IP; nó tự tạo negative sample bằng cách ghép cặp ngẫu nhiên. Hyperparameter: num_entity_vectors (hash size, khoảng 2 lần số entity duy nhất) và vector_dim. Khuyến nghị GPU."
+   }
+  }
+ ]
+}

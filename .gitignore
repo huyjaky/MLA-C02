@@ -1,0 +1,8 @@
+.env
+node_modules/
+dist/
+__pycache__/
+data/
+.impeccable/
+# subtitles copied from the course: regenerate with scripts/import_course.py
+app/content/transcripts/

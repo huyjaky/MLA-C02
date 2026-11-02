@@ -1,0 +1,12 @@
+{
+ "id": "02-025",
+ "section": "02",
+ "title": {
+  "en": "About DSSE-KMS",
+  "vi": "Về DSSE-KMS"
+ },
+ "body": {
+  "en": "<p>In the next lecture, when doing the hands-on you will realize a new encryption option is available, named DSSE-KMS and <a href=\"https://aws.amazon.com/blogs/aws/new-amazon-s3-dual-layer-server-side-encryption-with-keys-stored-in-aws-key-management-service-dsse-kms/\">released in June 2023</a>.</p><p><br></p><p><strong>DSSE-KMS is just \"Dual-Layer Server Side Encryption</strong> <strong>based on KMS\". </strong></p><p><br></p><p>As long as it is not coming up in the exam, I will not teach it in this course. If you do see it at your exam as an option, please let me know and I will update the course. </p><p><br></p><p>Happy learning!</p>",
+  "vi": "<p>Ở bài tiếp theo, khi làm phần thực hành bạn sẽ thấy có thêm một tùy chọn mã hóa mới tên là DSSE-KMS, <a href=\"https://aws.amazon.com/blogs/aws/new-amazon-s3-dual-layer-server-side-encryption-with-keys-stored-in-aws-key-management-service-dsse-kms/\">được phát hành vào tháng 6 năm 2023</a>.</p><p><br></p><p><strong>DSSE-KMS chỉ là \"Dual-Layer Server Side Encryption</strong> <strong>dựa trên KMS\". </strong></p><p><br></p><p>Chừng nào nó chưa xuất hiện trong kỳ thi, tôi sẽ không dạy trong khóa học này. Nếu bạn thấy nó là một lựa chọn trong bài thi của mình, vui lòng báo cho tôi và tôi sẽ cập nhật khóa học. </p><p><br></p><p>Chúc bạn học tốt!</p>"
+ }
+}

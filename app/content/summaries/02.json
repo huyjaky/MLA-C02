@@ -1,0 +1,2049 @@
+{
+ "02-001": {
+  "tldr": {
+   "en": "This section covers data ingestion and storage: data fundamentals first, then AWS storage and streaming services.",
+   "vi": "Phần này nói về thu thập và lưu trữ dữ liệu: nền tảng dữ liệu trước, sau đó là các dịch vụ lưu trữ và streaming của AWS."
+  },
+  "points": [
+   {
+    "en": "All ML starts with data, which must be stored centrally, scalably and securely.",
+    "vi": "Mọi ML đều bắt đầu từ dữ liệu, cần lưu trữ tập trung, có khả năng mở rộng và bảo mật."
+   },
+   {
+    "en": "Fundamentals: data types, data properties, warehouses, lakes, lakehouses, ETL pipelines and formats.",
+    "vi": "Nền tảng: loại dữ liệu, thuộc tính dữ liệu, warehouse, lake, lakehouse, ETL pipeline và định dạng."
+   },
+   {
+    "en": "AWS services covered: S3, EBS, EFS, FSx, Kinesis and Kafka (MSK).",
+    "vi": "Các dịch vụ AWS: S3, EBS, EFS, FSx, Kinesis và Kafka (MSK)."
+   }
+  ],
+  "services": []
+ },
+ "02-002": {
+  "tldr": {
+   "en": "Data is structured, semi-structured or unstructured depending on how much schema it carries; the exam expects you to tell them apart.",
+   "vi": "Dữ liệu là structured, semi-structured hoặc unstructured tùy mức độ schema; đề thi yêu cầu phân biệt được."
+  },
+  "points": [
+   {
+    "en": "Structured: fixed schema, rows and columns, easy to query with SQL (database tables, clean CSV, Excel).",
+    "vi": "Structured: schema cố định, hàng và cột, dễ truy vấn bằng SQL (bảng DB, CSV sạch, Excel)."
+   },
+   {
+    "en": "Unstructured: no schema; must be pre-processed and indexed first (text, images, video, audio, emails).",
+    "vi": "Unstructured: không có schema; phải tiền xử lý và lập chỉ mục trước (text, ảnh, video, audio, email)."
+   },
+   {
+    "en": "Semi-structured: has tags or hierarchy but an inconsistent schema (XML, JSON, email headers).",
+    "vi": "Semi-structured: có tag hoặc phân cấp nhưng schema không nhất quán (XML, JSON, email header)."
+   },
+   {
+    "en": "Log files are the most common semi-structured example; lines may need parsing one by one.",
+    "vi": "Log file là ví dụ semi-structured phổ biến nhất; có thể phải parse từng dòng."
+   }
+  ],
+  "services": [],
+  "funFact": {
+   "en": "Log files can vary in format and have missing fields on some lines, which is why they count as semi-structured.",
+   "vi": "Log file có thể khác định dạng và thiếu trường ở vài dòng, nên được xếp vào semi-structured."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Data\"] --> B[\"Structured: tables, CSV\"]\n  A --> C[\"Semi-structured: JSON, XML, logs\"]\n  A --> D[\"Unstructured: text, image, video\"]",
+   "vi": "flowchart LR\n  A[\"Dữ liệu\"] --> B[\"Structured: bảng, CSV\"]\n  A --> C[\"Semi-structured: JSON, XML, log\"]\n  A --> D[\"Unstructured: text, ảnh, video\"]"
+  }
+ },
+ "02-003": {
+  "tldr": {
+   "en": "The three V's of data are volume, velocity and variety; they drive how you store and process data.",
+   "vi": "Ba chữ V của dữ liệu là volume, velocity và variety; chúng quyết định cách lưu trữ và xử lý."
+  },
+  "points": [
+   {
+    "en": "Volume: how much data, from gigabytes to petabytes; big volume needs distributed, parallel systems.",
+    "vi": "Volume: lượng dữ liệu, từ GB đến PB; volume lớn cần hệ thống phân tán, song song."
+   },
+   {
+    "en": "Velocity: speed of data arrival; decides batch versus real-time or near real-time processing.",
+    "vi": "Velocity: tốc độ dữ liệu đến; quyết định batch hay real-time hoặc near real-time."
+   },
+   {
+    "en": "Exam favourite: real-time versus near real-time, e.g. Kinesis Data Streams versus Firehose.",
+    "vi": "Hay gặp trong đề: real-time và near real-time, ví dụ Kinesis Data Streams và Firehose."
+   },
+   {
+    "en": "Variety: mix of structured, semi-structured and unstructured data from many sources, needing unified querying.",
+    "vi": "Variety: nhiều loại dữ liệu từ nhiều nguồn, cần cách truy vấn thống nhất."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS Snowmobile",
+    "use": {
+     "en": "Physically ship huge data volumes to AWS instead of uploading over the internet.",
+     "vi": "Vận chuyển vật lý lượng dữ liệu rất lớn lên AWS thay vì upload qua internet."
+    }
+   },
+   {
+    "name": "Amazon Kinesis Data Streams",
+    "use": {
+     "en": "Real-time streaming ingestion for high-velocity data.",
+     "vi": "Thu nhận dữ liệu streaming real-time cho dữ liệu velocity cao."
+    }
+   },
+   {
+    "name": "Amazon Data Firehose",
+    "use": {
+     "en": "Near real-time delivery of streaming data to storage.",
+     "vi": "Chuyển dữ liệu streaming đến nơi lưu trữ theo kiểu near real-time."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "A fourth V, veracity, appears in many texts, but the exam guide only lists three.",
+   "vi": "Nhiều tài liệu có chữ V thứ tư là veracity, nhưng exam guide chỉ liệt kê ba."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"3 Vs\"] --> B[\"Volume: how much\"]\n  A --> C[\"Velocity: how fast\"]\n  A --> D[\"Variety: how many types\"]",
+   "vi": "flowchart LR\n  A[\"3 chữ V\"] --> B[\"Volume: bao nhiêu\"]\n  A --> C[\"Velocity: nhanh cỡ nào\"]\n  A --> D[\"Variety: bao nhiêu loại\"]"
+  }
+ },
+ "02-004": {
+  "tldr": {
+   "en": "A data warehouse stores structured, transformed data (schema on write); a data lake stores raw data (schema on read); a lakehouse blends both.",
+   "vi": "Data warehouse lưu dữ liệu structured đã biến đổi (schema on write); data lake lưu dữ liệu thô (schema on read); lakehouse kết hợp cả hai."
+  },
+  "points": [
+   {
+    "en": "Warehouse: structured data, ETL, star or snowflake schema, optimized for complex reads and BI. Example: Amazon Redshift.",
+    "vi": "Warehouse: dữ liệu structured, ETL, star hoặc snowflake schema, tối ưu truy vấn phức tạp và BI. Ví dụ: Amazon Redshift."
+   },
+   {
+    "en": "Lake: raw data in native format, any type, ELT. Example: S3, cataloged by AWS Glue and queried by Athena.",
+    "vi": "Lake: dữ liệu thô giữ nguyên định dạng, mọi loại, ELT. Ví dụ: S3, catalog bằng AWS Glue và truy vấn bằng Athena."
+   },
+   {
+    "en": "Warehouses are less agile and pricier; lakes are flexible and cheaper, used for ML and data discovery.",
+    "vi": "Warehouse kém linh hoạt và đắt hơn; lake linh hoạt, rẻ hơn, dùng cho ML và khám phá dữ liệu."
+   },
+   {
+    "en": "Lakehouse = lake flexibility plus warehouse performance: AWS Lake Formation with S3 and Redshift Spectrum.",
+    "vi": "Lakehouse = linh hoạt của lake và hiệu năng của warehouse: AWS Lake Formation với S3 và Redshift Spectrum."
+   },
+   {
+    "en": "Using both a warehouse and a lake together is common and fine.",
+    "vi": "Dùng cả warehouse và lake cùng lúc là chuyện bình thường."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Redshift",
+    "use": {
+     "en": "Data warehouse for structured BI and analytics queries.",
+     "vi": "Data warehouse cho truy vấn BI và phân tích dữ liệu structured."
+    }
+   },
+   {
+    "name": "Amazon S3",
+    "use": {
+     "en": "Object store used as the data lake for raw data.",
+     "vi": "Object store dùng làm data lake chứa dữ liệu thô."
+    }
+   },
+   {
+    "name": "AWS Glue",
+    "use": {
+     "en": "Extracts schema from raw data and provides the Data Catalog.",
+     "vi": "Trích xuất schema từ dữ liệu thô và cung cấp Data Catalog."
+    }
+   },
+   {
+    "name": "Amazon Athena",
+    "use": {
+     "en": "Queries data in S3 using the Glue Data Catalog.",
+     "vi": "Truy vấn dữ liệu trên S3 dựa vào Glue Data Catalog."
+    }
+   },
+   {
+    "name": "AWS Lake Formation",
+    "use": {
+     "en": "Builds and governs lakehouse-style architectures on S3.",
+     "vi": "Xây dựng và quản trị kiến trúc kiểu lakehouse trên S3."
+    }
+   },
+   {
+    "name": "Amazon Redshift Spectrum",
+    "use": {
+     "en": "Queries data sitting in S3 as if it were in the warehouse.",
+     "vi": "Truy vấn dữ liệu nằm trên S3 như thể nằm trong warehouse."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Before Redshift existed, Amazon itself ran its data warehouse on a giant Oracle database that was extremely expensive and hard to maintain.",
+   "vi": "Trước khi có Redshift, Amazon chạy data warehouse trên một database Oracle khổng lồ, cực đắt và khó bảo trì."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Raw data in S3\"] --> B[\"AWS Glue Data Catalog\"]\n  B --> C[\"Amazon Athena\"]\n  A -->|\"ETL\"| D[\"Amazon Redshift\"]\n  A -->|\"Spectrum\"| D",
+   "vi": "flowchart LR\n  A[\"Dữ liệu thô trên S3\"] --> B[\"AWS Glue Data Catalog\"]\n  B --> C[\"Amazon Athena\"]\n  A -->|\"ETL\"| D[\"Amazon Redshift\"]\n  A -->|\"Spectrum\"| D"
+  }
+ },
+ "02-005": {
+  "tldr": {
+   "en": "A data mesh is an organizational approach: each domain team owns its data and offers it as a data product, under shared governance.",
+   "vi": "Data mesh là cách tổ chức: mỗi domain team sở hữu dữ liệu của mình và cung cấp như một data product, dưới quản trị chung."
+  },
+  "points": [
+   {
+    "en": "It is about governance and ownership, not a specific technology.",
+    "vi": "Nó thiên về quản trị và quyền sở hữu, không phải một công nghệ cụ thể."
+   },
+   {
+    "en": "Domain teams own, maintain and publish their data as data products (domain-based data management).",
+    "vi": "Các domain team sở hữu, duy trì và công bố dữ liệu như data product (domain-based data management)."
+   },
+   {
+    "en": "Federated governance: central standards, with each domain responsible for integrity, security and access control.",
+    "vi": "Federated governance: tiêu chuẩn trung tâm, mỗi domain chịu trách nhiệm toàn vẹn, bảo mật và kiểm soát truy cập."
+   },
+   {
+    "en": "Needs self-service infrastructure so domains can build data products easily.",
+    "vi": "Cần hạ tầng self-service để các domain dễ dàng tạo data product."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS Lake Formation",
+    "use": {
+     "en": "Manages storage, access and permissions for data products.",
+     "vi": "Quản lý lưu trữ, truy cập và quyền cho các data product."
+    }
+   },
+   {
+    "name": "AWS Glue",
+    "use": {
+     "en": "Acts as the central data catalog showing available data products.",
+     "vi": "Đóng vai trò data catalog trung tâm cho thấy các data product hiện có."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Amazon itself has long been organized this way: central principles, but teams own their own stuff.",
+   "vi": "Chính Amazon từ lâu đã tổ chức theo cách này: nguyên tắc chung nhưng mỗi team tự sở hữu phần của mình."
+  },
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Domain team A: data product\"] --> C[\"Central governance and catalog\"]\n  B[\"Domain team B: data product\"] --> C\n  C --> D[\"Analysis use case\"]",
+   "vi": "flowchart TD\n  A[\"Domain team A: data product\"] --> C[\"Quản trị và catalog trung tâm\"]\n  B[\"Domain team B: data product\"] --> C\n  C --> D[\"Use case phân tích\"]"
+  }
+ },
+ "02-006": {
+  "tldr": {
+   "en": "ETL means extract, transform, load; for data lakes the last two swap to ELT. Pipelines need orchestration to run reliably.",
+   "vi": "ETL là extract, transform, load; với data lake hai bước sau đảo thành ELT. Pipeline cần orchestration để chạy ổn định."
+  },
+  "points": [
+   {
+    "en": "Extract: pull raw data from databases, CRMs, files or APIs while preserving integrity and handling retries.",
+    "vi": "Extract: lấy dữ liệu thô từ database, CRM, file hoặc API, đảm bảo toàn vẹn và xử lý retry."
+   },
+   {
+    "en": "Transform: cleanse, deduplicate, impute missing values, enrich, change formats, aggregate, encode or decode.",
+    "vi": "Transform: làm sạch, loại trùng, điền giá trị thiếu, làm giàu, đổi định dạng, tổng hợp, encode hoặc decode."
+   },
+   {
+    "en": "Load: write to the target in batch or streaming, without silently dropping data on failures.",
+    "vi": "Load: ghi vào đích theo batch hoặc streaming, không để mất dữ liệu âm thầm khi lỗi."
+   },
+   {
+    "en": "Batch versus streaming depends on volume, velocity and requirements.",
+    "vi": "Batch hay streaming tùy volume, velocity và yêu cầu."
+   },
+   {
+    "en": "Orchestrate with Glue, EventBridge, MWAA (Airflow), Step Functions, Lambda or Glue workflows.",
+    "vi": "Orchestration bằng Glue, EventBridge, MWAA (Airflow), Step Functions, Lambda hoặc Glue workflow."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS Glue",
+    "use": {
+     "en": "Automatic ETL or ELT, triggered by incoming data events; also has workflows.",
+     "vi": "ETL hoặc ELT tự động, kích hoạt bởi sự kiện dữ liệu đến; có cả workflow."
+    }
+   },
+   {
+    "name": "Amazon EventBridge",
+    "use": {
+     "en": "Event-driven triggering of pipeline steps.",
+     "vi": "Kích hoạt các bước pipeline theo sự kiện."
+    }
+   },
+   {
+    "name": "Amazon MWAA",
+    "use": {
+     "en": "Managed Apache Airflow for orchestrating workflows.",
+     "vi": "Apache Airflow được quản lý để điều phối workflow."
+    }
+   },
+   {
+    "name": "AWS Step Functions",
+    "use": {
+     "en": "Orchestrates multi-step workflows in order.",
+     "vi": "Điều phối workflow nhiều bước theo đúng thứ tự."
+    }
+   },
+   {
+    "name": "AWS Lambda",
+    "use": {
+     "en": "Serverless code step inside a pipeline.",
+     "vi": "Bước code serverless trong pipeline."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Sources: DB, CRM, files, APIs\"] -->|\"Extract\"| B[\"Transform: clean, enrich, format\"]\n  B -->|\"Load\"| C[\"Warehouse or lake\"]\n  D[\"Orchestration: Step Functions, MWAA, Glue\"] -.-> B",
+   "vi": "flowchart LR\n  A[\"Nguồn: DB, CRM, file, API\"] -->|\"Extract\"| B[\"Transform: làm sạch, làm giàu, đổi định dạng\"]\n  B -->|\"Load\"| C[\"Warehouse hoặc lake\"]\n  D[\"Orchestration: Step Functions, MWAA, Glue\"] -.-> B"
+  }
+ },
+ "02-007": {
+  "tldr": {
+   "en": "Know common data sources (JDBC, ODBC, logs, APIs, streams) and formats: CSV, JSON, Avro and Parquet, and when each fits.",
+   "vi": "Nắm các nguồn dữ liệu phổ biến (JDBC, ODBC, log, API, stream) và định dạng CSV, JSON, Avro, Parquet cùng khi nào dùng từng loại."
+  },
+  "points": [
+   {
+    "en": "JDBC is platform independent but Java only; ODBC is language independent but needs platform-specific drivers.",
+    "vi": "JDBC độc lập nền tảng nhưng chỉ dùng Java; ODBC độc lập ngôn ngữ nhưng cần driver theo nền tảng."
+   },
+   {
+    "en": "CSV: human-readable text, good for small to medium data and exchange between systems.",
+    "vi": "CSV: dạng text dễ đọc, hợp dữ liệu nhỏ đến vừa và trao đổi giữa các hệ thống."
+   },
+   {
+    "en": "JSON: text key-value format for semi-structured, nested data; used in APIs, configs and NoSQL.",
+    "vi": "JSON: định dạng text key-value cho dữ liệu semi-structured, lồng nhau; dùng trong API, config và NoSQL."
+   },
+   {
+    "en": "Avro: binary row format that stores the schema with the data; good when schema evolves and for streaming.",
+    "vi": "Avro: định dạng binary theo hàng, lưu schema cùng dữ liệu; hợp khi schema thay đổi và cho streaming."
+   },
+   {
+    "en": "Parquet: binary columnar format, great for analytics reading a few columns; used by Spark, Hive, Redshift Spectrum.",
+    "vi": "Parquet: định dạng binary theo cột, rất hợp phân tích chỉ đọc vài cột; dùng bởi Spark, Hive, Redshift Spectrum."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Redshift Spectrum",
+    "use": {
+     "en": "Queries Parquet and other files in S3; benefits from columnar formats.",
+     "vi": "Truy vấn Parquet và các file khác trên S3; hưởng lợi từ định dạng columnar."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Data format?\"] --> B[\"CSV: small, human readable\"]\n  A --> C[\"JSON: semi-structured, nested\"]\n  A --> D[\"Avro: binary, schema changes, streaming\"]\n  A --> E[\"Parquet: columnar, analytics\"]",
+   "vi": "flowchart TD\n  A[\"Chọn định dạng?\"] --> B[\"CSV: nhỏ, dễ đọc\"]\n  A --> C[\"JSON: semi-structured, lồng nhau\"]\n  A --> D[\"Avro: binary, schema thay đổi, streaming\"]\n  A --> E[\"Parquet: columnar, phân tích\"]"
+  }
+ },
+ "02-008": {
+  "tldr": {
+   "en": "Amazon S3 is infinitely scaling object storage organized as buckets and keyed objects; many AWS services depend on it.",
+   "vi": "Amazon S3 là object storage mở rộng vô hạn, tổ chức theo bucket và object key; nhiều dịch vụ AWS dựa vào nó."
+  },
+  "points": [
+   {
+    "en": "Use cases: backup, disaster recovery, archive, hybrid cloud, media, data lake and big data analytics, static websites.",
+    "vi": "Use case: backup, disaster recovery, archive, hybrid cloud, media, data lake và phân tích big data, static website."
+   },
+   {
+    "en": "Buckets are created per region; there is no real directory concept, only keys made of prefix plus object name.",
+    "vi": "Bucket tạo theo region; không có thư mục thật, chỉ có key gồm prefix và tên object."
+   },
+   {
+    "en": "Max object size is 50 TB; objects above 5 GB must use multi-part upload.",
+    "vi": "Kích thước object tối đa 50 TB; object trên 5 GB phải dùng multi-part upload."
+   },
+   {
+    "en": "Objects carry metadata, up to 10 tags (useful for security and lifecycle) and an optional version ID.",
+    "vi": "Object có metadata, tối đa 10 tag (hữu ích cho bảo mật và lifecycle) và version ID tùy chọn."
+   },
+   {
+    "en": "Bucket names were globally unique; the new account regional namespace adds a suffix so names stay unique.",
+    "vi": "Tên bucket trước đây phải duy nhất toàn cầu; account regional namespace mới thêm hậu tố để luôn duy nhất."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon S3",
+    "use": {
+     "en": "Scalable object storage; the default choice for data lakes and ML datasets.",
+     "vi": "Object storage mở rộng; lựa chọn mặc định cho data lake và dataset ML."
+    }
+   },
+   {
+    "name": "Amazon S3 Glacier",
+    "use": {
+     "en": "Cheap archival storage class for long-term retention.",
+     "vi": "Storage class lưu trữ lâu dài giá rẻ."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "NASDAQ keeps seven years of data in S3 Glacier.",
+   "vi": "NASDAQ lưu dữ liệu bảy năm trong S3 Glacier."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Bucket: per region\"] --> B[\"Key: prefix + object name\"]\n  B --> C[\"Object: up to 50 TB\"]\n  C --> D[\"Metadata, tags, version ID\"]",
+   "vi": "flowchart LR\n  A[\"Bucket: theo region\"] --> B[\"Key: prefix + tên object\"]\n  B --> C[\"Object: tối đa 50 TB\"]\n  C --> D[\"Metadata, tag, version ID\"]"
+  }
+ },
+ "02-009": {
+  "tldr": {
+   "en": "Hands-on: create an S3 bucket, upload objects, and see why the public URL fails while the pre-signed URL works.",
+   "vi": "Thực hành: tạo bucket S3, upload object, và xem vì sao public URL lỗi còn pre-signed URL thì chạy."
+  },
+  "points": [
+   {
+    "en": "Pick General purpose bucket type; Directory buckets are for low-latency use cases.",
+    "vi": "Chọn bucket loại General purpose; Directory bucket dành cho use case độ trễ thấp."
+   },
+   {
+    "en": "Prefer the account regional namespace so any name works without global clashes.",
+    "vi": "Nên dùng account regional namespace để đặt tên tùy ý không lo trùng toàn cầu."
+   },
+   {
+    "en": "Defaults: ACLs disabled, Block Public Access on, SSE-S3 encryption.",
+    "vi": "Mặc định: tắt ACL, bật Block Public Access, mã hóa SSE-S3."
+   },
+   {
+    "en": "The Open button uses a pre-signed URL with your credentials; the plain object URL returns AccessDenied.",
+    "vi": "Nút Open dùng pre-signed URL chứa credentials của bạn; object URL thường trả về AccessDenied."
+   },
+   {
+    "en": "Folders in the console are just key prefixes.",
+    "vi": "Folder trong console chỉ là prefix của key."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon S3",
+    "use": {
+     "en": "Object storage; objects are private by default.",
+     "vi": "Object storage; object mặc định là private."
+    }
+   }
+  ]
+ },
+ "02-010": {
+  "tldr": {
+   "en": "S3 security combines IAM policies, bucket policies, ACLs and Block Public Access; access needs an allow and no explicit deny.",
+   "vi": "Bảo mật S3 kết hợp IAM policy, bucket policy, ACL và Block Public Access; cần có allow và không có explicit deny."
+  },
+  "points": [
+   {
+    "en": "User-based: IAM policies. Resource-based: bucket policies, plus legacy object and bucket ACLs that can be disabled.",
+    "vi": "User-based: IAM policy. Resource-based: bucket policy, cùng ACL object và bucket kiểu cũ có thể tắt."
+   },
+   {
+    "en": "Access works if IAM or the resource policy allows it and there is no explicit deny.",
+    "vi": "Truy cập được nếu IAM hoặc resource policy cho phép và không có explicit deny."
+   },
+   {
+    "en": "Bucket policies are JSON with Resource, Effect, Action and Principal; use them for public access, forced encryption or cross-account access.",
+    "vi": "Bucket policy là JSON gồm Resource, Effect, Action, Principal; dùng cho public access, bắt buộc mã hóa hoặc cross-account."
+   },
+   {
+    "en": "EC2 instances should use IAM roles, not IAM users.",
+    "vi": "EC2 instance nên dùng IAM role, không dùng IAM user."
+   },
+   {
+    "en": "Block Public Access overrides public bucket policies; can be set at account level to prevent data leaks.",
+    "vi": "Block Public Access lấn át bucket policy public; có thể bật ở cấp account để tránh rò rỉ dữ liệu."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon S3",
+    "use": {
+     "en": "Bucket policies control public, cross-account and encryption rules.",
+     "vi": "Bucket policy kiểm soát quy tắc public, cross-account và mã hóa."
+    }
+   },
+   {
+    "name": "AWS IAM",
+    "use": {
+     "en": "User and role permissions for S3 API calls.",
+     "vi": "Quyền user và role cho các API call của S3."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Request to S3 object\"] --> B[\"IAM policy allows?\"]\n  A --> C[\"Bucket policy allows?\"]\n  B --> D[\"No explicit deny?\"]\n  C --> D\n  D --> E[\"Access granted\"]",
+   "vi": "flowchart TD\n  A[\"Request tới object S3\"] --> B[\"IAM policy cho phép?\"]\n  A --> C[\"Bucket policy cho phép?\"]\n  B --> D[\"Không có explicit deny?\"]\n  C --> D\n  D --> E[\"Cho phép truy cập\"]"
+  }
+ },
+ "02-011": {
+  "tldr": {
+   "en": "Hands-on: turn off Block Public Access, then attach a bucket policy generated with the AWS Policy Generator to make objects public.",
+   "vi": "Thực hành: tắt Block Public Access, rồi gắn bucket policy tạo bằng AWS Policy Generator để public object."
+  },
+  "points": [
+   {
+    "en": "Step 1: untick Block Public Access, a dangerous action for real company data.",
+    "vi": "Bước 1: bỏ chọn Block Public Access, hành động nguy hiểm với dữ liệu thật của công ty."
+   },
+   {
+    "en": "Step 2: policy with Effect Allow, Principal star, Action s3:GetObject.",
+    "vi": "Bước 2: policy với Effect Allow, Principal dấu sao, Action s3:GetObject."
+   },
+   {
+    "en": "The resource ARN needs bucket ARN plus slash star, because GetObject applies to objects inside the bucket.",
+    "vi": "Resource ARN cần ARN của bucket cộng /*, vì GetObject áp dụng cho object bên trong bucket."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon S3",
+    "use": {
+     "en": "Public bucket policy lets anyone read objects.",
+     "vi": "Bucket policy public cho phép mọi người đọc object."
+    }
+   }
+  ]
+ },
+ "02-012": {
+  "tldr": {
+   "en": "S3 versioning is enabled per bucket and keeps every overwritten object as a new version, protecting against deletes and enabling rollback.",
+   "vi": "S3 versioning bật theo bucket, giữ mỗi lần ghi đè thành một version mới, bảo vệ khỏi xóa nhầm và cho phép rollback."
+  },
+  "points": [
+   {
+    "en": "Each overwrite of a key creates a new version; best practice is to enable it.",
+    "vi": "Mỗi lần ghi đè key tạo một version mới; nên bật như best practice."
+   },
+   {
+    "en": "Deleting just adds a delete marker, so previous versions can be restored.",
+    "vi": "Xóa chỉ thêm delete marker nên có thể khôi phục version cũ."
+   },
+   {
+    "en": "Objects uploaded before enabling versioning get version null.",
+    "vi": "Object upload trước khi bật versioning có version null."
+   },
+   {
+    "en": "Suspending versioning does not delete existing versions.",
+    "vi": "Tạm dừng versioning không xóa các version đã có."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon S3 Versioning",
+    "use": {
+     "en": "Protects against accidental deletes and allows rollback.",
+     "vi": "Bảo vệ khỏi xóa nhầm và cho phép rollback."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Upload key v1\"] --> B[\"Overwrite: v2\"]\n  B --> C[\"Delete: delete marker\"]\n  C -->|\"remove marker\"| B",
+   "vi": "flowchart LR\n  A[\"Upload key v1\"] --> B[\"Ghi đè: v2\"]\n  B --> C[\"Xóa: delete marker\"]\n  C -->|\"gỡ marker\"| B"
+  }
+ },
+ "02-013": {
+  "tldr": {
+   "en": "Hands-on: enable versioning, overwrite a file to create a new version, roll back by deleting a version, and restore by removing a delete marker.",
+   "vi": "Thực hành: bật versioning, ghi đè file để tạo version mới, rollback bằng cách xóa version, và khôi phục bằng cách gỡ delete marker."
+  },
+  "points": [
+   {
+    "en": "Enable it under bucket Properties; use the Show versions toggle to see version IDs.",
+    "vi": "Bật trong Properties của bucket; dùng nút Show versions để xem version ID."
+   },
+   {
+    "en": "Files uploaded before versioning show version ID null.",
+    "vi": "File upload trước khi bật versioning có version ID null."
+   },
+   {
+    "en": "Deleting a specific version ID is a permanent delete and acts as a rollback.",
+    "vi": "Xóa một version ID cụ thể là permanent delete và đóng vai trò rollback."
+   },
+   {
+    "en": "A normal delete adds a delete marker (404 on access); deleting the marker restores the object.",
+    "vi": "Xóa thông thường thêm delete marker (truy cập báo 404); xóa marker sẽ khôi phục object."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon S3 Versioning",
+    "use": {
+     "en": "Rollback and recovery of overwritten or deleted objects.",
+     "vi": "Rollback và khôi phục object bị ghi đè hoặc bị xóa."
+    }
+   }
+  ]
+ },
+ "02-014": {
+  "tldr": {
+   "en": "S3 replication copies objects asynchronously between buckets: CRR across regions, SRR within one region. Versioning is required on both.",
+   "vi": "S3 replication sao chép object bất đồng bộ giữa các bucket: CRR khác region, SRR cùng region. Cả hai bucket phải bật versioning."
+  },
+  "points": [
+   {
+    "en": "Needs versioning on source and destination, plus IAM permissions for S3 to read and write the buckets.",
+    "vi": "Cần versioning ở bucket nguồn và đích, cùng quyền IAM để S3 đọc và ghi các bucket."
+   },
+   {
+    "en": "Buckets can be in different AWS accounts; copying is asynchronous.",
+    "vi": "Bucket có thể ở khác AWS account; việc sao chép là bất đồng bộ."
+   },
+   {
+    "en": "CRR use cases: compliance, lower latency, cross-account copies.",
+    "vi": "Use case CRR: tuân thủ, độ trễ thấp hơn, sao chép cross-account."
+   },
+   {
+    "en": "SRR use cases: aggregate logs, live replication between production and test.",
+    "vi": "Use case SRR: gom log, replication trực tiếp giữa production và test."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon S3 Replication",
+    "use": {
+     "en": "CRR and SRR for compliance, latency and log aggregation.",
+     "vi": "CRR và SRR cho tuân thủ, độ trễ và gom log."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Source bucket: versioning on\"] -->|\"CRR: other region\"| B[\"Target bucket: versioning on\"]\n  A -->|\"SRR: same region\"| C[\"Target bucket\"]",
+   "vi": "flowchart LR\n  A[\"Bucket nguồn: bật versioning\"] -->|\"CRR: khác region\"| B[\"Bucket đích: bật versioning\"]\n  A -->|\"SRR: cùng region\"| C[\"Bucket đích\"]"
+  }
+ },
+ "02-015": {
+  "tldr": {
+   "en": "Replication rules only cover new objects; use S3 Batch Replication for existing ones, and know how deletes and chaining behave.",
+   "vi": "Replication chỉ áp dụng cho object mới; dùng S3 Batch Replication cho object cũ, và cần biết cách xử lý delete và chaining."
+  },
+  "points": [
+   {
+    "en": "Only new objects replicate after enabling; S3 Batch Replication copies existing and previously failed objects.",
+    "vi": "Chỉ object mới được replicate sau khi bật; S3 Batch Replication sao chép object cũ và object từng lỗi."
+   },
+   {
+    "en": "Delete markers can optionally replicate; deletes with a version ID are never replicated.",
+    "vi": "Delete marker có thể replicate tùy chọn; xóa theo version ID thì không bao giờ được replicate."
+   },
+   {
+    "en": "There is no chaining: bucket 1 to 2 and 2 to 3 does not copy bucket 1 objects to 3.",
+    "vi": "Không có chaining: bucket 1 sang 2 và 2 sang 3 thì object của bucket 1 không tới bucket 3."
+   }
+  ],
+  "services": [
+   {
+    "name": "S3 Batch Replication",
+    "use": {
+     "en": "Replicates existing objects and failed replications.",
+     "vi": "Replicate object có sẵn và object replicate bị lỗi."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Version-ID deletes are not replicated on purpose, to prevent malicious deletes spreading between buckets.",
+   "vi": "Xóa theo version ID cố ý không được replicate để ngăn việc xóa độc hại lan sang bucket khác."
+  }
+ },
+ "02-016": {
+  "tldr": {
+   "en": "Hands-on: create origin and replica buckets with versioning, add a replication rule and an IAM role, and observe delete marker behavior.",
+   "vi": "Thực hành: tạo bucket origin và replica có versioning, thêm replication rule và IAM role, rồi quan sát hành vi của delete marker."
+  },
+  "points": [
+   {
+    "en": "Both buckets need versioning; the rule lives under Management, Replication rules.",
+    "vi": "Cả hai bucket cần versioning; rule nằm ở Management, Replication rules."
+   },
+   {
+    "en": "Existing objects are not replicated unless you opt in via Batch Operations.",
+    "vi": "Object có sẵn không được replicate trừ khi chọn qua Batch Operations."
+   },
+   {
+    "en": "Replicated objects keep the same version IDs; copying took about 10 seconds.",
+    "vi": "Object được replicate giữ nguyên version ID; sao chép mất khoảng 10 giây."
+   },
+   {
+    "en": "Delete marker replication is off by default; permanent deletes of a version are never replicated.",
+    "vi": "Delete marker replication mặc định tắt; permanent delete một version không bao giờ được replicate."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon S3 Replication",
+    "use": {
+     "en": "CRR or SRR configured through replication rules.",
+     "vi": "CRR hoặc SRR cấu hình bằng replication rule."
+    }
+   },
+   {
+    "name": "AWS IAM",
+    "use": {
+     "en": "Role that lets S3 read the source and write the target bucket.",
+     "vi": "Role cho phép S3 đọc bucket nguồn và ghi bucket đích."
+    }
+   }
+  ]
+ },
+ "02-017": {
+  "tldr": {
+   "en": "S3 storage classes trade cost against availability and retrieval speed; durability is 11 nines for all of them.",
+   "vi": "Các storage class của S3 đánh đổi giữa chi phí, availability và tốc độ truy xuất; durability luôn là 11 nines."
+  },
+  "points": [
+   {
+    "en": "Standard: frequent access, 99.99% availability. Standard-IA: infrequent but rapid access, retrieval fee, for DR and backups.",
+    "vi": "Standard: truy cập thường xuyên, availability 99.99%. Standard-IA: ít truy cập nhưng cần nhanh, tính phí truy xuất, cho DR và backup."
+   },
+   {
+    "en": "One Zone-IA: single AZ, data lost if the AZ is destroyed; for secondary copies or re-creatable data.",
+    "vi": "One Zone-IA: một AZ, mất dữ liệu nếu AZ bị phá hủy; cho bản sao phụ hoặc dữ liệu tạo lại được."
+   },
+   {
+    "en": "Glacier Instant: milliseconds, 90-day minimum. Flexible: minutes to 12 hours, 90 days. Deep Archive: 12 or 48 hours, 180 days.",
+    "vi": "Glacier Instant: mili giây, tối thiểu 90 ngày. Flexible: vài phút đến 12 giờ, 90 ngày. Deep Archive: 12 hoặc 48 giờ, 180 ngày."
+   },
+   {
+    "en": "Intelligent-Tiering moves objects automatically by access pattern, with a monitoring fee and no retrieval charges.",
+    "vi": "Intelligent-Tiering tự chuyển object theo mẫu truy cập, có phí monitoring và không phí truy xuất."
+   },
+   {
+    "en": "Change class manually or automate transitions with Lifecycle rules.",
+    "vi": "Đổi class thủ công hoặc tự động hóa bằng Lifecycle rule."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon S3 Storage Classes",
+    "use": {
+     "en": "Pick by access frequency, retrieval time and cost.",
+     "vi": "Chọn theo tần suất truy cập, thời gian truy xuất và chi phí."
+    }
+   },
+   {
+    "name": "Amazon S3 Glacier",
+    "use": {
+     "en": "Archive tiers: Instant Retrieval, Flexible Retrieval, Deep Archive.",
+     "vi": "Các tầng archive: Instant Retrieval, Flexible Retrieval, Deep Archive."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "11 nines durability means storing 10 million objects, you would lose one about every 10,000 years.",
+   "vi": "Durability 11 nines nghĩa là lưu 10 triệu object thì trung bình khoảng 10.000 năm mới mất một object."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Standard\"] --> B[\"Standard-IA\"]\n  B --> C[\"Glacier Instant\"]\n  C --> D[\"Glacier Flexible\"]\n  D --> E[\"Glacier Deep Archive\"]\n  F[\"Intelligent-Tiering: automatic\"] -.-> A",
+   "vi": "flowchart LR\n  A[\"Standard\"] --> B[\"Standard-IA\"]\n  B --> C[\"Glacier Instant\"]\n  C --> D[\"Glacier Flexible\"]\n  D --> E[\"Glacier Deep Archive\"]\n  F[\"Intelligent-Tiering: tự động\"] -.-> A"
+  }
+ },
+ "02-018": {
+  "tldr": {
+   "en": "Hands-on: choose a storage class at upload, change it later, and automate transitions with a lifecycle rule.",
+   "vi": "Thực hành: chọn storage class khi upload, đổi sau đó, và tự động hóa chuyển class bằng lifecycle rule."
+  },
+  "points": [
+   {
+    "en": "Storage class is set per object at upload and can be edited in Properties.",
+    "vi": "Storage class đặt cho từng object lúc upload và sửa được trong Properties."
+   },
+   {
+    "en": "The console lists AZ count, minimum duration, minimum billable size and tiering fees per class.",
+    "vi": "Console liệt kê số AZ, thời gian tối thiểu, kích thước tính phí tối thiểu và phí tiering của mỗi class."
+   },
+   {
+    "en": "Lifecycle rules under Management move objects, e.g. IA at 30 days, Intelligent-Tiering at 60, Glacier at 180.",
+    "vi": "Lifecycle rule trong Management chuyển object, ví dụ IA sau 30 ngày, Intelligent-Tiering sau 60, Glacier sau 180."
+   },
+   {
+    "en": "Reduced Redundancy is deprecated.",
+    "vi": "Reduced Redundancy đã bị loại bỏ."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon S3 Lifecycle",
+    "use": {
+     "en": "Automates transitions between storage classes.",
+     "vi": "Tự động chuyển object giữa các storage class."
+    }
+   }
+  ]
+ },
+ "02-019": {
+  "tldr": {
+   "en": "Lifecycle rules automate transitions between storage classes and expiration of objects, filtered by prefix or tag; S3 Analytics helps pick the timing.",
+   "vi": "Lifecycle rule tự động chuyển storage class và hết hạn object, lọc theo prefix hoặc tag; S3 Analytics giúp chọn thời điểm."
+  },
+  "points": [
+   {
+    "en": "Transition actions move objects to another class after N days; expiration actions delete objects after a set time.",
+    "vi": "Transition action chuyển object sang class khác sau N ngày; expiration action xóa object sau một thời gian."
+   },
+   {
+    "en": "Expiration can also remove old versions and incomplete multi-part uploads.",
+    "vi": "Expiration cũng xóa được version cũ và multi-part upload dang dở."
+   },
+   {
+    "en": "Rules can target the whole bucket, a prefix, or object tags.",
+    "vi": "Rule có thể áp dụng cho cả bucket, một prefix hoặc object tag."
+   },
+   {
+    "en": "Exam scenario: source images in Standard then Glacier at 60 days; thumbnails in One Zone-IA then expire at 60 days.",
+    "vi": "Tình huống đề thi: ảnh gốc ở Standard rồi sang Glacier sau 60 ngày; thumbnail ở One Zone-IA rồi hết hạn sau 60 ngày."
+   },
+   {
+    "en": "S3 Analytics gives a daily CSV report with Standard to Standard-IA recommendations; data appears after 24 to 48 hours.",
+    "vi": "S3 Analytics tạo báo cáo CSV hằng ngày gợi ý Standard sang Standard-IA; dữ liệu xuất hiện sau 24 đến 48 giờ."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon S3 Lifecycle",
+    "use": {
+     "en": "Automates storage class transitions and expiration.",
+     "vi": "Tự động chuyển storage class và xóa object hết hạn."
+    }
+   },
+   {
+    "name": "Amazon S3 Analytics",
+    "use": {
+     "en": "Recommends when to move objects; works for Standard and Standard-IA only.",
+     "vi": "Gợi ý thời điểm chuyển object; chỉ hỗ trợ Standard và Standard-IA."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Standard\"] -->|\"60 days\"| B[\"Standard-IA\"]\n  B -->|\"6 months\"| C[\"Glacier\"]\n  C -->|\"expiration\"| D[\"Deleted\"]",
+   "vi": "flowchart LR\n  A[\"Standard\"] -->|\"60 ngày\"| B[\"Standard-IA\"]\n  B -->|\"6 tháng\"| C[\"Glacier\"]\n  C -->|\"expiration\"| D[\"Bị xóa\"]"
+  }
+ },
+ "02-020": {
+  "tldr": {
+   "en": "Hands-on: build a lifecycle rule with five action types covering current and non-current versions.",
+   "vi": "Thực hành: tạo lifecycle rule với năm loại action cho current và non-current version."
+  },
+  "points": [
+   {
+    "en": "Five actions: transition current versions, transition non-current versions, expire current, delete non-current, clean up expired markers and incomplete multi-part uploads.",
+    "vi": "Năm action: chuyển current version, chuyển non-current version, expire current, xóa non-current, dọn marker hết hạn và multi-part upload dang dở."
+   },
+   {
+    "en": "Non-current versions are objects overwritten by a newer one.",
+    "vi": "Non-current version là object đã bị bản mới hơn ghi đè."
+   },
+   {
+    "en": "The console shows a timeline of what will happen to each version.",
+    "vi": "Console hiển thị timeline những gì sẽ xảy ra với từng version."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon S3 Lifecycle",
+    "use": {
+     "en": "Rule engine for transitions and expirations.",
+     "vi": "Công cụ rule cho transition và expiration."
+    }
+   }
+  ]
+ },
+ "02-021": {
+  "tldr": {
+   "en": "S3 Event Notifications react to bucket events by sending them to SNS, SQS, Lambda, or to EventBridge for richer routing.",
+   "vi": "S3 Event Notification phản ứng với sự kiện bucket bằng cách gửi tới SNS, SQS, Lambda, hoặc EventBridge để định tuyến phong phú hơn."
+  },
+  "points": [
+   {
+    "en": "Events include object created, removed, restored and replication; filter by name such as suffix jpeg.",
+    "vi": "Event gồm object created, removed, restored và replication; lọc theo tên, ví dụ hậu tố jpeg."
+   },
+   {
+    "en": "Targets: SNS topic, SQS queue, Lambda function; delivery is usually within seconds.",
+    "vi": "Đích: SNS topic, SQS queue, Lambda function; thường giao trong vài giây."
+   },
+   {
+    "en": "Permissions use resource policies on the SNS topic, SQS queue or Lambda function, not IAM roles.",
+    "vi": "Quyền dùng resource policy trên SNS topic, SQS queue hoặc Lambda function, không dùng IAM role."
+   },
+   {
+    "en": "All events also go to EventBridge: advanced filtering, multiple destinations, archive, replay, reliable delivery.",
+    "vi": "Mọi event cũng đi vào EventBridge: lọc nâng cao, nhiều đích, archive, replay, giao nhận đáng tin cậy."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon S3 Event Notifications",
+    "use": {
+     "en": "Trigger workflows when objects change, e.g. thumbnail generation.",
+     "vi": "Kích hoạt workflow khi object thay đổi, ví dụ tạo thumbnail."
+    }
+   },
+   {
+    "name": "Amazon SNS",
+    "use": {
+     "en": "Fan-out notification target.",
+     "vi": "Đích thông báo kiểu fan-out."
+    }
+   },
+   {
+    "name": "Amazon SQS",
+    "use": {
+     "en": "Queue target for decoupled processing.",
+     "vi": "Đích dạng queue cho xử lý tách rời."
+    }
+   },
+   {
+    "name": "AWS Lambda",
+    "use": {
+     "en": "Runs code in response to S3 events.",
+     "vi": "Chạy code khi có S3 event."
+    }
+   },
+   {
+    "name": "Amazon EventBridge",
+    "use": {
+     "en": "Advanced filtering and routing to 18+ AWS services.",
+     "vi": "Lọc nâng cao và định tuyến tới hơn 18 dịch vụ AWS."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"S3 bucket event\"] --> B[\"SNS\"]\n  A --> C[\"SQS\"]\n  A --> D[\"Lambda\"]\n  A --> E[\"EventBridge\"]\n  E --> F[\"Step Functions, Kinesis, Firehose\"]",
+   "vi": "flowchart LR\n  A[\"Event của S3 bucket\"] --> B[\"SNS\"]\n  A --> C[\"SQS\"]\n  A --> D[\"Lambda\"]\n  A --> E[\"EventBridge\"]\n  E --> F[\"Step Functions, Kinesis, Firehose\"]"
+  }
+ },
+ "02-022": {
+  "tldr": {
+   "en": "Hands-on: send S3 object-created events to an SQS queue, which first requires an SQS access policy allowing S3.",
+   "vi": "Thực hành: gửi event object-created của S3 tới SQS queue, việc này cần access policy SQS cho phép S3 trước."
+  },
+  "points": [
+   {
+    "en": "Properties has two options: create an event notification, or enable the EventBridge integration.",
+    "vi": "Properties có hai lựa chọn: tạo event notification, hoặc bật tích hợp EventBridge."
+   },
+   {
+    "en": "Saving fails with an unknown error until the SQS access policy allows S3 to send messages.",
+    "vi": "Lưu sẽ lỗi unknown error cho đến khi access policy SQS cho phép S3 gửi message."
+   },
+   {
+    "en": "S3 first sends a test event to verify connectivity.",
+    "vi": "S3 gửi trước một test event để kiểm tra kết nối."
+   },
+   {
+    "en": "Uploading an object produces a message with eventName ObjectCreatedPut and the object key.",
+    "vi": "Upload object tạo message có eventName ObjectCreatedPut và key của object."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon S3 Event Notifications",
+    "use": {
+     "en": "Publish bucket events to a destination.",
+     "vi": "Gửi event của bucket tới một đích."
+    }
+   },
+   {
+    "name": "Amazon SQS",
+    "use": {
+     "en": "Receives the S3 events as messages.",
+     "vi": "Nhận S3 event dưới dạng message."
+    }
+   }
+  ]
+ },
+ "02-023": {
+  "tldr": {
+   "en": "S3 scales automatically with strong per-prefix request rates; speed up with multi-part upload, Transfer Acceleration and byte-range fetches.",
+   "vi": "S3 tự mở rộng với tốc độ request theo prefix rất cao; tăng tốc bằng multi-part upload, Transfer Acceleration và byte-range fetch."
+  },
+  "points": [
+   {
+    "en": "Baseline: 100 to 200 ms first byte; 3,500 PUT/COPY/POST/DELETE and 5,500 GET/HEAD per second per prefix.",
+    "vi": "Baseline: 100 đến 200 ms byte đầu; 3.500 PUT/COPY/POST/DELETE và 5.500 GET/HEAD mỗi giây mỗi prefix."
+   },
+   {
+    "en": "More prefixes means more throughput; there is no limit on prefixes.",
+    "vi": "Nhiều prefix hơn thì throughput cao hơn; số prefix không bị giới hạn."
+   },
+   {
+    "en": "Multi-part upload: recommended above 100 MB, required above 5 GB; parts upload in parallel.",
+    "vi": "Multi-part upload: nên dùng trên 100 MB, bắt buộc trên 5 GB; các phần upload song song."
+   },
+   {
+    "en": "Transfer Acceleration uploads to a nearby edge location, then uses the AWS private network to the bucket.",
+    "vi": "Transfer Acceleration upload tới edge location gần, rồi đi qua mạng riêng AWS tới bucket."
+   },
+   {
+    "en": "Byte-range fetches parallelize downloads, improve retries, or fetch just a header.",
+    "vi": "Byte-range fetch song song hóa download, retry tốt hơn, hoặc chỉ lấy phần header."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon S3 Transfer Acceleration",
+    "use": {
+     "en": "Faster long-distance transfers via edge locations.",
+     "vi": "Truyền xa nhanh hơn qua các edge location."
+    }
+   },
+   {
+    "name": "Amazon S3 Multi-part Upload",
+    "use": {
+     "en": "Parallel upload of large files.",
+     "vi": "Upload song song file lớn."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Spreading reads evenly across 4 prefixes gives about 22,000 GET/HEAD requests per second.",
+   "vi": "Đọc đều trên 4 prefix cho khoảng 22.000 request GET/HEAD mỗi giây."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Client\"] -->|\"public internet\"| B[\"Edge location\"]\n  B -->|\"private AWS network\"| C[\"S3 bucket in target region\"]",
+   "vi": "flowchart LR\n  A[\"Client\"] -->|\"internet công cộng\"| B[\"Edge location\"]\n  B -->|\"mạng riêng AWS\"| C[\"S3 bucket ở region đích\"]"
+  }
+ },
+ "02-024": {
+  "tldr": {
+   "en": "S3 offers SSE-S3, SSE-KMS, SSE-C and client-side encryption; know which fits which need, and force HTTPS with a bucket policy.",
+   "vi": "S3 có SSE-S3, SSE-KMS, SSE-C và client-side encryption; cần biết loại nào hợp nhu cầu nào, và ép HTTPS bằng bucket policy."
+  },
+  "points": [
+   {
+    "en": "SSE-S3: AWS-owned keys, AES-256, default for new buckets; header x-amz-server-side-encryption AES256.",
+    "vi": "SSE-S3: key do AWS sở hữu, AES-256, mặc định cho bucket mới; header x-amz-server-side-encryption AES256."
+   },
+   {
+    "en": "SSE-KMS: you control the key, usage is audited in CloudTrail; reading needs access to the KMS key too.",
+    "vi": "SSE-KMS: bạn kiểm soát key, việc dùng được ghi trong CloudTrail; đọc cần cả quyền với KMS key."
+   },
+   {
+    "en": "SSE-KMS calls count toward KMS quotas (5,000 to 30,000 requests per second); can throttle busy buckets.",
+    "vi": "Lệnh gọi SSE-KMS tính vào quota KMS (5.000 đến 30.000 request mỗi giây); có thể gây throttle bucket tải cao."
+   },
+   {
+    "en": "SSE-C: you supply the key on every request over HTTPS; S3 never stores it.",
+    "vi": "SSE-C: bạn cung cấp key trong mỗi request qua HTTPS; S3 không lưu key."
+   },
+   {
+    "en": "Client-side: client encrypts and manages keys. Force TLS by denying when aws:SecureTransport is false.",
+    "vi": "Client-side: client tự mã hóa và quản lý key. Ép TLS bằng cách deny khi aws:SecureTransport là false."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon S3 Encryption",
+    "use": {
+     "en": "SSE-S3, SSE-KMS, SSE-C or client-side encryption.",
+     "vi": "SSE-S3, SSE-KMS, SSE-C hoặc client-side encryption."
+    }
+   },
+   {
+    "name": "AWS KMS",
+    "use": {
+     "en": "Customer-managed keys for SSE-KMS.",
+     "vi": "Key do khách hàng quản lý cho SSE-KMS."
+    }
+   },
+   {
+    "name": "AWS CloudTrail",
+    "use": {
+     "en": "Logs every use of a KMS key.",
+     "vi": "Ghi lại mọi lần dùng KMS key."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Encrypt S3 objects\"] --> B[\"SSE-S3: AWS owned key\"]\n  A --> C[\"SSE-KMS: KMS key, audited\"]\n  A --> D[\"SSE-C: your key per request\"]\n  A --> E[\"Client-side: you encrypt first\"]",
+   "vi": "flowchart TD\n  A[\"Mã hóa object S3\"] --> B[\"SSE-S3: key của AWS\"]\n  A --> C[\"SSE-KMS: KMS key, có audit\"]\n  A --> D[\"SSE-C: key của bạn mỗi request\"]\n  A --> E[\"Client-side: tự mã hóa trước\"]"
+  }
+ },
+ "02-026": {
+  "tldr": {
+   "en": "Hands-on: set default bucket encryption, check an object's encryption, and override it per object; SSE-C is CLI only.",
+   "vi": "Thực hành: đặt mã hóa mặc định cho bucket, kiểm tra mã hóa của object, và ghi đè theo từng object; SSE-C chỉ dùng được qua CLI."
+  },
+  "points": [
+   {
+    "en": "A bucket must have default encryption: SSE-S3, SSE-KMS or DSSE-KMS.",
+    "vi": "Bucket phải có mã hóa mặc định: SSE-S3, SSE-KMS hoặc DSSE-KMS."
+   },
+   {
+    "en": "Changing an object's encryption creates a new version when versioning is on.",
+    "vi": "Đổi mã hóa của object sẽ tạo version mới khi bật versioning."
+   },
+   {
+    "en": "The default aws/s3 KMS key is free; your own KMS keys cost money each month.",
+    "vi": "KMS key mặc định aws/s3 miễn phí; KMS key tự tạo tốn phí mỗi tháng."
+   },
+   {
+    "en": "Bucket Key reduces KMS API calls (and cost) and applies only to SSE-KMS.",
+    "vi": "Bucket Key giảm số lệnh gọi KMS API (và chi phí), chỉ áp dụng cho SSE-KMS."
+   },
+   {
+    "en": "SSE-C can only be used from the CLI; client-side encryption needs no S3 setting.",
+    "vi": "SSE-C chỉ dùng được từ CLI; client-side encryption không cần cấu hình S3."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS KMS",
+    "use": {
+     "en": "Default aws/s3 key or custom keys for SSE-KMS.",
+     "vi": "Key mặc định aws/s3 hoặc key tự tạo cho SSE-KMS."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "DSSE-KMS is simply dual-layer server-side encryption with KMS.",
+   "vi": "DSSE-KMS đơn giản là mã hóa server-side hai lớp với KMS."
+  }
+ },
+ "02-027": {
+  "tldr": {
+   "en": "All buckets default to SSE-S3, but you can change the default or force encryption headers with a bucket policy.",
+   "vi": "Mọi bucket mặc định dùng SSE-S3, nhưng bạn có thể đổi mặc định hoặc ép header mã hóa bằng bucket policy."
+  },
+  "points": [
+   {
+    "en": "SSE-S3 is applied automatically to new objects; default can be switched, e.g. to SSE-KMS.",
+    "vi": "SSE-S3 tự áp dụng cho object mới; có thể đổi mặc định, ví dụ sang SSE-KMS."
+   },
+   {
+    "en": "A bucket policy can deny PutObject requests that lack the required encryption header (KMS or SSE-C).",
+    "vi": "Bucket policy có thể deny PutObject thiếu header mã hóa yêu cầu (KMS hoặc SSE-C)."
+   },
+   {
+    "en": "Bucket policies are evaluated before default encryption settings.",
+    "vi": "Bucket policy được đánh giá trước cài đặt mã hóa mặc định."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon S3 Default Encryption",
+    "use": {
+     "en": "SSE-S3 by default; policies can enforce a stricter type.",
+     "vi": "Mặc định SSE-S3; policy có thể ép loại chặt hơn."
+    }
+   }
+  ]
+ },
+ "02-028": {
+  "tldr": {
+   "en": "S3 Access Points give each user group its own DNS name and policy, replacing one huge bucket policy.",
+   "vi": "S3 Access Point cho mỗi nhóm người dùng một DNS name và policy riêng, thay vì một bucket policy khổng lồ."
+  },
+  "points": [
+   {
+    "en": "Each access point has its own policy (like a bucket policy) scoped to a prefix, e.g. finance, sales, read-only analytics.",
+    "vi": "Mỗi access point có policy riêng (giống bucket policy) giới hạn theo prefix, ví dụ finance, sales, analytics chỉ đọc."
+   },
+   {
+    "en": "The bucket policy stays simple; security scales through access points.",
+    "vi": "Bucket policy vẫn đơn giản; bảo mật mở rộng qua các access point."
+   },
+   {
+    "en": "Origin can be the internet or a VPC for private access.",
+    "vi": "Origin có thể là internet hoặc VPC để truy cập riêng tư."
+   },
+   {
+    "en": "VPC origin needs a VPC endpoint whose policy allows both the access point and the target bucket.",
+    "vi": "VPC origin cần VPC endpoint có policy cho phép cả access point và bucket đích."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon S3 Access Points",
+    "use": {
+     "en": "Simplify per-team access management at scale.",
+     "vi": "Đơn giản hóa quản lý truy cập theo từng team ở quy mô lớn."
+    }
+   },
+   {
+    "name": "VPC Endpoint",
+    "use": {
+     "en": "Private connection from a VPC to an access point.",
+     "vi": "Kết nối riêng từ VPC tới access point."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Finance users\"] --> B[\"Finance access point\"]\n  C[\"Sales users\"] --> D[\"Sales access point\"]\n  E[\"Analytics users\"] --> F[\"Analytics access point: read only\"]\n  B --> G[\"S3 bucket\"]\n  D --> G\n  F --> G",
+   "vi": "flowchart LR\n  A[\"Người dùng finance\"] --> B[\"Finance access point\"]\n  C[\"Người dùng sales\"] --> D[\"Sales access point\"]\n  E[\"Người dùng analytics\"] --> F[\"Analytics access point: chỉ đọc\"]\n  B --> G[\"S3 bucket\"]\n  D --> G\n  F --> G"
+  }
+ },
+ "02-029": {
+  "tldr": {
+   "en": "S3 Object Lambda transforms an object on the fly as it is retrieved, so one bucket can serve different views of the same data.",
+   "vi": "S3 Object Lambda biến đổi object ngay khi được lấy ra, nên một bucket có thể phục vụ nhiều dạng khác nhau của cùng dữ liệu."
+  },
+  "points": [
+   {
+    "en": "It uses a Lambda function behind an Object Lambda access point on top of a normal access point.",
+    "vi": "Dùng Lambda function phía sau Object Lambda access point đặt trên access point thường."
+   },
+   {
+    "en": "No need to duplicate buckets for each consumer.",
+    "vi": "Không cần nhân bản bucket cho từng bên dùng."
+   },
+   {
+    "en": "Use cases: redact PII for analytics, enrich with a database lookup, convert XML to JSON.",
+    "vi": "Use case: che PII cho analytics, làm giàu dữ liệu bằng tra cứu database, chuyển XML sang JSON."
+   },
+   {
+    "en": "Also resizing or watermarking images per requesting user.",
+    "vi": "Cũng dùng để resize hoặc đóng watermark ảnh theo người yêu cầu."
+   }
+  ],
+  "services": [
+   {
+    "name": "S3 Object Lambda",
+    "use": {
+     "en": "Modify objects on retrieval without copying data.",
+     "vi": "Sửa object khi truy xuất mà không sao chép dữ liệu."
+    }
+   },
+   {
+    "name": "AWS Lambda",
+    "use": {
+     "en": "Runs the redaction or enrichment code.",
+     "vi": "Chạy code che dữ liệu hoặc làm giàu dữ liệu."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Analytics app\"] --> B[\"Object Lambda access point\"]\n  B --> C[\"Lambda: redact PII\"]\n  C --> D[\"S3 bucket\"]\n  E[\"E-commerce app\"] --> D",
+   "vi": "flowchart LR\n  A[\"App analytics\"] --> B[\"Object Lambda access point\"]\n  B --> C[\"Lambda: che PII\"]\n  C --> D[\"S3 bucket\"]\n  E[\"App e-commerce\"] --> D"
+  }
+ },
+ "02-030": {
+  "tldr": {
+   "en": "Amazon EBS is a network block drive for EC2 that persists after instance termination, but is locked to one Availability Zone.",
+   "vi": "Amazon EBS là ổ đĩa block qua mạng cho EC2, dữ liệu còn sau khi instance bị terminate, nhưng bị gắn với một Availability Zone."
+  },
+  "points": [
+   {
+    "en": "Think of it as a network USB stick: detach and reattach to another instance quickly, good for failover.",
+    "vi": "Hãy hình dung như USB qua mạng: gỡ và gắn sang instance khác nhanh, tiện cho failover."
+   },
+   {
+    "en": "Bound to one AZ; move across AZs with a snapshot.",
+    "vi": "Gắn với một AZ; muốn chuyển AZ thì dùng snapshot."
+   },
+   {
+    "en": "Provision capacity and IOPS in advance and pay for it; can increase later.",
+    "vi": "Cấp phát trước dung lượng và IOPS và trả phí theo đó; có thể tăng sau."
+   },
+   {
+    "en": "At this level a volume attaches to one instance at a time; an instance can have many volumes.",
+    "vi": "Ở mức này một volume gắn một instance tại một thời điểm; một instance có thể có nhiều volume."
+   },
+   {
+    "en": "Delete on termination: on for the root volume, off for other volumes by default.",
+    "vi": "Delete on termination: mặc định bật cho root volume, tắt cho volume khác."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon EBS",
+    "use": {
+     "en": "Persistent block storage for EC2 instances.",
+     "vi": "Block storage bền vững cho EC2 instance."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart TD\n  A[\"AZ eu-west-1b\"] --> B[\"EC2 instance\"]\n  B --> C[\"EBS root volume: delete on termination\"]\n  B --> D[\"EBS data volume: kept by default\"]",
+   "vi": "flowchart TD\n  A[\"AZ eu-west-1b\"] --> B[\"EC2 instance\"]\n  B --> C[\"EBS root volume: delete on termination\"]\n  B --> D[\"EBS data volume: mặc định được giữ lại\"]"
+  }
+ },
+ "02-031": {
+  "tldr": {
+   "en": "Hands-on: create and attach an EBS volume, see the AZ restriction, and observe delete on termination.",
+   "vi": "Thực hành: tạo và gắn EBS volume, thấy giới hạn AZ, và quan sát delete on termination."
+  },
+  "points": [
+   {
+    "en": "A new volume must be created in the same AZ as the instance to attach.",
+    "vi": "Volume mới phải tạo cùng AZ với instance mới gắn được."
+   },
+   {
+    "en": "An instance can have several volumes; volumes can exist unattached and be deleted in seconds.",
+    "vi": "Một instance có thể có nhiều volume; volume có thể tồn tại không gắn và xóa trong vài giây."
+   },
+   {
+    "en": "Root volume has delete on termination Yes; the extra volume has No and survives termination.",
+    "vi": "Root volume có delete on termination là Yes; volume thêm có No và còn lại sau khi terminate."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon EBS",
+    "use": {
+     "en": "Create, attach and detach volumes on demand.",
+     "vi": "Tạo, gắn và gỡ volume theo nhu cầu."
+    }
+   }
+  ]
+ },
+ "02-032": {
+  "tldr": {
+   "en": "EBS Elastic Volumes let you change size, type or performance of a live volume with no detach and no downtime.",
+   "vi": "EBS Elastic Volumes cho phép đổi dung lượng, loại hoặc hiệu năng của volume đang chạy mà không cần gỡ hay có downtime."
+  },
+  "points": [
+   {
+    "en": "Use Actions, Modify volume; no need to enable it, most instance types support it.",
+    "vi": "Dùng Actions, Modify volume; không cần bật, hầu hết instance type đều hỗ trợ."
+   },
+   {
+    "en": "You can only increase size, never decrease it.",
+    "vi": "Chỉ tăng được dung lượng, không giảm được."
+   },
+   {
+    "en": "You can switch type on the fly, e.g. gp2 to gp3, and set IOPS and throughput explicitly.",
+    "vi": "Có thể đổi loại ngay lúc chạy, ví dụ gp2 sang gp3, và nên chỉ định IOPS và throughput rõ ràng."
+   },
+   {
+    "en": "Performance attributes can be raised or lowered live.",
+    "vi": "Có thể tăng hoặc giảm thông số hiệu năng ngay lúc chạy."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon EBS Elastic Volumes",
+    "use": {
+     "en": "Resize or retype volumes without downtime.",
+     "vi": "Đổi dung lượng hoặc loại volume mà không downtime."
+    }
+   }
+  ]
+ },
+ "02-033": {
+  "tldr": {
+   "en": "Amazon EFS is a managed, auto-scaling NFS file system that many Linux EC2 instances across AZs can mount at once, at a higher price than EBS.",
+   "vi": "Amazon EFS là NFS được quản lý, tự mở rộng, nhiều EC2 Linux ở nhiều AZ gắn cùng lúc, giá cao hơn EBS."
+  },
+  "points": [
+   {
+    "en": "Multi-AZ shared access over NFS, secured by security groups; Linux only (POSIX); encryption at rest with KMS.",
+    "vi": "Truy cập chung đa AZ qua NFS, bảo vệ bằng security group; chỉ Linux (POSIX); mã hóa at rest bằng KMS."
+   },
+   {
+    "en": "Pay per use, no capacity planning; roughly three times the cost of gp2 EBS.",
+    "vi": "Trả theo mức dùng, không cần lên kế hoạch dung lượng; giá khoảng gấp ba EBS gp2."
+   },
+   {
+    "en": "Performance mode: General Purpose (low latency, default) or Max I/O (higher latency, highly parallel big data).",
+    "vi": "Performance mode: General Purpose (độ trễ thấp, mặc định) hoặc Max I/O (độ trễ cao hơn, song song cao cho big data)."
+   },
+   {
+    "en": "Throughput mode: Bursting, Provisioned, or Elastic (auto-scales, best for unpredictable workloads).",
+    "vi": "Throughput mode: Bursting, Provisioned, hoặc Elastic (tự co giãn, hợp workload khó đoán)."
+   },
+   {
+    "en": "Storage tiers Standard, IA and Archive with lifecycle policies; One Zone options save up to 90% overall.",
+    "vi": "Storage tier Standard, IA và Archive cùng lifecycle policy; tùy chọn One Zone, tổng tiết kiệm đến 90%."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon EFS",
+    "use": {
+     "en": "Shared Linux file system across many instances and AZs.",
+     "vi": "File system Linux dùng chung cho nhiều instance và AZ."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart TD\n  A[\"EFS file system\"] --> B[\"EC2 in AZ a\"]\n  A --> C[\"EC2 in AZ b\"]\n  A --> D[\"EC2 in AZ c\"]",
+   "vi": "flowchart TD\n  A[\"EFS file system\"] --> B[\"EC2 ở AZ a\"]\n  A --> C[\"EC2 ở AZ b\"]\n  A --> D[\"EC2 ở AZ c\"]"
+  }
+ },
+ "02-034": {
+  "tldr": {
+   "en": "Hands-on: create a regional EFS file system, mount it on two EC2 instances in different AZs, and see a file shared between them.",
+   "vi": "Thực hành: tạo EFS file system regional, mount vào hai EC2 ở hai AZ khác nhau, và thấy file được dùng chung."
+  },
+  "points": [
+   {
+    "en": "Choose Regional (multi-AZ, production) or One Zone (cheaper, dev only); keep automatic backups on.",
+    "vi": "Chọn Regional (đa AZ, cho production) hoặc One Zone (rẻ hơn, chỉ cho dev); nên bật automatic backup."
+   },
+   {
+    "en": "Lifecycle management moves files to IA after 30 days and Archive after 90 days, back to Standard on first access.",
+    "vi": "Lifecycle management chuyển file sang IA sau 30 ngày và Archive sau 90 ngày, về Standard khi truy cập lần đầu."
+   },
+   {
+    "en": "Throughput modes: Bursting, Provisioned, Elastic (recommended); Elastic pairs with General Purpose.",
+    "vi": "Throughput mode: Bursting, Provisioned, Elastic (khuyến nghị); Elastic đi cùng General Purpose."
+   },
+   {
+    "en": "Mount targets sit in each AZ; the EC2 wizard auto-creates NFS port 2049 security group rules and mounts via user data.",
+    "vi": "Mount target nằm ở mỗi AZ; EC2 wizard tự tạo rule security group NFS port 2049 và mount qua user data."
+   },
+   {
+    "en": "A file written on instance A in AZ a is immediately visible on instance B in AZ b.",
+    "vi": "File ghi trên instance A ở AZ a thấy ngay trên instance B ở AZ b."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon EFS",
+    "use": {
+     "en": "Shared network file system mounted on multiple instances.",
+     "vi": "File system mạng dùng chung, mount trên nhiều instance."
+    }
+   }
+  ]
+ },
+ "02-035": {
+  "tldr": {
+   "en": "EBS is a single-AZ block volume for one instance; EFS is a multi-AZ shared file system; instance store is lost with the instance.",
+   "vi": "EBS là block volume một AZ cho một instance; EFS là file system dùng chung đa AZ; instance store mất cùng instance."
+  },
+  "points": [
+   {
+    "en": "EBS attaches to one instance at a time (except io1 and io2 Multi-Attach) and is locked to one AZ.",
+    "vi": "EBS gắn một instance tại một thời điểm (trừ Multi-Attach của io1 và io2) và bị khóa theo một AZ."
+   },
+   {
+    "en": "Move an EBS volume across AZs through a snapshot; gp2 IOPS grow with size, gp3 and io1 IOPS are independent.",
+    "vi": "Chuyển EBS giữa các AZ qua snapshot; IOPS gp2 tăng theo dung lượng, gp3 và io1 thì độc lập."
+   },
+   {
+    "en": "EBS root volumes are deleted on termination by default.",
+    "vi": "Root volume EBS mặc định bị xóa khi terminate."
+   },
+   {
+    "en": "EFS: hundreds of Linux instances across AZs via mount targets, pricier, use storage tiers to save.",
+    "vi": "EFS: hàng trăm instance Linux qua nhiều AZ nhờ mount target, đắt hơn, dùng storage tier để tiết kiệm."
+   },
+   {
+    "en": "Instance store is physically attached; data is lost if the instance is lost.",
+    "vi": "Instance store gắn vật lý; mất dữ liệu nếu mất instance."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon EBS",
+    "use": {
+     "en": "Single-instance, single-AZ block storage.",
+     "vi": "Block storage cho một instance, một AZ."
+    }
+   },
+   {
+    "name": "Amazon EFS",
+    "use": {
+     "en": "Shared multi-AZ file storage for Linux.",
+     "vi": "File storage dùng chung đa AZ cho Linux."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"EBS: one AZ, one instance\"] -->|\"snapshot\"| B[\"EBS in another AZ\"]\n  C[\"EFS: many instances, many AZs\"]",
+   "vi": "flowchart LR\n  A[\"EBS: một AZ, một instance\"] -->|\"snapshot\"| B[\"EBS ở AZ khác\"]\n  C[\"EFS: nhiều instance, nhiều AZ\"]"
+  }
+ },
+ "02-036": {
+  "tldr": {
+   "en": "Amazon FSx offers fully managed third-party file systems: Windows File Server, Lustre, NetApp ONTAP and OpenZFS; pick by protocol and use case.",
+   "vi": "Amazon FSx cung cấp các file system bên thứ ba được quản lý: Windows File Server, Lustre, NetApp ONTAP và OpenZFS; chọn theo giao thức và use case."
+  },
+  "points": [
+   {
+    "en": "FSx for Windows File Server: SMB and NTFS, Active Directory, usable from Linux too, Multi-AZ, daily backup to S3.",
+    "vi": "FSx for Windows File Server: SMB và NTFS, Active Directory, dùng được từ Linux, Multi-AZ, backup hằng ngày lên S3."
+   },
+   {
+    "en": "FSx for Lustre: ML and HPC keyword; sub-millisecond latency, integrates with S3 for input and output.",
+    "vi": "FSx for Lustre: từ khóa ML và HPC; độ trễ dưới mili giây, tích hợp S3 cho input và output."
+   },
+   {
+    "en": "Lustre scratch: temporary, no replication, about 6x faster burst; persistent: long-term, replicated within one AZ.",
+    "vi": "Lustre scratch: tạm thời, không replicate, burst nhanh gấp khoảng 6 lần; persistent: lâu dài, replicate trong một AZ."
+   },
+   {
+    "en": "FSx for NetApp ONTAP: NFS, SMB, iSCSI; move ONTAP or NAS workloads; auto-scaling, dedup, instant cloning.",
+    "vi": "FSx for NetApp ONTAP: NFS, SMB, iSCSI; chuyển workload ONTAP hoặc NAS; auto-scaling, dedup, clone tức thì."
+   },
+   {
+    "en": "FSx for OpenZFS: NFS only, move ZFS workloads, up to 1M IOPS, under 0.5 ms latency, no dedup.",
+    "vi": "FSx for OpenZFS: chỉ NFS, chuyển workload ZFS, đến 1 triệu IOPS, độ trễ dưới 0,5 ms, không có dedup."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon FSx for Windows File Server",
+    "use": {
+     "en": "Windows shares over SMB with Active Directory.",
+     "vi": "Windows share qua SMB với Active Directory."
+    }
+   },
+   {
+    "name": "Amazon FSx for Lustre",
+    "use": {
+     "en": "High-performance file system for ML and HPC, linked to S3.",
+     "vi": "File system hiệu năng cao cho ML và HPC, liên kết với S3."
+    }
+   },
+   {
+    "name": "Amazon FSx for NetApp ONTAP",
+    "use": {
+     "en": "Migrate NetApp or NAS workloads; multi-protocol.",
+     "vi": "Chuyển workload NetApp hoặc NAS; đa giao thức."
+    }
+   },
+   {
+    "name": "Amazon FSx for OpenZFS",
+    "use": {
+     "en": "Migrate ZFS workloads over NFS.",
+     "vi": "Chuyển workload ZFS qua NFS."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "The name Lustre comes from Linux plus cluster.",
+   "vi": "Cái tên Lustre đến từ Linux cộng cluster."
+  },
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Need a managed file system?\"] --> B[\"Windows, SMB, AD: FSx for Windows\"]\n  A --> C[\"ML or HPC: FSx for Lustre\"]\n  A --> D[\"NetApp or NAS migration: FSx for ONTAP\"]\n  A --> E[\"ZFS migration: FSx for OpenZFS\"]",
+   "vi": "flowchart TD\n  A[\"Cần file system được quản lý?\"] --> B[\"Windows, SMB, AD: FSx for Windows\"]\n  A --> C[\"ML hoặc HPC: FSx for Lustre\"]\n  A --> D[\"Chuyển NetApp hoặc NAS: FSx for ONTAP\"]\n  A --> E[\"Chuyển ZFS: FSx for OpenZFS\"]"
+  }
+ },
+ "02-037": {
+  "tldr": {
+   "en": "A console tour of the four FSx options: Lustre, Windows File Server, NetApp ONTAP and OpenZFS.",
+   "vi": "Tour trên console qua bốn lựa chọn FSx: Lustre, Windows File Server, NetApp ONTAP và OpenZFS."
+  },
+  "points": [
+   {
+    "en": "Lustre: choose Scratch or Persistent deployment, plus storage type and throughput.",
+    "vi": "Lustre: chọn deployment Scratch hoặc Persistent, cùng storage type và throughput."
+   },
+   {
+    "en": "Windows File Server: Multi-AZ or Single-AZ, SSD or HDD, SMB, Active Directory authentication.",
+    "vi": "Windows File Server: Multi-AZ hoặc Single-AZ, SSD hoặc HDD, SMB, xác thực Active Directory."
+   },
+   {
+    "en": "NetApp ONTAP and OpenZFS: work with Linux, Windows and macOS; ONTAP adds dedup, compression and compaction.",
+    "vi": "NetApp ONTAP và OpenZFS: chạy với Linux, Windows và macOS; ONTAP có thêm dedup, compression và compaction."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon FSx",
+    "use": {
+     "en": "Four managed file system families; know how to choose between them.",
+     "vi": "Bốn họ file system được quản lý; cần biết cách chọn giữa chúng."
+    }
+   }
+  ]
+ },
+ "02-038": {
+  "tldr": {
+   "en": "Kinesis Data Streams collects and stores streaming data in real time; producers write to shards, consumers read and can replay.",
+   "vi": "Kinesis Data Streams thu thập và lưu dữ liệu streaming real-time; producer ghi vào shard, consumer đọc và có thể replay."
+  },
+  "points": [
+   {
+    "en": "Keyword real-time. Producers: your app code, SDK, KPL, or Kinesis Agent for logs and metrics.",
+    "vi": "Từ khóa real-time. Producer: code app, SDK, KPL hoặc Kinesis Agent cho log và metric."
+   },
+   {
+    "en": "Consumers: your app (KCL), Lambda, Amazon Data Firehose, Managed Service for Apache Flink.",
+    "vi": "Consumer: app của bạn (KCL), Lambda, Amazon Data Firehose, Managed Service for Apache Flink."
+   },
+   {
+    "en": "Retention up to 365 days, replay supported, data cannot be deleted before it expires; same partition key keeps order.",
+    "vi": "Lưu giữ đến 365 ngày, hỗ trợ replay, không xóa được trước khi hết hạn; cùng partition key thì giữ thứ tự."
+   },
+   {
+    "en": "Provisioned mode: per shard 1 MB/s or 1,000 records/s in, 2 MB/s out; pay per shard-hour; scale manually.",
+    "vi": "Provisioned mode: mỗi shard 1 MB/s hoặc 1.000 record/s vào, 2 MB/s ra; trả theo shard-giờ; scale thủ công."
+   },
+   {
+    "en": "On-demand mode: default about 4 MB/s or 4,000 records/s, auto-scales on the past 30 days of traffic.",
+    "vi": "On-demand mode: mặc định khoảng 4 MB/s hoặc 4.000 record/s, tự scale theo lưu lượng 30 ngày qua."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Kinesis Data Streams",
+    "use": {
+     "en": "Real-time streaming ingestion with replay.",
+     "vi": "Thu nhận streaming real-time có khả năng replay."
+    }
+   },
+   {
+    "name": "Kinesis Producer Library (KPL)",
+    "use": {
+     "en": "Optimized high-throughput producer.",
+     "vi": "Producer tối ưu cho throughput cao."
+    }
+   },
+   {
+    "name": "Kinesis Client Library (KCL)",
+    "use": {
+     "en": "Optimized consumer application library.",
+     "vi": "Thư viện consumer tối ưu."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Producers: apps, Kinesis Agent\"] --> B[\"Kinesis Data Streams: shards\"]\n  B --> C[\"Consumer app: KCL\"]\n  B --> D[\"Lambda\"]\n  B --> E[\"Amazon Data Firehose\"]\n  B --> F[\"Managed Service for Apache Flink\"]",
+   "vi": "flowchart LR\n  A[\"Producer: app, Kinesis Agent\"] --> B[\"Kinesis Data Streams: shard\"]\n  B --> C[\"App consumer: KCL\"]\n  B --> D[\"Lambda\"]\n  B --> E[\"Amazon Data Firehose\"]\n  B --> F[\"Managed Service for Apache Flink\"]"
+  }
+ },
+ "02-039": {
+  "tldr": {
+   "en": "Hands-on: create a Kinesis data stream, put records with the CLI in CloudShell, then read them back through a shard iterator.",
+   "vi": "Thực hành: tạo Kinesis data stream, put record bằng CLI trong CloudShell, rồi đọc lại qua shard iterator."
+  },
+  "points": [
+   {
+    "en": "Capacity mode is On-demand (auto) or Provisioned (choose shards, use the shard estimator); no free tier.",
+    "vi": "Capacity mode là On-demand (tự động) hoặc Provisioned (chọn shard, dùng shard estimator); không có free tier."
+   },
+   {
+    "en": "Producers: Kinesis Agent, SDK (low level) or KPL (high level); consumers: Firehose, KCL, Lambda, Flink.",
+    "vi": "Producer: Kinesis Agent, SDK (mức thấp) hoặc KPL (mức cao); consumer: Firehose, KCL, Lambda, Flink."
+   },
+   {
+    "en": "put-record takes a stream name, partition key and data; same partition key goes to the same shard.",
+    "vi": "put-record cần tên stream, partition key và data; cùng partition key vào cùng shard."
+   },
+   {
+    "en": "Reading at low level: describe the stream, get a shard iterator (TRIM_HORIZON reads from the start), then get-records; data is base64.",
+    "vi": "Đọc mức thấp: describe stream, lấy shard iterator (TRIM_HORIZON đọc từ đầu), rồi get-records; data dạng base64."
+   },
+   {
+    "en": "Each response returns NextShardIterator to continue where you stopped; KCL handles this for you.",
+    "vi": "Mỗi response trả NextShardIterator để đọc tiếp; KCL xử lý việc này giúp bạn."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Kinesis Data Streams",
+    "use": {
+     "en": "Create stream, put and get records.",
+     "vi": "Tạo stream, put và get record."
+    }
+   },
+   {
+    "name": "AWS CloudShell",
+    "use": {
+     "en": "Free browser CLI with your credentials preloaded.",
+     "vi": "CLI miễn phí trên trình duyệt, đã có sẵn credentials."
+    }
+   }
+  ]
+ },
+ "02-040": {
+  "tldr": {
+   "en": "Amazon Data Firehose is a fully managed, serverless, near real-time service that buffers streaming data and delivers it to S3, Redshift, OpenSearch, partners or HTTP endpoints.",
+   "vi": "Amazon Data Firehose là dịch vụ serverless, được quản lý, near real-time, đệm dữ liệu streaming rồi chuyển tới S3, Redshift, OpenSearch, đối tác hoặc HTTP endpoint."
+  },
+  "points": [
+   {
+    "en": "Near real-time because of its buffer (size or time); the keyword usually points to Firehose.",
+    "vi": "Near real-time vì có buffer (theo kích thước hoặc thời gian); từ khóa này thường trỏ tới Firehose."
+   },
+   {
+    "en": "Sources: SDK, Kinesis Agent, Kinesis Data Streams, CloudWatch logs and events, IoT.",
+    "vi": "Nguồn: SDK, Kinesis Agent, Kinesis Data Streams, CloudWatch logs và events, IoT."
+   },
+   {
+    "en": "Optional Lambda transform; can convert to Parquet or ORC and compress with gzip or snappy; failed data can go to an S3 backup.",
+    "vi": "Có thể transform bằng Lambda; chuyển sang Parquet hoặc ORC và nén gzip hoặc snappy; dữ liệu lỗi có thể ghi vào S3 backup."
+   },
+   {
+    "en": "Streams vs Firehose: Streams needs custom code, real-time, replay, up to 1 year; Firehose is managed, auto-scaling, no storage, no replay.",
+    "vi": "Streams vs Firehose: Streams cần code riêng, real-time, replay, đến 1 năm; Firehose được quản lý, tự scale, không lưu trữ, không replay."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Data Firehose",
+    "use": {
+     "en": "Load streaming data into S3, Redshift, OpenSearch and partners without managing servers.",
+     "vi": "Nạp dữ liệu streaming vào S3, Redshift, OpenSearch và đối tác mà không quản lý server."
+    }
+   },
+   {
+    "name": "AWS Lambda",
+    "use": {
+     "en": "Optional custom transformation inside Firehose.",
+     "vi": "Transform tùy chỉnh tùy chọn bên trong Firehose."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Firehose was long called Kinesis Data Firehose; it was renamed because it does far more than Kinesis.",
+   "vi": "Firehose từng có tên Kinesis Data Firehose; được đổi tên vì nó làm nhiều việc hơn hẳn Kinesis."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Producers, Kinesis Data Streams, CloudWatch\"] --> B[\"Amazon Data Firehose: buffer\"]\n  B -->|\"optional\"| C[\"Lambda transform\"]\n  C --> D[\"S3, Redshift, OpenSearch, HTTP\"]\n  B --> D",
+   "vi": "flowchart LR\n  A[\"Producer, Kinesis Data Streams, CloudWatch\"] --> B[\"Amazon Data Firehose: buffer\"]\n  B -->|\"tùy chọn\"| C[\"Lambda transform\"]\n  C --> D[\"S3, Redshift, OpenSearch, HTTP\"]\n  B --> D"
+  }
+ },
+ "02-041": {
+  "tldr": {
+   "en": "Exam scenarios ask how to fix slow or failing Kinesis producers and consumers; the usual answers are fix hot shards, add shards, batch, retry with backoff, or use enhanced fan-out.",
+   "vi": "Đề thi hay hỏi cách xử lý producer và consumer Kinesis chậm hoặc lỗi; đáp án thường là sửa hot shard, thêm shard, batch, retry có backoff hoặc dùng enhanced fan-out."
+  },
+  "points": [
+   {
+    "en": "Slow producers: check for throughput exceptions and service or shard limits; hot shards need a better partition key.",
+    "vi": "Producer chậm: kiểm tra throughput exception và giới hạn service hoặc shard; hot shard cần partition key tốt hơn."
+   },
+   {
+    "en": "Batch with KPL and PutRecords, or aggregate records; handle 500 and 503 errors with retries.",
+    "vi": "Batch bằng KPL và PutRecords, hoặc gộp record; xử lý lỗi 500 và 503 bằng retry."
+   },
+   {
+    "en": "Throttling: use exponential backoff, rate limiting, enhanced shard-level monitoring and random partition keys.",
+    "vi": "Throttling: dùng exponential backoff, rate limiting, enhanced monitoring cấp shard và partition key ngẫu nhiên."
+   },
+   {
+    "en": "Slow consumers: add shards, raise max records per call, test an empty processor, and watch iterator age metrics.",
+    "vi": "Consumer chậm: thêm shard, tăng max records mỗi lần gọi, thử processor rỗng, và theo dõi metric iterator age."
+   },
+   {
+    "en": "ReadProvisionedThroughputExceeded: reshard, shrink GetRecords, or use enhanced fan-out. Lambda not invoked: check execution role.",
+    "vi": "ReadProvisionedThroughputExceeded: reshard, giảm GetRecords, hoặc dùng enhanced fan-out. Lambda không chạy: kiểm tra execution role."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Kinesis Data Streams",
+    "use": {
+     "en": "Troubleshooting producer and consumer throughput.",
+     "vi": "Xử lý sự cố throughput của producer và consumer."
+    }
+   },
+   {
+    "name": "Kinesis enhanced fan-out",
+    "use": {
+     "en": "Dedicated throughput per consumer to avoid read throttling.",
+     "vi": "Throughput riêng cho từng consumer để tránh throttling khi đọc."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "An empty GetRecords result on the consumer side is completely normal; just keep calling.",
+   "vi": "Consumer nhận GetRecords rỗng là hoàn toàn bình thường; cứ gọi tiếp."
+  },
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Kinesis problem\"] --> B[\"Producer slow: hot shard, limits\"]\n  A --> C[\"Throttled: backoff, more shards\"]\n  A --> D[\"Consumer behind: add shards, check iterator age\"]\n  A --> E[\"Read throttled: enhanced fan-out\"]",
+   "vi": "flowchart TD\n  A[\"Sự cố Kinesis\"] --> B[\"Producer chậm: hot shard, giới hạn\"]\n  A --> C[\"Bị throttle: backoff, thêm shard\"]\n  A --> D[\"Consumer trễ: thêm shard, xem iterator age\"]\n  A --> E[\"Đọc bị throttle: enhanced fan-out\"]"
+  }
+ },
+ "02-042": {
+  "tldr": {
+   "en": "Managed Service for Apache Flink (formerly Kinesis Data Analytics) runs your Flink applications on streams from Kinesis or MSK; the older SQL version is fading.",
+   "vi": "Managed Service for Apache Flink (trước là Kinesis Data Analytics) chạy ứng dụng Flink trên stream từ Kinesis hoặc MSK; bản SQL cũ đang mờ dần."
+  },
+  "points": [
+   {
+    "en": "Kinesis Data Analytics for SQL applied SQL to streams, with S3 reference tables for lookups; likely to be deprecated.",
+    "vi": "Kinesis Data Analytics for SQL áp SQL lên stream, dùng bảng tham chiếu trên S3 để tra cứu; có thể sắp bị loại bỏ."
+   },
+   {
+    "en": "Managed Service for Apache Flink: serverless; you upload your Flink app (Java, Python, Scala) from S3.",
+    "vi": "Managed Service for Apache Flink: serverless; bạn upload ứng dụng Flink (Java, Python, Scala) từ S3."
+   },
+   {
+    "en": "Table API gives SQL access, replacing the SQL product.",
+    "vi": "Table API cho truy cập SQL, thay thế sản phẩm SQL."
+   },
+   {
+    "en": "Sources: Kinesis Data Streams or MSK; sinks: S3, Kinesis Data Streams, Firehose.",
+    "vi": "Nguồn: Kinesis Data Streams hoặc MSK; đích: S3, Kinesis Data Streams, Firehose."
+   },
+   {
+    "en": "Use cases: streaming ETL, continuous metric generation, responsive real-time analytics.",
+    "vi": "Use case: streaming ETL, tạo metric liên tục, analytics real-time phản hồi nhanh."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Managed Service for Apache Flink",
+    "use": {
+     "en": "Run Flink stream processing without managing infrastructure.",
+     "vi": "Chạy xử lý stream bằng Flink mà không quản lý hạ tầng."
+    }
+   },
+   {
+    "name": "Amazon MSK",
+    "use": {
+     "en": "Managed Kafka as a Flink source.",
+     "vi": "Kafka được quản lý làm nguồn cho Flink."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "The service always ran Apache Flink under the hood; the renames just stopped hiding it.",
+   "vi": "Dịch vụ này luôn chạy Apache Flink bên dưới; các lần đổi tên chỉ là thôi không che giấu nữa."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Kinesis Data Streams or MSK\"] --> B[\"Managed Service for Apache Flink: app from S3\"]\n  B --> C[\"S3\"]\n  B --> D[\"Kinesis Data Streams\"]\n  B --> E[\"Firehose\"]",
+   "vi": "flowchart LR\n  A[\"Kinesis Data Streams hoặc MSK\"] --> B[\"Managed Service for Apache Flink: app từ S3\"]\n  B --> C[\"S3\"]\n  B --> D[\"Kinesis Data Streams\"]\n  B --> E[\"Firehose\"]"
+  }
+ },
+ "02-043": {
+  "tldr": {
+   "en": "Hands-on tour of Managed Service for Apache Flink using a blueprint, with a strong warning to delete everything afterward because it is not free.",
+   "vi": "Tour thực hành Managed Service for Apache Flink bằng blueprint, kèm cảnh báo mạnh phải xóa mọi thứ sau đó vì dịch vụ này không miễn phí."
+  },
+  "points": [
+   {
+    "en": "Two options: streaming applications (upload your Flink jar) or Studio notebooks for interactive queries.",
+    "vi": "Hai lựa chọn: streaming application (upload jar Flink) hoặc Studio notebook để truy vấn tương tác."
+   },
+   {
+    "en": "The blueprint deploys via CloudFormation: Kinesis stream, Flink app and an S3 bucket for the jar and output.",
+    "vi": "Blueprint triển khai qua CloudFormation: Kinesis stream, app Flink và S3 bucket chứa jar và output."
+   },
+   {
+    "en": "Monitor in CloudWatch, take snapshots of app state, or open the Apache Flink dashboard.",
+    "vi": "Giám sát bằng CloudWatch, tạo snapshot trạng thái app, hoặc mở dashboard Apache Flink."
+   },
+   {
+    "en": "Cleanup: stop the app, delete both CloudFormation stacks and the Kinesis stream, which keeps billing.",
+    "vi": "Dọn dẹp: dừng app, xóa cả hai CloudFormation stack và Kinesis stream, thứ vẫn tiếp tục tính phí."
+   },
+   {
+    "en": "Query the S3 output with Athena; S3 Select is being deprecated.",
+    "vi": "Truy vấn output trên S3 bằng Athena; S3 Select đang bị loại bỏ."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Managed Service for Apache Flink",
+    "use": {
+     "en": "Flink apps or Studio notebooks over streams.",
+     "vi": "App Flink hoặc Studio notebook trên stream."
+    }
+   },
+   {
+    "name": "AWS CloudFormation",
+    "use": {
+     "en": "Deploys the blueprint stacks.",
+     "vi": "Triển khai các stack của blueprint."
+    }
+   },
+   {
+    "name": "Amazon Athena",
+    "use": {
+     "en": "Query the S3 output interactively.",
+     "vi": "Truy vấn output trên S3 theo kiểu tương tác."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Stopping the Flink app was not enough: the Kinesis stream kept running and billing until deleted explicitly.",
+   "vi": "Chỉ dừng app Flink là chưa đủ: Kinesis stream vẫn chạy và tính phí cho đến khi xóa rõ ràng."
+  }
+ },
+ "02-044": {
+  "tldr": {
+   "en": "Kinesis Data Analytics is serverless but not cheap; its RANDOM_CUT_FOREST SQL function is the go-to answer for anomaly detection on a stream.",
+   "vi": "Kinesis Data Analytics là serverless nhưng không rẻ; hàm SQL RANDOM_CUT_FOREST là đáp án quen thuộc cho phát hiện bất thường trên stream."
+  },
+  "points": [
+   {
+    "en": "Serverless, auto-scaling, pay for resources used; shut down jobs when finished.",
+    "vi": "Serverless, tự scale, trả theo tài nguyên dùng; nhớ tắt job khi xong."
+   },
+   {
+    "en": "IAM permissions let the application reach its source and destination services.",
+    "vi": "IAM permission cho phép ứng dụng truy cập dịch vụ nguồn và đích."
+   },
+   {
+    "en": "Schema Discovery analyzes the incoming stream and infers column names and schema, which you can edit.",
+    "vi": "Schema Discovery phân tích stream đầu vào và suy ra tên cột và schema, bạn có thể chỉnh sửa."
+   },
+   {
+    "en": "RANDOM_CUT_FOREST detects anomalies or outliers in numeric columns of a stream.",
+    "vi": "RANDOM_CUT_FOREST phát hiện bất thường hoặc outlier trên các cột số của stream."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Kinesis Data Analytics",
+    "use": {
+     "en": "Streaming SQL, with RANDOM_CUT_FOREST for stream anomaly detection.",
+     "vi": "SQL trên stream, có RANDOM_CUT_FOREST để phát hiện bất thường trên stream."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "AWS showcased random cut forest by spotting anomalous subway ridership during the New York City Marathon.",
+   "vi": "AWS minh họa random cut forest bằng việc phát hiện lượng khách tàu điện ngầm bất thường trong cuộc thi New York City Marathon."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Kinesis stream\"] --> B[\"Kinesis Data Analytics: RANDOM_CUT_FOREST\"]\n  B --> C[\"Anomaly score output\"]",
+   "vi": "flowchart LR\n  A[\"Kinesis stream\"] --> B[\"Kinesis Data Analytics: RANDOM_CUT_FOREST\"]\n  B --> C[\"Output điểm bất thường\"]"
+  }
+ },
+ "02-045": {
+  "tldr": {
+   "en": "Amazon MSK is fully managed Apache Kafka, an alternative to Kinesis that is far more configurable; know its architecture and security options.",
+   "vi": "Amazon MSK là Apache Kafka được quản lý hoàn toàn, thay thế Kinesis với khả năng cấu hình linh hoạt hơn nhiều; cần biết kiến trúc và tùy chọn bảo mật."
+  },
+  "points": [
+   {
+    "en": "MSK creates and manages Kafka brokers and ZooKeeper nodes in your VPC, multi-AZ (up to 3), data on EBS (1 GB to 16 TB).",
+    "vi": "MSK tạo và quản lý Kafka broker và ZooKeeper trong VPC của bạn, đa AZ (tối đa 3), dữ liệu trên EBS (1 GB đến 16 TB)."
+   },
+   {
+    "en": "Producers write to Kafka topics (replicated); consumers pull and send to EMR, S3, SageMaker, Kinesis, RDS and more.",
+    "vi": "Producer ghi vào Kafka topic (có replicate); consumer kéo dữ liệu và gửi tới EMR, S3, SageMaker, Kinesis, RDS và hơn nữa."
+   },
+   {
+    "en": "Configurable: default message size is 1 MB but can be raised, e.g. to 10 MB.",
+    "vi": "Cấu hình được: kích thước message mặc định 1 MB nhưng có thể tăng, ví dụ lên 10 MB."
+   },
+   {
+    "en": "Auth options: mutual TLS or SASL/SCRAM with Kafka ACLs for authorization, or IAM Access Control for both.",
+    "vi": "Tùy chọn xác thực: mutual TLS hoặc SASL/SCRAM kèm Kafka ACL để phân quyền, hoặc IAM Access Control cho cả hai."
+   },
+   {
+    "en": "TLS in flight and KMS at rest are on by default; Kafka ACLs cannot be managed with IAM policies.",
+    "vi": "TLS in flight và KMS at rest bật mặc định; Kafka ACL không quản lý được bằng IAM policy."
+   },
+   {
+    "en": "Monitoring: CloudWatch (basic, enhanced, topic level), Prometheus, broker logs to CloudWatch Logs, S3 or Kinesis.",
+    "vi": "Giám sát: CloudWatch (basic, enhanced, topic level), Prometheus, broker log tới CloudWatch Logs, S3 hoặc Kinesis."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon MSK",
+    "use": {
+     "en": "Managed Apache Kafka; pick it when Kafka compatibility or big messages are needed.",
+     "vi": "Apache Kafka được quản lý; chọn khi cần tương thích Kafka hoặc message lớn."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Producers\"] --> B[\"MSK cluster: Kafka topics\"]\n  B --> C[\"Consumers\"]\n  C --> D[\"S3, EMR, SageMaker, Kinesis, RDS\"]",
+   "vi": "flowchart LR\n  A[\"Producer\"] --> B[\"MSK cluster: Kafka topic\"]\n  B --> C[\"Consumer\"]\n  C --> D[\"S3, EMR, SageMaker, Kinesis, RDS\"]"
+  }
+ },
+ "02-046": {
+  "tldr": {
+   "en": "MSK Connect runs Kafka Connect connectors as a managed, auto-scaling service so you can move data in and out of Kafka without managing infrastructure.",
+   "vi": "MSK Connect chạy Kafka Connect connector dưới dạng dịch vụ được quản lý, tự scale, giúp chuyển dữ liệu vào ra Kafka mà không phải quản lý hạ tầng."
+  },
+  "points": [
+   {
+    "en": "Kafka Connect moves data between Kafka and other systems; MSK Connect hosts the workers for you.",
+    "vi": "Kafka Connect chuyển dữ liệu giữa Kafka và hệ thống khác; MSK Connect lo phần worker."
+   },
+   {
+    "en": "Deploy any connector as a plugin: S3, Redshift, OpenSearch, Debezium and others.",
+    "vi": "Triển khai connector bất kỳ như plugin: S3, Redshift, OpenSearch, Debezium và các loại khác."
+   },
+   {
+    "en": "Priced per worker per hour.",
+    "vi": "Tính phí theo worker mỗi giờ."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon MSK Connect",
+    "use": {
+     "en": "Managed Kafka Connect, e.g. MSK topic to S3 sink.",
+     "vi": "Kafka Connect được quản lý, ví dụ từ MSK topic sang S3."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"MSK cluster\"] --> B[\"MSK Connect workers with S3 connector\"]\n  B --> C[\"Amazon S3\"]",
+   "vi": "flowchart LR\n  A[\"MSK cluster\"] --> B[\"MSK Connect worker với S3 connector\"]\n  B --> C[\"Amazon S3\"]"
+  }
+ },
+ "02-047": {
+  "tldr": {
+   "en": "MSK Serverless runs Kafka without capacity management: you define topics and partitions, and AWS scales compute and storage.",
+   "vi": "MSK Serverless chạy Kafka mà không phải quản lý capacity: bạn chỉ định nghĩa topic và partition, AWS tự scale compute và storage."
+  },
+  "points": [
+   {
+    "en": "No provisioning: MSK scales compute and storage automatically.",
+    "vi": "Không cần cấp phát: MSK tự scale compute và storage."
+   },
+   {
+    "en": "Security uses IAM Access Control.",
+    "vi": "Bảo mật dùng IAM Access Control."
+   },
+   {
+    "en": "Pricing is per cluster-hour, per partition-hour, plus storage and data in and out.",
+    "vi": "Giá tính theo cluster-giờ, partition-giờ, cộng storage và dữ liệu vào ra."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon MSK Serverless",
+    "use": {
+     "en": "Kafka with no capacity planning.",
+     "vi": "Kafka không cần lên kế hoạch capacity."
+    }
+   }
+  ]
+ },
+ "02-048": {
+  "tldr": {
+   "en": "Kinesis Data Streams is usually the exam answer, but choose Amazon MSK when you need Kafka-style flexibility such as larger messages.",
+   "vi": "Kinesis Data Streams thường là đáp án của đề, nhưng chọn Amazon MSK khi cần sự linh hoạt kiểu Kafka như message lớn."
+  },
+  "points": [
+   {
+    "en": "Message size: Kinesis up to 10 MB; MSK 1 MB default but configurable higher (e.g. 10 MB).",
+    "vi": "Kích thước message: Kinesis đến 10 MB; MSK mặc định 1 MB nhưng cấu hình tăng được (ví dụ 10 MB)."
+   },
+   {
+    "en": "Kinesis has shards (split and merge); MSK has topics with partitions (you can only add partitions).",
+    "vi": "Kinesis có shard (split và merge); MSK có topic với partition (chỉ thêm được partition)."
+   },
+   {
+    "en": "Encryption: Kinesis is TLS by default; MSK allows plaintext or TLS; both use KMS at rest.",
+    "vi": "Mã hóa: Kinesis mặc định TLS; MSK cho phép plaintext hoặc TLS; cả hai dùng KMS at rest."
+   },
+   {
+    "en": "Security: Kinesis uses IAM; MSK uses mutual TLS or SASL/SCRAM with Kafka ACLs, or IAM Access Control.",
+    "vi": "Bảo mật: Kinesis dùng IAM; MSK dùng mutual TLS hoặc SASL/SCRAM với Kafka ACL, hoặc IAM Access Control."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Kinesis Data Streams",
+    "use": {
+     "en": "Default choice for AWS streaming ingestion.",
+     "vi": "Lựa chọn mặc định cho streaming ingestion trên AWS."
+    }
+   },
+   {
+    "name": "Amazon MSK",
+    "use": {
+     "en": "Pick for configurable Kafka and special cases.",
+     "vi": "Chọn khi cần Kafka cấu hình được và các trường hợp đặc biệt."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Streaming ingestion?\"] --> B[\"Default: Kinesis Data Streams\"]\n  A --> C[\"Kafka compatibility or config needs: Amazon MSK\"]",
+   "vi": "flowchart TD\n  A[\"Streaming ingestion?\"] --> B[\"Mặc định: Kinesis Data Streams\"]\n  A --> C[\"Cần tương thích Kafka hoặc cấu hình riêng: Amazon MSK\"]"
+  }
+ }
+}

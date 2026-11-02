@@ -1,0 +1,554 @@
+{
+ "07-001": {
+  "tldr": {
+   "en": "Large language models are built on the transformer architecture; this section explains how they work, with SageMaker labs.",
+   "vi": "Large language model được xây trên kiến trúc transformer; phần này giải thích cách chúng hoạt động, kèm lab SageMaker."
+  },
+  "points": [
+   {
+    "en": "Transformers underlie LLMs such as GPT and Claude.",
+    "vi": "Transformer là nền tảng của các LLM như GPT và Claude."
+   },
+   {
+    "en": "The exam may not need the details, but background helps before using LLMs.",
+    "vi": "Đề thi có thể không cần chi tiết, nhưng kiến thức nền giúp ích trước khi dùng LLM."
+   },
+   {
+    "en": "Hands-on labs in SageMaker show generative AI under the hood.",
+    "vi": "Các lab thực hành trên SageMaker cho thấy generative AI hoạt động bên trong ra sao."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon SageMaker",
+    "use": {
+     "en": "Used for the hands-on transformer labs.",
+     "vi": "Dùng cho các lab thực hành về transformer."
+    }
+   }
+  ]
+ },
+ "07-002": {
+  "tldr": {
+   "en": "Transformers replaced RNN encoder-decoders by using self-attention and feedforward networks, which can be processed in parallel and trained on huge data.",
+   "vi": "Transformer thay thế RNN encoder-decoder bằng self-attention và feedforward network, xử lý song song được và huấn luyện trên dữ liệu khổng lồ."
+  },
+  "points": [
+   {
+    "en": "RNN encoder-decoder squeezes a sentence into one final hidden state, an information bottleneck for long text.",
+    "vi": "RNN encoder-decoder nén cả câu vào một hidden state cuối, gây nghẽn thông tin với văn bản dài."
+   },
+   {
+    "en": "The 2017 paper Attention Is All You Need keeps a hidden state per token so the decoder can look at all of them.",
+    "vi": "Bài báo Attention Is All You Need (2017) giữ hidden state cho từng token để decoder nhìn được tất cả."
+   },
+   {
+    "en": "Attention weights say which other tokens matter when interpreting a token, giving context.",
+    "vi": "Attention weight cho biết token nào khác quan trọng khi hiểu một token, tạo ngữ cảnh."
+   },
+   {
+    "en": "RNNs with attention are still sequential; transformers drop RNNs for feedforward networks and parallelize.",
+    "vi": "RNN có attention vẫn tuần tự; transformer bỏ RNN, dùng feedforward network và chạy song song."
+   },
+   {
+    "en": "Positional encoding is added because parallel processing loses word order; parallelism enables training on the whole internet.",
+    "vi": "Cần positional encoding vì xử lý song song mất thứ tự từ; song song cho phép train trên cả internet."
+   }
+  ],
+  "services": [
+   {
+    "name": "Transformer architecture",
+    "use": {
+     "en": "Basis of GPT, BERT and other foundation models.",
+     "vi": "Nền tảng của GPT, BERT và các foundation model khác."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "The lecture's translation example goes from English to Klingon, which has no word for please.",
+   "vi": "Ví dụ dịch trong bài là từ tiếng Anh sang Klingon, ngôn ngữ không có từ cho please."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"RNN encoder\"] -->|\"one final hidden state\"| B[\"Bottleneck\"]\n  B --> C[\"RNN decoder\"]\n  D[\"Transformer\"] -->|\"state per token\"| E[\"Self-attention in parallel\"]\n  E --> F[\"Scales to huge data\"]",
+   "vi": "flowchart LR\n  A[\"RNN encoder\"] -->|\"một hidden state cuối\"| B[\"Nút thắt thông tin\"]\n  B --> C[\"RNN decoder\"]\n  D[\"Transformer\"] -->|\"state cho mỗi token\"| E[\"Self-attention song song\"]\n  E --> F[\"Mở rộng với dữ liệu khổng lồ\"]"
+  }
+ },
+ "07-003": {
+  "tldr": {
+   "en": "Self-attention turns each token embedding into a context-aware vector using learned query, key and value matrices.",
+   "vi": "Self-attention biến embedding của mỗi token thành vector có ngữ cảnh bằng các ma trận query, key, value đã học."
+  },
+  "points": [
+   {
+    "en": "Each token embedding is multiplied by learned Q, K, V matrices (trained by backpropagation) to get query, key and value vectors.",
+    "vi": "Embedding mỗi token nhân với các ma trận Q, K, V đã học (bằng backpropagation) để ra vector query, key, value."
+   },
+   {
+    "en": "Scores come from query dot key (scaled dot-product attention), normalized with softmax, then used to weight the values and sum into vector z.",
+    "vi": "Điểm số lấy từ query nhân key (scaled dot-product attention), chuẩn hóa bằng softmax, rồi dùng để trọng số hóa value và cộng thành vector z."
+   },
+   {
+    "en": "Context changes meaning: novel after read points to book; novel next to idea means original.",
+    "vi": "Ngữ cảnh đổi nghĩa: novel đi với read là sách; novel đi với idea là mới lạ."
+   },
+   {
+    "en": "Masked self-attention stops tokens from seeing future tokens; GPT is decoder-only, BERT is encoder-only with masked language modeling.",
+    "vi": "Masked self-attention ngăn token nhìn token tương lai; GPT chỉ có decoder, BERT chỉ có encoder với masked language modeling."
+   },
+   {
+    "en": "Multi-headed attention reshapes Q, K, V vectors into rows (heads) to parallelize further.",
+    "vi": "Multi-headed attention chia vector Q, K, V thành các hàng (head) để song song hóa thêm."
+   }
+  ],
+  "services": [
+   {
+    "name": "GPT",
+    "use": {
+     "en": "Decoder-only transformer using masked self-attention.",
+     "vi": "Transformer chỉ có decoder dùng masked self-attention."
+    }
+   },
+   {
+    "name": "BERT",
+    "use": {
+     "en": "Encoder-only transformer.",
+     "vi": "Transformer chỉ có encoder."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Token embedding\"] --> B[\"Multiply by Q, K, V matrices\"]\n  B --> C[\"Query dot Key = scores\"]\n  C --> D[\"Softmax\"]\n  D --> E[\"Weight the Values and sum\"]\n  E --> F[\"Context-aware vector z\"]",
+   "vi": "flowchart LR\n  A[\"Embedding của token\"] --> B[\"Nhân với ma trận Q, K, V\"]\n  B --> C[\"Query nhân Key = điểm\"]\n  C --> D[\"Softmax\"]\n  D --> E[\"Trọng số hóa Value rồi cộng\"]\n  E --> F[\"Vector z có ngữ cảnh\"]"
+  }
+ },
+ "07-004": {
+  "tldr": {
+   "en": "Transformers power chat, Q&A, classification, summarization, translation, code and text generation, but they sound right without knowing what is true.",
+   "vi": "Transformer dùng cho chat, hỏi đáp, phân loại, tóm tắt, dịch, sinh code và văn bản, nhưng chúng nghe có vẻ đúng mà không biết đâu là sự thật."
+  },
+  "points": [
+   {
+    "en": "A raw transformer is a foundation model; chatbots need extra training for conversation context and moderation.",
+    "vi": "Transformer thô là foundation model; chatbot cần huấn luyện thêm cho ngữ cảnh hội thoại và moderation."
+   },
+   {
+    "en": "Add a layer on top for classification tasks such as sentiment analysis or named entity recognition.",
+    "vi": "Thêm một layer phía trên cho tác vụ phân loại như sentiment analysis hoặc named entity recognition."
+   },
+   {
+    "en": "Summarization, machine translation and code translation are all sequence-to-sequence style tasks.",
+    "vi": "Tóm tắt, dịch máy và dịch code đều là tác vụ kiểu sequence-to-sequence."
+   },
+   {
+    "en": "Models have no sense of truth or experience, so always test their output.",
+    "vi": "Model không có khái niệm sự thật hay trải nghiệm, nên luôn kiểm tra output."
+   },
+   {
+    "en": "Automated customer service can be fine-tuned on past transcripts, but the AI may promise actions nobody performs.",
+    "vi": "Chăm sóc khách hàng tự động có thể fine-tune trên transcript cũ, nhưng AI có thể hứa những việc không ai thực hiện."
+   }
+  ],
+  "services": [
+   {
+    "name": "Foundation model",
+    "use": {
+     "en": "Pre-trained transformer that applications are built on.",
+     "vi": "Transformer đã pre-train làm nền để xây ứng dụng."
+    }
+   }
+  ]
+ },
+ "07-005": {
+  "tldr": {
+   "en": "GPT is a decoder-only transformer that repeatedly predicts the next token; input goes through tokenization, embedding and positional encoding.",
+   "vi": "GPT là transformer chỉ có decoder, liên tục dự đoán token kế tiếp; input đi qua tokenization, embedding và positional encoding."
+  },
+  "points": [
+   {
+    "en": "GPT has only decoder blocks (self-attention then feedforward), stacked hundreds of times; BERT is encoder-only, T5 uses both.",
+    "vi": "GPT chỉ có decoder block (self-attention rồi feedforward), chồng hàng trăm lớp; BERT chỉ encoder, T5 dùng cả hai."
+   },
+   {
+    "en": "There is no real input or output: it just generates the next token again and again from the prompt.",
+    "vi": "Không có input hay output thực sự: nó chỉ sinh token kế tiếp lặp đi lặp lại từ prompt."
+   },
+   {
+    "en": "Training needs no labels: text itself is the answer, predicting the next word of existing sentences.",
+    "vi": "Huấn luyện không cần nhãn: bản thân văn bản là đáp án, dự đoán từ kế tiếp của câu có sẵn."
+   },
+   {
+    "en": "Tokenization turns words or word pieces into numbers; embeddings place similar tokens close in a space of thousands of dimensions.",
+    "vi": "Tokenization biến từ hoặc mảnh từ thành số; embedding đặt các token tương tự gần nhau trong không gian hàng nghìn chiều."
+   },
+   {
+    "en": "Positional encoding uses interleaved sine and cosine waves to tell each token where it sits.",
+    "vi": "Positional encoding dùng sóng sin và cos xen kẽ để cho biết vị trí của mỗi token."
+   }
+  ],
+  "services": [
+   {
+    "name": "GPT-2 via Hugging Face",
+    "use": {
+     "en": "Open model you can import into AWS.",
+     "vi": "Model mở có thể import vào AWS."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "GPT-4 is rumored to have well over 1 trillion parameters, and the tokenizer splits indivisible into three tokens.",
+   "vi": "GPT-4 được đồn có hơn 1 nghìn tỷ tham số, và tokenizer tách từ indivisible thành ba token."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Text prompt\"] --> B[\"Tokenization\"]\n  B --> C[\"Token embedding\"]\n  C --> D[\"Positional encoding\"]\n  D --> E[\"Stack of decoder blocks\"]\n  E --> F[\"Next token\"]\n  F -->|\"append and repeat\"| A",
+   "vi": "flowchart LR\n  A[\"Prompt văn bản\"] --> B[\"Tokenization\"]\n  B --> C[\"Token embedding\"]\n  C --> D[\"Positional encoding\"]\n  D --> E[\"Chồng decoder block\"]\n  E --> F[\"Token kế tiếp\"]\n  F -->|\"nối vào và lặp lại\"| A"
+  }
+ },
+ "07-006": {
+  "tldr": {
+   "en": "GPT output is a probability for every possible next token; temperature controls how randomly one is picked.",
+   "vi": "Output của GPT là xác suất cho mọi token kế tiếp có thể; temperature điều khiển mức ngẫu nhiên khi chọn."
+  },
+  "points": [
+   {
+    "en": "The last decoder block yields an output vector, multiplied by the token embedding matrix to give next-token probabilities.",
+    "vi": "Decoder block cuối cho vector output, nhân với ma trận token embedding để ra xác suất token kế tiếp."
+   },
+   {
+    "en": "Temperature zero always picks the most probable token.",
+    "vi": "Temperature bằng 0 luôn chọn token có xác suất cao nhất."
+   },
+   {
+    "en": "Higher temperature adds randomness, giving varied answers and new ideas.",
+    "vi": "Temperature cao thêm ngẫu nhiên, cho câu trả lời đa dạng và ý tưởng mới."
+   },
+   {
+    "en": "Full pipeline: tokenize, embed, positional encoding, stacked masked self-attention plus feedforward, output probabilities.",
+    "vi": "Toàn bộ pipeline: tokenize, embed, positional encoding, chồng masked self-attention cộng feedforward, xác suất đầu ra."
+   }
+  ],
+  "services": [],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Decoder stack output vector\"] --> B[\"Multiply by embedding matrix\"]\n  B --> C[\"Probability per token\"]\n  C --> D[\"Pick next token using temperature\"]",
+   "vi": "flowchart LR\n  A[\"Vector output của decoder\"] --> B[\"Nhân với embedding matrix\"]\n  B --> C[\"Xác suất cho từng token\"]\n  C --> D[\"Chọn token kế tiếp theo temperature\"]"
+  }
+ },
+ "07-007": {
+  "tldr": {
+   "en": "Key LLM terms: tokens, embeddings, top P, top K, temperature, context window and max tokens.",
+   "vi": "Thuật ngữ LLM chính: token, embedding, top P, top K, temperature, context window và max tokens."
+  },
+  "points": [
+   {
+    "en": "Tokens are numeric forms of words or word parts; embeddings are vectors encoding meaning, close together for similar meanings.",
+    "vi": "Token là dạng số của từ hoặc phần từ; embedding là vector mã hóa ý nghĩa, gần nhau khi nghĩa tương tự."
+   },
+   {
+    "en": "Top P keeps tokens above a probability threshold; higher means more random.",
+    "vi": "Top P giữ token trên ngưỡng xác suất; càng cao càng ngẫu nhiên."
+   },
+   {
+    "en": "Top K keeps exactly k candidate tokens; higher k means more random.",
+    "vi": "Top K giữ đúng k token ứng viên; k càng lớn càng ngẫu nhiên."
+   },
+   {
+    "en": "Temperature picks among candidates: high (1.0) is random and creative, low is consistent.",
+    "vi": "Temperature chọn trong các ứng viên: cao (1.0) ngẫu nhiên và sáng tạo, thấp ổn định."
+   },
+   {
+    "en": "Context window is how many tokens the model processes at once; max tokens caps input or output length.",
+    "vi": "Context window là số token model xử lý cùng lúc; max tokens giới hạn độ dài input hoặc output."
+   }
+  ],
+  "services": [],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Next-token probabilities\"] --> B[\"Top K or Top P filter\"]\n  B --> C[\"Temperature picks one\"]\n  C --> D[\"Next token\"]",
+   "vi": "flowchart LR\n  A[\"Xác suất token kế tiếp\"] --> B[\"Lọc Top K hoặc Top P\"]\n  B --> C[\"Temperature chọn một\"]\n  C --> D[\"Token kế tiếp\"]"
+  }
+ },
+ "07-008": {
+  "tldr": {
+   "en": "Fine-tuning is transfer learning for transformers: start from a pre-trained model and train it further for a specific task or style.",
+   "vi": "Fine-tuning là transfer learning cho transformer: bắt đầu từ model pre-train rồi huấn luyện thêm cho tác vụ hoặc phong cách cụ thể."
+  },
+  "points": [
+   {
+    "en": "Ways to fine-tune: run new data through the whole model, freeze lower layers and retrain top layers, or add a new layer on top.",
+    "vi": "Cách fine-tune: cho dữ liệu mới chạy qua cả model, đóng băng layer dưới và train lại layer trên, hoặc thêm layer mới phía trên."
+   },
+   {
+    "en": "A few prompt and completion examples can change tone or personality.",
+    "vi": "Vài ví dụ prompt và completion có thể đổi giọng điệu hoặc tính cách."
+   },
+   {
+    "en": "Adapt to new tasks, for example classification (sentiment) by adding a layer on top.",
+    "vi": "Thích nghi với tác vụ mới, ví dụ classification (sentiment) bằng cách thêm layer phía trên."
+   },
+   {
+    "en": "Examples: train on your emails, a character's scripts, or customer service transcripts.",
+    "vi": "Ví dụ: train trên email của bạn, kịch bản của một nhân vật, hoặc transcript chăm sóc khách hàng."
+   }
+  ],
+  "services": [
+   {
+    "name": "Pre-trained models (GPT-3, Llama)",
+    "use": {
+     "en": "Foundation to build on instead of training from scratch.",
+     "vi": "Nền tảng để xây thêm thay vì train từ đầu."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "The instructor once fine-tuned an OpenAI model on all Star Trek The Next Generation scripts to build his own version of Data.",
+   "vi": "Giảng viên từng fine-tune một model OpenAI trên toàn bộ kịch bản Star Trek The Next Generation để tạo phiên bản Data của riêng mình."
+  }
+ },
+ "07-009": {
+  "tldr": {
+   "en": "Lab: launch a SageMaker notebook instance, install Hugging Face Transformers, and inspect tokenization and positional encoding on BERT.",
+   "vi": "Lab: tạo SageMaker notebook instance, cài Hugging Face Transformers, và xem tokenization và positional encoding trên BERT."
+  },
+  "points": [
+   {
+    "en": "Notebook instances cost money while running (T3 medium used); stop them when idle.",
+    "vi": "Notebook instance tốn tiền khi đang chạy (dùng T3 medium); hãy stop khi không dùng."
+   },
+   {
+    "en": "Hugging Face is a free repository of pre-trained models such as GPT-2, GPT-J, Llama and Stable Diffusion.",
+    "vi": "Hugging Face là kho model pre-train miễn phí như GPT-2, GPT-J, Llama và Stable Diffusion."
+   },
+   {
+    "en": "BERT tokenizer adds special tokens (CLS at start, SEP at end), and a word can be more than one token; an attention mask is also produced.",
+    "vi": "Tokenizer của BERT thêm token đặc biệt (CLS đầu, SEP cuối), một từ có thể nhiều token; đồng thời tạo attention mask."
+   },
+   {
+    "en": "Positional encoding is built from interleaved sine and cosine waves; it repeats eventually but works for nearby tokens.",
+    "vi": "Positional encoding tạo từ sóng sin và cos xen kẽ; cuối cùng sẽ lặp lại nhưng hoạt động tốt với token gần nhau."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker notebook instance",
+    "use": {
+     "en": "Managed Jupyter environment for experiments; stop it to avoid charges.",
+     "vi": "Môi trường Jupyter được quản lý để thử nghiệm; stop để tránh phí."
+    }
+   },
+   {
+    "name": "Hugging Face Transformers",
+    "use": {
+     "en": "Library to load pre-trained models and tokenizers.",
+     "vi": "Thư viện nạp model và tokenizer pre-train."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "In the BERT example, the sentence I read a good novel became more tokens than words, partly because the period is its own token.",
+   "vi": "Trong ví dụ BERT, câu I read a good novel ra nhiều token hơn số từ, một phần vì dấu chấm cũng là một token."
+  }
+ },
+ "07-010": {
+  "tldr": {
+   "en": "Lab: visualize BERT self-attention to see how the word novel gets different meaning from nearby words.",
+   "vi": "Lab: trực quan hóa self-attention của BERT để thấy từ novel nhận nghĩa khác nhau từ các từ lân cận."
+  },
+  "points": [
+   {
+    "en": "BertViz shows attention heads and the query, key and value behind them.",
+    "vi": "BertViz hiển thị các attention head và query, key, value đứng sau."
+   },
+   {
+    "en": "In I read a good novel, novel attends strongly to read, so it means a book.",
+    "vi": "Trong I read a good novel, novel chú ý mạnh tới read nên nghĩa là sách."
+   },
+   {
+    "en": "In attention is a novel idea, novel attends to idea and its top prediction is new.",
+    "vi": "Trong attention is a novel idea, novel chú ý tới idea và dự đoán hàng đầu là new."
+   },
+   {
+    "en": "Remember to stop the notebook to avoid charges.",
+    "vi": "Nhớ stop notebook để tránh bị tính phí."
+   }
+  ],
+  "services": [
+   {
+    "name": "BertViz",
+    "use": {
+     "en": "Tool to visualize self-attention in a notebook.",
+     "vi": "Công cụ trực quan hóa self-attention trong notebook."
+    }
+   },
+   {
+    "name": "Hugging Face",
+    "use": {
+     "en": "Source of the pre-trained BERT model.",
+     "vi": "Nguồn của model BERT pre-train."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"I read a good novel\"] -->|\"novel attends to read\"| B[\"novel means book\"]\n  C[\"Attention is a novel idea\"] -->|\"novel attends to idea\"| D[\"novel means new\"]",
+   "vi": "flowchart LR\n  A[\"I read a good novel\"] -->|\"novel chú ý tới read\"| B[\"novel nghĩa là sách\"]\n  C[\"Attention is a novel idea\"] -->|\"novel chú ý tới idea\"| D[\"novel nghĩa là mới lạ\"]"
+  }
+ },
+ "07-011": {
+  "tldr": {
+   "en": "Lab: use a Hugging Face pipeline to run GPT-2 text generation in a few lines of code.",
+   "vi": "Lab: dùng Hugging Face pipeline chạy sinh văn bản GPT-2 chỉ trong vài dòng code."
+  },
+  "points": [
+   {
+    "en": "A text-generation pipeline with GPT-2 needs about three lines; set max length and number of variations.",
+    "vi": "Pipeline text-generation với GPT-2 chỉ cần khoảng ba dòng; đặt max length và số biến thể."
+   },
+   {
+    "en": "Not specific to AWS: it works in any environment.",
+    "vi": "Không riêng cho AWS: chạy được ở mọi môi trường."
+   },
+   {
+    "en": "LLMs make things up convincingly; they generate consistent language, not truth.",
+    "vi": "LLM bịa nội dung rất thuyết phục; chúng sinh ngôn ngữ nhất quán, không phải sự thật."
+   },
+   {
+    "en": "Output reflects training data (GPT-2 gave Wikipedia-like text); fine-tuning, such as on IMDb reviews, can specialize it.",
+    "vi": "Output phản ánh dữ liệu train (GPT-2 ra văn bản kiểu Wikipedia); fine-tuning, ví dụ trên review IMDb, có thể chuyên biệt hóa."
+   }
+  ],
+  "services": [
+   {
+    "name": "Hugging Face pipeline",
+    "use": {
+     "en": "High-level API to use pre-trained models without extra code.",
+     "vi": "API cấp cao để dùng model pre-train mà không cần nhiều code."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "GPT-2's Star Trek output looked like general Wikipedia text, hinting at its training data.",
+   "vi": "Output Star Trek của GPT-2 giống văn bản Wikipedia chung chung, gợi ý về dữ liệu huấn luyện của nó."
+  }
+ },
+ "07-012": {
+  "tldr": {
+   "en": "AWS acts as an aggregator of foundation models and SageMaker JumpStart launches notebooks preloaded with them, including the Hugging Face ecosystem.",
+   "vi": "AWS đóng vai trò tập hợp các foundation model và SageMaker JumpStart mở notebook nạp sẵn chúng, gồm cả hệ sinh thái Hugging Face."
+  },
+  "points": [
+   {
+    "en": "Foundation models are big pre-trained transformers (GPT, BERT, Llama) you fine-tune; OpenAI's latest and Google's models are not on AWS.",
+    "vi": "Foundation model là transformer pre-train lớn (GPT, BERT, Llama) để bạn fine-tune; model mới nhất của OpenAI và Google không có trên AWS."
+   },
+   {
+    "en": "Meta models like Llama are on AWS because Meta has no competing cloud.",
+    "vi": "Model của Meta như Llama có trên AWS vì Meta không có cloud cạnh tranh."
+   },
+   {
+    "en": "AWS offers Jurassic-2 (multilingual text), Claude (conversation, Q&A, workflow automation), Stable Diffusion (images), Amazon Titan (text and embeddings).",
+    "vi": "AWS cung cấp Jurassic-2 (văn bản đa ngôn ngữ), Claude (hội thoại, hỏi đáp, tự động hóa), Stable Diffusion (ảnh), Amazon Titan (văn bản và embedding)."
+   },
+   {
+    "en": "Embeddings from Titan support personalization and search by comparing vector closeness.",
+    "vi": "Embedding của Titan hỗ trợ cá nhân hóa và tìm kiếm bằng cách so khoảng cách vector."
+   },
+   {
+    "en": "JumpStart foundation models also include Falcon, FLAN, BLOOMZ, GPT-J, GPT-2 and an Alexa encoder-decoder model.",
+    "vi": "Foundation model của JumpStart còn có Falcon, FLAN, BLOOMZ, GPT-J, GPT-2 và một model encoder-decoder của Alexa."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker JumpStart",
+    "use": {
+     "en": "Launch a notebook with a pre-trained foundation model and examples ready.",
+     "vi": "Mở notebook có sẵn foundation model pre-train và ví dụ."
+    }
+   },
+   {
+    "name": "Amazon Titan",
+    "use": {
+     "en": "AWS text generation model that also provides embeddings.",
+     "vi": "Model sinh văn bản của AWS, đồng thời cung cấp embedding."
+    }
+   },
+   {
+    "name": "Claude (Anthropic)",
+    "use": {
+     "en": "Conversation, question answering and workflow automation.",
+     "vi": "Hội thoại, hỏi đáp và tự động hóa workflow."
+    }
+   },
+   {
+    "name": "Jurassic-2 (AI21 Labs)",
+    "use": {
+     "en": "Multilingual text generation.",
+     "vi": "Sinh văn bản đa ngôn ngữ."
+    }
+   },
+   {
+    "name": "Stable Diffusion",
+    "use": {
+     "en": "Image, art and logo generation.",
+     "vi": "Sinh ảnh, tranh và logo."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "mindmap\n  root[\"Foundation models on AWS\"]\n    Text\n      Jurassic-2\n      Claude\n      Amazon Titan\n      Llama\n    Image\n      Stable Diffusion\n    Via JumpStart\n      Hugging Face models\n      Falcon and GPT-J",
+   "vi": "mindmap\n  root[\"Foundation model trên AWS\"]\n    Văn bản\n      Jurassic-2\n      Claude\n      Amazon Titan\n      Llama\n    Ảnh\n      Stable Diffusion\n    Qua JumpStart\n      Model Hugging Face\n      Falcon và GPT-J"
+  }
+ },
+ "07-013": {
+  "tldr": {
+   "en": "Lab: browse JumpStart foundation models, set up a SageMaker domain, and see how costly and easy to forget the resources are.",
+   "vi": "Lab: duyệt foundation model của JumpStart, tạo SageMaker domain, và thấy tài nguyên tốn kém và dễ quên thế nào."
+  },
+  "points": [
+   {
+    "en": "JumpStart code: use JumpStartModel with a model ID, accept the EULA, call deploy, then query the predictor and delete it.",
+    "vi": "Code JumpStart: dùng JumpStartModel với model ID, chấp nhận EULA, gọi deploy, rồi query predictor và xóa nó."
+   },
+   {
+    "en": "Falcon 40B Instruct is a decoder-only model under Apache 2.0, but its default inference instance is a very expensive ml.g5.48xlarge needing a quota increase.",
+    "vi": "Falcon 40B Instruct là model chỉ decoder, giấy phép Apache 2.0, nhưng instance inference mặc định rất đắt (ml.g5.48xlarge) cần xin tăng quota."
+   },
+   {
+    "en": "A SageMaker domain holds shared storage, config, user profiles, roles and VPC settings; quick setup is for a single user.",
+    "vi": "SageMaker domain chứa storage dùng chung, cấu hình, user profile, role và VPC; quick setup dành cho một người dùng."
+   },
+   {
+    "en": "Inference parameters include temperature, top-k, top-p, random seed and stop token.",
+    "vi": "Tham số inference gồm temperature, top-k, top-p, random seed và stop token."
+   },
+   {
+    "en": "Cleanup: stop the JupyterLab app, delete the space, the user profile, then the domain; SageMaker is notorious for surprise bills.",
+    "vi": "Dọn dẹp: stop ứng dụng JupyterLab, xóa space, user profile, rồi domain; SageMaker nổi tiếng gây hóa đơn bất ngờ."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker JumpStart",
+    "use": {
+     "en": "Hub of foundation, vision and NLP models deployable from Studio.",
+     "vi": "Hub các model foundation, vision và NLP triển khai được từ Studio."
+    }
+   },
+   {
+    "name": "SageMaker domain",
+    "use": {
+     "en": "Account-level environment for Studio users, storage and settings.",
+     "vi": "Môi trường cấp tài khoản cho người dùng Studio, storage và cấu hình."
+    }
+   },
+   {
+    "name": "SageMaker Studio",
+    "use": {
+     "en": "IDE for opening JumpStart notebooks.",
+     "vi": "IDE để mở notebook JumpStart."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Pick model in JumpStart\"] --> B[\"Create SageMaker domain\"]\n  B --> C[\"Open notebook in Studio\"]\n  C --> D[\"Deploy model endpoint\"]\n  D --> E[\"Query then delete predictor\"]\n  E --> F[\"Delete space, user, domain\"]",
+   "vi": "flowchart LR\n  A[\"Chọn model trong JumpStart\"] --> B[\"Tạo SageMaker domain\"]\n  B --> C[\"Mở notebook trong Studio\"]\n  C --> D[\"Deploy model endpoint\"]\n  D --> E[\"Query rồi xóa predictor\"]\n  E --> F[\"Xóa space, user, domain\"]"
+  }
+ }
+}

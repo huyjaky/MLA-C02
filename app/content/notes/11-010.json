@@ -1,0 +1,12 @@
+{
+ "id": "11-010",
+ "section": "11",
+ "title": {
+  "en": "NOTE Amazon QuickSight is being rebranded as Amazon Quick Suite",
+  "vi": "LƯU Ý: Amazon QuickSight đang được đổi thương hiệu thành Amazon Quick Suite"
+ },
+ "body": {
+  "en": "<p>In 2026, Amazon is rebranding QuickSight as \"Quick Suite.\" However, QuickSight itself lives on as \"Quick Sight\" (two words now,) which is part of the larger \"Quick Suite\" product that includes more generative AI features.</p><p>The following lectures, and the service that is in-scope for the exam, refer specifically to Quick Sight.</p>",
+  "vi": "<p>Trong năm 2026, Amazon đổi thương hiệu QuickSight thành \"Quick Suite\". Tuy nhiên, QuickSight vẫn tồn tại dưới tên \"Quick Sight\" (hai từ), là một phần của sản phẩm \"Quick Suite\" lớn hơn với nhiều tính năng generative AI.</p><p>Các bài giảng tiếp theo, và dịch vụ nằm trong phạm vi kỳ thi, đều đề cập cụ thể đến Quick Sight.</p>"
+ }
+}

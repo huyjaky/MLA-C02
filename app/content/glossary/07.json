@@ -1,0 +1,167 @@
+{
+ "section": "07",
+ "terms": [
+  {
+   "id": "transformer",
+   "term": "Transformer",
+   "lecture": "07-002",
+   "definition": {
+    "en": "Architecture based on self-attention instead of recurrence, so tokens are processed in parallel, which makes training on long sequences efficient. Basis of GPT, BERT, LLaMA.",
+    "vi": "Kiến trúc dựa trên self-attention thay vì recurrence nên xử lý token song song, giúp huấn luyện chuỗi dài hiệu quả. Nền tảng của GPT, BERT, LLaMA."
+   }
+  },
+  {
+   "id": "self-attention",
+   "term": "Self-attention",
+   "lecture": "07-003",
+   "definition": {
+    "en": "Mechanism that weights every token's relationship to every other token to produce context-dependent representations (e.g. 'bank' as river vs loan).",
+    "vi": "Cơ chế gán trọng số quan hệ giữa mọi cặp token để tạo biểu diễn phụ thuộc ngữ cảnh (vd. 'bank' là bờ sông hay ngân hàng)."
+   }
+  },
+  {
+   "id": "multi-head-attention",
+   "term": "Multi-head attention",
+   "lecture": "07-003",
+   "definition": {
+    "en": "Runs several self-attention heads in parallel, each learning a different kind of relationship between tokens in the same layer.",
+    "vi": "Chạy nhiều head self-attention song song, mỗi head học một kiểu quan hệ khác giữa các token trong cùng một lớp."
+   }
+  },
+  {
+   "id": "masked-self-attention",
+   "term": "Masked (causal) self-attention",
+   "lecture": "07-006",
+   "definition": {
+    "en": "Mask blocking attention to later tokens so a decoder-only model predicts the next token using only previous ones. Needed to train GPT-style models.",
+    "vi": "Mask chặn attention tới các token phía sau để mô hình decoder-only chỉ dùng token trước đó khi dự đoán token kế tiếp. Cần để huấn luyện mô hình kiểu GPT."
+   }
+  },
+  {
+   "id": "positional-encoding",
+   "term": "Positional encoding",
+   "lecture": "07-002",
+   "definition": {
+    "en": "Position information added to token embeddings, because attention itself ignores order. Without it, identical words at different positions look the same.",
+    "vi": "Thông tin vị trí cộng vào token embedding vì attention tự nó không biết thứ tự. Thiếu nó thì cùng một từ ở các vị trí khác nhau trông giống nhau."
+   }
+  },
+  {
+   "id": "encoder-decoder",
+   "term": "Encoder vs decoder models",
+   "lecture": "07-004",
+   "definition": {
+    "en": "Encoder-based models (e.g. BERT) understand text for classification and extraction; decoder-only models (e.g. GPT) generate text token by token; encoder-decoder models suit translation and summarization.",
+    "vi": "Mô hình encoder (vd. BERT) hiểu văn bản để phân loại, trích xuất; decoder-only (vd. GPT) sinh văn bản từng token; encoder-decoder phù hợp dịch và tóm tắt."
+   }
+  },
+  {
+   "id": "gpt-autoregressive",
+   "term": "GPT (autoregressive generation)",
+   "lecture": "07-005",
+   "definition": {
+    "en": "Decoder-only transformer pretrained on unlabeled text by repeatedly predicting the next token; generation feeds each output back as input.",
+    "vi": "Transformer decoder-only được pretrain trên văn bản không nhãn bằng cách liên tục dự đoán token kế tiếp; khi sinh, mỗi output được đưa lại làm input."
+   }
+  },
+  {
+   "id": "token",
+   "term": "Token",
+   "lecture": "07-007",
+   "definition": {
+    "en": "Numeric representation of a word or part of a word fed to an LLM; computers work with numbers, so text is tokenized first. Usage and limits are measured in tokens.",
+    "vi": "Biểu diễn số của một từ hoặc một phần từ đưa vào LLM; máy tính xử lý số nên văn bản được tokenize trước. Mức dùng và giới hạn tính theo token."
+   }
+  },
+  {
+   "id": "embedding",
+   "term": "Embedding",
+   "lecture": "07-007",
+   "definition": {
+    "en": "Vector encoding the meaning of a token; tokens with similar meaning lie close together in the vector space, regardless of language.",
+    "vi": "Vector mã hóa ý nghĩa của token; các token nghĩa gần nhau nằm gần nhau trong không gian vector, bất kể ngôn ngữ."
+   }
+  },
+  {
+   "id": "context-window",
+   "term": "Context window",
+   "lecture": "07-007",
+   "definition": {
+    "en": "Maximum number of tokens an LLM can process at once (prompt, retrieved passages, history and output). Exceeding it requires truncating or summarizing input.",
+    "vi": "Số token tối đa LLM xử lý cùng lúc (prompt, đoạn truy xuất, lịch sử và output). Vượt quá thì phải cắt hoặc tóm tắt đầu vào."
+   }
+  },
+  {
+   "id": "temperature",
+   "term": "Temperature",
+   "lecture": "07-007",
+   "definition": {
+    "en": "Controls randomness of token selection: low = more deterministic and consistent, high = more creative and random. Lower it when outputs vary too much.",
+    "vi": "Điều khiển độ ngẫu nhiên khi chọn token: thấp = xác định, nhất quán hơn; cao = sáng tạo, ngẫu nhiên hơn. Giảm khi output thay đổi quá nhiều."
+   }
+  },
+  {
+   "id": "top-p",
+   "term": "Top P",
+   "lecture": "07-007",
+   "definition": {
+    "en": "Nucleus sampling: choose from the smallest set of tokens whose cumulative probability reaches P. Higher P means a broader set and more random output.",
+    "vi": "Nucleus sampling: chọn từ tập token nhỏ nhất có xác suất tích lũy đạt P. P cao hơn nghĩa là tập rộng hơn và output ngẫu nhiên hơn."
+   }
+  },
+  {
+   "id": "top-k",
+   "term": "Top K",
+   "lecture": "07-007",
+   "definition": {
+    "en": "Restricts sampling at each step to the K most probable tokens. Smaller K gives more focused output, larger K allows more variety.",
+    "vi": "Giới hạn việc lấy mẫu ở mỗi bước trong K token xác suất cao nhất. K nhỏ cho output tập trung hơn, K lớn cho đa dạng hơn."
+   }
+  },
+  {
+   "id": "max-tokens",
+   "term": "Max tokens / stop sequences",
+   "lecture": "07-007",
+   "definition": {
+    "en": "Max tokens limits the length of the generated output; stop sequences end generation when a given string appears. They control length, not randomness.",
+    "vi": "Max tokens giới hạn độ dài output sinh ra; stop sequence kết thúc sinh khi xuất hiện chuỗi chỉ định. Chúng kiểm soát độ dài, không phải độ ngẫu nhiên."
+   }
+  },
+  {
+   "id": "fine-tuning",
+   "term": "Fine-tuning (transfer learning)",
+   "lecture": "07-008",
+   "definition": {
+    "en": "Further trains a pretrained transformer on task-specific data, either through all layers, by freezing lower layers and retraining the top, or by adding a new layer. Cheaper and needs less data than training from scratch.",
+    "vi": "Huấn luyện tiếp transformer pretrained trên dữ liệu theo tác vụ, qua toàn bộ lớp, đóng băng lớp dưới và huấn luyện lại lớp trên, hoặc thêm lớp mới. Rẻ hơn và cần ít dữ liệu hơn huấn luyện từ đầu."
+   }
+  },
+  {
+   "id": "foundation-model",
+   "term": "Foundation model",
+   "lecture": "07-012",
+   "definition": {
+    "en": "Large pretrained model (GPT, BERT, LLaMA...) that is fine-tuned for specific tasks. On AWS, models such as LLaMA are available; OpenAI's latest GPT and DALL-E are not.",
+    "vi": "Mô hình lớn pretrained (GPT, BERT, LLaMA...) được fine-tune cho tác vụ cụ thể. Trên AWS có các mô hình như LLaMA; GPT mới nhất và DALL-E của OpenAI thì không."
+   }
+  },
+  {
+   "id": "sagemaker-jumpstart",
+   "term": "SageMaker JumpStart",
+   "lecture": "07-012",
+   "definition": {
+    "en": "Hub of pretrained foundation and ML models (including Hugging Face) that can be deployed or fine-tuned from SageMaker Studio with a few clicks.",
+    "vi": "Hub chứa các mô hình foundation và ML pretrained (gồm Hugging Face) có thể triển khai hoặc fine-tune từ SageMaker Studio chỉ với vài thao tác."
+   }
+  },
+  {
+   "id": "prompt-completion-tuning",
+   "term": "Tuning with prompt/completion examples",
+   "lecture": "07-008",
+   "definition": {
+    "en": "A few examples of prompts and desired completions can steer a pretrained model's tone or adapt it to a new task (e.g. classification) without training from scratch.",
+    "vi": "Vài ví dụ prompt và completion mong muốn có thể điều chỉnh giọng điệu của mô hình pretrained hoặc thích nghi với tác vụ mới (vd. phân loại) mà không cần huấn luyện từ đầu."
+   }
+  }
+ ]
+}

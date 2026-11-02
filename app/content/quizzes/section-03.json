@@ -1,0 +1,486 @@
+{
+ "id": "section-03",
+ "kind": "section",
+ "section": "03",
+ "title": {
+  "en": "Data Transformation, Integrity, and Feature Engineering",
+  "vi": "Biến đổi dữ liệu, tính toàn vẹn và Feature Engineering"
+ },
+ "description": {
+  "en": "<p>Test your knowledge on the content of this section.</p>",
+  "vi": "<p>Kiểm tra kiến thức của bạn về nội dung trong phần này.</p>"
+ },
+ "passPercent": 70,
+ "questions": [
+  {
+   "id": 87787671,
+   "multi": false,
+   "question": {
+    "en": "<p>A biotech startup runs intermittent Spark jobs and does not want to provision or size a persistent EMR cluster. Which deployment option should it choose?</p>",
+    "vi": "<p>Một startup công nghệ sinh học chạy các job Spark không thường xuyên và không muốn cấp phát hay định cỡ một EMR cluster chạy liên tục. Nên chọn phương án triển khai nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use EMR Serverless applications</p>",
+     "vi": "<p>Dùng EMR Serverless application</p>"
+    },
+    {
+     "en": "<p>Use EMR persistent clusters</p>",
+     "vi": "<p>Dùng EMR persistent cluster</p>"
+    },
+    {
+     "en": "<p>Use self-managed Spark on EC2</p>",
+     "vi": "<p>Dùng Spark tự quản lý trên EC2</p>"
+    },
+    {
+     "en": "<p>Use AWS Batch without Spark</p>",
+     "vi": "<p>Dùng AWS Batch không có Spark</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Correct. EMR Serverless provisions workers for submitted Spark jobs without a persistent cluster.</p>",
+     "vi": "<p>Đúng. EMR Serverless cấp phát worker cho các job Spark được gửi lên mà không cần cluster chạy liên tục.</p>"
+    },
+    {
+     "en": "<p>Incorrect. A persistent cluster requires capacity sizing and management.</p>",
+     "vi": "<p>Sai. Persistent cluster đòi hỏi định cỡ và quản lý dung lượng.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Self-managed Spark creates the most operational work.</p>",
+     "vi": "<p>Sai. Spark tự quản lý tạo ra nhiều công sức vận hành nhất.</p>"
+    },
+    {
+     "en": "<p>Incorrect. AWS Batch runs containers but does not provide the managed Spark runtime requested.</p>",
+     "vi": "<p>Sai. AWS Batch chạy container nhưng không cung cấp môi trường Spark được quản lý như yêu cầu.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87787677,
+   "multi": false,
+   "question": {
+    "en": "<p>A logistics company already operates Amazon EKS and wants Spark workloads to share Kubernetes resources with other applications without creating EMR clusters. Which option is MOST appropriate?</p>",
+    "vi": "<p>Một công ty logistics đã vận hành Amazon EKS và muốn các workload Spark dùng chung tài nguyên Kubernetes với các ứng dụng khác mà không tạo EMR cluster. Phương án nào phù hợp NHẤT?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use EMR on EC2 instances</p>",
+     "vi": "<p>Dùng EMR on EC2 instances</p>"
+    },
+    {
+     "en": "<p>Use EMR Serverless only</p>",
+     "vi": "<p>Chỉ dùng EMR Serverless</p>"
+    },
+    {
+     "en": "<p>Use EMR on EKS</p>",
+     "vi": "<p>Dùng EMR on EKS</p>"
+    },
+    {
+     "en": "<p>Use Glue DataBrew projects</p>",
+     "vi": "<p>Dùng Glue DataBrew projects</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. EMR on EC2 creates a separate cluster rather than sharing the EKS environment.</p>",
+     "vi": "<p>Sai. EMR on EC2 tạo cluster riêng thay vì dùng chung môi trường EKS.</p>"
+    },
+    {
+     "en": "<p>Incorrect. EMR Serverless abstracts workers but does not run jobs on the existing EKS cluster.</p>",
+     "vi": "<p>Sai. EMR Serverless trừu tượng hóa worker nhưng không chạy job trên EKS cluster hiện có.</p>"
+    },
+    {
+     "en": "<p>Correct. EMR on EKS submits Spark jobs to existing Kubernetes infrastructure.</p>",
+     "vi": "<p>Đúng. EMR on EKS gửi job Spark tới hạ tầng Kubernetes hiện có.</p>"
+    },
+    {
+     "en": "<p>Incorrect. DataBrew is a visual data preparation service, not Spark on Kubernetes.</p>",
+     "vi": "<p>Sai. DataBrew là dịch vụ chuẩn bị dữ liệu trực quan, không phải Spark trên Kubernetes.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87788417,
+   "multi": false,
+   "question": {
+    "en": "<p>A streaming team needs distributed feature transformations, K-means clustering, and ML pipelines within Apache Spark. Which library should the team use?</p>",
+    "vi": "<p>Một nhóm streaming cần các phép biến đổi feature phân tán, phân cụm K-means và ML pipeline trong Apache Spark. Nhóm nên dùng thư viện nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use Spark GraphX libraries</p>",
+     "vi": "<p>Dùng thư viện Spark GraphX</p>"
+    },
+    {
+     "en": "<p>Use Spark MLlib libraries</p>",
+     "vi": "<p>Dùng thư viện Spark MLlib</p>"
+    },
+    {
+     "en": "<p>Use Hadoop HDFS libraries</p>",
+     "vi": "<p>Dùng thư viện Hadoop HDFS</p>"
+    },
+    {
+     "en": "<p>Use Athena SQL functions</p>",
+     "vi": "<p>Dùng hàm SQL của Athena</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. GraphX focuses on graph processing rather than general ML pipelines.</p>",
+     "vi": "<p>Sai. GraphX tập trung vào xử lý đồ thị chứ không phải ML pipeline tổng quát.</p>"
+    },
+    {
+     "en": "<p>Correct. MLlib provides clustering, classification, regression, feature transformation, and pipeline utilities.</p>",
+     "vi": "<p>Đúng. MLlib cung cấp phân cụm, phân loại, hồi quy, biến đổi feature và tiện ích pipeline.</p>"
+    },
+    {
+     "en": "<p>Incorrect. HDFS is storage, not a machine learning library.</p>",
+     "vi": "<p>Sai. HDFS là lưu trữ, không phải thư viện machine learning.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Athena SQL is not the native Spark ML pipeline library.</p>",
+     "vi": "<p>Sai. SQL của Athena không phải thư viện ML pipeline gốc của Spark.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87788433,
+   "multi": false,
+   "question": {
+    "en": "<p>A news search engine must reduce the influence of words that occur in almost every article while retaining words frequent in a particular article. Which feature technique should be used?</p>",
+    "vi": "<p>Một công cụ tìm kiếm tin tức phải giảm ảnh hưởng của các từ xuất hiện trong gần như mọi bài báo trong khi vẫn giữ các từ xuất hiện nhiều trong một bài cụ thể. Nên dùng kỹ thuật feature nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use one-hot target encoding</p>",
+     "vi": "<p>Dùng one-hot target encoding</p>"
+    },
+    {
+     "en": "<p>Use min-max feature scaling</p>",
+     "vi": "<p>Dùng min-max feature scaling</p>"
+    },
+    {
+     "en": "<p>Use random undersampling</p>",
+     "vi": "<p>Dùng random undersampling</p>"
+    },
+    {
+     "en": "<p>Use TF-IDF weighting</p>",
+     "vi": "<p>Dùng TF-IDF weighting</p>"
+    }
+   ],
+   "answer": [
+    3
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. One-hot encoding represents categories and does not measure term relevance.</p>",
+     "vi": "<p>Sai. One-hot encoding biểu diễn các category và không đo độ liên quan của term.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Min-max scaling does not account for document frequency.</p>",
+     "vi": "<p>Sai. Min-max scaling không tính đến document frequency.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Undersampling addresses class imbalance rather than term importance.</p>",
+     "vi": "<p>Sai. Undersampling xử lý mất cân bằng lớp chứ không phải tầm quan trọng của term.</p>"
+    },
+    {
+     "en": "<p>Correct. TF-IDF combines term frequency with inverse document frequency to down-weight common words.</p>",
+     "vi": "<p>Đúng. TF-IDF kết hợp term frequency với inverse document frequency để giảm trọng số các từ phổ biến.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87788465,
+   "multi": false,
+   "question": {
+    "en": "<p>A housing dataset has missing income values and extreme income outliers. The team needs a simple numeric imputation baseline that is less distorted by those outliers. What should it use?</p>",
+    "vi": "<p>Một dataset nhà ở có giá trị thu nhập bị thiếu và các outlier thu nhập cực đoan. Nhóm cần một baseline imputation số đơn giản ít bị méo bởi các outlier đó. Nên dùng gì?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Replace values with the median</p>",
+     "vi": "<p>Thay giá trị bằng median</p>"
+    },
+    {
+     "en": "<p>Replace values with the maximum</p>",
+     "vi": "<p>Thay giá trị bằng giá trị lớn nhất</p>"
+    },
+    {
+     "en": "<p>Replace values with a random label</p>",
+     "vi": "<p>Thay giá trị bằng một nhãn ngẫu nhiên</p>"
+    },
+    {
+     "en": "<p>Drop every incomplete column</p>",
+     "vi": "<p>Bỏ mọi cột không đầy đủ</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Correct. Median imputation is generally more robust than mean replacement when outliers are present.</p>",
+     "vi": "<p>Đúng. Imputation bằng median thường bền vững hơn thay bằng mean khi có outlier.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Maximum replacement would introduce a strong upward bias.</p>",
+     "vi": "<p>Sai. Thay bằng giá trị lớn nhất sẽ gây lệch mạnh theo hướng tăng.</p>"
+    },
+    {
+     "en": "<p>Incorrect. A random label is invalid for a numeric income feature.</p>",
+     "vi": "<p>Sai. Nhãn ngẫu nhiên không hợp lệ cho feature thu nhập dạng số.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Dropping the entire column discards potentially valuable information.</p>",
+     "vi": "<p>Sai. Bỏ cả cột làm mất thông tin có thể có giá trị.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87788849,
+   "multi": false,
+   "question": {
+    "en": "<p>Only 1% of a telecom training set represents customer churn. The team wants to create new minority examples using nearest neighbors rather than duplicate existing rows. Which technique should it use?</p>",
+    "vi": "<p>Chỉ 1% trong tập huấn luyện của một công ty viễn thông là khách hàng rời bỏ (churn). Nhóm muốn tạo các mẫu thiểu số mới bằng láng giềng gần nhất thay vì nhân bản các dòng hiện có. Nên dùng kỹ thuật nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use majority-class oversampling</p>",
+     "vi": "<p>Dùng oversampling lớp đa số</p>"
+    },
+    {
+     "en": "<p>Use random feature shuffling</p>",
+     "vi": "<p>Dùng xáo trộn feature ngẫu nhiên</p>"
+    },
+    {
+     "en": "<p>Use SMOTE resampling</p>",
+     "vi": "<p>Dùng resampling SMOTE</p>"
+    },
+    {
+     "en": "<p>Use mean-value imputation</p>",
+     "vi": "<p>Dùng mean-value imputation</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Oversampling the majority class would worsen the imbalance.</p>",
+     "vi": "<p>Sai. Oversampling lớp đa số sẽ làm mất cân bằng tệ hơn.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Shuffling changes order but not class representation.</p>",
+     "vi": "<p>Sai. Xáo trộn thay đổi thứ tự nhưng không thay đổi mức đại diện của các lớp.</p>"
+    },
+    {
+     "en": "<p>Correct. SMOTE synthesizes minority-class samples from nearest-neighbor relationships.</p>",
+     "vi": "<p>Đúng. SMOTE tổng hợp các mẫu lớp thiểu số từ quan hệ láng giềng gần nhất.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Mean imputation handles missing numeric values, not imbalance.</p>",
+     "vi": "<p>Sai. Mean imputation xử lý giá trị số bị thiếu, không phải mất cân bằng.</p>"
+    }
+   ]
+  },
+  {
+   "id": 87788865,
+   "multi": false,
+   "question": {
+    "en": "<p>A web analytics model is skewed by automated bots that generate millions of requests. The business confirms that bot traffic is outside the target population. What is the MOST appropriate preprocessing action?</p>",
+    "vi": "<p>Một model phân tích web bị lệch bởi các bot tự động tạo ra hàng triệu request. Doanh nghiệp xác nhận lưu lượng bot nằm ngoài tập đối tượng mục tiêu. Hành động tiền xử lý nào phù hợp NHẤT?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Scale bot counts to a smaller range</p>",
+     "vi": "<p>Scale số lượng bot về khoảng nhỏ hơn</p>"
+    },
+    {
+     "en": "<p>Remove verified bot outliers</p>",
+     "vi": "<p>Loại bỏ các outlier bot đã được xác minh</p>"
+    },
+    {
+     "en": "<p>Encode bots with one-hot vectors</p>",
+     "vi": "<p>Mã hóa bot bằng vector one-hot</p>"
+    },
+    {
+     "en": "<p>Duplicate normal traffic records</p>",
+     "vi": "<p>Nhân bản các bản ghi lưu lượng bình thường</p>"
+    }
+   ],
+   "answer": [
+    1
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Scaling preserves the unwanted observations and their influence.</p>",
+     "vi": "<p>Sai. Scaling giữ lại các quan sát không mong muốn và ảnh hưởng của chúng.</p>"
+    },
+    {
+     "en": "<p>Correct. Removing understood outliers is appropriate when they are not part of the target population.</p>",
+     "vi": "<p>Đúng. Loại bỏ các outlier đã hiểu rõ là phù hợp khi chúng không thuộc tập đối tượng mục tiêu.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Encoding identifies categories but does not eliminate the skew.</p>",
+     "vi": "<p>Sai. Mã hóa xác định category nhưng không loại bỏ độ lệch.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Duplicating records can distort the distribution and is not a principled fix.</p>",
+     "vi": "<p>Sai. Nhân bản bản ghi có thể làm méo phân phối và không phải cách khắc phục có nguyên tắc.</p>"
+    }
+   ]
+  },
+  {
+   "id": 184674069,
+   "multi": false,
+   "question": {
+    "en": "<p>A restaurant model accepts numeric inputs, but the cuisine feature contains values such as Thai, Italian, and Mexican with no natural order. Which transformation should be applied?</p>",
+    "vi": "<p>Một model cho nhà hàng nhận đầu vào số, nhưng feature ẩm thực chứa các giá trị như Thái, Ý và Mexico không có thứ tự tự nhiên. Nên áp dụng phép biến đổi nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Apply logarithmic scaling</p>",
+     "vi": "<p>Áp dụng logarithmic scaling</p>"
+    },
+    {
+     "en": "<p>Apply standard deviation clipping</p>",
+     "vi": "<p>Áp dụng standard deviation clipping</p>"
+    },
+    {
+     "en": "<p>Apply target-row shuffling</p>",
+     "vi": "<p>Áp dụng xáo trộn target-row</p>"
+    },
+    {
+     "en": "<p>Apply one-hot encoding</p>",
+     "vi": "<p>Áp dụng one-hot encoding</p>"
+    }
+   ],
+   "answer": [
+    3
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Log scaling applies to positive numeric magnitudes, not nominal categories.</p>",
+     "vi": "<p>Sai. Log scaling áp dụng cho độ lớn số dương, không phải category danh nghĩa.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Clipping addresses numeric outliers.</p>",
+     "vi": "<p>Sai. Clipping xử lý outlier số.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Shuffling rows does not convert categorical values.</p>",
+     "vi": "<p>Sai. Xáo trộn dòng không chuyển đổi giá trị categorical.</p>"
+    },
+    {
+     "en": "<p>Correct. One-hot encoding creates a separate indicator for each nominal category.</p>",
+     "vi": "<p>Đúng. One-hot encoding tạo một chỉ báo riêng cho mỗi category danh nghĩa.</p>"
+    }
+   ]
+  },
+  {
+   "id": 184674077,
+   "multi": false,
+   "question": {
+    "en": "<p>A neural network uses age values from 18 to 90 and annual income values up to 500,000. Income dominates gradient updates solely because of magnitude. What should the engineer do?</p>",
+    "vi": "<p>Một neural network dùng giá trị tuổi từ 18 đến 90 và thu nhập hằng năm lên tới 500.000. Thu nhập chi phối các bước cập nhật gradient chỉ vì độ lớn. Kỹ sư nên làm gì?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Normalize features to comparable scales</p>",
+     "vi": "<p>Normalize các feature về thang đo tương đương</p>"
+    },
+    {
+     "en": "<p>Increase the income feature precision</p>",
+     "vi": "<p>Tăng độ chính xác của feature thu nhập</p>"
+    },
+    {
+     "en": "<p>Remove the age feature from training</p>",
+     "vi": "<p>Loại bỏ feature tuổi khỏi huấn luyện</p>"
+    },
+    {
+     "en": "<p>Shuffle only the income column</p>",
+     "vi": "<p>Chỉ xáo trộn cột thu nhập</p>"
+    }
+   ],
+   "answer": [
+    0
+   ],
+   "feedback": [
+    {
+     "en": "<p>Correct. Scaling prevents large-magnitude features from receiving disproportionate weight.</p>",
+     "vi": "<p>Đúng. Scaling ngăn các feature có độ lớn lớn nhận trọng số không cân xứng.</p>"
+    },
+    {
+     "en": "<p>Incorrect. More numeric precision does not fix scale imbalance.</p>",
+     "vi": "<p>Sai. Thêm độ chính xác số không khắc phục mất cân bằng thang đo.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Age may contain useful signal and need not be removed.</p>",
+     "vi": "<p>Sai. Tuổi có thể chứa tín hiệu hữu ích và không cần loại bỏ.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Shuffling a single feature destroys relationships and does not normalize magnitude.</p>",
+     "vi": "<p>Sai. Xáo trộn một feature làm hỏng các mối quan hệ và không chuẩn hóa độ lớn.</p>"
+    }
+   ]
+  },
+  {
+   "id": 184674685,
+   "multi": false,
+   "question": {
+    "en": "<p>A support analytics pipeline must retain the final four digits of account numbers while obscuring the remaining digits before analysis. Which technique should be used?</p>",
+    "vi": "<p>Một pipeline phân tích hỗ trợ khách hàng phải giữ lại bốn chữ số cuối của số tài khoản trong khi che các chữ số còn lại trước khi phân tích. Nên dùng kỹ thuật nào?</p>"
+   },
+   "options": [
+    {
+     "en": "<p>Use feature standardization</p>",
+     "vi": "<p>Dùng feature standardization</p>"
+    },
+    {
+     "en": "<p>Use token-level stemming</p>",
+     "vi": "<p>Dùng token-level stemming</p>"
+    },
+    {
+     "en": "<p>Use deterministic masking</p>",
+     "vi": "<p>Dùng deterministic masking</p>"
+    },
+    {
+     "en": "<p>Use minority oversampling</p>",
+     "vi": "<p>Dùng minority oversampling</p>"
+    }
+   ],
+   "answer": [
+    2
+   ],
+   "feedback": [
+    {
+     "en": "<p>Incorrect. Standardization rescales numbers but does not protect PII.</p>",
+     "vi": "<p>Sai. Standardization đổi thang đo số nhưng không bảo vệ PII.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Stemming normalizes words and is unrelated to account numbers.</p>",
+     "vi": "<p>Sai. Stemming chuẩn hóa từ và không liên quan đến số tài khoản.</p>"
+    },
+    {
+     "en": "<p>Correct. Masking obscures sensitive values while preserving an allowed portion.</p>",
+     "vi": "<p>Đúng. Masking che các giá trị nhạy cảm trong khi giữ lại phần được phép.</p>"
+    },
+    {
+     "en": "<p>Incorrect. Oversampling changes class balance and does not anonymize data.</p>",
+     "vi": "<p>Sai. Oversampling thay đổi cân bằng lớp và không ẩn danh dữ liệu.</p>"
+    }
+   ]
+  }
+ ]
+}

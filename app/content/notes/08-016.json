@@ -1,0 +1,12 @@
+{
+ "id": "08-016",
+ "section": "08",
+ "title": {
+  "en": "Remember to delete your OpenSearch collection!",
+  "vi": "Nhớ xóa OpenSearch collection của bạn!"
+ },
+ "body": {
+  "en": "<p>If you are following along hands on...</p><p>Please remember to delete your knowledge base AND its underlying OpenSearch serverless \"collection\" as shown in the video. Again, deleting a knowledge base does not delete its underlying vector store.</p><p>Even if you do not use OpenSearch serverless, a collection left running will cost you on the order of $200/month. \"Serverless\" does not mean \"scales to zero\" - it keeps racking up costs even if it's unused. I don't want anyone to get any nasty surprises!</p>",
+  "vi": "<p>Nếu bạn đang làm theo bài thực hành...</p><p>Hãy nhớ xóa knowledge base VÀ \"collection\" OpenSearch serverless bên dưới như đã chỉ trong video. Một lần nữa: xóa knowledge base không xóa vector store nằm bên dưới.</p><p>Ngay cả khi bạn không dùng OpenSearch serverless, một collection để chạy sẽ tốn khoảng $200/tháng. \"Serverless\" không có nghĩa là \"scale về 0\" - nó vẫn tiếp tục tính phí dù không dùng. Mình không muốn ai gặp phải bất ngờ khó chịu nào cả!</p>"
+ }
+}

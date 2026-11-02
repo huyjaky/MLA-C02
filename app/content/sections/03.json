@@ -1,0 +1,396 @@
+{
+ "id": "03",
+ "order": 3,
+ "title": {
+  "en": "Data Transformation, Integrity, and Feature Engineering",
+  "vi": "Biến đổi dữ liệu, tính toàn vẹn và Feature Engineering"
+ },
+ "lectures": [
+  {
+   "id": "03-001",
+   "title": {
+    "en": "Intro Data Transformation, Integrity, and Feature Engineering",
+    "vi": "Giới thiệu biến đổi dữ liệu, tính toàn vẹn và Feature Engineering"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/001 Intro Data Transformation, Integrity, and Feature Engineering.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-002",
+   "title": {
+    "en": "Elastic MapReduce (EMR) and Hadoop Overview",
+    "vi": "Tổng quan Elastic MapReduce (EMR) và Hadoop"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/002 Elastic MapReduce (EMR) and Hadoop Overview.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-003",
+   "title": {
+    "en": "EMR Serverless",
+    "vi": "EMR Serverless"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/003 EMR Serverless.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-004",
+   "title": {
+    "en": "Apache Spark on EMR",
+    "vi": "Apache Spark trên EMR"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/004 Apache Spark on EMR.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-005",
+   "title": {
+    "en": "Feature Engineering and the Curse of Dimensionality",
+    "vi": "Feature Engineering và Curse of Dimensionality"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/005 Feature Engineering and the Curse of Dimensionality.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-006",
+   "title": {
+    "en": "Lab Preparing Data for TF-IDF with Spark and EMR Studio, Part 1",
+    "vi": "Lab: Chuẩn bị dữ liệu cho TF-IDF với Spark và EMR Studio, Phần 1"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/006 Lab Preparing Data for TF-IDF with Spark and EMR Studio, Part 1.mp4",
+   "transcript": true,
+   "materials": [
+    "TF-IDF.ipynb",
+    "subset-small.tsv"
+   ]
+  },
+  {
+   "id": "03-007",
+   "title": {
+    "en": "Lab Preparing Data for TF-IDF with Spark and EMR Studio, Part 2",
+    "vi": "Lab: Chuẩn bị dữ liệu cho TF-IDF với Spark và EMR Studio, Phần 2"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/007 Lab Preparing Data for TF-IDF with Spark and EMR Studio, Part 2.mp4",
+   "transcript": true,
+   "materials": [
+    "TF-IDF.ipynb",
+    "subset-small.tsv"
+   ]
+  },
+  {
+   "id": "03-008",
+   "title": {
+    "en": "Imputing Missing Data",
+    "vi": "Điền dữ liệu bị thiếu (Imputing Missing Data)"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/008 Imputing Missing Data.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-009",
+   "title": {
+    "en": "Dealing with Unbalanced Data",
+    "vi": "Xử lý dữ liệu mất cân bằng"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/009 Dealing with Unbalanced Data.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-010",
+   "title": {
+    "en": "Handling Outliers",
+    "vi": "Xử lý outlier"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/010 Handling Outliers.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-011",
+   "title": {
+    "en": "Binning, Transforming, Encoding, Scaling, and Shuffling",
+    "vi": "Binning, Transforming, Encoding, Scaling và Shuffling"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/011 Binning, Transforming, Encoding, Scaling, and Shuffling.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-012",
+   "title": {
+    "en": "Advanced Text Pre-Processing for AI",
+    "vi": "Tiền xử lý văn bản nâng cao cho AI"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/012 Advanced Text Pre-Processing for AI.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-013",
+   "title": {
+    "en": "Data Masking and Anonymization",
+    "vi": "Data Masking và Anonymization"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/013 Data Masking and Anonymization.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-014",
+   "title": {
+    "en": "AI Training - Data Integrity",
+    "vi": "Huấn luyện AI - Tính toàn vẹn dữ liệu"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/014 AI Training - Data Integrity.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-015",
+   "title": {
+    "en": "UPDATE SageMaker is now SageMaker AI",
+    "vi": "CẬP NHẬT: SageMaker nay là SageMaker AI"
+   },
+   "kind": "note",
+   "transcript": false
+  },
+  {
+   "id": "03-016",
+   "title": {
+    "en": "SageMaker AI Overview",
+    "vi": "Tổng quan SageMaker AI"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/016 SageMaker AI Overview.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-017",
+   "title": {
+    "en": "SageMaker AI Domains",
+    "vi": "SageMaker AI Domains"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/017 SageMaker AI Domains.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-018",
+   "title": {
+    "en": "Data Processing, Training, and Deployment with SageMaker AI",
+    "vi": "Xử lý dữ liệu, huấn luyện và triển khai với SageMaker AI"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/018 Data Processing, Training, and Deployment with SageMaker AI.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-019",
+   "title": {
+    "en": "Labeling and Annotating Training Data",
+    "vi": "Gắn nhãn và chú thích dữ liệu huấn luyện"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/019 Labeling and Annotating Training Data.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-020",
+   "title": {
+    "en": "SageMaker Data Wrangler",
+    "vi": "SageMaker Data Wrangler"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/020 SageMaker Data Wrangler.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-021",
+   "title": {
+    "en": "NOTICE SageMaker Data Wrangler is getting hard to find",
+    "vi": "LƯU Ý: SageMaker Data Wrangler ngày càng khó tìm"
+   },
+   "kind": "note",
+   "transcript": false
+  },
+  {
+   "id": "03-022",
+   "title": {
+    "en": "Demo SageMaker Studio, Canvas, and Data Wrangler",
+    "vi": "Demo SageMaker Studio, Canvas và Data Wrangler"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/022 Demo SageMaker Studio, Canvas, and Data Wrangler.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-023",
+   "title": {
+    "en": "Pre-Training Bias Metrics, and Mitigating Bias",
+    "vi": "Pre-Training Bias Metrics và giảm thiểu bias"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/023 Pre-Training Bias Metrics, and Mitigating Bias.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-024",
+   "title": {
+    "en": "Partial Dependence Plots (PDPs), Shapley values, and SHAP",
+    "vi": "Partial Dependence Plots (PDPs), Shapley values và SHAP"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/024 Partial Dependence Plots (PDPs), Shapley values, and SHAP.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-025",
+   "title": {
+    "en": "SageMaker Feature Store",
+    "vi": "SageMaker Feature Store"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/025 SageMaker Feature Store.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-026",
+   "title": {
+    "en": "SageMaker Canvas",
+    "vi": "SageMaker Canvas"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/026 SageMaker Canvas.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-027",
+   "title": {
+    "en": "AWS Glue",
+    "vi": "AWS Glue"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/027 AWS Glue.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-028",
+   "title": {
+    "en": "AWS Glue Studio",
+    "vi": "AWS Glue Studio"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/028 AWS Glue Studio.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-029",
+   "title": {
+    "en": "AWS Glue Data Quality",
+    "vi": "AWS Glue Data Quality"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/029 AWS Glue Data Quality.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-030",
+   "title": {
+    "en": "AWS Glue DataBrew",
+    "vi": "AWS Glue DataBrew"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/030 AWS Glue DataBrew.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-031",
+   "title": {
+    "en": "Demo Glue DataBrew",
+    "vi": "Demo Glue DataBrew"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/031 Demo Glue DataBrew.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-032",
+   "title": {
+    "en": "Handling PII in DataBrew Transformations",
+    "vi": "Xử lý PII trong biến đổi DataBrew"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/032 Handling PII in DataBrew Transformations.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-033",
+   "title": {
+    "en": "Intro to Amazon Athena",
+    "vi": "Giới thiệu Amazon Athena"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/033 Intro to Amazon Athena.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-034",
+   "title": {
+    "en": "Athena and Glue",
+    "vi": "Athena và Glue"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/034 Athena and Glue.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-035",
+   "title": {
+    "en": "Athena and CREATE TABLE AS SELECT",
+    "vi": "Athena và CREATE TABLE AS SELECT"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/035 Athena and CREATE TABLE AS SELECT.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-036",
+   "title": {
+    "en": "Athena Performance",
+    "vi": "Hiệu năng Athena"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/036 Athena Performance.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-037",
+   "title": {
+    "en": "Athena ACID Transactions",
+    "vi": "Giao dịch ACID trong Athena"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/037 Athena ACID Transactions.mp4",
+   "transcript": true
+  },
+  {
+   "id": "03-038",
+   "title": {
+    "en": "Athena Fine-Grained Access",
+    "vi": "Kiểm soát truy cập chi tiết (Fine-Grained Access) trong Athena"
+   },
+   "kind": "video",
+   "video": "03 - Data Transformation, Integrity, and Feature Engineering/038 Athena Fine-Grained Access.mp4",
+   "transcript": true
+  }
+ ]
+}

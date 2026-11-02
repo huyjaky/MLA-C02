@@ -1,0 +1,143 @@
+/*
+ * Design tokens. World: a Leitner index-card box on a desk.
+ * Pressboard navy shell, white card stock with blue ruling and a red header rule,
+ * one divider-tab colour per course section, rubber-stamp verdicts.
+ */
+:root {
+  color-scheme: light;
+
+  /* ground and stock */
+  --desk: #e6e9ee;
+  --desk-2: #dde1e8;
+  --card: #fdfdfb;
+  --card-2: #f4f5f2;
+  --line: #d3d8e0;
+  --line-strong: #b8c0cc;
+  --rule-blue: rgb(96 140 205 / 0.16);
+  --rule-red: #d65a4c;
+
+  /* ink */
+  --ink: #18202d;
+  --ink-2: #445063;
+  --ink-3: #6a7487;
+  --accent: #2453b8;
+  --accent-ink: #ffffff;
+  --accent-soft: #e3eafa;
+  --focus: #2f6fdb;
+
+  /* pressboard shell */
+  --board: #1d2b45;
+  --board-2: #26375a;
+  --board-ink: #e9eef8;
+  --board-ink-2: #a9b6cf;
+
+  /* state */
+  --ok: #1d7a4b;
+  --ok-soft: #e1f2e8;
+  --bad: #c0392b;
+  --bad-soft: #fbe5e2;
+  --warn: #b7791f;
+
+  /* section divider tabs */
+  --tab-1: #d64933;
+  --tab-2: #2f6fdb;
+  --tab-3: #2e8b57;
+  --tab-4: #d89a1c;
+  --tab-5: #7a4fc4;
+  --tab-6: #17908f;
+  --tab-7: #c43d7a;
+  --tab-8: #6f8a1f;
+  --tab-9: #e2742b;
+  --tab-10: #3389c7;
+  --tab-11: #8e3f6f;
+  --tab-12: #8a6a4a;
+  --tab-exam: #18202d;
+
+  /* type: Be Vietnam Pro was drawn for Vietnamese diacritics */
+  --font: 'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.8125rem;
+  --fs-md: 0.9375rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.375rem;
+  --fs-2xl: 1.75rem;
+
+  /* space and shape */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --radius: 6px;
+  --radius-card: 4px;
+  --shadow-card: 0 1px 1px rgb(24 32 45 / 0.06), 0 2px 6px rgb(24 32 45 / 0.07);
+  --shadow-lift: 0 2px 4px rgb(24 32 45 / 0.08), 0 12px 28px rgb(24 32 45 / 0.14);
+
+  /* motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --t-fast: 140ms;
+  --t-base: 200ms;
+  --t-slow: 420ms;
+
+  --sidebar-w: 17rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --desk: #10141b;
+    --desk-2: #151a23;
+    --card: #1a2029;
+    --card-2: #20272f;
+    --line: #2c3440;
+    --line-strong: #3b4554;
+    --rule-blue: rgb(120 160 220 / 0.08);
+    --rule-red: #b5544a;
+    --ink: #e7ebf2;
+    --ink-2: #b4bccb;
+    --ink-3: #8a94a6;
+    --accent: #6f9cf2;
+    --accent-ink: #0d1422;
+    --accent-soft: #1f2c47;
+    --focus: #8fb2f7;
+    --board: #0b111c;
+    --board-2: #162036;
+    --ok: #4cc28a;
+    --ok-soft: #15301f;
+    --bad: #f07466;
+    --bad-soft: #3a1c19;
+    --tab-exam: #e7ebf2;
+    --shadow-card: 0 1px 1px rgb(0 0 0 / 0.3), 0 2px 8px rgb(0 0 0 / 0.25);
+    --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.3), 0 14px 32px rgb(0 0 0 / 0.45);
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --desk: #10141b;
+  --desk-2: #151a23;
+  --card: #1a2029;
+  --card-2: #20272f;
+  --line: #2c3440;
+  --line-strong: #3b4554;
+  --rule-blue: rgb(120 160 220 / 0.08);
+  --rule-red: #b5544a;
+  --ink: #e7ebf2;
+  --ink-2: #b4bccb;
+  --ink-3: #8a94a6;
+  --accent: #6f9cf2;
+  --accent-ink: #0d1422;
+  --accent-soft: #1f2c47;
+  --focus: #8fb2f7;
+  --board: #0b111c;
+  --board-2: #162036;
+  --ok: #4cc28a;
+  --ok-soft: #15301f;
+  --bad: #f07466;
+  --bad-soft: #3a1c19;
+  --tab-exam: #e7ebf2;
+  --shadow-card: 0 1px 1px rgb(0 0 0 / 0.3), 0 2px 8px rgb(0 0 0 / 0.25);
+  --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.3), 0 14px 32px rgb(0 0 0 / 0.45);
+}

@@ -1,0 +1,293 @@
+{
+ "section": "09",
+ "terms": [
+  {
+   "id": "deployment-guardrails",
+   "term": "SageMaker deployment guardrails",
+   "lecture": "09-003",
+   "definition": {
+    "en": "Blue/green deployment for real-time or asynchronous endpoints: the old model runs on the blue fleet, the new one on the green fleet. Modes are all-at-once, canary (small share first) and linear (stepwise), all with automatic rollback via alarms. Choose canary to send a small percentage first and roll back automatically.",
+    "vi": "Triển khai blue/green cho endpoint real-time hoặc asynchronous: model cũ chạy trên blue fleet, model mới trên green fleet. Các chế độ gồm all-at-once, canary (chuyển một phần nhỏ trước) và linear (từng bước), đều có tự động rollback qua alarm. Chọn canary khi muốn gửi một tỷ lệ nhỏ trước và tự rollback."
+   }
+  },
+  {
+   "id": "shadow-tests",
+   "term": "SageMaker shadow tests",
+   "lecture": "09-003",
+   "definition": {
+    "en": "A shadow variant receives a copy of a percentage of production traffic so you can compare its performance with production. You monitor it in the SageMaker console and decide manually when to promote it.",
+    "vi": "Shadow variant nhận một bản sao một phần lưu lượng production để bạn so sánh hiệu năng với production. Bạn giám sát trên console SageMaker và tự quyết định khi nào promote."
+   }
+  },
+  {
+   "id": "production-variants",
+   "term": "Production variants",
+   "lecture": "09-006",
+   "definition": {
+    "en": "Multiple models behind one endpoint, each with a weight that splits live traffic; the way to run an A/B test (for example 80/20). Auto scaling is applied per production variant.",
+    "vi": "Nhiều model sau cùng một endpoint, mỗi model có trọng số chia lưu lượng thực; cách để chạy A/B test (ví dụ 80/20). Auto scaling được áp dụng theo từng production variant."
+   }
+  },
+  {
+   "id": "multi-model-endpoints",
+   "term": "Multi-model, multi-container endpoints and inference components",
+   "lecture": "09-002",
+   "definition": {
+    "en": "One endpoint can host several models or containers to raise resource utilization. Inference components give each model its own scaling policy, and each endpoint has its own guardrails, VPC and network isolation.",
+    "vi": "Một endpoint có thể host nhiều model hoặc container để tăng mức sử dụng tài nguyên. Inference component cho mỗi model một scaling policy riêng, và mỗi endpoint có guardrail, VPC và network isolation riêng."
+   }
+  },
+  {
+   "id": "bedrock-custom-model-import",
+   "term": "Bedrock custom model import",
+   "lecture": "09-002",
+   "definition": {
+    "en": "Lets you train or tune a model in SageMaker (for example from Hugging Face) and have Bedrock host it, so inference becomes serverless without managing SageMaker endpoints.",
+    "vi": "Cho phép huấn luyện hoặc tune model trong SageMaker (ví dụ từ Hugging Face) rồi để Bedrock host, nhờ đó inference thành serverless mà không phải quản lý endpoint SageMaker."
+   }
+  },
+  {
+   "id": "cross-region-inference",
+   "term": "Cross-region inference",
+   "lecture": "09-002",
+   "definition": {
+    "en": "Bedrock inference profiles redistribute traffic to other regions when one is overloaded or down. You can restrict it to a geography or go global, and global gives the highest throughput.",
+    "vi": "Inference profile của Bedrock phân phối lại lưu lượng sang region khác khi một region quá tải hoặc gặp sự cố. Có thể giới hạn theo khu vực địa lý hoặc dùng global, global cho throughput cao nhất."
+   }
+  },
+  {
+   "id": "model-compression",
+   "term": "Model compression",
+   "lecture": "09-002",
+   "definition": {
+    "en": "Quantization lowers weight precision (for example 32-bit to 8-bit), pruning removes unneeded layers or weights, and knowledge distillation trains a smaller model from a larger one. All reduce deployment size and cost. Do not optimize prematurely; measure first with CloudWatch.",
+    "vi": "Quantization giảm độ chính xác của trọng số (ví dụ 32-bit xuống 8-bit), pruning loại bỏ layer hoặc trọng số không cần, knowledge distillation huấn luyện model nhỏ từ model lớn. Tất cả đều giảm kích thước và chi phí triển khai. Đừng tối ưu sớm; hãy đo bằng CloudWatch trước."
+   }
+  },
+  {
+   "id": "sagemaker-container-structure",
+   "term": "SageMaker container structure (/opt/ml)",
+   "lecture": "09-004",
+   "definition": {
+    "en": "Every SageMaker training or hosting job runs a Docker image from ECR. Training uses /opt/ml/input (config, hyperparameters, data channels), /opt/ml/code (training script), /opt/ml/output (failures) and /opt/ml/model. Use a custom image when the algorithm or runtime is not in a prebuilt image.",
+    "vi": "Mọi training hoặc hosting job của SageMaker chạy một Docker image từ ECR. Training dùng /opt/ml/input (config, hyperparameter, data channel), /opt/ml/code (script training), /opt/ml/output (lỗi) và /opt/ml/model. Dùng custom image khi thuật toán hoặc runtime không có trong image dựng sẵn."
+   }
+  },
+  {
+   "id": "managed-spot-training",
+   "term": "Managed Spot Training",
+   "lecture": "09-005",
+   "definition": {
+    "en": "Uses EC2 Spot instances for training to save up to 90% over on-demand. Instances can be interrupted, so use S3 checkpoints to resume; it may also increase training time while waiting for capacity.",
+    "vi": "Dùng EC2 Spot instance để huấn luyện, tiết kiệm tới 90% so với on-demand. Instance có thể bị gián đoạn nên cần checkpoint trên S3 để tiếp tục; thời gian huấn luyện cũng có thể tăng do phải chờ capacity."
+   }
+  },
+  {
+   "id": "instance-type-selection",
+   "term": "Choosing instance types",
+   "lecture": "09-005",
+   "definition": {
+    "en": "Deep learning training benefits from GPU instances (P3, G4); inference is lighter and often fits compute-optimized (C5); non-GPU algorithms usually fit general purpose (M5). GPU instances are pricey, but one multi-GPU machine can beat many CPU instances.",
+    "vi": "Huấn luyện deep learning hưởng lợi từ instance GPU (P3, G4); inference nhẹ hơn và thường hợp với compute-optimized (C5); thuật toán không dùng GPU thường hợp với general purpose (M5). Instance GPU đắt, nhưng một máy nhiều GPU có thể hiệu quả hơn nhiều instance CPU."
+   }
+  },
+  {
+   "id": "sagemaker-auto-scaling",
+   "term": "SageMaker automatic scaling",
+   "lecture": "09-006",
+   "definition": {
+    "en": "A scaling policy with target metrics, min/max capacity and cooldowns adjusts the instance count per production variant using CloudWatch. Load test the policy before production. For AZ resilience, use at least two instances; SageMaker spreads them across AZs.",
+    "vi": "Scaling policy với target metric, min/max capacity và cooldown điều chỉnh số instance theo từng production variant dựa trên CloudWatch. Hãy load test policy trước khi lên production. Để chịu lỗi AZ, dùng ít nhất hai instance; SageMaker sẽ trải chúng trên các AZ."
+   }
+  },
+  {
+   "id": "token-efficiency",
+   "term": "Token efficiency techniques",
+   "lecture": "09-007",
+   "definition": {
+    "en": "Limit retrieved chunks and filter by metadata, summarize or truncate old chat history, set max tokens, ask for structured JSON output, compress prompts with a smaller model (at a latency cost), and prefer RAG chunks over stuffing whole documents into the prompt.",
+    "vi": "Giới hạn số chunk truy xuất và lọc theo metadata, tóm tắt hoặc cắt bớt lịch sử chat cũ, đặt max tokens, yêu cầu output JSON có cấu trúc, nén prompt bằng model nhỏ hơn (đánh đổi bằng độ trễ), và ưu tiên chunk RAG thay vì nhét cả tài liệu vào prompt."
+   }
+  },
+  {
+   "id": "bedrock-batch-inference",
+   "term": "Bedrock batch inference",
+   "lecture": "09-008",
+   "definition": {
+    "en": "Submit many prompts from S3 and get all responses back in S3 when real-time answers are not needed; more efficient and cheaper. Also batch embedding requests when populating vector stores.",
+    "vi": "Gửi nhiều prompt từ S3 và nhận lại toàn bộ phản hồi trong S3 khi không cần câu trả lời real-time; hiệu quả và rẻ hơn. Cũng nên gom batch các request embedding khi nạp vector store."
+   }
+  },
+  {
+   "id": "bedrock-capacity-planning",
+   "term": "Bedrock capacity and provisioned throughput",
+   "lecture": "09-008",
+   "definition": {
+    "en": "Estimate tokens per minute and requests per minute, check Service Quotas and request increases, or buy Provisioned Throughput (model units) for consistent performance. It is per model, required for custom models, and you must call with the provisioned model ARN, not the generic model ID.",
+    "vi": "Ước lượng token mỗi phút và request mỗi phút, kiểm tra Service Quotas và xin tăng hạn mức, hoặc mua Provisioned Throughput (model unit) để có hiệu năng ổn định. Áp dụng theo từng model, bắt buộc với custom model, và phải gọi bằng ARN của provisioned model chứ không phải model ID chung."
+   }
+  },
+  {
+   "id": "inference-option-selection",
+   "term": "Choosing an inference option",
+   "lecture": "09-009",
+   "definition": {
+    "en": "Real-time: low latency interactive requests. Serverless: idle periods or uneven traffic and cold starts are acceptable. Asynchronous: large payloads (up to about 1 GB) and long processing, result delivered later. Batch Transform: offline bulk predictions. Deploy via JumpStart (easiest), ModelBuilder in the SageMaker Python SDK, or CloudFormation.",
+    "vi": "Real-time: request tương tác cần độ trễ thấp. Serverless: có thời gian nhàn rỗi hoặc lưu lượng không đều và chấp nhận cold start. Asynchronous: payload lớn (tới khoảng 1 GB) và xử lý lâu, kết quả trả về sau. Batch Transform: dự đoán hàng loạt offline. Triển khai qua JumpStart (dễ nhất), ModelBuilder trong SageMaker Python SDK hoặc CloudFormation."
+   }
+  },
+  {
+   "id": "sagemaker-neo",
+   "term": "SageMaker Neo",
+   "lecture": "09-009",
+   "definition": {
+    "en": "Automatically optimizes a model for a specific target environment, such as AWS Inferentia chips, to make inference faster.",
+    "vi": "Tự động tối ưu model cho một môi trường đích cụ thể, ví dụ chip AWS Inferentia, để inference nhanh hơn."
+   }
+  },
+  {
+   "id": "serverless-inference",
+   "term": "SageMaker Serverless Inference",
+   "lecture": "09-010",
+   "definition": {
+    "en": "You specify container memory and concurrency; capacity is provisioned automatically and scales to zero when idle, billed by usage. Best for infrequent or unpredictable traffic that tolerates cold starts.",
+    "vi": "Bạn chỉ định bộ nhớ và concurrency của container; năng lực được provision tự động và scale về 0 khi nhàn rỗi, tính phí theo mức dùng. Phù hợp nhất cho lưu lượng thưa hoặc khó đoán và chấp nhận cold start."
+   }
+  },
+  {
+   "id": "inference-recommender",
+   "term": "SageMaker Inference Recommender",
+   "lecture": "09-010",
+   "definition": {
+    "en": "Benchmarks a registered model across endpoint configurations and reports cost per hour, cost per inference, latency and throughput. Instance recommendations take about 45 minutes; custom endpoint recommendations (your instance types, traffic and SLAs) take about 2 hours.",
+    "vi": "Benchmark một model đã đăng ký trên nhiều cấu hình endpoint và báo cáo chi phí mỗi giờ, chi phí mỗi inference, latency và throughput. Instance recommendations mất khoảng 45 phút; endpoint recommendations tùy chỉnh (instance type, lưu lượng, SLA của bạn) mất khoảng 2 giờ."
+   }
+  },
+  {
+   "id": "ai-cost-drivers",
+   "term": "AI-specific cost drivers",
+   "lecture": "09-011",
+   "definition": {
+    "en": "Right-size the model (bigger models cost more per token), match the pricing mode to the traffic (on-demand or batch vs provisioned), use prompt caching, avoid oversized embedding dimensions and needless re-embedding, and pick the vector store by cost (S3 Vectors cheap, OpenSearch costlier). Agents and heavy reasoning multiply token usage.",
+    "vi": "Chọn model đúng cỡ (model lớn tốn nhiều hơn mỗi token), khớp chế độ tính phí với lưu lượng (on-demand hoặc batch so với provisioned), dùng prompt caching, tránh số chiều embedding quá lớn và re-embedding không cần thiết, chọn vector store theo chi phí (S3 Vectors rẻ, OpenSearch đắt hơn). Agent và suy luận nặng nhân số token lên nhiều lần."
+   }
+  },
+  {
+   "id": "inference-pipelines",
+   "term": "SageMaker Inference Pipelines",
+   "lecture": "09-012",
+   "definition": {
+    "en": "A linear sequence of 2 to 15 containers (built-in algorithms, your own, Spark ML or scikit-learn) chained for pre-processing, prediction and post-processing. Works for both real-time inference and batch transform.",
+    "vi": "Chuỗi tuyến tính từ 2 đến 15 container (thuật toán dựng sẵn, của bạn, Spark ML hoặc scikit-learn) nối với nhau cho pre-processing, dự đoán và post-processing. Dùng được cho cả real-time inference và batch transform."
+   }
+  },
+  {
+   "id": "data-vs-model-drift",
+   "term": "Data drift vs model quality drift",
+   "lecture": "09-013",
+   "definition": {
+    "en": "Data drift means production input distributions diverge from the training baseline and can be detected immediately by comparing feature statistics. Model quality drift means prediction quality degrades and needs ground-truth labels, which often arrive late. Alert a human rather than auto-retraining.",
+    "vi": "Data drift là phân phối đầu vào production lệch khỏi baseline huấn luyện và có thể phát hiện ngay bằng cách so sánh thống kê feature. Model quality drift là chất lượng dự đoán giảm, cần ground-truth label vốn thường đến muộn. Hãy cảnh báo cho con người thay vì tự động retrain."
+   }
+  },
+  {
+   "id": "drift-monitoring-tools",
+   "term": "Drift monitoring tooling",
+   "lecture": "09-013",
+   "definition": {
+    "en": "SageMaker Model Monitor is in maintenance mode, so use alternatives: MLflow apps and Evidently AI for drift and quality reports, CloudWatch for metrics, dashboards and alarms, and QuickSight for visualization.",
+    "vi": "SageMaker Model Monitor đang ở maintenance mode, nên dùng các lựa chọn thay thế: MLflow apps và Evidently AI cho báo cáo drift và chất lượng, CloudWatch cho metric, dashboard và alarm, QuickSight để trực quan hóa."
+   }
+  },
+  {
+   "id": "ml-production-monitoring",
+   "term": "Monitoring ML in production",
+   "lecture": "09-014",
+   "definition": {
+    "en": "Monitor infrastructure (invocations, latency, errors, CPU/GPU/memory, throttling), input data (missing or malformed features, ranges, distribution), and outputs (prediction distribution, plus accuracy, precision, recall when ground truth exists). Thresholds are workload specific; on alarms, investigate, retrain or roll back.",
+    "vi": "Giám sát hạ tầng (invocation, latency, lỗi, CPU/GPU/bộ nhớ, throttling), dữ liệu đầu vào (feature thiếu hoặc sai định dạng, khoảng giá trị, phân phối) và đầu ra (phân phối dự đoán, cộng accuracy, precision, recall khi có ground truth). Ngưỡng phụ thuộc workload; khi có alarm thì điều tra, retrain hoặc rollback."
+   }
+  },
+  {
+   "id": "sagemaker-projects-pipelines",
+   "term": "SageMaker Projects and Pipelines",
+   "lecture": "09-015",
+   "definition": {
+    "en": "SageMaker Projects is the Studio-native MLOps/CI-CD solution that provisions repositories and build/deploy workflows around SageMaker Pipelines, which define the steps: process, train, evaluate and register in the Model Registry. Typical flow: commit, EventBridge, CodePipeline, CodeBuild, deploy via CloudFormation to staging then production.",
+    "vi": "SageMaker Projects là giải pháp MLOps/CI-CD gốc của Studio, provision repository và workflow build/deploy xoay quanh SageMaker Pipelines, nơi định nghĩa các bước: xử lý, huấn luyện, đánh giá và đăng ký vào Model Registry. Luồng điển hình: commit, EventBridge, CodePipeline, CodeBuild, triển khai bằng CloudFormation lên staging rồi production."
+   }
+  },
+  {
+   "id": "ecr-ecs-eks",
+   "term": "Amazon ECR, ECS and EKS",
+   "lecture": "09-020",
+   "definition": {
+    "en": "ECR is the managed private (or public) container registry with IAM access and image scanning, backed by S3. ECS runs containers as tasks on EC2 or serverless Fargate; EKS runs managed Kubernetes (EC2 or Fargate), chosen when you already use Kubernetes or want cloud-agnostic portability.",
+    "vi": "ECR là container registry riêng (hoặc public) được quản lý, có kiểm soát truy cập IAM và quét image, lưu trên S3. ECS chạy container dưới dạng task trên EC2 hoặc Fargate serverless; EKS chạy Kubernetes được quản lý (EC2 hoặc Fargate), chọn khi đã dùng Kubernetes hoặc cần tính di động đa cloud."
+   }
+  },
+  {
+   "id": "cloudformation-vs-cdk",
+   "term": "CloudFormation vs CDK",
+   "lecture": "09-026",
+   "definition": {
+    "en": "CloudFormation declares infrastructure as YAML/JSON templates. The CDK defines infrastructure with constructs in a programming language (TypeScript, Python, Java, .NET) and compiles to a CloudFormation template.",
+    "vi": "CloudFormation khai báo hạ tầng bằng template YAML/JSON. CDK định nghĩa hạ tầng bằng construct trong ngôn ngữ lập trình (TypeScript, Python, Java, .NET) và biên dịch ra template CloudFormation."
+   }
+  },
+  {
+   "id": "code-services-cicd",
+   "term": "CodeBuild, CodeDeploy and CodePipeline",
+   "lecture": "09-030",
+   "definition": {
+    "en": "CodeBuild compiles, tests and packages code; CodeDeploy deploys to EC2 and on-premises servers (requires the CodeDeploy agent); CodePipeline orchestrates stages from source to build to deploy. CodeCommit and CodeConnections provide source control.",
+    "vi": "CodeBuild biên dịch, kiểm thử và đóng gói code; CodeDeploy triển khai lên EC2 và server on-premises (cần CodeDeploy agent); CodePipeline điều phối các stage từ source đến build rồi deploy. CodeCommit và CodeConnections cung cấp quản lý mã nguồn."
+   }
+  },
+  {
+   "id": "cicd-ai-artifacts",
+   "term": "CI/CD for AI artifacts",
+   "lecture": "09-032",
+   "definition": {
+    "en": "Treat prompts and versions (Bedrock Prompt Management), models (SageMaker Model Registry, MLflow), agents (AgentCore versions and aliases) and knowledge base configs like code: version, test, register, promote only approved versions, and keep rollback. Keep tests and evaluations outside the AI's reach so it cannot weaken them.",
+    "vi": "Coi prompt và phiên bản (Bedrock Prompt Management), model (SageMaker Model Registry, MLflow), agent (version và alias của AgentCore) và cấu hình knowledge base như code: versioning, test, đăng ký, chỉ promote phiên bản đã duyệt, và giữ khả năng rollback. Để test và evaluation ngoài tầm với của AI để nó không thể nới lỏng chúng."
+   }
+  },
+  {
+   "id": "automating-rag-updates",
+   "term": "Automating RAG updates",
+   "lecture": "09-033",
+   "definition": {
+    "en": "When source documents change: ingest (StartIngestionJob, event-driven or scheduled), re-chunk and re-embed, update the vector store, then validate retrieval quality before promoting. A refresh counts as successful only after ingestion completes and retrieval quality is verified.",
+    "vi": "Khi tài liệu nguồn thay đổi: ingest (StartIngestionJob, theo sự kiện hoặc theo lịch), chunk và embed lại, cập nhật vector store, rồi xác thực chất lượng truy xuất trước khi promote. Chỉ coi lần làm mới là thành công khi ingestion hoàn tất và chất lượng truy xuất đã được kiểm chứng."
+   }
+  },
+  {
+   "id": "genai-regression-testing",
+   "term": "GenAI regression testing in CI/CD",
+   "lecture": "09-034",
+   "definition": {
+    "en": "Outputs are non-deterministic, so use a fixed evaluation prompt set (normal, edge and key business cases, held out from tuning) scored against acceptance thresholds, not exact string matches. Use Bedrock Model Evaluations built-in or custom metrics, human review, or a judge model from a different family, and block deployment on regression.",
+    "vi": "Đầu ra không xác định nên dùng bộ prompt đánh giá cố định (ca bình thường, ca biên và ca nghiệp vụ chính, tách khỏi dữ liệu tuning) chấm theo ngưỡng chấp nhận, không so khớp chuỗi chính xác. Dùng metric có sẵn hoặc tùy chỉnh của Bedrock Model Evaluations, đánh giá bởi con người, hoặc judge model thuộc họ khác, và chặn triển khai khi bị hồi quy."
+   }
+  },
+  {
+   "id": "step-functions",
+   "term": "AWS Step Functions",
+   "lecture": "09-040",
+   "definition": {
+    "en": "Orchestrates workflows as a state machine whose steps are states: Task (does work, such as a Lambda or AWS service call), Choice (conditional logic), Wait, and others. Heavily tested for orchestrating data and ML pipelines.",
+    "vi": "Điều phối workflow dưới dạng state machine với các bước là state: Task (thực hiện công việc, như gọi Lambda hoặc dịch vụ AWS), Choice (logic điều kiện), Wait và các loại khác. Được hỏi nhiều khi điều phối pipeline dữ liệu và ML."
+   }
+  },
+  {
+   "id": "lake-formation-data-filters",
+   "term": "Lake Formation data filters",
+   "lecture": "09-043",
+   "definition": {
+    "en": "Provide column-, row- or cell-level security when granting SELECT on a table: column include/exclude lists for column-level, a row filter expression for row-level, and both together for cell-level. Lake Formation is built on Glue to set up a secure data lake.",
+    "vi": "Cung cấp bảo mật cấp cột, hàng hoặc ô khi cấp quyền SELECT trên bảng: danh sách include/exclude cột cho cấp cột, row filter expression cho cấp hàng, và kết hợp cả hai cho cấp ô. Lake Formation xây trên Glue để dựng data lake an toàn."
+   }
+  }
+ ]
+}

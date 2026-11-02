@@ -1,0 +1,70 @@
+{
+ "id": "14",
+ "order": 14,
+ "title": {
+  "en": "Wrapping Up",
+  "vi": "Tổng kết"
+ },
+ "lectures": [
+  {
+   "id": "14-001",
+   "title": {
+    "en": "Intro Wrapping Up",
+    "vi": "Giới thiệu phần Tổng kết"
+   },
+   "kind": "video",
+   "video": "14 - Wrapping Up/001 Intro Wrapping Up.mp4",
+   "transcript": true
+  },
+  {
+   "id": "14-002",
+   "title": {
+    "en": "Additional Training Resources",
+    "vi": "Tài nguyên đào tạo bổ sung"
+   },
+   "kind": "video",
+   "video": "14 - Wrapping Up/002 Additional Training Resources.mp4",
+   "transcript": true
+  },
+  {
+   "id": "14-003",
+   "title": {
+    "en": "What to Expect",
+    "vi": "Điều cần biết về kỳ thi"
+   },
+   "kind": "video",
+   "video": "14 - Wrapping Up/003 What to Expect.mp4",
+   "transcript": true
+  },
+  {
+   "id": "14-004",
+   "title": {
+    "en": "Exam Walkthrough and Signup",
+    "vi": "Hướng dẫn kỳ thi và đăng ký"
+   },
+   "kind": "video",
+   "video": "14 - Wrapping Up/004 Exam Walkthrough and Signup.mp4",
+   "transcript": true
+  },
+  {
+   "id": "14-005",
+   "title": {
+    "en": "Save 50_ on your AWS Exam Cost!",
+    "vi": "Giảm 50% chi phí thi AWS!"
+   },
+   "kind": "video",
+   "video": "14 - Wrapping Up/005 Save 50_ on your AWS Exam Cost!.mp4",
+   "transcript": true
+  },
+  {
+   "id": "14-006",
+   "title": {
+    "en": "Get an Extra 30 Minutes on your AWS Exam - Non Native English Speakers Only",
+    "vi": "Thêm 30 phút khi thi AWS - Chỉ dành cho người không phải bản ngữ tiếng Anh"
+   },
+   "kind": "video",
+   "video": "14 - Wrapping Up/006 Get an Extra 30 Minutes on your AWS Exam - Non Native English Speakers Only.mp4",
+   "transcript": true
+  }
+ ]
+}

@@ -1,0 +1,129 @@
+{
+ "12-001": {
+  "tldr": {
+   "en": "The last section summarizes ML best practices from the AWS Well-Architected Machine Learning lens, even though the exam guide says they may not be tested.",
+   "vi": "Phần cuối tóm tắt các best practice ML từ AWS Well-Architected Machine Learning lens, dù exam guide nói có thể không thi."
+  },
+  "points": [
+   {
+    "en": "Based on the AWS Well-Architected Machine Learning lens.",
+    "vi": "Dựa trên AWS Well-Architected Machine Learning lens."
+   },
+   {
+    "en": "Shows how the course services fit together to build responsible real-world systems.",
+    "vi": "Cho thấy các service trong khóa học kết hợp thế nào để xây hệ thống thực tế có trách nhiệm."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS Well-Architected Tool",
+    "use": {
+     "en": "Review workloads against best practices.",
+     "vi": "Đánh giá workload theo best practice."
+    }
+   }
+  ]
+ },
+ "12-002": {
+  "tldr": {
+   "en": "Responsible AI spans fairness, explainability, privacy, safety, controllability, veracity, governance and transparency. Measure it before training, after training, and continuously in production.",
+   "vi": "Responsible AI gồm fairness, explainability, privacy, safety, controllability, veracity, governance và transparency. Đo trước khi train, sau khi train và liên tục trong production."
+  },
+  "points": [
+   {
+    "en": "Classical ML: check bias and data quality first, then explain with SHAP and evaluate with MAE or RMSE.",
+    "vi": "ML cổ điển: kiểm tra bias và chất lượng dữ liệu trước, rồi giải thích bằng SHAP và đánh giá bằng MAE hoặc RMSE."
+   },
+   {
+    "en": "Track experiments with MLflow on SageMaker AI; add a human in the loop for high-stakes models.",
+    "vi": "Theo dõi experiment bằng MLflow trên SageMaker AI; thêm human in the loop cho model rủi ro cao."
+   },
+   {
+    "en": "Clarify, Model Monitor, A2I and Role Manager are in maintenance mode.",
+    "vi": "Clarify, Model Monitor, A2I và Role Manager đang ở maintenance mode."
+   },
+   {
+    "en": "Generative AI: Bedrock Model Evaluations with metrics, humans or LLM-as-a-judge.",
+    "vi": "Generative AI: Bedrock Model Evaluations bằng metric, con người hoặc LLM-as-a-judge."
+   },
+   {
+    "en": "Evaluations and runtime guardrails are complementary; keep monitoring forever, e.g. Macie for sensitive data in S3.",
+    "vi": "Evaluation và guardrail lúc runtime bổ trợ nhau; giám sát liên tục, ví dụ Macie tìm dữ liệu nhạy cảm trong S3."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon SageMaker AI with MLflow",
+    "use": {
+     "en": "Track experiments, metrics and artifacts.",
+     "vi": "Theo dõi experiment, metric và artifact."
+    }
+   },
+   {
+    "name": "Amazon Bedrock Model Evaluations",
+    "use": {
+     "en": "Evaluate generative models on correctness, safety and bias.",
+     "vi": "Đánh giá model generative về độ đúng, an toàn và bias."
+    }
+   },
+   {
+    "name": "Amazon Bedrock Guardrails",
+    "use": {
+     "en": "Enforce safety and policy on every prompt and output.",
+     "vi": "Áp chính sách an toàn cho từng prompt và output."
+    }
+   },
+   {
+    "name": "Amazon Macie",
+    "use": {
+     "en": "Detect sensitive data in S3.",
+     "vi": "Phát hiện dữ liệu nhạy cảm trong S3."
+    }
+   },
+   {
+    "name": "Amazon CloudWatch",
+    "use": {
+     "en": "Production monitoring of model behavior.",
+     "vi": "Giám sát hành vi model trong production."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "The lecture notes older SageMaker responsible-AI tools like Clarify and Model Monitor are now in maintenance mode.",
+   "vi": "Bài giảng nhắc các công cụ responsible AI cũ của SageMaker như Clarify và Model Monitor nay ở maintenance mode."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Check data bias and quality\"] --> B[\"Train model\"]\n  B --> C[\"Explain with SHAP and evaluate\"]\n  C --> D[\"Human review\"]\n  D --> E[\"Deploy\"]\n  E --> F[\"Monitor and guardrails\"]",
+   "vi": "flowchart LR\n  A[\"Kiểm tra bias và chất lượng dữ liệu\"] --> B[\"Train model\"]\n  B --> C[\"Giải thích bằng SHAP và đánh giá\"]\n  C --> D[\"Con người review\"]\n  D --> E[\"Deploy\"]\n  E --> F[\"Monitor và guardrail\"]"
+  }
+ },
+ "12-003": {
+  "tldr": {
+   "en": "These best practices come from the Well-Architected ML lens, a JSON interview in the Well-Architected Tool. Working backwards from them points to the services to learn.",
+   "vi": "Các best practice này đến từ ML lens của Well-Architected, một bộ câu hỏi dạng JSON trong Well-Architected Tool. Đi ngược từ đó sẽ chỉ ra các service cần học."
+  },
+  "points": [
+   {
+    "en": "A lens is a JSON file that interviews you about your ML usage and suggests improvements.",
+    "vi": "Lens là file JSON phỏng vấn bạn về cách dùng ML và gợi ý cải thiện."
+   },
+   {
+    "en": "The whitepaper has more depth on each practice.",
+    "vi": "Whitepaper đi sâu hơn về từng practice."
+   },
+   {
+    "en": "Services named along the way are the ones to focus on for the exam.",
+    "vi": "Các service được nhắc tới trong phần này là những service cần tập trung cho kỳ thi."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS Well-Architected Tool",
+    "use": {
+     "en": "Hosts the ML lens for workload reviews.",
+     "vi": "Chứa ML lens để review workload."
+    }
+   }
+  ]
+ }
+}

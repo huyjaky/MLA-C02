@@ -1,0 +1,982 @@
+{
+ "11-001": {
+  "tldr": {
+   "en": "This section covers monitoring (CloudWatch, CloudTrail, QuickSight), configuration (Config, CloudFormation) and cost control (Budgets, Cost Explorer).",
+   "vi": "Phần này nói về giám sát (CloudWatch, CloudTrail, QuickSight), quản lý cấu hình (Config, CloudFormation) và kiểm soát chi phí (Budgets, Cost Explorer)."
+  },
+  "points": [
+   {
+    "en": "Monitor usage with CloudWatch and CloudTrail, visualize with QuickSight.",
+    "vi": "Giám sát bằng CloudWatch và CloudTrail, trực quan hóa bằng QuickSight."
+   },
+   {
+    "en": "Manage configuration and deployment with AWS Config and CloudFormation.",
+    "vi": "Quản lý cấu hình và triển khai bằng AWS Config và CloudFormation."
+   },
+   {
+    "en": "Manage costs with AWS Budgets and Cost Explorer.",
+    "vi": "Quản lý chi phí bằng AWS Budgets và Cost Explorer."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon CloudWatch",
+    "use": {
+     "en": "Metrics, logs and alarms for monitoring.",
+     "vi": "Metrics, logs và alarm để giám sát."
+    }
+   },
+   {
+    "name": "AWS CloudTrail",
+    "use": {
+     "en": "Audit log of API calls.",
+     "vi": "Nhật ký audit các API call."
+    }
+   },
+   {
+    "name": "AWS Config",
+    "use": {
+     "en": "Track and check resource configuration.",
+     "vi": "Theo dõi và kiểm tra cấu hình tài nguyên."
+    }
+   },
+   {
+    "name": "AWS Budgets",
+    "use": {
+     "en": "Cost alerts against a budget.",
+     "vi": "Cảnh báo chi phí theo ngân sách."
+    }
+   }
+  ]
+ },
+ "11-002": {
+  "tldr": {
+   "en": "CloudWatch Metrics are time-based variables per service, grouped in namespaces with dimensions. They can be custom and streamed out near real time via Firehose.",
+   "vi": "CloudWatch Metrics là biến theo thời gian của mỗi service, nhóm theo namespace và dimension. Có thể tạo custom metric và stream gần real-time qua Firehose."
+  },
+  "points": [
+   {
+    "en": "A metric is a variable to monitor; one namespace per service, up to 30 dimensions per metric.",
+    "vi": "Metric là biến cần theo dõi; mỗi service một namespace, tối đa 30 dimension cho mỗi metric."
+   },
+   {
+    "en": "Custom metrics cover what AWS does not, e.g. EC2 memory usage.",
+    "vi": "Custom metric dùng cho thứ AWS không cung cấp sẵn, ví dụ memory của EC2."
+   },
+   {
+    "en": "Metric Streams send metrics near real time to Kinesis Data Firehose, then S3, Redshift, OpenSearch or third parties like Datadog.",
+    "vi": "Metric Streams gửi metric gần real-time tới Kinesis Data Firehose, rồi S3, Redshift, OpenSearch hoặc bên thứ ba như Datadog."
+   },
+   {
+    "en": "EC2 metrics arrive every 5 minutes; detailed monitoring gives 1 minute.",
+    "vi": "Metric EC2 mặc định 5 phút một lần; detailed monitoring cho 1 phút."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon CloudWatch Metrics",
+    "use": {
+     "en": "Monitor any AWS service and build dashboards.",
+     "vi": "Giám sát mọi service AWS và tạo dashboard."
+    }
+   },
+   {
+    "name": "Amazon Kinesis Data Firehose",
+    "use": {
+     "en": "Destination for streaming metrics out of CloudWatch.",
+     "vi": "Đích để stream metric ra khỏi CloudWatch."
+    }
+   },
+   {
+    "name": "Amazon Athena",
+    "use": {
+     "en": "Query streamed metrics stored in S3.",
+     "vi": "Truy vấn metric đã stream vào S3."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Memory usage is not an EC2 metric out of the box, which is the classic reason to create a custom metric.",
+   "vi": "Memory không phải metric EC2 có sẵn, đó là lý do kinh điển để tạo custom metric."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"CloudWatch Metrics\"] --> B[\"Metric Stream\"]\n  B --> C[\"Kinesis Data Firehose\"]\n  C --> D[\"Amazon S3\"]\n  C --> E[\"Amazon Redshift\"]\n  C --> F[\"Amazon OpenSearch\"]\n  C --> G[\"Datadog or Splunk\"]\n  D --> H[\"Amazon Athena\"]",
+   "vi": "flowchart LR\n  A[\"CloudWatch Metrics\"] --> B[\"Metric Stream\"]\n  B --> C[\"Kinesis Data Firehose\"]\n  C --> D[\"Amazon S3\"]\n  C --> E[\"Amazon Redshift\"]\n  C --> F[\"Amazon OpenSearch\"]\n  C --> G[\"Datadog hoặc Splunk\"]\n  D --> H[\"Amazon Athena\"]"
+  }
+ },
+ "11-003": {
+  "tldr": {
+   "en": "CloudWatch Logs stores application logs in log groups and streams, with retention and encryption. Export is batch to S3, while subscription filters give real-time streaming.",
+   "vi": "CloudWatch Logs lưu log theo log group và log stream, có retention và mã hóa. Export sang S3 là batch, còn subscription filter cho streaming real-time."
+  },
+  "points": [
+   {
+    "en": "Log group per application, log streams per instance or container; retention from 1 day to 10 years or never expire.",
+    "vi": "Mỗi application một log group, mỗi instance hoặc container một log stream; retention từ 1 ngày đến 10 năm hoặc không hết hạn."
+   },
+   {
+    "en": "Logs Insights is a query engine over historical data, not real time.",
+    "vi": "Logs Insights là query engine trên dữ liệu lịch sử, không phải real-time."
+   },
+   {
+    "en": "Export to S3 is batch, can take up to 12 hours, via CreateExportTask.",
+    "vi": "Export sang S3 là batch, có thể mất tới 12 giờ, qua CreateExportTask."
+   },
+   {
+    "en": "Subscription filters stream to Kinesis Data Streams, Firehose or Lambda in real time.",
+    "vi": "Subscription filter stream real-time tới Kinesis Data Streams, Firehose hoặc Lambda."
+   },
+   {
+    "en": "Cross-account, cross-region aggregation uses a subscription destination plus access policy and IAM role.",
+    "vi": "Gom log cross-account, cross-region dùng subscription destination cùng access policy và IAM role."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon CloudWatch Logs",
+    "use": {
+     "en": "Central store for application and service logs.",
+     "vi": "Nơi lưu log tập trung của application và service."
+    }
+   },
+   {
+    "name": "CloudWatch Logs Insights",
+    "use": {
+     "en": "Ad hoc queries on logs; pick it for searching and analyzing history.",
+     "vi": "Truy vấn log ad hoc; chọn khi cần tìm và phân tích dữ liệu lịch sử."
+    }
+   },
+   {
+    "name": "CloudWatch Unified Agent",
+    "use": {
+     "en": "Sends logs from servers; replaces the older Logs Agent.",
+     "vi": "Gửi log từ server; thay thế Logs Agent cũ."
+    }
+   },
+   {
+    "name": "Amazon Kinesis Data Firehose",
+    "use": {
+     "en": "Near real-time delivery of logs to S3 or OpenSearch.",
+     "vi": "Chuyển log gần real-time tới S3 hoặc OpenSearch."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "All CloudWatch Logs are encrypted by default, and you can bring your own KMS key.",
+   "vi": "Mọi CloudWatch Logs đều được mã hóa mặc định, và bạn có thể dùng KMS key riêng."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"CloudWatch Logs\"] -->|\"CreateExportTask batch\"| B[\"Amazon S3\"]\n  A -->|\"Subscription filter\"| C[\"Kinesis Data Streams\"]\n  A -->|\"Subscription filter\"| D[\"Kinesis Data Firehose\"]\n  A -->|\"Subscription filter\"| E[\"AWS Lambda\"]\n  D --> F[\"Amazon S3 or OpenSearch\"]",
+   "vi": "flowchart LR\n  A[\"CloudWatch Logs\"] -->|\"CreateExportTask batch\"| B[\"Amazon S3\"]\n  A -->|\"Subscription filter\"| C[\"Kinesis Data Streams\"]\n  A -->|\"Subscription filter\"| D[\"Kinesis Data Firehose\"]\n  A -->|\"Subscription filter\"| E[\"AWS Lambda\"]\n  D --> F[\"Amazon S3 hoặc OpenSearch\"]"
+  }
+ },
+ "11-004": {
+  "tldr": {
+   "en": "Hands-on with CloudWatch Logs: log groups, streams, a metric filter that turns log patterns into a metric, an alarm on it, and Logs Insights queries.",
+   "vi": "Thực hành CloudWatch Logs: log group, stream, metric filter biến pattern trong log thành metric, alarm trên metric đó và truy vấn Logs Insights."
+  },
+  "points": [
+   {
+    "en": "Service logs appear in log groups named like /aws/lambda/..., and you can create your own group with retention and KMS.",
+    "vi": "Log của service nằm trong log group dạng /aws/lambda/..., và bạn có thể tự tạo group với retention và KMS."
+   },
+   {
+    "en": "A metric filter counts log lines matching a pattern; it only populates new data, not history.",
+    "vi": "Metric filter đếm các dòng log khớp pattern; chỉ áp dụng cho dữ liệu mới, không có dữ liệu cũ."
+   },
+   {
+    "en": "Put an alarm on the metric filter metric to alert on log content.",
+    "vi": "Gắn alarm lên metric của metric filter để cảnh báo theo nội dung log."
+   },
+   {
+    "en": "Other actions: S3 export, live tail, and subscription filters to OpenSearch, Kinesis, Firehose or Lambda.",
+    "vi": "Các action khác: export S3, live tail và subscription filter tới OpenSearch, Kinesis, Firehose hoặc Lambda."
+   },
+   {
+    "en": "Logs Insights QL provides saved sample queries such as the 25 most recent events.",
+    "vi": "Logs Insights QL có sẵn query mẫu như 25 event mới nhất."
+   }
+  ],
+  "services": [
+   {
+    "name": "CloudWatch Logs metric filter",
+    "use": {
+     "en": "Turns log text patterns into metrics for alarms.",
+     "vi": "Biến pattern trong log thành metric để tạo alarm."
+    }
+   },
+   {
+    "name": "CloudWatch Logs Insights",
+    "use": {
+     "en": "Query logs with a purpose-built language.",
+     "vi": "Truy vấn log bằng ngôn ngữ chuyên dụng."
+    }
+   },
+   {
+    "name": "AWS Lambda",
+    "use": {
+     "en": "Example producer of logs into CloudWatch.",
+     "vi": "Ví dụ nguồn tạo log đẩy vào CloudWatch."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Lambda function\"] --> B[\"CloudWatch log group\"]\n  B --> C[\"Metric filter\"]\n  C --> D[\"Custom metric\"]\n  D --> E[\"CloudWatch alarm\"]",
+   "vi": "flowchart LR\n  A[\"Lambda function\"] --> B[\"CloudWatch log group\"]\n  B --> C[\"Metric filter\"]\n  C --> D[\"Custom metric\"]\n  D --> E[\"CloudWatch alarm\"]"
+  }
+ },
+ "11-005": {
+  "tldr": {
+   "en": "EC2 sends no logs or memory metrics to CloudWatch by default. Install the CloudWatch Unified Agent with an IAM role to collect both logs and detailed system metrics.",
+   "vi": "EC2 mặc định không gửi log hay metric memory lên CloudWatch. Cài CloudWatch Unified Agent cùng IAM role để thu cả log lẫn metric hệ thống chi tiết."
+  },
+  "points": [
+   {
+    "en": "An agent plus an IAM role on the instance is required to push logs; it also works on on-premises servers.",
+    "vi": "Cần agent cùng IAM role trên instance để đẩy log; cũng chạy được trên server on-premises."
+   },
+   {
+    "en": "The older Logs Agent only sends logs; the Unified Agent sends logs and metrics.",
+    "vi": "Logs Agent cũ chỉ gửi log; Unified Agent gửi cả log và metric."
+   },
+   {
+    "en": "Unified Agent collects RAM, swap, processes, disk and detailed CPU, network metrics.",
+    "vi": "Unified Agent thu RAM, swap, process, disk và CPU, network chi tiết."
+   },
+   {
+    "en": "Unified Agent configuration can be centralized in SSM Parameter Store.",
+    "vi": "Cấu hình Unified Agent có thể quản lý tập trung bằng SSM Parameter Store."
+   }
+  ],
+  "services": [
+   {
+    "name": "CloudWatch Unified Agent",
+    "use": {
+     "en": "Pick it for memory, swap, disk and fine-grained metrics plus logs.",
+     "vi": "Chọn khi cần memory, swap, disk, metric chi tiết cùng log."
+    }
+   },
+   {
+    "name": "AWS Systems Manager Parameter Store",
+    "use": {
+     "en": "Central configuration for the agent.",
+     "vi": "Lưu cấu hình tập trung cho agent."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Out of the box EC2 reports CPU, disk and network but not memory or swap, which is why the agent exists.",
+   "vi": "EC2 mặc định có CPU, disk, network nhưng không có memory hay swap, vì thế mới cần agent."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"EC2 or on-premises server\"] --> B[\"Unified Agent\"]\n  B -->|\"IAM role\"| C[\"CloudWatch Logs\"]\n  B -->|\"IAM role\"| D[\"CloudWatch Metrics\"]\n  E[\"SSM Parameter Store\"] -->|\"config\"| B",
+   "vi": "flowchart LR\n  A[\"EC2 hoặc server on-premises\"] --> B[\"Unified Agent\"]\n  B -->|\"IAM role\"| C[\"CloudWatch Logs\"]\n  B -->|\"IAM role\"| D[\"CloudWatch Metrics\"]\n  E[\"SSM Parameter Store\"] -->|\"config\"| B"
+  }
+ },
+ "11-006": {
+  "tldr": {
+   "en": "CloudWatch Alarms watch a metric and trigger EC2 actions, Auto Scaling or SNS. Composite alarms combine alarms with AND or OR to cut noise.",
+   "vi": "CloudWatch Alarm theo dõi một metric và kích hoạt EC2 action, Auto Scaling hoặc SNS. Composite alarm kết hợp các alarm bằng AND hoặc OR để giảm nhiễu."
+  },
+  "points": [
+   {
+    "en": "Alarm states: OK, INSUFFICIENT_DATA, ALARM; period can be as short as 10 or 30 seconds for high-resolution metrics.",
+    "vi": "Trạng thái alarm: OK, INSUFFICIENT_DATA, ALARM; period có thể ngắn 10 hoặc 30 giây với high-resolution metric."
+   },
+   {
+    "en": "Targets: EC2 actions (stop, terminate, reboot, recover), Auto Scaling, or SNS then Lambda.",
+    "vi": "Target: EC2 action (stop, terminate, reboot, recover), Auto Scaling, hoặc SNS rồi Lambda."
+   },
+   {
+    "en": "Composite alarms watch several alarms with AND or OR to reduce alarm noise.",
+    "vi": "Composite alarm theo dõi nhiều alarm bằng AND hoặc OR để giảm nhiễu."
+   },
+   {
+    "en": "EC2 recovery keeps the same IPs, metadata and placement group.",
+    "vi": "EC2 recovery giữ nguyên IP, metadata và placement group."
+   },
+   {
+    "en": "set-alarm-state CLI forces a state to test actions.",
+    "vi": "CLI set-alarm-state ép alarm sang một trạng thái để test action."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon CloudWatch Alarms",
+    "use": {
+     "en": "Notify or act when a metric breaches a threshold.",
+     "vi": "Cảnh báo hoặc hành động khi metric vượt ngưỡng."
+    }
+   },
+   {
+    "name": "Amazon SNS",
+    "use": {
+     "en": "Notification target for alarms.",
+     "vi": "Đích gửi thông báo của alarm."
+    }
+   },
+   {
+    "name": "Amazon EC2 Auto Scaling",
+    "use": {
+     "en": "Scale in or out from an alarm.",
+     "vi": "Scale in hoặc out từ alarm."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "The set-alarm-state CLI call lets you fake a breach to verify your alarm action works without waiting for a real incident.",
+   "vi": "Lệnh CLI set-alarm-state cho phép giả lập alarm để kiểm tra action mà không cần chờ sự cố thật."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"CPU alarm\"] --> C[\"Composite alarm\"]\n  B[\"IOPS alarm\"] --> C\n  C -->|\"A AND B in ALARM\"| D[\"Amazon SNS\"]\n  D --> E[\"AWS Lambda\"]",
+   "vi": "flowchart LR\n  A[\"CPU alarm\"] --> C[\"Composite alarm\"]\n  B[\"IOPS alarm\"] --> C\n  C -->|\"A AND B ở ALARM\"| D[\"Amazon SNS\"]\n  D --> E[\"AWS Lambda\"]"
+  }
+ },
+ "11-007": {
+  "tldr": {
+   "en": "Demo: create an alarm on EC2 CPUUtilization that terminates the instance, then trigger it with set-alarm-state instead of waiting.",
+   "vi": "Demo: tạo alarm trên CPUUtilization của EC2 để terminate instance, rồi kích hoạt bằng set-alarm-state thay vì chờ."
+  },
+  "points": [
+   {
+    "en": "Choose a metric, statistic, period and threshold, static or anomaly detection.",
+    "vi": "Chọn metric, statistic, period và ngưỡng, static hoặc anomaly detection."
+   },
+   {
+    "en": "Example: CPU above 95 percent for 3 of 3 five-minute periods.",
+    "vi": "Ví dụ: CPU trên 95 phần trăm trong 3 trên 3 period 5 phút."
+   },
+   {
+    "en": "Actions can be notification, Auto Scaling, EC2 action or Systems Manager action.",
+    "vi": "Action có thể là notification, Auto Scaling, EC2 action hoặc Systems Manager action."
+   },
+   {
+    "en": "The new alarm starts in INSUFFICIENT_DATA until enough data points exist.",
+    "vi": "Alarm mới bắt đầu ở INSUFFICIENT_DATA cho tới khi đủ data point."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon CloudWatch Alarms",
+    "use": {
+     "en": "Automatically act on a metric threshold.",
+     "vi": "Tự động hành động khi metric vượt ngưỡng."
+    }
+   },
+   {
+    "name": "Amazon EC2",
+    "use": {
+     "en": "Target of the terminate action.",
+     "vi": "Đích của action terminate."
+    }
+   }
+  ]
+ },
+ "11-008": {
+  "tldr": {
+   "en": "AWS X-Ray traces requests across distributed services and draws a service map, so you can find bottlenecks and errors. Enable it with the SDK plus the X-Ray daemon or a built-in integration.",
+   "vi": "AWS X-Ray trace request qua các service phân tán và vẽ service map để tìm bottleneck và lỗi. Bật bằng SDK cùng X-Ray daemon hoặc tích hợp sẵn."
+  },
+  "points": [
+   {
+    "en": "Visual service map shows dependencies, latency, errors and which service is slow or failing.",
+    "vi": "Service map trực quan cho thấy dependency, latency, lỗi và service nào chậm hoặc hỏng."
+   },
+   {
+    "en": "A trace is made of segments and subsegments, and can carry annotations; sampling lowers volume.",
+    "vi": "Trace gồm segment và subsegment, có thể thêm annotation; sampling giảm lượng dữ liệu."
+   },
+   {
+    "en": "Enable by importing the X-Ray SDK in code (small code change), then run the X-Ray daemon.",
+    "vi": "Bật bằng cách import X-Ray SDK vào code (sửa code ít), rồi chạy X-Ray daemon."
+   },
+   {
+    "en": "Lambda and other integrated services run the daemon for you; EC2 and on-premises need it installed.",
+    "vi": "Lambda và service tích hợp tự chạy daemon; EC2 và on-premises phải tự cài."
+   },
+   {
+    "en": "Works locally but not on EC2? Likely the daemon is not running or the IAM role lacks permission.",
+    "vi": "Chạy local được mà EC2 không? Thường do daemon chưa chạy hoặc IAM role thiếu quyền."
+   },
+   {
+    "en": "For Lambda, check execution role, X-Ray SDK import and active tracing enabled.",
+    "vi": "Với Lambda, kiểm tra execution role, import X-Ray SDK và bật active tracing."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS X-Ray",
+    "use": {
+     "en": "Distributed tracing and service map for debugging microservices.",
+     "vi": "Distributed tracing và service map để debug microservices."
+    }
+   },
+   {
+    "name": "X-Ray daemon",
+    "use": {
+     "en": "UDP listener that batches traces to X-Ray every second.",
+     "vi": "Chương trình lắng nghe UDP, gửi batch trace lên X-Ray mỗi giây."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "The X-Ray daemon sends traces in a batch every one second, and the service map is computed from those segments.",
+   "vi": "X-Ray daemon gửi trace theo batch mỗi giây, và service map được tính từ các segment đó."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"App with X-Ray SDK\"] -->|\"UDP\"| B[\"X-Ray daemon\"]\n  B -->|\"batch every 1s\"| C[\"AWS X-Ray\"]\n  C --> D[\"Service map\"]\n  C --> E[\"Traces\"]",
+   "vi": "flowchart LR\n  A[\"App với X-Ray SDK\"] -->|\"UDP\"| B[\"X-Ray daemon\"]\n  B -->|\"batch mỗi 1s\"| C[\"AWS X-Ray\"]\n  C --> D[\"Service map\"]\n  C --> E[\"Traces\"]"
+  }
+ },
+ "11-009": {
+  "tldr": {
+   "en": "Hands-on with X-Ray: a CloudFormation-deployed demo app generates traces, and the service map and trace view reveal which component is erroring or slow.",
+   "vi": "Thực hành X-Ray: app demo triển khai bằng CloudFormation tạo trace, service map và trace view cho thấy thành phần nào lỗi hoặc chậm."
+  },
+  "points": [
+   {
+    "en": "The service map shows ECS, DynamoDB tables and SNS with request counts, latency and fault rates.",
+    "vi": "Service map hiển thị ECS, các bảng DynamoDB và SNS cùng số request, latency và tỉ lệ lỗi."
+   },
+   {
+    "en": "A red or orange node pinpoints the failing service, here 100 percent errors to SNS.",
+    "vi": "Node đỏ hoặc cam chỉ ra service lỗi, ở đây là 100 phần trăm lỗi tới SNS."
+   },
+   {
+    "en": "Filter traces by node, then open one trace to see per-call latency breakdown.",
+    "vi": "Lọc trace theo node, rồi mở một trace để xem latency từng call."
+   },
+   {
+    "en": "X-Ray now lives in the CloudWatch console, with sampling, encryption and groups still in the old console.",
+    "vi": "X-Ray giờ nằm trong console CloudWatch; sampling, encryption và groups vẫn ở console cũ."
+   },
+   {
+    "en": "Delete the CloudFormation stack afterwards to avoid charges.",
+    "vi": "Xóa CloudFormation stack sau khi xong để tránh phát sinh chi phí."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS X-Ray",
+    "use": {
+     "en": "Visualize request paths and find slow or failing calls.",
+     "vi": "Trực quan đường đi của request và tìm call chậm hoặc lỗi."
+    }
+   },
+   {
+    "name": "AWS CloudFormation",
+    "use": {
+     "en": "Deploys the demo stack.",
+     "vi": "Triển khai stack demo."
+    }
+   },
+   {
+    "name": "Amazon DynamoDB",
+    "use": {
+     "en": "Backend tables seen in the service map.",
+     "vi": "Các bảng backend xuất hiện trên service map."
+    }
+   }
+  ]
+ },
+ "11-011": {
+  "tldr": {
+   "en": "Amazon QuickSight is a serverless BI tool for end users to build dashboards from many data sources, accelerated by SPICE, with a few ML features like anomaly detection, forecasting and Q.",
+   "vi": "Amazon QuickSight là công cụ BI serverless cho người dùng cuối tạo dashboard từ nhiều nguồn dữ liệu, tăng tốc bằng SPICE, có vài tính năng ML như anomaly detection, forecasting và Q."
+  },
+  "points": [
+   {
+    "en": "Aimed at business users, serverless, priced per user; sources include Redshift, Athena, RDS, S3, Salesforce, JDBC and ODBC.",
+    "vi": "Hướng tới người dùng nghiệp vụ, serverless, tính tiền theo user; nguồn gồm Redshift, Athena, RDS, S3, Salesforce, JDBC và ODBC."
+   },
+   {
+    "en": "SPICE is the in-memory engine, limited to 10 GB per user.",
+    "vi": "SPICE là engine in-memory, giới hạn 10 GB cho mỗi user."
+   },
+   {
+    "en": "ML Insights: anomaly detection and forecasting both use Random Cut Forest; auto-narratives write plain-language summaries.",
+    "vi": "ML Insights: anomaly detection và forecasting đều dùng Random Cut Forest; auto-narratives viết tóm tắt bằng ngôn ngữ tự nhiên."
+   },
+   {
+    "en": "QuickSight Q answers natural-language questions but needs topics and NLP-friendly field names; it is an add-on.",
+    "vi": "QuickSight Q trả lời câu hỏi ngôn ngữ tự nhiên nhưng cần topic và tên field thân thiện NLP; là add-on."
+   },
+   {
+    "en": "Paginated reports make printable multi-page reports; heavy ETL still belongs in Glue.",
+    "vi": "Paginated report tạo báo cáo nhiều trang để in; ETL nặng vẫn dùng Glue."
+   },
+   {
+    "en": "Security: MFA, VPC access via ENI, row-level security, column-level security (Enterprise only), SAML and AD in Enterprise.",
+    "vi": "Bảo mật: MFA, truy cập VPC qua ENI, row-level security, column-level security (chỉ Enterprise), SAML và AD ở Enterprise."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon QuickSight",
+    "use": {
+     "en": "Dashboards and ad hoc visual analysis for business users.",
+     "vi": "Dashboard và phân tích trực quan ad hoc cho người dùng nghiệp vụ."
+    }
+   },
+   {
+    "name": "SPICE",
+    "use": {
+     "en": "In-memory engine that speeds up queries.",
+     "vi": "Engine in-memory giúp tăng tốc truy vấn."
+    }
+   },
+   {
+    "name": "QuickSight Q",
+    "use": {
+     "en": "Natural-language questions on your data.",
+     "vi": "Hỏi dữ liệu bằng ngôn ngữ tự nhiên."
+    }
+   },
+   {
+    "name": "AWS Glue",
+    "use": {
+     "en": "Use it for heavy ETL, not QuickSight.",
+     "vi": "Dùng cho ETL nặng thay vì QuickSight."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "SPICE is a forced acronym for Super-fast, Parallel, In-memory Calculation Engine.",
+   "vi": "SPICE là từ viết tắt gượng ép của Super-fast, Parallel, In-memory Calculation Engine."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Redshift, RDS, Athena, S3\"] --> B[\"SPICE engine\"]\n  B --> C[\"QuickSight analysis\"]\n  C --> D[\"Dashboard\"]\n  C --> E[\"ML Insights\"]\n  C --> F[\"QuickSight Q\"]",
+   "vi": "flowchart LR\n  A[\"Redshift, RDS, Athena, S3\"] --> B[\"SPICE engine\"]\n  B --> C[\"QuickSight analysis\"]\n  C --> D[\"Dashboard\"]\n  C --> E[\"ML Insights\"]\n  C --> F[\"QuickSight Q\"]"
+  }
+ },
+ "11-012": {
+  "tldr": {
+   "en": "QuickSight offers many visual types and the exam asks which fits a given analysis: bar for comparison, line for trends, scatter for correlation, heat map for 2D color-coded data, and so on.",
+   "vi": "QuickSight có nhiều loại visual và đề thi hỏi loại nào hợp với bài toán: bar để so sánh, line cho xu hướng, scatter cho tương quan, heat map cho dữ liệu 2D theo màu, v.v."
+  },
+  "points": [
+   {
+    "en": "Bar charts: comparison and distribution. Line and area charts: change over time.",
+    "vi": "Bar chart: so sánh và phân phối. Line và area chart: thay đổi theo thời gian."
+   },
+   {
+    "en": "Scatter plots show correlation; heat maps color-code values in a 2D grid.",
+    "vi": "Scatter plot cho thấy tương quan; heat map tô màu giá trị trong lưới 2D."
+   },
+   {
+    "en": "Pie and donut show share of total; tree maps show hierarchical aggregation.",
+    "vi": "Pie và donut cho tỉ lệ trên tổng; tree map cho tổng hợp theo phân cấp."
+   },
+   {
+    "en": "Pivot tables aggregate tabular data; KPI compares a value to target; gauge shows how full.",
+    "vi": "Pivot table tổng hợp dữ liệu dạng bảng; KPI so giá trị với mục tiêu; gauge cho biết mức đầy."
+   },
+   {
+    "en": "Geospatial charts map data by location; word clouds show word frequency; dashboards are read-only shares.",
+    "vi": "Geospatial chart vẽ dữ liệu theo vị trí; word cloud cho tần suất từ; dashboard là bản chia sẻ chỉ đọc."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon QuickSight",
+    "use": {
+     "en": "Pick the visual type that matches the question.",
+     "vi": "Chọn loại visual phù hợp với câu hỏi."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "The scatter plot example uses Old Faithful geyser data: longer waits between eruptions mean longer eruptions.",
+   "vi": "Ví dụ scatter plot dùng dữ liệu geyser Old Faithful: chờ càng lâu giữa các đợt phun thì đợt phun càng dài."
+  },
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Which visual?\"] --> B[\"Compare or distribution\"]\n  A --> C[\"Trend over time\"]\n  A --> D[\"Correlation\"]\n  A --> E[\"Part of whole\"]\n  A --> F[\"Hierarchy\"]\n  B --> B1[\"Bar chart\"]\n  C --> C1[\"Line chart\"]\n  D --> D1[\"Scatter plot or heat map\"]\n  E --> E1[\"Pie or donut\"]\n  F --> F1[\"Tree map\"]",
+   "vi": "flowchart TD\n  A[\"Chọn visual nào?\"] --> B[\"So sánh hoặc phân phối\"]\n  A --> C[\"Xu hướng theo thời gian\"]\n  A --> D[\"Tương quan\"]\n  A --> E[\"Phần trên tổng\"]\n  A --> F[\"Phân cấp\"]\n  B --> B1[\"Bar chart\"]\n  C --> C1[\"Line chart\"]\n  D --> D1[\"Scatter plot hoặc heat map\"]\n  E --> E1[\"Pie hoặc donut\"]\n  F --> F1[\"Tree map\"]"
+  }
+ },
+ "11-013": {
+  "tldr": {
+   "en": "CloudTrail records every API call and user action in your account, on by default with 90 days of history. Send events to S3 for long-term retention and query them with Athena.",
+   "vi": "CloudTrail ghi lại mọi API call và hành động trong account, bật mặc định với 90 ngày lịch sử. Gửi event sang S3 để lưu lâu dài và truy vấn bằng Athena."
+  },
+  "points": [
+   {
+    "en": "Answers who did what and when, e.g. who terminated an EC2 instance.",
+    "vi": "Trả lời ai làm gì và khi nào, ví dụ ai đã terminate EC2 instance."
+   },
+   {
+    "en": "Management events (control plane) are logged by default, split into read and write.",
+    "vi": "Management event (control plane) được log mặc định, chia thành read và write."
+   },
+   {
+    "en": "Data events such as S3 object access and Lambda Invoke are off by default because of high volume.",
+    "vi": "Data event như truy cập object S3 và Lambda Invoke tắt mặc định vì khối lượng lớn."
+   },
+   {
+    "en": "CloudTrail Insights is paid and flags unusual activity against a baseline of management events.",
+    "vi": "CloudTrail Insights tính phí và phát hiện hoạt động bất thường dựa trên baseline của management event."
+   },
+   {
+    "en": "Keep events beyond 90 days by logging to S3, then analyze with Athena.",
+    "vi": "Giữ event quá 90 ngày bằng cách ghi vào S3, rồi phân tích bằng Athena."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS CloudTrail",
+    "use": {
+     "en": "Audit who made which API call.",
+     "vi": "Audit ai gọi API nào."
+    }
+   },
+   {
+    "name": "CloudTrail Insights",
+    "use": {
+     "en": "Detect unusual API activity.",
+     "vi": "Phát hiện hoạt động API bất thường."
+    }
+   },
+   {
+    "name": "Amazon S3 and Amazon Athena",
+    "use": {
+     "en": "Long-term storage and querying of trail events.",
+     "vi": "Lưu trữ lâu dài và truy vấn event của trail."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Console, CLI, SDK, services\"] --> B[\"AWS CloudTrail\"]\n  B -->|\"90 days\"| C[\"Event history\"]\n  B --> D[\"Amazon S3\"]\n  B --> E[\"CloudWatch Logs\"]\n  D --> F[\"Amazon Athena\"]",
+   "vi": "flowchart LR\n  A[\"Console, CLI, SDK, services\"] --> B[\"AWS CloudTrail\"]\n  B -->|\"90 ngày\"| C[\"Event history\"]\n  B --> D[\"Amazon S3\"]\n  B --> E[\"CloudWatch Logs\"]\n  D --> F[\"Amazon Athena\"]"
+  }
+ },
+ "11-014": {
+  "tldr": {
+   "en": "Demo: terminate an EC2 instance, then find the TerminateInstances API call in CloudTrail event history with its source, access key and region.",
+   "vi": "Demo: terminate một EC2 instance rồi tìm API call TerminateInstances trong event history của CloudTrail cùng nguồn, access key và region."
+  },
+  "points": [
+   {
+    "en": "Event history shows the last 90 days of management events.",
+    "vi": "Event history hiển thị management event trong 90 ngày gần nhất."
+   },
+   {
+    "en": "Each event shows event source, access key used, region and full JSON.",
+    "vi": "Mỗi event cho biết event source, access key đã dùng, region và JSON đầy đủ."
+   },
+   {
+    "en": "Events take about five minutes to appear.",
+    "vi": "Event mất khoảng 5 phút mới xuất hiện."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS CloudTrail",
+    "use": {
+     "en": "Look up who ran an API call.",
+     "vi": "Tra cứu ai đã chạy một API call."
+    }
+   }
+  ]
+ },
+ "11-015": {
+  "tldr": {
+   "en": "AWS Config records resource configuration over time and checks it against rules for compliance. Rules only report; fix with SSM automation remediation.",
+   "vi": "AWS Config ghi cấu hình tài nguyên theo thời gian và kiểm tra theo rule để đánh giá compliance. Rule chỉ báo cáo; muốn sửa thì dùng remediation bằng SSM automation."
+  },
+  "points": [
+   {
+    "en": "Answers questions like: is SSH open to the world, or are buckets public?",
+    "vi": "Trả lời các câu hỏi như: SSH có mở ra toàn cầu không, bucket có public không?"
+   },
+   {
+    "en": "Over 75 AWS managed rules, or custom rules backed by Lambda; triggered on change or on a schedule.",
+    "vi": "Hơn 75 managed rule của AWS, hoặc custom rule dùng Lambda; kích hoạt khi có thay đổi hoặc theo lịch."
+   },
+   {
+    "en": "Config rules do not block actions and do not replace IAM.",
+    "vi": "Config rule không chặn hành động và không thay thế IAM."
+   },
+   {
+    "en": "Remediate non-compliant resources with SSM Automation documents, with retries.",
+    "vi": "Khắc phục resource không tuân thủ bằng SSM Automation document, có retry."
+   },
+   {
+    "en": "Per-region service, can aggregate across accounts; notify through EventBridge or SNS; pricey per item recorded.",
+    "vi": "Là service theo region, có thể aggregate nhiều account; thông báo qua EventBridge hoặc SNS; chi phí tính theo mỗi item ghi lại."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS Config",
+    "use": {
+     "en": "Track configuration history and compliance of resources.",
+     "vi": "Theo dõi lịch sử cấu hình và compliance của tài nguyên."
+    }
+   },
+   {
+    "name": "AWS Systems Manager Automation",
+    "use": {
+     "en": "Auto-remediate non-compliant resources.",
+     "vi": "Tự động khắc phục resource không tuân thủ."
+    }
+   },
+   {
+    "name": "Amazon EventBridge",
+    "use": {
+     "en": "Trigger notifications on compliance change.",
+     "vi": "Kích hoạt thông báo khi compliance thay đổi."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Resource config change\"] --> B[\"AWS Config\"]\n  B --> C[\"Config rule evaluation\"]\n  C -->|\"non-compliant\"| D[\"SSM Automation remediation\"]\n  C -->|\"event\"| E[\"EventBridge or SNS\"]",
+   "vi": "flowchart LR\n  A[\"Thay đổi cấu hình resource\"] --> B[\"AWS Config\"]\n  B --> C[\"Đánh giá Config rule\"]\n  C -->|\"không tuân thủ\"| D[\"SSM Automation remediation\"]\n  C -->|\"event\"| E[\"EventBridge hoặc SNS\"]"
+  }
+ },
+ "11-016": {
+  "tldr": {
+   "en": "Hands-on with AWS Config: turn on recording, add the restricted-ssh managed rule, see non-compliant security groups, fix one and watch it become compliant.",
+   "vi": "Thực hành AWS Config: bật recording, thêm managed rule restricted-ssh, xem security group không tuân thủ, sửa và thấy nó trở lại compliant."
+  },
+  "points": [
+   {
+    "en": "Setup records resources into an S3 bucket via a service-linked role; recording more resources costs more.",
+    "vi": "Khi setup, Config ghi resource vào S3 bucket qua service-linked role; ghi càng nhiều resource càng tốn tiền."
+   },
+   {
+    "en": "The resource timeline shows config changes, rule results and related CloudTrail events.",
+    "vi": "Resource timeline hiển thị thay đổi cấu hình, kết quả rule và event CloudTrail liên quan."
+   },
+   {
+    "en": "The restricted-ssh rule flagged security groups with port 22 open to anywhere; deleting that rule re-evaluated them as compliant.",
+    "vi": "Rule restricted-ssh đánh dấu security group mở port 22 cho mọi nơi; xóa rule đó thì được đánh giá lại là compliant."
+   },
+   {
+    "en": "Remediation can be manual or automatic with retries, using SSM automation documents.",
+    "vi": "Remediation có thể thủ công hoặc tự động kèm retry, dùng SSM automation document."
+   },
+   {
+    "en": "Aggregators span multiple accounts; settings can send changes to SNS.",
+    "vi": "Aggregator gom nhiều account; settings có thể gửi thay đổi tới SNS."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS Config",
+    "use": {
+     "en": "Compliance rules and resource timeline.",
+     "vi": "Compliance rule và timeline của resource."
+    }
+   },
+   {
+    "name": "AWS CloudTrail",
+    "use": {
+     "en": "Linked events show who changed the resource.",
+     "vi": "Event liên kết cho biết ai đã thay đổi resource."
+    }
+   }
+  ]
+ },
+ "11-017": {
+  "tldr": {
+   "en": "CloudWatch is for performance, CloudTrail for who called which API, Config for configuration changes and compliance. They complement each other, as the load balancer example shows.",
+   "vi": "CloudWatch dành cho hiệu năng, CloudTrail cho việc ai gọi API nào, Config cho thay đổi cấu hình và compliance. Chúng bổ trợ nhau như ví dụ load balancer."
+  },
+  "points": [
+   {
+    "en": "CloudWatch: metrics, dashboards, alarms, log aggregation and analysis.",
+    "vi": "CloudWatch: metric, dashboard, alarm, gom và phân tích log."
+   },
+   {
+    "en": "CloudTrail: API call history by anyone or anything in the account.",
+    "vi": "CloudTrail: lịch sử API call của mọi người và mọi thứ trong account."
+   },
+   {
+    "en": "Config: configuration changes over time and compliance against rules.",
+    "vi": "Config: thay đổi cấu hình theo thời gian và compliance theo rule."
+   },
+   {
+    "en": "For an ELB: CloudWatch watches connections and errors, Config tracks SSL and security group rules, CloudTrail shows who changed them.",
+    "vi": "Với ELB: CloudWatch xem kết nối và lỗi, Config theo dõi SSL và security group rule, CloudTrail cho biết ai đã thay đổi."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon CloudWatch",
+    "use": {
+     "en": "What is happening: performance.",
+     "vi": "Chuyện gì đang xảy ra: hiệu năng."
+    }
+   },
+   {
+    "name": "AWS CloudTrail",
+    "use": {
+     "en": "Who did it: API calls.",
+     "vi": "Ai làm: API call."
+    }
+   },
+   {
+    "name": "AWS Config",
+    "use": {
+     "en": "What changed and is it compliant: configuration.",
+     "vi": "Cái gì thay đổi và có tuân thủ không: cấu hình."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  Q[\"Question about a resource\"] --> A[\"Performance or alerts\"]\n  Q --> B[\"Who made the change\"]\n  Q --> C[\"Config history or compliance\"]\n  A --> A1[\"CloudWatch\"]\n  B --> B1[\"CloudTrail\"]\n  C --> C1[\"AWS Config\"]",
+   "vi": "flowchart LR\n  Q[\"Câu hỏi về một resource\"] --> A[\"Hiệu năng hoặc cảnh báo\"]\n  Q --> B[\"Ai thực hiện thay đổi\"]\n  Q --> C[\"Lịch sử cấu hình hoặc compliance\"]\n  A --> A1[\"CloudWatch\"]\n  B --> B1[\"CloudTrail\"]\n  C --> C1[\"AWS Config\"]"
+  }
+ },
+ "11-018": {
+  "tldr": {
+   "en": "AWS Budgets alerts you when actual or forecasted cost or usage exceeds a budget. It is more granular than a simple billing alarm.",
+   "vi": "AWS Budgets cảnh báo khi chi phí hoặc usage thực tế hoặc dự báo vượt ngân sách. Chi tiết hơn billing alarm thông thường."
+  },
+  "points": [
+   {
+    "en": "Four budget types: usage, cost, reservation, savings plan.",
+    "vi": "Bốn loại budget: usage, cost, reservation, savings plan."
+   },
+   {
+    "en": "Reservation budgets track RI utilization for EC2, ElastiCache, RDS and Redshift.",
+    "vi": "Reservation budget theo dõi mức dùng RI cho EC2, ElastiCache, RDS và Redshift."
+   },
+   {
+    "en": "Up to 5 notifications per budget; filter by service, linked account, tag, purchase option.",
+    "vi": "Tối đa 5 thông báo cho mỗi budget; lọc theo service, linked account, tag, purchase option."
+   },
+   {
+    "en": "First two budgets are free, then 2 cents per day per budget.",
+    "vi": "Hai budget đầu miễn phí, sau đó 2 cent mỗi ngày mỗi budget."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS Budgets",
+    "use": {
+     "en": "Alert on cost, usage, RI or Savings Plan thresholds.",
+     "vi": "Cảnh báo theo ngưỡng chi phí, usage, RI hoặc Savings Plan."
+    }
+   }
+  ]
+ },
+ "11-019": {
+  "tldr": {
+   "en": "Demo of AWS Budgets: templates for quick setup, or a customized cost budget with scope filters, actual or forecast alerts, and optional actions via an IAM role.",
+   "vi": "Demo AWS Budgets: dùng template cho nhanh, hoặc tạo cost budget tùy chỉnh với filter, cảnh báo actual hoặc forecast và action tùy chọn qua IAM role."
+  },
+  "points": [
+   {
+    "en": "Templates include zero spend, monthly cost and daily Savings Plans coverage.",
+    "vi": "Template gồm zero spend, monthly cost và daily Savings Plans coverage."
+   },
+   {
+    "en": "Set period, recurring or expiring, fixed amount, and filter by service, region, tag and more.",
+    "vi": "Đặt chu kỳ, lặp lại hay hết hạn, số tiền cố định, và lọc theo service, region, tag, v.v."
+   },
+   {
+    "en": "Alerts at a percent of actual or forecasted spend go to email, SNS or chatbots for Slack and Chime.",
+    "vi": "Cảnh báo ở một phần trăm chi phí thực tế hoặc dự báo gửi tới email, SNS hoặc chatbot cho Slack và Chime."
+   },
+   {
+    "en": "Budget actions need an IAM role that lets Budgets act on your behalf.",
+    "vi": "Budget action cần IAM role cho phép Budgets hành động thay bạn."
+   },
+   {
+    "en": "Usage, Savings Plans and reservation budgets track utilization or coverage.",
+    "vi": "Budget usage, Savings Plans và reservation theo dõi mức sử dụng hoặc coverage."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS Budgets",
+    "use": {
+     "en": "Set cost alerts and automated actions.",
+     "vi": "Đặt cảnh báo chi phí và action tự động."
+    }
+   },
+   {
+    "name": "Amazon SNS",
+    "use": {
+     "en": "Alert destination for budgets.",
+     "vi": "Đích nhận cảnh báo của budget."
+    }
+   }
+  ]
+ },
+ "11-020": {
+  "tldr": {
+   "en": "Cost Explorer visualizes and forecasts AWS cost and usage, down to hourly or resource level, and recommends Savings Plans.",
+   "vi": "Cost Explorer trực quan hóa và dự báo chi phí, usage AWS, chi tiết tới theo giờ hoặc theo resource, và gợi ý Savings Plans."
+  },
+  "points": [
+   {
+    "en": "Custom reports of cost and usage across accounts, monthly, hourly or per resource.",
+    "vi": "Báo cáo tùy chỉnh về chi phí và usage giữa các account, theo tháng, giờ hoặc resource."
+   },
+   {
+    "en": "Recommends an optimal Savings Plan with estimated monthly spend.",
+    "vi": "Gợi ý Savings Plan tối ưu kèm ước tính chi phí hàng tháng."
+   },
+   {
+    "en": "Forecasts usage up to 18 months from past usage.",
+    "vi": "Dự báo usage tới 18 tháng dựa trên usage trước đó."
+   },
+   {
+    "en": "Likely the only billing service the exam asks about.",
+    "vi": "Có thể là billing service duy nhất được hỏi trong đề thi."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS Cost Explorer",
+    "use": {
+     "en": "Analyze and forecast spend, find Savings Plans.",
+     "vi": "Phân tích và dự báo chi phí, tìm Savings Plans."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "The lecture notes this is probably the only billing service the exam will ask about.",
+   "vi": "Giảng viên lưu ý đây có lẽ là billing service duy nhất sẽ xuất hiện trong đề."
+  }
+ },
+ "11-021": {
+  "tldr": {
+   "en": "Trusted Advisor gives a high-level account assessment across six categories. Core checks are free; the full set needs a Business or Enterprise support plan.",
+   "vi": "Trusted Advisor đánh giá tổng quan account theo sáu nhóm. Core check miễn phí; bộ đầy đủ cần Business hoặc Enterprise support plan."
+  },
+  "points": [
+   {
+    "en": "No install needed; checks e.g. public EBS or RDS snapshots and root account use.",
+    "vi": "Không cần cài; kiểm tra ví dụ snapshot EBS hoặc RDS public và việc dùng root account."
+   },
+   {
+    "en": "Six categories: cost optimization, performance, security, fault tolerance, service limits, operational excellence.",
+    "vi": "Sáu nhóm: cost optimization, performance, security, fault tolerance, service limits, operational excellence."
+   },
+   {
+    "en": "Full checks require Business or Enterprise support, which also adds programmatic access via the Support API.",
+    "vi": "Check đầy đủ cần Business hoặc Enterprise support, đồng thời có truy cập programmatic qua Support API."
+   },
+   {
+    "en": "Service limits checks cover Auto Scaling groups, CloudFormation stacks, DynamoDB capacity and more.",
+    "vi": "Check service limit gồm Auto Scaling group, CloudFormation stack, dung lượng DynamoDB, v.v."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS Trusted Advisor",
+    "use": {
+     "en": "Best-practice checks on cost, security, limits and more.",
+     "vi": "Check best practice về chi phí, bảo mật, limit và hơn nữa."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Trusted Advisor\"] --> B[\"Cost optimization\"]\n  A --> C[\"Performance\"]\n  A --> D[\"Security\"]\n  A --> E[\"Fault tolerance\"]\n  A --> F[\"Service limits\"]\n  A --> G[\"Operational excellence\"]",
+   "vi": "flowchart LR\n  A[\"Trusted Advisor\"] --> B[\"Cost optimization\"]\n  A --> C[\"Performance\"]\n  A --> D[\"Security\"]\n  A --> E[\"Fault tolerance\"]\n  A --> F[\"Service limits\"]\n  A --> G[\"Operational excellence\"]"
+  }
+ }
+}

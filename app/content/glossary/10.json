@@ -1,0 +1,221 @@
+{
+ "section": "10",
+ "terms": [
+  {
+   "id": "least-privilege",
+   "term": "Principle of Least Privilege",
+   "lecture": "10-002",
+   "definition": {
+    "en": "Grant only the permissions required to perform a task, scoped to specific actions, resources and prefixes. Start broad while developing, then lock down; IAM Access Analyzer can generate least-privilege policies from observed activity.",
+    "vi": "Chỉ cấp đúng quyền cần thiết để thực hiện một tác vụ, giới hạn theo action, resource và prefix cụ thể. Có thể bắt đầu rộng khi phát triển rồi siết lại; IAM Access Analyzer có thể sinh policy least privilege từ hoạt động thực tế."
+   }
+  },
+  {
+   "id": "iam-access-analyzer",
+   "term": "IAM Access Analyzer",
+   "lecture": "10-002",
+   "definition": {
+    "en": "Generates least-privilege IAM policies based on actual observed access activity. Pick it when asked how to work out the minimal permissions a workload really needs.",
+    "vi": "Sinh IAM policy least privilege dựa trên hoạt động truy cập thực tế đã quan sát. Chọn khi đề hỏi cách xác định quyền tối thiểu mà workload thực sự cần."
+   }
+  },
+  {
+   "id": "sagemaker-encryption",
+   "term": "SageMaker encryption at rest and in transit",
+   "lecture": "10-003",
+   "definition": {
+    "en": "Use KMS keys for notebooks, training volumes, /opt/ml and /tmp, model artifacts and S3 data; use SSL/TLS for all connections. Inter-container traffic encryption can be enabled on distributed training jobs (it may slow training).",
+    "vi": "Dùng KMS key cho notebook, training volume, /opt/ml và /tmp, model artifact và dữ liệu S3; dùng SSL/TLS cho mọi kết nối. Có thể bật inter-container traffic encryption cho distributed training (có thể làm training chậm hơn)."
+   }
+  },
+  {
+   "id": "sagemaker-vpc",
+   "term": "SageMaker in a private VPC",
+   "lecture": "10-004",
+   "definition": {
+    "en": "Training jobs and notebooks can run in a VPC, but SageMaker still needs S3, so create S3 VPC endpoints. If you disable notebook internet access you must provide an interface endpoint (PrivateLink) or a NAT gateway; network isolation on containers removes S3 access.",
+    "vi": "Training job và notebook có thể chạy trong VPC, nhưng SageMaker vẫn cần S3 nên phải tạo S3 VPC endpoint. Nếu tắt internet của notebook phải có interface endpoint (PrivateLink) hoặc NAT gateway; bật network isolation cho container sẽ mất truy cập S3."
+   }
+  },
+  {
+   "id": "iam-users-groups-policies",
+   "term": "IAM users, groups and policies",
+   "lecture": "10-005",
+   "definition": {
+    "en": "Users are people or apps, groups hold users, and JSON policies attach to users, groups or roles to allow or deny actions. Never use the root account for daily work.",
+    "vi": "User là con người hoặc ứng dụng, group chứa các user, và policy dạng JSON gắn vào user, group hoặc role để cho phép hoặc từ chối action. Không dùng root account cho công việc hằng ngày."
+   }
+  },
+  {
+   "id": "iam-policy-structure",
+   "term": "IAM policy structure",
+   "lecture": "10-008",
+   "definition": {
+    "en": "A JSON policy with Effect (Allow/Deny), Action, Resource and optional Condition. An explicit Deny always overrides an Allow; the default is implicit deny.",
+    "vi": "Policy JSON gồm Effect (Allow/Deny), Action, Resource và Condition tùy chọn. Explicit Deny luôn thắng Allow; mặc định là implicit deny."
+   }
+  },
+  {
+   "id": "iam-mfa",
+   "term": "IAM MFA",
+   "lecture": "10-010",
+   "definition": {
+    "en": "Multi-factor authentication requires a password plus a possession factor (virtual MFA app, U2F key, hardware token). Enable it at least for the root account and administrators to protect against stolen passwords.",
+    "vi": "Multi-factor authentication yêu cầu mật khẩu cộng một yếu tố sở hữu (app MFA ảo, khóa U2F, hardware token). Nên bật tối thiểu cho root account và administrator để chống lộ mật khẩu."
+   }
+  },
+  {
+   "id": "iam-roles",
+   "term": "IAM roles",
+   "lecture": "10-012",
+   "definition": {
+    "en": "An identity assumed by AWS services (EC2 instance profile, SageMaker execution role, Lambda) that supplies temporary credentials. Choose a role instead of storing access keys on an instance.",
+    "vi": "Danh tính mà dịch vụ AWS đảm nhận (EC2 instance profile, SageMaker execution role, Lambda) và cấp credential tạm thời. Chọn role thay vì lưu access key trên instance."
+   }
+  },
+  {
+   "id": "encryption-in-transit-at-rest",
+   "term": "Encryption at rest vs in transit",
+   "lecture": "10-014",
+   "definition": {
+    "en": "At rest protects stored data (S3, EBS, RDS) with keys such as KMS; in transit protects data moving over the network with TLS/SSL. Encrypt PII in both states.",
+    "vi": "At rest bảo vệ dữ liệu đã lưu (S3, EBS, RDS) bằng key như KMS; in transit bảo vệ dữ liệu truyền qua mạng bằng TLS/SSL. Mã hóa PII ở cả hai trạng thái."
+   }
+  },
+  {
+   "id": "aws-kms",
+   "term": "AWS KMS",
+   "lecture": "10-015",
+   "definition": {
+    "en": "Managed service for creating and controlling encryption keys, integrated with IAM and most AWS services, with every key API call auditable in CloudTrail. Pick it whenever the exam asks for managed encryption keys with audit and access control.",
+    "vi": "Dịch vụ quản lý tạo và kiểm soát encryption key, tích hợp với IAM và hầu hết dịch vụ AWS, mọi lệnh gọi API dùng key đều audit được qua CloudTrail. Chọn khi đề yêu cầu key mã hóa được quản lý có audit và kiểm soát truy cập."
+   }
+  },
+  {
+   "id": "kms-key-types",
+   "term": "KMS key types",
+   "lecture": "10-015",
+   "definition": {
+    "en": "Symmetric keys (one key, used by integrated AWS services) and asymmetric keys (public/private pair for encrypt/decrypt or sign/verify outside AWS). Ownership types are AWS owned (free, invisible), AWS managed (free, aws/service) and customer managed (full control, paid).",
+    "vi": "Symmetric key (một key, dùng bởi các dịch vụ AWS tích hợp) và asymmetric key (cặp public/private để mã hóa/giải mã hoặc ký/xác minh bên ngoài AWS). Theo quyền sở hữu: AWS owned (miễn phí, không thấy), AWS managed (miễn phí, aws/service) và customer managed (kiểm soát đầy đủ, có phí)."
+   }
+  },
+  {
+   "id": "customer-managed-key",
+   "term": "Customer-managed KMS key",
+   "lecture": "10-015",
+   "definition": {
+    "en": "A key you create with your own key policy, rotation and CloudTrail audit. Required to share encrypted snapshots cross-account and to control exactly which roles can use the key.",
+    "vi": "Key bạn tự tạo với key policy, rotation riêng và audit qua CloudTrail. Bắt buộc để chia sẻ snapshot đã mã hóa cross-account và kiểm soát chính xác role nào được dùng key."
+   }
+  },
+  {
+   "id": "kms-key-policy",
+   "term": "KMS key policy",
+   "lecture": "10-016",
+   "definition": {
+    "en": "The resource policy attached to a KMS key that determines who can administer and use it, including other accounts. Without a key policy allowing the principal, IAM permissions alone do not grant key access.",
+    "vi": "Resource policy gắn với KMS key quyết định ai được quản trị và sử dụng key, kể cả account khác. Nếu key policy không cho phép principal thì chỉ có quyền IAM là không đủ để truy cập key."
+   }
+  },
+  {
+   "id": "amazon-macie",
+   "term": "Amazon Macie",
+   "lecture": "10-017",
+   "definition": {
+    "en": "Fully managed data security service that uses ML and pattern matching to discover sensitive data such as PII in S3 buckets and sends findings via EventBridge. Choose it when asked to find PII in S3.",
+    "vi": "Dịch vụ bảo mật dữ liệu được quản lý hoàn toàn, dùng ML và pattern matching để phát hiện dữ liệu nhạy cảm như PII trong S3 và gửi finding qua EventBridge. Chọn khi đề yêu cầu tìm PII trong S3."
+   }
+  },
+  {
+   "id": "aws-secrets-manager",
+   "term": "AWS Secrets Manager",
+   "lecture": "10-018",
+   "definition": {
+    "en": "Stores secrets (such as database credentials) with automatic rotation through a Lambda function, KMS encryption, native RDS/Aurora integration and multi-region replication. Choose it over SSM Parameter Store when rotation is needed.",
+    "vi": "Lưu secret (như credential database) với tự động xoay vòng qua Lambda, mã hóa KMS, tích hợp sẵn RDS/Aurora và replication multi-region. Chọn thay cho SSM Parameter Store khi cần rotation."
+   }
+  },
+  {
+   "id": "vpc-subnets-gateways",
+   "term": "VPC, subnets, IGW and NAT gateway",
+   "lecture": "10-020",
+   "definition": {
+    "en": "A VPC is a private network per region; subnets are tied to an AZ. An internet gateway gives public subnets internet access, while a NAT gateway lets private subnets reach the internet outbound only.",
+    "vi": "VPC là mạng riêng theo region; subnet gắn với một AZ. Internet gateway cho public subnet truy cập internet, còn NAT gateway cho private subnet đi ra internet theo chiều outbound."
+   }
+  },
+  {
+   "id": "nacl-vs-security-group",
+   "term": "NACL vs Security Group",
+   "lecture": "10-021",
+   "definition": {
+    "en": "NACLs are stateless firewalls at the subnet level with allow and deny rules; Security Groups are stateful, work at the instance/ENI level, only allow rules and can reference other security groups.",
+    "vi": "NACL là firewall stateless ở cấp subnet với rule allow và deny; Security Group là stateful, hoạt động ở cấp instance/ENI, chỉ có rule allow và có thể tham chiếu security group khác."
+   }
+  },
+  {
+   "id": "vpc-flow-logs",
+   "term": "VPC Flow Logs",
+   "lecture": "10-021",
+   "definition": {
+    "en": "Capture IP traffic information for VPCs, subnets and ENIs, sent to CloudWatch Logs, S3 or Firehose. Use them to debug why traffic is accepted or rejected.",
+    "vi": "Ghi lại thông tin traffic IP của VPC, subnet và ENI, gửi tới CloudWatch Logs, S3 hoặc Firehose. Dùng để debug vì sao traffic bị chấp nhận hoặc từ chối."
+   }
+  },
+  {
+   "id": "vpc-peering",
+   "term": "VPC Peering",
+   "lecture": "10-022",
+   "definition": {
+    "en": "Connects two VPCs privately as long as CIDR ranges do not overlap. It is not transitive, so each pair of VPCs needs its own peering connection.",
+    "vi": "Kết nối riêng tư hai VPC miễn là dải CIDR không chồng lấn. Không có tính bắc cầu (non-transitive), nên mỗi cặp VPC cần một peering connection riêng."
+   }
+  },
+  {
+   "id": "vpc-endpoints",
+   "term": "VPC Endpoints",
+   "lecture": "10-022",
+   "definition": {
+    "en": "Provide private access from a VPC to AWS services without the internet. Gateway endpoints cover S3 and DynamoDB; interface endpoints (ENI, PrivateLink) cover most other services. Choose them for any private-connectivity-to-AWS-service question.",
+    "vi": "Cho phép truy cập riêng tư từ VPC tới dịch vụ AWS mà không qua internet. Gateway endpoint dành cho S3 và DynamoDB; interface endpoint (ENI, PrivateLink) dành cho hầu hết dịch vụ còn lại. Chọn cho mọi câu hỏi về kết nối riêng tư tới dịch vụ AWS."
+   }
+  },
+  {
+   "id": "site-to-site-vpn-direct-connect",
+   "term": "Site-to-Site VPN vs Direct Connect",
+   "lecture": "10-022",
+   "definition": {
+    "en": "Site-to-Site VPN is an encrypted connection from on-premises to a VPC over the public internet, set up in minutes. Direct Connect is a dedicated private physical link, more consistent and private, but takes about a month or more to establish.",
+    "vi": "Site-to-Site VPN là kết nối mã hóa từ on-premises tới VPC qua internet công cộng, thiết lập trong vài phút. Direct Connect là đường vật lý riêng, ổn định và riêng tư hơn, nhưng mất khoảng một tháng trở lên để thiết lập."
+   }
+  },
+  {
+   "id": "aws-privatelink",
+   "term": "AWS PrivateLink",
+   "lecture": "10-024",
+   "definition": {
+    "en": "Exposes a service in one VPC privately to many other VPCs or accounts without peering, internet gateway, NAT or route tables. The provider fronts the service with a Network Load Balancer and consumers use an ENI.",
+    "vi": "Phơi bày riêng tư một service trong VPC cho nhiều VPC hoặc account khác mà không cần peering, internet gateway, NAT hay route table. Nhà cung cấp đặt Network Load Balancer phía trước service và bên dùng truy cập qua ENI."
+   }
+  },
+  {
+   "id": "cloudtrail-vs-cloudwatch-security",
+   "term": "CloudTrail for auditing, CloudWatch for monitoring",
+   "lecture": "10-003",
+   "definition": {
+    "en": "CloudTrail logs API activity and user actions for audit and forensics; CloudWatch monitors metrics and logs and raises alarms. This distinction is a favorite exam question.",
+    "vi": "CloudTrail ghi lại hoạt động API và hành động của user để audit và điều tra; CloudWatch giám sát metric và log và phát cảnh báo. Đây là câu hỏi thường gặp trong kỳ thi."
+   }
+  },
+  {
+   "id": "amazon-inspector",
+   "term": "Amazon Inspector",
+   "lecture": "10-004",
+   "definition": {
+    "en": "Continuously scans EC2 instances, Lambda functions and ECR container images for software vulnerabilities and unintended network exposure. Pick it for vulnerability scanning of compute workloads, not for S3 data.",
+    "vi": "Quét liên tục EC2, Lambda và ECR container image để tìm lỗ hổng phần mềm và mức độ phơi nhiễm mạng ngoài ý muốn. Chọn cho việc quét lỗ hổng workload compute, không phải dữ liệu S3."
+   }
+  }
+ ]
+}

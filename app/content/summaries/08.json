@@ -1,0 +1,2248 @@
+{
+ "08-001": {
+  "tldr": {
+   "en": "This section builds generative AI apps with Bedrock: foundation models, knowledge bases, vector stores, RAG, and an LLM agent with custom tools.",
+   "vi": "Phần này xây dựng ứng dụng generative AI với Bedrock: foundation model, knowledge base, vector store, RAG và LLM agent dùng tool tùy chỉnh."
+  },
+  "points": [
+   {
+    "en": "Covers text and image generation with Bedrock foundation models.",
+    "vi": "Bao gồm tạo text và image bằng foundation model của Bedrock."
+   },
+   {
+    "en": "Extends models with knowledge bases, vector stores and RAG.",
+    "vi": "Mở rộng model bằng knowledge base, vector store và RAG."
+   },
+   {
+    "en": "Ends with a full LLM agent that calls custom tools.",
+    "vi": "Kết thúc bằng một LLM agent đầy đủ gọi được tool tùy chỉnh."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock",
+    "use": {
+     "en": "Managed API for foundation models in generative AI apps.",
+     "vi": "API managed cho foundation model trong ứng dụng generative AI."
+    }
+   }
+  ]
+ },
+ "08-002": {
+  "tldr": {
+   "en": "Bedrock is a serverless, unified API over many foundation models (Titan, Claude, Meta and more) with fine-tuning, RAG and agents. Models need access requested first and need an IAM user.",
+   "vi": "Bedrock là API serverless thống nhất cho nhiều foundation model (Titan, Claude, Meta...) có fine-tuning, RAG và agent. Cần request quyền truy cập model trước và dùng IAM user."
+  },
+  "points": [
+   {
+    "en": "Marketplace style: third-party models are billed through AWS at the provider's own pricing; Titan is Amazon's own.",
+    "vi": "Kiểu marketplace: model bên thứ ba tính phí qua AWS theo giá của nhà cung cấp; Titan là của Amazon."
+   },
+   {
+    "en": "Bedrock is serverless: no servers to manage for training, fine-tuning or inference. Use SageMaker for lower-level control.",
+    "vi": "Bedrock là serverless: không quản lý server cho training, fine-tuning hay inference. Muốn kiểm soát sâu hơn thì dùng SageMaker."
+   },
+   {
+    "en": "Four endpoints: bedrock (manage/train), bedrock-runtime (inference), bedrock-agent (build agents/KBs), bedrock-agent-runtime (use them).",
+    "vi": "Bốn endpoint: bedrock (quản lý/train), bedrock-runtime (inference), bedrock-agent (xây agent/KB), bedrock-agent-runtime (dùng chúng)."
+   },
+   {
+    "en": "Runtime calls: Converse for chat, InvokeModel for one-shot; both have streaming versions. Agent runtime: InvokeAgent, Retrieve, RetrieveAndGenerate.",
+    "vi": "Runtime: Converse cho chat, InvokeModel cho one-shot; đều có bản streaming. Agent runtime: InvokeAgent, Retrieve, RetrieveAndGenerate."
+   },
+   {
+    "en": "Use an IAM user, not root, with Bedrock permissions; request model access up front (EULA, not pricing, is acknowledged).",
+    "vi": "Dùng IAM user, không dùng root, có quyền Bedrock; request model access trước (chỉ đồng ý EULA, không phải giá)."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock",
+    "use": {
+     "en": "Serverless unified API to foundation models; pick it for managed gen AI.",
+     "vi": "API serverless thống nhất tới foundation model; chọn khi cần gen AI managed."
+    }
+   },
+   {
+    "name": "Amazon Titan",
+    "use": {
+     "en": "Amazon's own foundation models; access approved immediately.",
+     "vi": "Foundation model của Amazon; được duyệt truy cập ngay."
+    }
+   },
+   {
+    "name": "Amazon SageMaker",
+    "use": {
+     "en": "Lower-level ML control when Bedrock is not enough.",
+     "vi": "Kiểm soát ML mức thấp hơn khi Bedrock chưa đủ."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Amazon Titan access is approved instantly, while third-party models usually take a couple of minutes.",
+   "vi": "Truy cập Amazon Titan được duyệt ngay, còn model bên thứ ba thường mất vài phút."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"bedrock: manage and train\"] --> B[\"bedrock-runtime: Converse and InvokeModel\"]\n  A --> C[\"bedrock-agent: agents and KBs\"]\n  C --> D[\"bedrock-agent-runtime: InvokeAgent and Retrieve\"]",
+   "vi": "flowchart LR\n  A[\"bedrock: quản lý và train\"] --> B[\"bedrock-runtime: Converse và InvokeModel\"]\n  A --> C[\"bedrock-agent: agent và KB\"]\n  C --> D[\"bedrock-agent-runtime: InvokeAgent và Retrieve\"]"
+  }
+ },
+ "08-003": {
+  "tldr": {
+   "en": "Bedrock supports IAM and Bedrock API keys. Use IAM roles with temporary credentials for production; API keys are a developer convenience.",
+   "vi": "Bedrock hỗ trợ IAM và Bedrock API key. Dùng IAM role với temporary credential cho production; API key chỉ để tiện cho developer."
+  },
+  "points": [
+   {
+    "en": "IAM is preferred for production: least privilege and full AWS authorization.",
+    "vi": "IAM được ưu tiên cho production: least privilege và đầy đủ cơ chế authorization của AWS."
+   },
+   {
+    "en": "Bedrock API key is a simple bearer token placed in an environment variable, good for experiments.",
+    "vi": "Bedrock API key là bearer token đơn giản đặt trong biến môi trường, hợp để thử nghiệm."
+   },
+   {
+    "en": "Short-term keys inherit the creator's IAM permissions and last at most 12 hours.",
+    "vi": "Short-term key kế thừa quyền IAM của người tạo và tồn tại tối đa 12 giờ."
+   },
+   {
+    "en": "Long-term keys are for exploration only; never hard-code them or commit them to Git.",
+    "vi": "Long-term key chỉ để khám phá; không hard-code hay commit lên Git."
+   }
+  ],
+  "services": [
+   {
+    "name": "IAM",
+    "use": {
+     "en": "Preferred auth for production Bedrock workloads.",
+     "vi": "Xác thực ưu tiên cho workload Bedrock production."
+    }
+   },
+   {
+    "name": "Amazon Bedrock API keys",
+    "use": {
+     "en": "Bearer-token convenience for dev and experimentation.",
+     "vi": "Bearer token tiện cho dev và thử nghiệm."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Bedrock auth\"] --> B[\"IAM roles: production\"]\n  A --> C[\"API key: dev only\"]\n  C --> D[\"Short-term: max 12 hours\"]\n  C --> E[\"Long-term: avoid in prod\"]",
+   "vi": "flowchart LR\n  A[\"Xác thực Bedrock\"] --> B[\"IAM role: production\"]\n  A --> C[\"API key: chỉ dev\"]\n  C --> D[\"Short-term: tối đa 12 giờ\"]\n  C --> E[\"Long-term: tránh ở prod\"]"
+  }
+ },
+ "08-005": {
+  "tldr": {
+   "en": "The Bedrock Playground lets you try chat, text and image models, tune inference settings, compare models and use prompt routers.",
+   "vi": "Bedrock Playground cho thử model chat, text, image, chỉnh tham số inference, so sánh model và dùng prompt router."
+  },
+  "points": [
+   {
+    "en": "Chat mode keeps conversation context; you can upload files and ask questions about them.",
+    "vi": "Chat mode giữ ngữ cảnh hội thoại; có thể upload file và hỏi về nội dung."
+   },
+   {
+    "en": "Temperature controls randomness; top P and top K limit which candidate tokens are sampled.",
+    "vi": "Temperature điều khiển độ ngẫu nhiên; top P và top K giới hạn token ứng viên được chọn."
+   },
+   {
+    "en": "Max output length caps cost; system prompt, guardrails and prompt caching are also configurable.",
+    "vi": "Max output length giới hạn chi phí; còn chỉnh được system prompt, guardrail và prompt caching."
+   },
+   {
+    "en": "Compare mode runs one prompt on two models, each with its own settings, so match them for fairness.",
+    "vi": "Compare mode chạy một prompt trên hai model, mỗi model có setting riêng, nên cần khớp setting để so sánh công bằng."
+   },
+   {
+    "en": "Prompt routers send simple prompts to cheap models and hard ones to bigger models; wrong routing hurts quality.",
+    "vi": "Prompt router gửi prompt đơn giản tới model rẻ, prompt khó tới model lớn; route sai làm giảm chất lượng."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock Playground",
+    "use": {
+     "en": "Quick console testing of chat, text and image models.",
+     "vi": "Thử nhanh model chat, text, image trên console."
+    }
+   },
+   {
+    "name": "Amazon Nova Canvas",
+    "use": {
+     "en": "Image model: variations, inpainting, background removal, virtual try-on.",
+     "vi": "Model image: tạo biến thể, sửa vùng ảnh, xóa nền, virtual try-on."
+    }
+   },
+   {
+    "name": "Bedrock Intelligent Prompt Routing",
+    "use": {
+     "en": "Routes each prompt to a cheaper or stronger model to save cost.",
+     "vi": "Route mỗi prompt tới model rẻ hơn hoặc mạnh hơn để tiết kiệm chi phí."
+    }
+   },
+   {
+    "name": "Bedrock Guardrails",
+    "use": {
+     "en": "Filter unwanted topics and PII.",
+     "vi": "Lọc chủ đề không mong muốn và PII."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Image models support a negative prompt and a seed: reuse the same seed for similar, repeatable results.",
+   "vi": "Image model hỗ trợ negative prompt và seed: dùng lại cùng seed để có kết quả giống nhau, lặp lại được."
+  }
+ },
+ "08-006": {
+  "tldr": {
+   "en": "Bedrock fine-tuning builds a custom model from labeled prompt/completion pairs in S3; continued pre-training uses unlabeled raw text. Both are costly and slow but save tokens later.",
+   "vi": "Fine-tuning trong Bedrock tạo custom model từ cặp prompt/completion có nhãn trong S3; continued pre-training dùng text thô không nhãn. Đều tốn kém và chậm nhưng tiết kiệm token về sau."
+  },
+  "points": [
+   {
+    "en": "Fine-tuning bakes your data into the model, avoiding long prompts full of examples and saving tokens long-term.",
+    "vi": "Fine-tuning đưa dữ liệu vào chính model, tránh prompt dài đầy ví dụ và tiết kiệm token về lâu dài."
+   },
+   {
+    "en": "Training data is JSON prompt/completion pairs uploaded to S3; the model generalizes beyond them.",
+    "vi": "Dữ liệu train là cặp prompt/completion dạng JSON trên S3; model vẫn tổng quát hóa ngoài các ví dụ."
+   },
+   {
+    "en": "Use cases: brand voice, newer data than cutoff, proprietary data, support transcripts, classification. Not every model can be tuned.",
+    "vi": "Use case: giọng thương hiệu, dữ liệu mới hơn cutoff, dữ liệu riêng, transcript hỗ trợ, phân loại. Không phải model nào cũng tune được."
+   },
+   {
+    "en": "Continued pre-training uses unlabeled data (plain text); fine-tuning uses labeled prompt/completion pairs.",
+    "vi": "Continued pre-training dùng dữ liệu không nhãn (text thuần); fine-tuning dùng cặp prompt/completion có nhãn."
+   },
+   {
+    "en": "For sensitive training data, run the job in a VPC with PrivateLink. The custom model gets its own model ID.",
+    "vi": "Với dữ liệu nhạy cảm, chạy job trong VPC với PrivateLink. Custom model có model ID riêng."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock Custom Models",
+    "use": {
+     "en": "Fine-tune or continue pre-training a foundation model with your data.",
+     "vi": "Fine-tune hoặc continued pre-training foundation model bằng dữ liệu của bạn."
+    }
+   },
+   {
+    "name": "Amazon S3",
+    "use": {
+     "en": "Stores the training data.",
+     "vi": "Lưu dữ liệu training."
+    }
+   },
+   {
+    "name": "AWS PrivateLink",
+    "use": {
+     "en": "Keeps customization jobs on a private network for sensitive data.",
+     "vi": "Giữ job customization trong mạng riêng cho dữ liệu nhạy cảm."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Prompt and completion JSON\"] --> B[\"Amazon S3\"]\n  B --> C[\"Bedrock fine-tuning job\"]\n  D[\"Unlabeled text\"] --> B\n  B --> E[\"Continued pre-training job\"]\n  C --> F[\"Custom model\"]\n  E --> F",
+   "vi": "flowchart LR\n  A[\"JSON prompt và completion\"] --> B[\"Amazon S3\"]\n  B --> C[\"Job fine-tuning Bedrock\"]\n  D[\"Text không nhãn\"] --> B\n  B --> E[\"Job continued pre-training\"]\n  C --> F[\"Custom model\"]\n  E --> F"
+  }
+ },
+ "08-007": {
+  "tldr": {
+   "en": "LoRA fine-tunes a model by training small low-rank matrices beside the attention weights, leaving the base model unchanged.",
+   "vi": "LoRA fine-tune model bằng cách train các ma trận low-rank nhỏ bên cạnh attention weight, giữ nguyên base model."
+  },
+  "points": [
+   {
+    "en": "LoRA adds low-rank matrices, usually at the attention layer, instead of retraining the whole model.",
+    "vi": "LoRA thêm các ma trận low-rank, thường ở attention layer, thay vì train lại toàn bộ model."
+   },
+   {
+    "en": "At inference, the tuned weights are added to the pre-trained weights before generating output.",
+    "vi": "Lúc inference, trọng số đã tune được cộng vào pre-trained weight trước khi sinh output."
+   },
+   {
+    "en": "Much cheaper in storage, training and inference; the base model stays unchanged.",
+    "vi": "Rẻ hơn nhiều về lưu trữ, training và inference; base model không đổi."
+   },
+   {
+    "en": "An adapter layer stacks a new layer on top instead; LoRA tends to work better.",
+    "vi": "Adapter layer thêm một layer mới lên trên; LoRA thường hiệu quả hơn."
+   }
+  ],
+  "services": [],
+  "funFact": {
+   "en": "Self-attention comes from Google's paper Attention Is All You Need.",
+   "vi": "Self-attention đến từ bài báo Attention Is All You Need của Google."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Input\"] --> B[\"Pre-trained weights\"]\n  A --> C[\"LoRA low-rank matrices\"]\n  B --> D[\"Add together\"]\n  C --> D\n  D --> E[\"Output\"]",
+   "vi": "flowchart LR\n  A[\"Input\"] --> B[\"Pre-trained weights\"]\n  A --> C[\"Ma trận low-rank LoRA\"]\n  B --> D[\"Cộng lại\"]\n  C --> D\n  D --> E[\"Output\"]"
+  }
+ },
+ "08-008": {
+  "tldr": {
+   "en": "Over-aggressive fine-tuning on narrow data can make a model forget its other skills. Mix in general data, tune gently, and evaluate beyond the new task.",
+   "vi": "Fine-tuning quá mạnh trên dữ liệu hẹp có thể làm model quên các kỹ năng khác. Hãy trộn thêm dữ liệu tổng quát, tune nhẹ tay và đánh giá cả ngoài task mới."
+  },
+  "points": [
+   {
+    "en": "Catastrophic forgetting: improving a target task while degrading reasoning, coding or instruction following.",
+    "vi": "Catastrophic forgetting: cải thiện task mục tiêu nhưng làm giảm khả năng reasoning, coding, làm theo instruction."
+   },
+   {
+    "en": "Most likely when fine-tuning data is very narrow or very different from the original training data.",
+    "vi": "Dễ xảy ra nhất khi dữ liệu fine-tune rất hẹp hoặc rất khác dữ liệu gốc."
+   },
+   {
+    "en": "Fix: mix in general data (Amazon Nova has data mixing) and use a modest learning rate and few epochs.",
+    "vi": "Cách xử lý: trộn dữ liệu tổng quát (Amazon Nova có data mixing), dùng learning rate vừa phải và ít epoch."
+   },
+   {
+    "en": "Evaluate on both the new task and the general capabilities you want to keep.",
+    "vi": "Đánh giá cả task mới lẫn các khả năng tổng quát cần giữ."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Nova",
+    "use": {
+     "en": "Supports data mixing to reduce catastrophic forgetting during fine-tuning.",
+     "vi": "Hỗ trợ data mixing để giảm catastrophic forgetting khi fine-tune."
+    }
+   }
+  ]
+ },
+ "08-009": {
+  "tldr": {
+   "en": "Model distillation uses a large teacher model to generate synthetic responses that fine-tune a smaller student model, giving lower cost and latency for a specific workload.",
+   "vi": "Model distillation dùng teacher model lớn tạo response tổng hợp để fine-tune student model nhỏ hơn, giảm chi phí và độ trễ cho workload cụ thể."
+  },
+  "points": [
+   {
+    "en": "Teacher generates responses to your prompts; the student is fine-tuned on that data to approach teacher quality.",
+    "vi": "Teacher tạo response cho prompt của bạn; student được fine-tune bằng dữ liệu đó để gần chất lượng của teacher."
+   },
+   {
+    "en": "Distillation is not quantization or pruning; it trains a smaller model on a larger model's outputs.",
+    "vi": "Distillation không phải quantization hay pruning; nó train model nhỏ trên output của model lớn."
+   },
+   {
+    "en": "Everything starts with representative prompts for your production workload, often in JSONL.",
+    "vi": "Mọi thứ bắt đầu từ các prompt đại diện cho workload production, thường ở dạng JSONL."
+   },
+   {
+    "en": "Validate and clean the synthetic data, and keep evaluation data separate.",
+    "vi": "Kiểm tra và làm sạch dữ liệu tổng hợp, giữ riêng dữ liệu evaluation."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock Model Distillation",
+    "use": {
+     "en": "Managed teacher-to-student distillation to cut cost and latency.",
+     "vi": "Distillation teacher-student managed để giảm chi phí và latency."
+    }
+   },
+   {
+    "name": "Amazon Nova on SageMaker AI",
+    "use": {
+     "en": "Nova models also support distillation at lower level.",
+     "vi": "Model Nova cũng hỗ trợ distillation ở mức thấp hơn."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Representative prompts\"] --> B[\"Teacher model\"]\n  B --> C[\"Synthetic responses\"]\n  C --> D[\"Validate and clean\"]\n  D --> E[\"Fine-tune student model\"]\n  E --> F[\"Cheaper faster model\"]",
+   "vi": "flowchart LR\n  A[\"Prompt đại diện\"] --> B[\"Teacher model\"]\n  B --> C[\"Response tổng hợp\"]\n  C --> D[\"Kiểm tra và làm sạch\"]\n  D --> E[\"Fine-tune student model\"]\n  E --> F[\"Model rẻ và nhanh hơn\"]"
+  }
+ },
+ "08-010": {
+  "tldr": {
+   "en": "RAG (a knowledge base in Bedrock) retrieves relevant data from an external store and adds it to the prompt, like an open-book exam. It is cheaper than fine-tuning for fresh data.",
+   "vi": "RAG (knowledge base trong Bedrock) truy xuất dữ liệu liên quan từ kho bên ngoài và thêm vào prompt, như thi open-book. Rẻ hơn fine-tuning khi dữ liệu thay đổi."
+  },
+  "points": [
+   {
+    "en": "Flow: query an external store, augment the prompt with the results, send it to the foundation model.",
+    "vi": "Luồng: truy vấn kho ngoài, bổ sung kết quả vào prompt, gửi tới foundation model."
+   },
+   {
+    "en": "Pros: easy to keep data current by updating the store, no retraining, semantic search, fewer made-up answers.",
+    "vi": "Ưu điểm: dễ cập nhật dữ liệu bằng cách sửa kho, không retrain, có semantic search, giảm bịa đáp án."
+   },
+   {
+    "en": "Cons: longer prompts mean more tokens, sensitive to prompt template, can still hallucinate, costly vector stores.",
+    "vi": "Nhược điểm: prompt dài tốn token, nhạy với prompt template, vẫn có thể hallucinate, vector store tốn kém."
+   },
+   {
+    "en": "The biggest challenge is retrieving relevant chunks; poor chunking gives poor answers.",
+    "vi": "Thách thức lớn nhất là truy xuất chunk liên quan; chunking kém cho kết quả kém."
+   },
+   {
+    "en": "RAG does not train the model; the data only enters through the prompt.",
+    "vi": "RAG không train model; dữ liệu chỉ vào qua prompt."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock Knowledge Bases",
+    "use": {
+     "en": "Managed RAG: retrieve from your data and augment prompts; pick for fresh or proprietary data without retraining.",
+     "vi": "RAG managed: truy xuất dữ liệu của bạn và bổ sung prompt; chọn khi cần dữ liệu mới hoặc riêng tư mà không retrain."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "The lecture's example is a Jeopardy question about Mexico hosting a sports event twice; retrieval helps answer it (the World Cup).",
+   "vi": "Ví dụ trong bài là câu Jeopardy về nước đăng cai một giải thể thao hai lần; truy xuất giúp trả lời (World Cup)."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"User prompt\"] --> B[\"Embed query\"]\n  B --> C[\"Knowledge base search\"]\n  C --> D[\"Top documents\"]\n  D --> E[\"Augmented prompt\"]\n  A --> E\n  E --> F[\"Foundation model\"]\n  F --> G[\"Answer\"]",
+   "vi": "flowchart LR\n  A[\"Prompt người dùng\"] --> B[\"Embed truy vấn\"]\n  B --> C[\"Tìm trong knowledge base\"]\n  C --> D[\"Top tài liệu\"]\n  D --> E[\"Prompt được bổ sung\"]\n  A --> E\n  E --> F[\"Foundation model\"]\n  F --> G[\"Câu trả lời\"]"
+  }
+ },
+ "08-011": {
+  "tldr": {
+   "en": "Knowledge bases usually store embeddings in a vector store and find similar items by nearest-neighbor semantic search. OpenSearch is the common AWS choice.",
+   "vi": "Knowledge base thường lưu embedding trong vector store và tìm mục tương tự bằng semantic search nearest-neighbor. OpenSearch là lựa chọn phổ biến trên AWS."
+  },
+  "points": [
+   {
+    "en": "An embedding is a high-dimensional vector encoding meaning; semantically similar items sit close together.",
+    "vi": "Embedding là vector nhiều chiều mã hóa ý nghĩa; các mục giống nghĩa nằm gần nhau."
+   },
+   {
+    "en": "Embedding models such as Titan turn text into vectors cheaply.",
+    "vi": "Embedding model như Titan chuyển text thành vector với chi phí thấp."
+   },
+   {
+    "en": "Retrieval: embed the prompt, find the top-K nearest vectors (often cosine), put results in the prompt.",
+    "vi": "Truy xuất: embed prompt, tìm top-K vector gần nhất (thường cosine), đưa kết quả vào prompt."
+   },
+   {
+    "en": "Options: OpenSearch, Neptune, Redis, SQL, MongoDB, Cassandra, or purpose-built stores like Pinecone.",
+    "vi": "Lựa chọn: OpenSearch, Neptune, Redis, SQL, MongoDB, Cassandra hoặc store chuyên dụng như Pinecone."
+   },
+   {
+    "en": "Quality depends on K, relevance of chunks and prompt wording.",
+    "vi": "Chất lượng phụ thuộc K, độ liên quan của chunk và cách viết prompt."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon OpenSearch Service",
+    "use": {
+     "en": "Common vector store behind Bedrock knowledge bases.",
+     "vi": "Vector store phổ biến phía sau Bedrock knowledge base."
+    }
+   },
+   {
+    "name": "Amazon Titan Embeddings",
+    "use": {
+     "en": "Embedding model that turns text into vectors.",
+     "vi": "Embedding model biến text thành vector."
+    }
+   },
+   {
+    "name": "Amazon Neptune",
+    "use": {
+     "en": "Graph database that can also serve vector search.",
+     "vi": "Graph database cũng có thể phục vụ vector search."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Prompt\"] --> B[\"Embedding model\"]\n  B --> C[\"Query vector\"]\n  C --> D[\"Vector store: top K nearest\"]\n  D --> E[\"Relevant chunks\"]\n  E --> F[\"Prompt plus chunks\"]\n  F --> G[\"Foundation model\"]",
+   "vi": "flowchart LR\n  A[\"Prompt\"] --> B[\"Embedding model\"]\n  B --> C[\"Query vector\"]\n  C --> D[\"Vector store: top K gần nhất\"]\n  D --> E[\"Chunk liên quan\"]\n  E --> F[\"Prompt cộng chunk\"]\n  F --> G[\"Foundation model\"]"
+  }
+ },
+ "08-012": {
+  "tldr": {
+   "en": "Tune retrieval by choosing embedding dimensions, using dense vectors with cosine similarity, attaching metadata to chunks, and keeping the knowledge base fresh.",
+   "vi": "Tối ưu truy xuất bằng cách chọn số chiều embedding, dùng dense vector với cosine similarity, gắn metadata vào chunk và giữ knowledge base luôn mới."
+  },
+  "points": [
+   {
+    "en": "Smaller vectors cost less to store and process but can lose meaning; larger ones suit complex domains.",
+    "vi": "Vector nhỏ rẻ hơn khi lưu và xử lý nhưng có thể mất ý nghĩa; vector lớn hợp với domain phức tạp."
+   },
+   {
+    "en": "Dense embeddings (floats packing meaning) are standard in gen AI; sparse vectors like one-hot waste space.",
+    "vi": "Dense embedding (số thực chứa ý nghĩa) là chuẩn trong gen AI; sparse vector như one-hot lãng phí chỗ."
+   },
+   {
+    "en": "Cosine similarity measures closeness of vectors: 1 means identical, 0 means unrelated.",
+    "vi": "Cosine similarity đo độ gần của vector: 1 là giống hệt, 0 là không liên quan."
+   },
+   {
+    "en": "Attach metadata (source, category, access control, lineage) via a metadata file to filter, re-rank and cite.",
+    "vi": "Gắn metadata (nguồn, danh mục, kiểm soát truy cập, lineage) qua file metadata để lọc, re-rank và trích dẫn."
+   },
+   {
+    "en": "Keep it fresh: S3 event triggers Lambda to start ingestion; batch updates (AWS Batch, EventBridge) to avoid constant jobs.",
+    "vi": "Giữ dữ liệu mới: S3 event kích hoạt Lambda để ingest; gom batch (AWS Batch, EventBridge) để tránh job liên tục."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Titan Embeddings",
+    "use": {
+     "en": "Embedding model with 1024 or more dimensions by default.",
+     "vi": "Embedding model mặc định từ 1024 chiều trở lên."
+    }
+   },
+   {
+    "name": "AWS Lambda",
+    "use": {
+     "en": "Triggers knowledge base ingestion when S3 content changes.",
+     "vi": "Kích hoạt ingestion knowledge base khi nội dung S3 thay đổi."
+    }
+   },
+   {
+    "name": "Amazon EventBridge",
+    "use": {
+     "en": "Queue and schedule updates so ingestion runs less often.",
+     "vi": "Xếp hàng và lên lịch cập nhật để ingestion chạy ít hơn."
+    }
+   },
+   {
+    "name": "AWS Batch",
+    "use": {
+     "en": "Batch embedding generation for efficiency.",
+     "vi": "Tạo embedding theo batch để hiệu quả hơn."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "A Titan embedding vector can be larger than the 300-character chunk it represents, so storing it may cost more than the text itself.",
+   "vi": "Một embedding vector của Titan có thể lớn hơn chunk 300 ký tự mà nó biểu diễn, nên lưu vector có thể tốn hơn lưu text."
+  }
+ },
+ "08-013": {
+  "tldr": {
+   "en": "Multimodal models mix text, images, audio, video and documents in one embedding space, so a RAG system can retrieve across media types.",
+   "vi": "Multimodal model trộn text, ảnh, audio, video và tài liệu trong cùng một embedding space, nên hệ RAG có thể truy xuất xuyên nhiều loại media."
+  },
+  "points": [
+   {
+    "en": "Specialized encoders produce embeddings that can be compared across media types.",
+    "vi": "Các encoder chuyên biệt tạo embedding có thể so sánh giữa các loại media."
+   },
+   {
+    "en": "Claude and Amazon Nova are natively multimodal; Titan Multimodal Embeddings is an embedding model.",
+    "vi": "Claude và Amazon Nova là multimodal gốc; Titan Multimodal Embeddings là embedding model."
+   },
+   {
+    "en": "A text query can retrieve images and text, and an image query can retrieve related text.",
+    "vi": "Query text có thể truy xuất ảnh và text, query ảnh có thể truy xuất text liên quan."
+   },
+   {
+    "en": "Titan Multimodal Embeddings G1 takes input text, an image (base64-encoded) or both in a JSON request.",
+    "vi": "Titan Multimodal Embeddings G1 nhận input text, ảnh (mã hóa base64) hoặc cả hai trong request JSON."
+   },
+   {
+    "en": "The data pipeline must encode images before calling the model.",
+    "vi": "Pipeline dữ liệu phải mã hóa ảnh trước khi gọi model."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Titan Multimodal Embeddings G1",
+    "use": {
+     "en": "Embeds text and images into one comparable vector space.",
+     "vi": "Embed text và ảnh vào cùng một không gian vector so sánh được."
+    }
+   },
+   {
+    "name": "Amazon Nova",
+    "use": {
+     "en": "Natively multimodal foundation models.",
+     "vi": "Foundation model multimodal gốc."
+    }
+   },
+   {
+    "name": "Anthropic Claude",
+    "use": {
+     "en": "Handles text and image input.",
+     "vi": "Xử lý input text và ảnh."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Text\"] --> E[\"Multimodal embedding model\"]\n  B[\"Image base64\"] --> E\n  C[\"Audio or video\"] --> E\n  E --> F[\"Comparable vectors\"]\n  F --> G[\"Vector store for RAG\"]",
+   "vi": "flowchart LR\n  A[\"Text\"] --> E[\"Multimodal embedding model\"]\n  B[\"Ảnh base64\"] --> E\n  C[\"Audio hoặc video\"] --> E\n  E --> F[\"Vector so sánh được\"]\n  F --> G[\"Vector store cho RAG\"]"
+  }
+ },
+ "08-014": {
+  "tldr": {
+   "en": "A Bedrock knowledge base ingests documents from S3, a web crawler or connectors, chunks and embeds them, and stores vectors for retrieval into prompts.",
+   "vi": "Bedrock knowledge base ingest tài liệu từ S3, web crawler hoặc connector, chia chunk, embed rồi lưu vector để truy xuất vào prompt."
+  },
+  "points": [
+   {
+    "en": "Sources: S3, web crawler, and connectors such as Confluence, Salesforce and SharePoint.",
+    "vi": "Nguồn: S3, web crawler và connector như Confluence, Salesforce, SharePoint."
+   },
+   {
+    "en": "Choose an embedding model (Titan or Cohere) and the vector dimension.",
+    "vi": "Chọn embedding model (Titan hoặc Cohere) và số chiều vector."
+   },
+   {
+    "en": "Vector store options: OpenSearch (default), MemoryDB, Aurora, MongoDB Atlas, Pinecone, Redis Enterprise Cloud.",
+    "vi": "Vector store: OpenSearch (mặc định), MemoryDB, Aurora, MongoDB Atlas, Pinecone, Redis Enterprise Cloud."
+   },
+   {
+    "en": "You control chunk size and overlap; coherent chunks retrieve better than arbitrary slices.",
+    "vi": "Bạn chỉnh được chunk size và overlap; chunk mạch lạc truy xuất tốt hơn lát cắt tùy ý."
+   },
+   {
+    "en": "Use it via console chat with your document, the Bedrock API, or as part of an agent (agentic RAG).",
+    "vi": "Dùng qua chat with your document trên console, Bedrock API hoặc là một phần của agent (agentic RAG)."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock Knowledge Bases",
+    "use": {
+     "en": "Managed ingestion, embedding, retrieval and prompt augmentation.",
+     "vi": "Ingest, embedding, truy xuất và bổ sung prompt được quản lý."
+    }
+   },
+   {
+    "name": "Amazon OpenSearch Service",
+    "use": {
+     "en": "Default vector store for knowledge bases.",
+     "vi": "Vector store mặc định cho knowledge base."
+    }
+   },
+   {
+    "name": "Amazon MemoryDB",
+    "use": {
+     "en": "Newer vector-capable store option.",
+     "vi": "Lựa chọn vector store mới hơn."
+    }
+   },
+   {
+    "name": "Amazon S3",
+    "use": {
+     "en": "Document source for ingestion.",
+     "vi": "Nguồn tài liệu để ingest."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"S3 or crawler or connectors\"] --> B[\"Chunking\"]\n  B --> C[\"Embedding model\"]\n  C --> D[\"Vector store\"]\n  E[\"User query\"] --> D\n  D --> F[\"Context\"]\n  F --> G[\"Augmented prompt to FM\"]",
+   "vi": "flowchart LR\n  A[\"S3 hoặc crawler hoặc connector\"] --> B[\"Chia chunk\"]\n  B --> C[\"Embedding model\"]\n  C --> D[\"Vector store\"]\n  E[\"Query người dùng\"] --> D\n  D --> F[\"Context\"]\n  F --> G[\"Prompt bổ sung gửi FM\"]"
+  }
+ },
+ "08-015": {
+  "tldr": {
+   "en": "Lab: create a knowledge base from S3 text, with parser, chunking, embedding model and OpenSearch Serverless, sync it and test retrieval. Delete the OpenSearch collection afterward to avoid charges.",
+   "vi": "Lab: tạo knowledge base từ text trên S3 với parser, chunking, embedding model và OpenSearch Serverless, sync rồi test truy xuất. Nhớ xóa collection OpenSearch để khỏi bị tính phí."
+  },
+  "points": [
+   {
+    "en": "Data source (S3, web, SharePoint, Salesforce, Confluence) is separate from the vector store; sync indexes it.",
+    "vi": "Data source (S3, web, SharePoint, Salesforce, Confluence) tách khỏi vector store; sync để lập chỉ mục."
+   },
+   {
+    "en": "Parsers: default for plain text, Bedrock Data Automation or a foundation model for PDFs, images, forms.",
+    "vi": "Parser: mặc định cho text thuần, Bedrock Data Automation hoặc foundation model cho PDF, ảnh, form."
+   },
+   {
+    "en": "Chunking: default about 300 tokens; also fixed with overlap, hierarchical parent-child, semantic, or none.",
+    "vi": "Chunking: mặc định khoảng 300 token; còn fixed có overlap, hierarchical cha-con, semantic hoặc không chunk."
+   },
+   {
+    "en": "A Lambda function can transform data during ingestion; KMS key and deletion policy are configurable.",
+    "vi": "Lambda có thể biến đổi dữ liệu khi ingest; có thể chỉnh KMS key và deletion policy."
+   },
+   {
+    "en": "Vector store choices: OpenSearch Serverless (exam focus), Aurora PostgreSQL, Neptune Analytics, S3 Vectors (not in exam scope).",
+    "vi": "Vector store: OpenSearch Serverless (trọng tâm thi), Aurora PostgreSQL, Neptune Analytics, S3 Vectors (ngoài phạm vi thi)."
+   },
+   {
+    "en": "Deleting the knowledge base does not delete the OpenSearch Serverless collection, which costs hundreds per month.",
+    "vi": "Xóa knowledge base không xóa collection OpenSearch Serverless, vốn tốn vài trăm USD mỗi tháng."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock Knowledge Bases",
+    "use": {
+     "en": "Build, sync and test a RAG source with retrieval and citations.",
+     "vi": "Xây, sync và test nguồn RAG với truy xuất và trích dẫn."
+    }
+   },
+   {
+    "name": "Amazon OpenSearch Serverless",
+    "use": {
+     "en": "Vector store the exam focuses on; delete when done.",
+     "vi": "Vector store trọng tâm của kỳ thi; nhớ xóa khi xong."
+    }
+   },
+   {
+    "name": "Amazon Bedrock Data Automation",
+    "use": {
+     "en": "Extracts structured data from images, PDFs, audio and video.",
+     "vi": "Trích xuất dữ liệu có cấu trúc từ ảnh, PDF, audio, video."
+    }
+   },
+   {
+    "name": "Amazon Aurora PostgreSQL",
+    "use": {
+     "en": "Vector store when SQL features matter.",
+     "vi": "Vector store khi cần tính năng SQL."
+    }
+   },
+   {
+    "name": "Amazon Neptune Analytics",
+    "use": {
+     "en": "Graph-based vector store.",
+     "vi": "Vector store dựa trên graph."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Even the simplest OpenSearch Serverless setup costs a couple of hundred dollars a month, and the console now warns that deleting the knowledge base keeps the vector store.",
+   "vi": "Ngay cả OpenSearch Serverless đơn giản nhất cũng tốn vài trăm USD mỗi tháng, và console giờ cảnh báo xóa knowledge base không xóa vector store."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Upload book to S3\"] --> B[\"Create knowledge base\"]\n  B --> C[\"Parse and chunk\"]\n  C --> D[\"Titan embeddings\"]\n  D --> E[\"OpenSearch Serverless\"]\n  E --> F[\"Sync data source\"]\n  F --> G[\"Test with RetrieveAndGenerate\"]",
+   "vi": "flowchart LR\n  A[\"Upload sách lên S3\"] --> B[\"Tạo knowledge base\"]\n  B --> C[\"Parse và chia chunk\"]\n  C --> D[\"Titan embeddings\"]\n  D --> E[\"OpenSearch Serverless\"]\n  E --> F[\"Sync data source\"]\n  F --> G[\"Test bằng RetrieveAndGenerate\"]"
+  }
+ },
+ "08-017": {
+  "tldr": {
+   "en": "Vector store choices for Bedrock: OpenSearch (fast, always billed), S3 Vectors (cheap, slower), Aurora pgvector (SQL plus vectors). Bedrock can also manage the store for you.",
+   "vi": "Lựa chọn vector store cho Bedrock: OpenSearch (nhanh, luôn tính phí), S3 Vectors (rẻ, chậm hơn), Aurora pgvector (SQL cộng vector). Bedrock cũng có thể tự quản lý store."
+  },
+  "points": [
+   {
+    "en": "OpenSearch serverless does not scale to zero: shut down collections and domains or keep paying.",
+    "vi": "OpenSearch serverless không scale về 0: phải tắt collection và domain, nếu không vẫn bị tính phí."
+   },
+   {
+    "en": "Hybrid search combines vector and keyword search, helping when semantic search alone is not relevant enough.",
+    "vi": "Hybrid search kết hợp vector và keyword search, hữu ích khi semantic search một mình chưa đủ liên quan."
+   },
+   {
+    "en": "S3 Vectors is up to 90% cheaper and strongly consistent, but only 100 ms to 1 s retrieval.",
+    "vi": "S3 Vectors rẻ hơn tới 90% và strongly consistent, nhưng truy xuất chỉ 100 ms đến 1 s."
+   },
+   {
+    "en": "Tiered strategy: OpenSearch for hot, performance-critical queries; S3 Vectors for infrequent ones (paying both if careless).",
+    "vi": "Chiến lược tiered: OpenSearch cho truy vấn nóng cần hiệu năng; S3 Vectors cho truy vấn ít dùng (cẩn thận kẻo trả cả hai)."
+   },
+   {
+    "en": "Aurora pgvector adds a vector column and SQL vector search; good for small to medium RAG with structured data.",
+    "vi": "Aurora pgvector thêm cột vector và vector search bằng SQL; hợp RAG nhỏ đến vừa với dữ liệu có cấu trúc."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon OpenSearch Service",
+    "use": {
+     "en": "Fast vector and hybrid search for performance-critical RAG.",
+     "vi": "Vector và hybrid search nhanh cho RAG cần hiệu năng."
+    }
+   },
+   {
+    "name": "Amazon S3 Vectors",
+    "use": {
+     "en": "Cheapest vector storage, for infrequent or non-latency-critical queries.",
+     "vi": "Lưu vector rẻ nhất, cho truy vấn ít dùng hoặc không nhạy latency."
+    }
+   },
+   {
+    "name": "Amazon Aurora PostgreSQL (pgvector)",
+    "use": {
+     "en": "Vectors plus complex SQL filtering in one database.",
+     "vi": "Vector cộng lọc SQL phức tạp trong một database."
+    }
+   },
+   {
+    "name": "Amazon DynamoDB",
+    "use": {
+     "en": "Also supports vector search, though newer than the exam.",
+     "vi": "Cũng hỗ trợ vector search, nhưng mới hơn phạm vi đề thi."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "S3 Vectors allows up to 10,000 indexes per bucket and 2 billion vectors per index.",
+   "vi": "S3 Vectors cho phép tối đa 10.000 index mỗi bucket và 2 tỷ vector mỗi index."
+  },
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Need a vector store\"] --> B[\"Low latency critical\"]\n  A --> C[\"Lowest cost, infrequent queries\"]\n  A --> D[\"SQL filtering and structured data\"]\n  B --> E[\"OpenSearch\"]\n  C --> F[\"S3 Vectors\"]\n  D --> G[\"Aurora pgvector\"]",
+   "vi": "flowchart TD\n  A[\"Cần vector store\"] --> B[\"Cần latency thấp\"]\n  A --> C[\"Rẻ nhất, truy vấn ít\"]\n  A --> D[\"Lọc SQL và dữ liệu có cấu trúc\"]\n  B --> E[\"OpenSearch\"]\n  C --> F[\"S3 Vectors\"]\n  D --> G[\"Aurora pgvector\"]"
+  }
+ },
+ "08-018": {
+  "tldr": {
+   "en": "Hands-on S3 Vectors: create a vector bucket and index (dimension 1 to 4096, Euclidean or cosine), then pick S3 vectors as the store when creating a Bedrock knowledge base.",
+   "vi": "Thực hành S3 Vectors: tạo vector bucket và index (chiều 1 đến 4096, Euclidean hoặc cosine), rồi chọn S3 vectors làm store khi tạo Bedrock knowledge base."
+  },
+  "points": [
+   {
+    "en": "Create a vector bucket, then a vector index with a dimension (1 to 4096) and a distance metric.",
+    "vi": "Tạo vector bucket, rồi vector index với số chiều (1 đến 4096) và distance metric."
+   },
+   {
+    "en": "Distance metric is Euclidean or cosine; non-filterable metadata must be declared at index creation.",
+    "vi": "Distance metric là Euclidean hoặc cosine; metadata non-filterable phải khai báo khi tạo index."
+   },
+   {
+    "en": "Insert with put vectors via CLI or the S3 Vectors Embed CLI; encryption uses SSE-S3 or your KMS key.",
+    "vi": "Chèn dữ liệu bằng put vectors qua CLI hoặc S3 Vectors Embed CLI; mã hóa dùng SSE-S3 hoặc KMS key của bạn."
+   },
+   {
+    "en": "In a knowledge base, choose Amazon S3 vectors as the store; dimensions follow the embedding model.",
+    "vi": "Trong knowledge base, chọn Amazon S3 vectors làm store; số chiều theo embedding model."
+   },
+   {
+    "en": "Deleting the knowledge base keeps the vector bucket; delete the index first, then the bucket.",
+    "vi": "Xóa knowledge base không xóa vector bucket; xóa index trước rồi mới xóa bucket."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon S3 Vectors",
+    "use": {
+     "en": "Vector buckets and indexes used as a knowledge base store.",
+     "vi": "Vector bucket và index dùng làm store cho knowledge base."
+    }
+   },
+   {
+    "name": "Amazon Bedrock Knowledge Bases",
+    "use": {
+     "en": "Integrates S3 Vectors as a built-in vector store option.",
+     "vi": "Tích hợp S3 Vectors như một lựa chọn vector store có sẵn."
+    }
+   },
+   {
+    "name": "Amazon Titan Text Embeddings V2",
+    "use": {
+     "en": "Embedding model used in the demo.",
+     "vi": "Embedding model dùng trong demo."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Create vector bucket\"] --> B[\"Create vector index\"]\n  B --> C[\"Put vectors\"]\n  C --> D[\"Query vectors\"]\n  B --> E[\"Bedrock knowledge base\"]",
+   "vi": "flowchart LR\n  A[\"Tạo vector bucket\"] --> B[\"Tạo vector index\"]\n  B --> C[\"Put vectors\"]\n  C --> D[\"Query vectors\"]\n  B --> E[\"Bedrock knowledge base\"]"
+  }
+ },
+ "08-019": {
+  "tldr": {
+   "en": "Advanced RAG splits retrieval into pre-retrieval, retrieval and post-retrieval. Pre-retrieval work covers chunking, data granularity, data extraction and query rewriting.",
+   "vi": "Advanced RAG chia retrieval thành pre-retrieval, retrieval và post-retrieval. Pre-retrieval gồm chunking, độ chi tiết dữ liệu, trích xuất dữ liệu và query rewriting."
+  },
+  "points": [
+   {
+    "en": "Naive RAG is prompt, retrieve, augment, generate; advanced RAG optimizes before and after retrieval.",
+    "vi": "Naive RAG là prompt, retrieve, augment, generate; advanced RAG tối ưu trước và sau retrieval."
+   },
+   {
+    "en": "Choose data granularity and consider summarizing or cleaning text before storing it.",
+    "vi": "Chọn độ chi tiết dữ liệu và cân nhắc tóm tắt hoặc làm sạch text trước khi lưu."
+   },
+   {
+    "en": "Fixed-size chunking is the naive default; semantic chunking groups text by meaning using embeddings, BERT or an LLM.",
+    "vi": "Chunking cố định là mặc định naive; semantic chunking gom text theo ý nghĩa bằng embedding, BERT hoặc LLM."
+   },
+   {
+    "en": "Extract tables, charts and images from PDFs too, not just text.",
+    "vi": "Cũng trích xuất bảng, biểu đồ và ảnh từ PDF, không chỉ text."
+   },
+   {
+    "en": "Query rewriting splits multi-part queries or trims filler words before search.",
+    "vi": "Query rewriting tách query nhiều ý hoặc bỏ từ thừa trước khi tìm."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock Knowledge Bases",
+    "use": {
+     "en": "Where chunking and parsing choices are configured.",
+     "vi": "Nơi cấu hình chunking và parsing."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Pre-retrieval: chunking and query rewriting\"] --> B[\"Retrieval\"]\n  B --> C[\"Post-retrieval: filter and re-rank\"]\n  C --> D[\"LLM generation\"]",
+   "vi": "flowchart LR\n  A[\"Pre-retrieval: chunking và query rewriting\"] --> B[\"Retrieval\"]\n  B --> C[\"Post-retrieval: lọc và re-rank\"]\n  C --> D[\"LLM sinh câu trả lời\"]"
+  }
+ },
+ "08-020": {
+  "tldr": {
+   "en": "Bedrock knowledge bases offer fixed-size (default 300 tokens, sentence-aware), no chunking, hierarchical parent-child, and semantic chunking. Semantic chunking costs foundation model fees.",
+   "vi": "Knowledge base của Bedrock có chunking cố định (mặc định 300 token, tôn trọng câu), không chunking, hierarchical cha-con và semantic. Semantic chunking tốn phí foundation model."
+  },
+  "points": [
+   {
+    "en": "Fixed-size: set tokens per chunk and overlap percentage; default is 300 tokens without splitting sentences.",
+    "vi": "Fixed-size: đặt token mỗi chunk và phần trăm overlap; mặc định 300 token, không cắt giữa câu."
+   },
+   {
+    "en": "No chunking: each document is one chunk; use it when you pre-chunk your data yourself.",
+    "vi": "No chunking: mỗi tài liệu là một chunk; dùng khi bạn tự chunk trước."
+   },
+   {
+    "en": "Hierarchical: search small child chunks for precision, then return the larger parent for context.",
+    "vi": "Hierarchical: tìm trên child chunk nhỏ để chính xác, rồi trả parent lớn hơn để có ngữ cảnh."
+   },
+   {
+    "en": "Semantic: a foundation model splits by meaning; set max tokens, buffer size and breakpoint percentile threshold.",
+    "vi": "Semantic: foundation model chia theo ý nghĩa; đặt max token, buffer size và breakpoint percentile threshold."
+   },
+   {
+    "en": "Large buffer size adds noise, small one misses context; higher breakpoint threshold gives fewer, bigger chunks.",
+    "vi": "Buffer size lớn gây nhiễu, nhỏ thì thiếu ngữ cảnh; breakpoint threshold cao cho ít chunk hơn nhưng lớn hơn."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock Knowledge Bases",
+    "use": {
+     "en": "Configurable chunking strategies for ingestion.",
+     "vi": "Chiến lược chunking có thể cấu hình khi ingest."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Chunking strategy\"] --> B[\"Fixed size: default 300 tokens\"]\n  A --> C[\"Hierarchical: child search then parent context\"]\n  A --> D[\"Semantic: FM splits by meaning, extra cost\"]\n  A --> E[\"None: one document per chunk\"]",
+   "vi": "flowchart TD\n  A[\"Chiến lược chunking\"] --> B[\"Fixed size: mặc định 300 token\"]\n  A --> C[\"Hierarchical: tìm child rồi lấy ngữ cảnh parent\"]\n  A --> D[\"Semantic: FM chia theo ý nghĩa, tốn thêm phí\"]\n  A --> E[\"None: mỗi tài liệu một chunk\"]"
+  }
+ },
+ "08-021": {
+  "tldr": {
+   "en": "Re-ranker models reorder retrieved chunks by their relevance to the query, improving RAG context beyond raw vector distance.",
+   "vi": "Re-ranker model sắp xếp lại các chunk truy xuất theo độ liên quan với query, cải thiện context RAG hơn khoảng cách vector thuần."
+  },
+  "points": [
+   {
+    "en": "Semantic search results may be only loosely relevant; a re-ranker scores each chunk against the query.",
+    "vi": "Kết quả semantic search có thể chỉ liên quan lỏng lẻo; re-ranker chấm điểm từng chunk với query."
+   },
+   {
+    "en": "Use the Rerank operation in the Bedrock API, or specify a reranker model when querying a knowledge base.",
+    "vi": "Dùng thao tác Rerank trong Bedrock API, hoặc chỉ định reranker model khi truy vấn knowledge base."
+   },
+   {
+    "en": "Built-in reranker models come from Amazon and Cohere, available only in limited regions.",
+    "vi": "Reranker có sẵn từ Amazon và Cohere, chỉ có ở một số region."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock Rerank API",
+    "use": {
+     "en": "Reorders retrieved chunks by relevance to the query.",
+     "vi": "Sắp xếp lại chunk truy xuất theo độ liên quan với query."
+    }
+   },
+   {
+    "name": "Amazon Rerank and Cohere Rerank",
+    "use": {
+     "en": "Reranker models available for knowledge bases.",
+     "vi": "Reranker model dùng được cho knowledge base."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Query\"] --> B[\"Vector search: top results\"]\n  B --> C[\"Reranker model\"]\n  C --> D[\"Best chunks first\"]\n  D --> E[\"Foundation model\"]",
+   "vi": "flowchart LR\n  A[\"Query\"] --> B[\"Vector search: top kết quả\"]\n  B --> C[\"Reranker model\"]\n  C --> D[\"Chunk tốt nhất lên đầu\"]\n  D --> E[\"Foundation model\"]"
+  }
+ },
+ "08-022": {
+  "tldr": {
+   "en": "Bedrock Guardrails filter both prompts and responses: topics, words, harmful content, profanity, PII (block or mask) and hallucinations via contextual grounding checks.",
+   "vi": "Bedrock Guardrails lọc cả prompt lẫn response: chủ đề, từ ngữ, nội dung độc hại, profanity, PII (block hoặc mask) và hallucination qua contextual grounding check."
+  },
+  "points": [
+   {
+    "en": "Applies to input and output of knowledge bases, agents and text models; image models are not covered in this lecture.",
+    "vi": "Áp dụng cho input và output của knowledge base, agent, text model; bài này chưa nói tới image model."
+   },
+   {
+    "en": "Filter by denied topics, word lists, built-in harmful categories and a profanity filter.",
+    "vi": "Lọc theo denied topic, danh sách từ, nhóm nội dung độc hại có sẵn và profanity filter."
+   },
+   {
+    "en": "PII filters can block or mask data such as phone numbers, SSNs and addresses.",
+    "vi": "PII filter có thể block hoặc mask dữ liệu như số điện thoại, SSN, địa chỉ."
+   },
+   {
+    "en": "Contextual grounding check scores grounding (similar to retrieved source) and relevance (to the query) against thresholds.",
+    "vi": "Contextual grounding check chấm grounding (giống nguồn đã truy xuất) và relevance (với query) theo ngưỡng."
+   },
+   {
+    "en": "You can customize the blocked message users see.",
+    "vi": "Có thể tùy chỉnh thông báo bị chặn mà người dùng thấy."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock Guardrails",
+    "use": {
+     "en": "Content, topic, PII and hallucination filtering for prompts and responses.",
+     "vi": "Lọc nội dung, chủ đề, PII và hallucination cho prompt và response."
+    }
+   },
+   {
+    "name": "Amazon Bedrock Knowledge Bases",
+    "use": {
+     "en": "Guardrails can be attached to them.",
+     "vi": "Có thể gắn guardrail vào đó."
+    }
+   },
+   {
+    "name": "Amazon Bedrock Agents",
+    "use": {
+     "en": "Guardrails can be attached to them.",
+     "vi": "Có thể gắn guardrail vào đó."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"User prompt\"] --> B[\"Guardrail input check\"]\n  B --> C[\"Foundation model or agent\"]\n  C --> D[\"Guardrail output check\"]\n  D --> E[\"Response or blocked message\"]",
+   "vi": "flowchart LR\n  A[\"Prompt người dùng\"] --> B[\"Guardrail kiểm tra input\"]\n  B --> C[\"Foundation model hoặc agent\"]\n  C --> D[\"Guardrail kiểm tra output\"]\n  D --> E[\"Response hoặc thông báo chặn\"]"
+  }
+ },
+ "08-023": {
+  "tldr": {
+   "en": "Lab: build a guardrail with harmful-content filters, prompt-attack filter, denied topic, word filter, PII masking and grounding checks, then test it so blocked inputs return your message.",
+   "vi": "Lab: tạo guardrail với bộ lọc nội dung độc hại, prompt-attack, denied topic, word filter, mask PII và grounding check, rồi test để input bị chặn trả về thông báo của bạn."
+  },
+  "points": [
+   {
+    "en": "Harmful categories have adjustable thresholds and can check both text and images.",
+    "vi": "Các nhóm nội dung độc hại có ngưỡng chỉnh được và kiểm tra được cả text lẫn ảnh."
+   },
+   {
+    "en": "Prompt attack filter blocks jailbreaks such as ignore all previous instructions; may cause false positives.",
+    "vi": "Prompt attack filter chặn jailbreak như ignore all previous instructions; có thể gây false positive."
+   },
+   {
+    "en": "Denied topics need a definition and examples; word filters take profanity plus custom words.",
+    "vi": "Denied topic cần định nghĩa và ví dụ; word filter gồm profanity và từ tùy chỉnh."
+   },
+   {
+    "en": "PII can be masked instead of blocked; contextual grounding checks tune grounding and relevance thresholds.",
+    "vi": "PII có thể mask thay vì block; contextual grounding check chỉnh ngưỡng grounding và relevance."
+   },
+   {
+    "en": "Newer filter tiers need cross-region inference; automated reasoning checks are detect-only. Test shows traces of which filter fired.",
+    "vi": "Tier filter mới cần cross-region inference; automated reasoning check chỉ ở chế độ detect. Khi test có trace cho biết filter nào kích hoạt."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock Guardrails",
+    "use": {
+     "en": "Create and test content, topic, word, PII and grounding filters.",
+     "vi": "Tạo và test filter nội dung, chủ đề, từ, PII và grounding."
+    }
+   },
+   {
+    "name": "AWS KMS",
+    "use": {
+     "en": "Optional customer-managed key for the guardrail.",
+     "vi": "Customer-managed key tùy chọn cho guardrail."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "The demo blocked the word potato as a joke profane word, and the trace showed exactly which word filter tripped.",
+   "vi": "Demo chặn từ potato như một từ cấm để minh họa, và trace cho thấy chính xác word filter nào kích hoạt."
+  }
+ },
+ "08-024": {
+  "tldr": {
+   "en": "Prompt engineering is how you ask the model; better prompts give better and safer outputs without changing model parameters. AWS also groups RAG and agents under it.",
+   "vi": "Prompt engineering là cách bạn hỏi model; prompt tốt cho kết quả tốt và an toàn hơn mà không đổi tham số model. AWS cũng xếp RAG và agent vào nhóm này."
+  },
+  "points": [
+   {
+    "en": "How you ask matters: detailed prompts boost capability, and specifying rules can improve safety.",
+    "vi": "Cách hỏi rất quan trọng: prompt chi tiết tăng khả năng, nêu rõ quy tắc giúp an toàn hơn."
+   },
+   {
+    "en": "RAG injects your own documents and data into the prompt as context, with no fine-tuning.",
+    "vi": "RAG đưa tài liệu và dữ liệu của bạn vào prompt làm context, không cần fine-tuning."
+   },
+   {
+    "en": "Agents let the model call external tools or functions, such as a weather lookup or internal service.",
+    "vi": "Agent cho phép model gọi tool hoặc function ngoài, như tra thời tiết hoặc service nội bộ."
+   },
+   {
+    "en": "Garbage in, garbage out: better inputs give better outputs.",
+    "vi": "Garbage in, garbage out: input tốt cho output tốt."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock Knowledge Bases",
+    "use": {
+     "en": "RAG: augment prompts with your own data.",
+     "vi": "RAG: bổ sung prompt bằng dữ liệu của bạn."
+    }
+   },
+   {
+    "name": "Amazon Bedrock Agents",
+    "use": {
+     "en": "Let the model call external tools.",
+     "vi": "Cho model gọi tool bên ngoài."
+    }
+   }
+  ]
+ },
+ "08-025": {
+  "tldr": {
+   "en": "A good prompt has four parts: instructions, context, input data and an output indicator.",
+   "vi": "Một prompt tốt có bốn phần: instructions, context, input data và output indicator."
+  },
+  "points": [
+   {
+    "en": "Instructions: the task you want the model to do.",
+    "vi": "Instructions: nhiệm vụ bạn muốn model thực hiện."
+   },
+   {
+    "en": "Context: background or retrieved external information that guides the model.",
+    "vi": "Context: thông tin nền hoặc thông tin truy xuất bên ngoài để định hướng model."
+   },
+   {
+    "en": "Input data: the item to respond to; can also include examples of the desired style.",
+    "vi": "Input data: nội dung cần phản hồi; có thể kèm ví dụ về phong cách mong muốn."
+   },
+   {
+    "en": "Output indicator: the desired type, format, length or constraints of the answer.",
+    "vi": "Output indicator: loại, định dạng, độ dài hoặc ràng buộc mong muốn của câu trả lời."
+   }
+  ],
+  "services": [],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Instructions: the task\"] --> E[\"Final prompt\"]\n  B[\"Context: background or retrieved data\"] --> E\n  C[\"Input data: details and examples\"] --> E\n  D[\"Output indicator: format and length\"] --> E",
+   "vi": "flowchart LR\n  A[\"Instructions: nhiệm vụ\"] --> E[\"Prompt hoàn chỉnh\"]\n  B[\"Context: nền hoặc dữ liệu truy xuất\"] --> E\n  C[\"Input data: chi tiết và ví dụ\"] --> E\n  D[\"Output indicator: định dạng và độ dài\"] --> E"
+  }
+ },
+ "08-026": {
+  "tldr": {
+   "en": "Amazon's prompt best practices: be clear and concise, add context, state the output format at the end, ask as a question, give examples, break tasks down, and experiment.",
+   "vi": "Best practice prompt của Amazon: rõ ràng ngắn gọn, thêm context, nêu định dạng output ở cuối, hỏi dạng câu hỏi, cho ví dụ, chia nhỏ task và thử nghiệm."
+  },
+  "points": [
+   {
+    "en": "Be clear and concise; vague wording leaves room for errors.",
+    "vi": "Rõ ràng và ngắn gọn; câu mơ hồ dễ gây lỗi."
+   },
+   {
+    "en": "Include context, specify the response type, and put the desired output format at the end of the prompt.",
+    "vi": "Thêm context, nêu loại response và đặt định dạng output mong muốn ở cuối prompt."
+   },
+   {
+    "en": "Phrase input as a question and give example responses; examples also teach the output format.",
+    "vi": "Diễn đạt input như câu hỏi và đưa ví dụ response; ví dụ cũng dạy định dạng output."
+   },
+   {
+    "en": "Break complex tasks into subtasks; ask the model to think step by step (chain of thought).",
+    "vi": "Chia task phức tạp thành subtask; yêu cầu model suy nghĩ từng bước (chain of thought)."
+   },
+   {
+    "en": "Models are non-deterministic and evolve, so experiment with different prompts.",
+    "vi": "Model không xác định và liên tục thay đổi, nên hãy thử nhiều prompt khác nhau."
+   }
+  ],
+  "services": [],
+  "funFact": {
+   "en": "Examples inside a prompt are a trick to get fairly structured output, such as only the word positive or negative.",
+   "vi": "Ví dụ trong prompt là mẹo để có output khá có cấu trúc, như chỉ trả từ positive hoặc negative."
+  }
+ },
+ "08-027": {
+  "tldr": {
+   "en": "Zero-shot gives no examples, few-shot gives some examples, and chain-of-thought tells the model to reason step by step.",
+   "vi": "Zero-shot không có ví dụ, few-shot có vài ví dụ, và chain-of-thought yêu cầu model suy luận từng bước."
+  },
+  "points": [
+   {
+    "en": "Zero-shot: no examples; relies on the model's training, e.g. just ask for the sentiment.",
+    "vi": "Zero-shot: không ví dụ; dựa vào dữ liệu train của model, ví dụ chỉ hỏi sentiment."
+   },
+   {
+    "en": "Few-shot: provide example inputs and outputs; the model learns both the task and the output format.",
+    "vi": "Few-shot: đưa ví dụ input và output; model học cả task lẫn định dạng output."
+   },
+   {
+    "en": "Chain of thought: say think step by step and outline the steps; improves results and explainability.",
+    "vi": "Chain of thought: bảo think step by step và nêu các bước; cải thiện kết quả và khả năng giải thích."
+   }
+  ],
+  "services": [],
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Prompt types\"] --> B[\"Zero-shot: no examples\"]\n  A --> C[\"Few-shot: examples given\"]\n  A --> D[\"Chain of thought: think step by step\"]",
+   "vi": "flowchart TD\n  A[\"Các loại prompt\"] --> B[\"Zero-shot: không ví dụ\"]\n  A --> C[\"Few-shot: có ví dụ\"]\n  A --> D[\"Chain of thought: suy nghĩ từng bước\"]"
+  }
+ },
+ "08-028": {
+  "tldr": {
+   "en": "Bedrock Prompt Management stores reusable, versioned prompts with variables in double curly braces, variants per model, and can deploy them into flows.",
+   "vi": "Bedrock Prompt Management lưu prompt tái sử dụng, có version, biến trong dấu ngoặc nhọn kép, variant theo model, và có thể deploy vào flow."
+  },
+  "points": [
+   {
+    "en": "Reuse prompts across applications and keep versions so you can roll back.",
+    "vi": "Tái sử dụng prompt giữa các ứng dụng và giữ version để rollback."
+   },
+   {
+    "en": "Variables use double curly braces, for example a genre and a number of songs, filled in by the app.",
+    "vi": "Biến dùng ngoặc nhọn kép, ví dụ genre và số bài hát, do ứng dụng điền vào."
+   },
+   {
+    "en": "Variants tune a prompt for different models or inference settings; add system prompt, tools and caching.",
+    "vi": "Variant tinh chỉnh prompt cho từng model hoặc cấu hình inference; có thể thêm system prompt, tool và caching."
+   },
+   {
+    "en": "Test in the prompt builder, create a version, then use the version in a Bedrock flow.",
+    "vi": "Test trong prompt builder, tạo version rồi dùng version đó trong Bedrock flow."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock Prompt Management",
+    "use": {
+     "en": "Versioned, parameterized, reusable prompts.",
+     "vi": "Prompt có version, tham số hóa, tái sử dụng."
+    }
+   },
+   {
+    "name": "Amazon Bedrock Flows",
+    "use": {
+     "en": "Chain deployed prompts into larger applications.",
+     "vi": "Nối các prompt đã deploy thành ứng dụng lớn hơn."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Create prompt with variables\"] --> B[\"Test in prompt builder\"]\n  B --> C[\"Create version\"]\n  C --> D[\"Use in Bedrock flow or app\"]",
+   "vi": "flowchart LR\n  A[\"Tạo prompt có biến\"] --> B[\"Test trong prompt builder\"]\n  B --> C[\"Tạo version\"]\n  C --> D[\"Dùng trong Bedrock flow hoặc app\"]"
+  }
+ },
+ "08-029": {
+  "tldr": {
+   "en": "An LLM agent is a foundation model plus memory, planning and tools. Tool prompts tell it when to call each tool, and knowledge bases act as just another tool (agentic RAG).",
+   "vi": "LLM agent là foundation model cộng memory, planning và tool. Prompt của tool cho biết khi nào gọi tool, và knowledge base chỉ là một tool nữa (agentic RAG)."
+  },
+  "points": [
+   {
+    "en": "Components: LLM core, short-term memory (chat history), long-term memory, planning, and tools.",
+    "vi": "Thành phần: LLM lõi, short-term memory (lịch sử chat), long-term memory, planning và tool."
+   },
+   {
+    "en": "Planning is mostly guidance in prompts; each tool has a prompt describing when to use it, inputs and outputs.",
+    "vi": "Planning chủ yếu là hướng dẫn trong prompt; mỗi tool có prompt mô tả khi nào dùng, input và output."
+   },
+   {
+    "en": "AgentCore Gateway turns Lambda functions or external APIs into MCP-style tools; tools can be defined with JSON schema, OpenAPI or Smithy.",
+    "vi": "AgentCore Gateway biến Lambda hoặc API ngoài thành tool kiểu MCP; tool định nghĩa bằng JSON schema, OpenAPI hoặc Smithy."
+   },
+   {
+    "en": "A knowledge base used as an agent tool is agentic RAG; the agent can ask the user for missing parameters.",
+    "vi": "Knowledge base dùng như tool của agent là agentic RAG; agent có thể hỏi người dùng tham số còn thiếu."
+   },
+   {
+    "en": "The built-in code interpreter lets the agent write and run its own code, for example for charts.",
+    "vi": "Code interpreter có sẵn cho phép agent tự viết và chạy code, ví dụ để vẽ biểu đồ."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock AgentCore Gateway",
+    "use": {
+     "en": "Exposes Lambda and APIs as MCP tools to the agent.",
+     "vi": "Cung cấp Lambda và API dưới dạng MCP tool cho agent."
+    }
+   },
+   {
+    "name": "Amazon Bedrock AgentCore Memory",
+    "use": {
+     "en": "Pluggable short and long-term memory.",
+     "vi": "Memory ngắn hạn và dài hạn có thể cắm vào."
+    }
+   },
+   {
+    "name": "Amazon Bedrock AgentCore Code Interpreter",
+    "use": {
+     "en": "Agent writes and executes code to answer.",
+     "vi": "Agent viết và chạy code để trả lời."
+    }
+   },
+   {
+    "name": "AWS Lambda",
+    "use": {
+     "en": "Can be wrapped as an agent tool.",
+     "vi": "Có thể bọc thành tool cho agent."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"User request\"] --> B[\"LLM agent core\"]\n  B --> C[\"Memory: short and long term\"]\n  B --> D[\"Planning: decompose task\"]\n  B --> E[\"Gateway tools: Lambda and APIs\"]\n  B --> F[\"Knowledge base\"]\n  B --> G[\"Code interpreter\"]",
+   "vi": "flowchart LR\n  A[\"Yêu cầu người dùng\"] --> B[\"LLM agent core\"]\n  B --> C[\"Memory: ngắn hạn và dài hạn\"]\n  B --> D[\"Planning: chia nhỏ task\"]\n  B --> E[\"Tool Gateway: Lambda và API\"]\n  B --> F[\"Knowledge base\"]\n  B --> G[\"Code interpreter\"]"
+  }
+ },
+ "08-030": {
+  "tldr": {
+   "en": "Multi-agent systems use specialized agents in patterns: orchestrator, routing, parallelization, prompt chaining and evaluator-optimizer. Use them only for genuinely complex problems.",
+   "vi": "Hệ multi-agent dùng các agent chuyên biệt theo mẫu: orchestrator, routing, parallelization, prompt chaining và evaluator-optimizer. Chỉ dùng cho bài toán thật sự phức tạp."
+  },
+  "points": [
+   {
+    "en": "Use multiple agents when one agent has too many tools or logic with many conditionals; keep simple cases simple.",
+    "vi": "Dùng nhiều agent khi một agent có quá nhiều tool hoặc logic nhiều điều kiện; việc đơn giản thì giữ đơn giản."
+   },
+   {
+    "en": "Orchestrator: splits a task to parallel worker agents, then a synthesizer combines results; each agent has its own context.",
+    "vi": "Orchestrator: chia task cho các worker agent chạy song song, synthesizer gộp kết quả; mỗi agent có context riêng."
+   },
+   {
+    "en": "Routing: a router picks the best agent or model size for a prompt, saving cost; Agent Squad does this.",
+    "vi": "Routing: router chọn agent hoặc cỡ model phù hợp cho prompt, tiết kiệm chi phí; Agent Squad làm việc này."
+   },
+   {
+    "en": "Parallelization with an aggregator suits parallel guardrails, evaluations or voting.",
+    "vi": "Parallelization với aggregator hợp cho guardrail, evaluation song song hoặc voting."
+   },
+   {
+    "en": "Prompt chaining runs steps sequentially with gates to bail out early; evaluator-optimizer loops until quality is good enough.",
+    "vi": "Prompt chaining chạy tuần tự với gate để dừng sớm; evaluator-optimizer lặp đến khi đạt chất lượng."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock Flows",
+    "use": {
+     "en": "Can chain prompts and route between agents.",
+     "vi": "Có thể nối prompt và route giữa các agent."
+    }
+   },
+   {
+    "name": "Strands Agents",
+    "use": {
+     "en": "Framework for building multi-agent patterns.",
+     "vi": "Framework để xây các mẫu multi-agent."
+    }
+   },
+   {
+    "name": "Agent Squad",
+    "use": {
+     "en": "Routes each request to the best-fit agent.",
+     "vi": "Route mỗi yêu cầu tới agent phù hợp nhất."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Prompt\"] --> B[\"Orchestrator agent\"]\n  B --> C[\"Worker agent 1\"]\n  B --> D[\"Worker agent 2\"]\n  B --> E[\"Worker agent 3\"]\n  C --> F[\"Synthesizer\"]\n  D --> F\n  E --> F\n  F --> G[\"Final response\"]",
+   "vi": "flowchart LR\n  A[\"Prompt\"] --> B[\"Orchestrator agent\"]\n  B --> C[\"Worker agent 1\"]\n  B --> D[\"Worker agent 2\"]\n  B --> E[\"Worker agent 3\"]\n  C --> F[\"Synthesizer\"]\n  D --> F\n  E --> F\n  F --> G[\"Câu trả lời cuối\"]"
+  }
+ },
+ "08-031": {
+  "tldr": {
+   "en": "Agents have short-term memory (the current session) and long-term memory (summaries, preferences, facts across sessions), stored in services like DynamoDB or AgentCore Memory.",
+   "vi": "Agent có short-term memory (phiên hiện tại) và long-term memory (tóm tắt, sở thích, sự kiện qua các phiên), lưu ở các dịch vụ như DynamoDB hoặc AgentCore Memory."
+  },
+  "points": [
+   {
+    "en": "Short-term memory is the session history that becomes part of the prompt; keep it in memory, ElastiCache, MemoryDB or DynamoDB.",
+    "vi": "Short-term memory là lịch sử phiên được đưa vào prompt; lưu trong memory, ElastiCache, MemoryDB hoặc DynamoDB."
+   },
+   {
+    "en": "Long-term memory stores past conversations, summaries, user preferences and explicit facts.",
+    "vi": "Long-term memory lưu hội thoại cũ, tóm tắt, sở thích người dùng và các sự kiện được yêu cầu nhớ."
+   },
+   {
+    "en": "Memory records can use different strategies for preferences, semantic facts and session summaries.",
+    "vi": "Memory record có thể dùng chiến lược khác nhau cho sở thích, semantic fact và tóm tắt phiên."
+   },
+   {
+    "en": "Storage options: DynamoDB, RDS or Aurora, AgentCore Memory, or mem0 through the Strands SDK.",
+    "vi": "Nơi lưu: DynamoDB, RDS hoặc Aurora, AgentCore Memory, hoặc mem0 qua Strands SDK."
+   },
+   {
+    "en": "Knowledge bases are more like external long-term knowledge than memory of user interactions.",
+    "vi": "Knowledge base giống kiến thức dài hạn bên ngoài hơn là memory về tương tác của người dùng."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock AgentCore Memory",
+    "use": {
+     "en": "Attach managed short and long-term memory to agents.",
+     "vi": "Gắn memory ngắn và dài hạn managed vào agent."
+    }
+   },
+   {
+    "name": "Amazon DynamoDB",
+    "use": {
+     "en": "Fits both session and persistent memory.",
+     "vi": "Phù hợp cho cả memory phiên và memory lâu dài."
+    }
+   },
+   {
+    "name": "Amazon ElastiCache and MemoryDB",
+    "use": {
+     "en": "Fast stores for session memory.",
+     "vi": "Store nhanh cho memory phiên."
+    }
+   },
+   {
+    "name": "Amazon Aurora",
+    "use": {
+     "en": "Small to medium long-term memory store.",
+     "vi": "Store long-term memory cỡ nhỏ đến vừa."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "OpenAI's SDK uses SQLite as its default store for agent memory.",
+   "vi": "SDK của OpenAI dùng SQLite làm store mặc định cho memory của agent."
+  }
+ },
+ "08-032": {
+  "tldr": {
+   "en": "Bedrock AgentCore is AWS's way to deploy agents at scale, serverless and framework-agnostic, with identity, memory, gateway, runtime and observability. It replaces console-based Bedrock Agents.",
+   "vi": "Bedrock AgentCore là cách AWS deploy agent ở quy mô lớn, serverless và không phụ thuộc framework, có identity, memory, gateway, runtime và observability. Nó thay thế Bedrock Agents trên console."
+  },
+  "points": [
+   {
+    "en": "Handles hard deployment parts: endpoints, memory at scale, authentication, without managing Docker, ECR or ECS.",
+    "vi": "Xử lý phần khó của deploy: endpoint, memory ở quy mô lớn, xác thực, không cần tự quản Docker, ECR hay ECS."
+   },
+   {
+    "en": "Works with any framework: Strands, LangGraph, LangChain, OpenAI Agents SDK, Google ADK, CrewAI; not tied to Bedrock models.",
+    "vi": "Chạy với mọi framework: Strands, LangGraph, LangChain, OpenAI Agents SDK, Google ADK, CrewAI; không bắt buộc model Bedrock."
+   },
+   {
+    "en": "Capabilities: identity, built-in tools, memory, gateway for MCP and APIs, runtime, observability, evaluations and policies.",
+    "vi": "Tính năng: identity, tool có sẵn, memory, gateway cho MCP và API, runtime, observability, evaluation và policy."
+   },
+   {
+    "en": "Agent Runtime deploys via CodeBuild and ECR to serverless endpoints; it can run locally for development.",
+    "vi": "Agent Runtime deploy qua CodeBuild và ECR lên endpoint serverless; có thể chạy local để phát triển."
+   },
+   {
+    "en": "The AgentCore CLI packages or scaffolds agents; enable Gen AI observability in CloudWatch to monitor them.",
+    "vi": "AgentCore CLI đóng gói hoặc tạo sườn agent; bật Gen AI observability trong CloudWatch để giám sát."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock AgentCore Runtime",
+    "use": {
+     "en": "Serverless hosting of agents at scale.",
+     "vi": "Hosting agent serverless ở quy mô lớn."
+    }
+   },
+   {
+    "name": "Amazon Bedrock AgentCore Identity",
+    "use": {
+     "en": "Authenticate and control access to agents.",
+     "vi": "Xác thực và kiểm soát truy cập vào agent."
+    }
+   },
+   {
+    "name": "Amazon Bedrock AgentCore Gateway",
+    "use": {
+     "en": "Connect to external systems via MCP and APIs.",
+     "vi": "Kết nối hệ thống ngoài qua MCP và API."
+    }
+   },
+   {
+    "name": "Amazon Bedrock AgentCore Memory",
+    "use": {
+     "en": "Built-in short and long-term memory.",
+     "vi": "Memory ngắn và dài hạn có sẵn."
+    }
+   },
+   {
+    "name": "Amazon CloudWatch",
+    "use": {
+     "en": "Observability and evaluations dashboard for agents.",
+     "vi": "Dashboard observability và evaluation cho agent."
+    }
+   },
+   {
+    "name": "Amazon Bedrock Knowledge Bases",
+    "use": {
+     "en": "Integrates for RAG without rebuilding vector search.",
+     "vi": "Tích hợp để làm RAG mà không phải xây lại vector search."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "AgentCore even includes a micropayment capability so people can pay for access to your agent.",
+   "vi": "AgentCore còn có tính năng micropayment để người dùng trả tiền truy cập agent của bạn."
+  },
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Your agent code: any framework\"] --> B[\"AgentCore Runtime\"]\n  B --> C[\"Identity\"]\n  B --> D[\"Memory\"]\n  B --> E[\"Gateway: MCP and APIs\"]\n  B --> F[\"Built-in tools\"]\n  B --> G[\"Observability in CloudWatch\"]",
+   "vi": "flowchart TD\n  A[\"Code agent của bạn: mọi framework\"] --> B[\"AgentCore Runtime\"]\n  B --> C[\"Identity\"]\n  B --> D[\"Memory\"]\n  B --> E[\"Gateway: MCP và API\"]\n  B --> F[\"Tool có sẵn\"]\n  B --> G[\"Observability trong CloudWatch\"]"
+  }
+ },
+ "08-034": {
+  "tldr": {
+   "en": "AgentCore can import Bedrock agents as Strands code, Gateway turns APIs and Lambda into MCP-style tools with central credentials, and Identity gives agents their own identities to call external services.",
+   "vi": "AgentCore có thể import Bedrock agent thành code Strands, Gateway biến API và Lambda thành tool kiểu MCP với credential tập trung, và Identity cấp danh tính riêng cho agent để gọi dịch vụ ngoài."
+  },
+  "points": [
+   {
+    "en": "The agentcore import-agent command converts a Bedrock agent to Strands (or LangChain and LangGraph) code you can extend and deploy.",
+    "vi": "Lệnh agentcore import-agent chuyển Bedrock agent thành code Strands (hoặc LangChain, LangGraph) để mở rộng và deploy."
+   },
+   {
+    "en": "Gateway makes OpenAPI or Smithy targets and Lambda functions look like MCP tools, with semantic tool selection.",
+    "vi": "Gateway làm cho target OpenAPI, Smithy và Lambda trông như MCP tool, có semantic tool selection."
+   },
+   {
+    "en": "Gateway centralizes authorization and credentials for external tools.",
+    "vi": "Gateway tập trung authorization và credential cho tool bên ngoài."
+   },
+   {
+    "en": "AgentCore Identity is the agent's own identity, like a Cognito user pool for agents, with secure credential storage.",
+    "vi": "AgentCore Identity là danh tính riêng của agent, giống Cognito user pool cho agent, có lưu credential an toàn."
+   },
+   {
+    "en": "It supports OAuth 2.0 with Google, GitHub, Slack, Salesforce and Atlassian; user login to the agent itself typically uses Cognito.",
+    "vi": "Hỗ trợ OAuth 2.0 với Google, GitHub, Slack, Salesforce, Atlassian; đăng nhập người dùng vào agent thường dùng Cognito."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock AgentCore Gateway",
+    "use": {
+     "en": "Unified MCP-style access to APIs and Lambda with managed credentials.",
+     "vi": "Truy cập kiểu MCP thống nhất tới API và Lambda với credential được quản lý."
+    }
+   },
+   {
+    "name": "Amazon Bedrock AgentCore Identity",
+    "use": {
+     "en": "Identities and OAuth credentials for agents calling external tools.",
+     "vi": "Danh tính và credential OAuth cho agent gọi tool ngoài."
+    }
+   },
+   {
+    "name": "Amazon Cognito",
+    "use": {
+     "en": "Authenticates end users of the agent application.",
+     "vi": "Xác thực người dùng cuối của ứng dụng agent."
+    }
+   },
+   {
+    "name": "Strands Agents SDK",
+    "use": {
+     "en": "Target framework of the import-agent conversion.",
+     "vi": "Framework đích của việc chuyển đổi import-agent."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Agent\"] --> B[\"AgentCore Gateway\"]\n  B --> C[\"Lambda function\"]\n  B --> D[\"OpenAPI or Smithy API\"]\n  B --> E[\"External MCP server\"]\n  F[\"AgentCore Identity\"] --> B",
+   "vi": "flowchart LR\n  A[\"Agent\"] --> B[\"AgentCore Gateway\"]\n  B --> C[\"Lambda function\"]\n  B --> D[\"OpenAPI hoặc Smithy API\"]\n  B --> E[\"MCP server bên ngoài\"]\n  F[\"AgentCore Identity\"] --> B"
+  }
+ },
+ "08-035": {
+  "tldr": {
+   "en": "AgentCore Policy intercepts tool calls at the Gateway, outside the agent's code, and allows or denies them with Cedar policies. Default is deny, with enforce or log-only modes.",
+   "vi": "AgentCore Policy chặn các tool call ở Gateway, nằm ngoài code của agent, và cho phép hoặc từ chối bằng Cedar policy. Mặc định là deny, có chế độ enforce hoặc log-only."
+  },
+  "points": [
+   {
+    "en": "Policies attach to AgentCore Gateways and evaluate every tool call before it reaches tools, APIs or MCP servers.",
+    "vi": "Policy gắn vào AgentCore Gateway và đánh giá mọi tool call trước khi tới tool, API hay MCP server."
+   },
+   {
+    "en": "Written in Cedar, but you can generate it from plain English or a form.",
+    "vi": "Viết bằng Cedar, nhưng có thể sinh từ tiếng Anh thường hoặc form."
+   },
+   {
+    "en": "Example rule: permit process refund only when the amount is under 200 dollars.",
+    "vi": "Ví dụ rule: chỉ cho phép process refund khi số tiền dưới 200 đô."
+   },
+   {
+    "en": "Evaluated outside agent code, deny by default; forbid wins, and OAuth claims and tool arguments are validated.",
+    "vi": "Đánh giá ngoài code agent, deny theo mặc định; forbid thắng, và OAuth claim cùng tool argument được kiểm tra."
+   },
+   {
+    "en": "Log-only mode tests policies before enforce mode; monitor via CloudWatch Gen AI observability.",
+    "vi": "Chế độ log-only để thử policy trước khi bật enforce; giám sát qua CloudWatch Gen AI observability."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock AgentCore Policy",
+    "use": {
+     "en": "Fine-grained Cedar-based control over agent tool calls.",
+     "vi": "Kiểm soát chi tiết tool call của agent bằng Cedar."
+    }
+   },
+   {
+    "name": "Amazon Bedrock AgentCore Gateway",
+    "use": {
+     "en": "Policies require a gateway to intercept calls.",
+     "vi": "Policy cần gateway để chặn các call."
+    }
+   },
+   {
+    "name": "Amazon CloudWatch",
+    "use": {
+     "en": "Observe policy decisions.",
+     "vi": "Quan sát quyết định của policy."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "It uses cross-region inference to generate policies, so data may cross regions.",
+   "vi": "Nó dùng cross-region inference khi sinh policy, nên dữ liệu có thể đi qua region khác."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Agent tool call\"] --> B[\"AgentCore Gateway\"]\n  B --> C[\"Policy engine: Cedar\"]\n  C -->|\"permit\"| D[\"Tool or API\"]\n  C -->|\"forbid or no match\"| E[\"Denied\"]",
+   "vi": "flowchart LR\n  A[\"Tool call của agent\"] --> B[\"AgentCore Gateway\"]\n  B --> C[\"Policy engine: Cedar\"]\n  C -->|\"permit\"| D[\"Tool hoặc API\"]\n  C -->|\"forbid hoặc không khớp\"| E[\"Bị từ chối\"]"
+  }
+ },
+ "08-036": {
+  "tldr": {
+   "en": "AgentCore Evaluations use LLM judges to score agents on quality and safety metrics, sampled and filtered to control cost, with results in CloudWatch and cross-region inference always on.",
+   "vi": "AgentCore Evaluations dùng LLM judge chấm agent về chất lượng và an toàn, có lấy mẫu và lọc để kiểm soát chi phí, kết quả nằm trong CloudWatch và luôn dùng cross-region inference."
+  },
+  "points": [
+   {
+    "en": "Built-in evaluators: correctness, helpfulness, conciseness, faithfulness, relevance, coherence, refusal, goal success, tool accuracy, harmfulness, stereotyping.",
+    "vi": "Evaluator có sẵn: correctness, helpfulness, conciseness, faithfulness, relevance, coherence, refusal, goal success, tool accuracy, harmfulness, stereotyping."
+   },
+   {
+    "en": "Evaluators run at session, trace or tool-call level; they work with Strands, LangGraph and OpenTelemetry data.",
+    "vi": "Evaluator chạy ở mức session, trace hoặc tool call; hoạt động với dữ liệu Strands, LangGraph và OpenTelemetry."
+   },
+   {
+    "en": "Each evaluation uses another LLM, so use filters and a sampling rate (0.01% to 100%) to limit cost.",
+    "vi": "Mỗi evaluation dùng thêm một LLM, nên dùng filter và sampling rate (0,01% đến 100%) để giới hạn chi phí."
+   },
+   {
+    "en": "Custom evaluators are prompt templates with a judge model, ideally different from the agent's model, plus scale labels.",
+    "vi": "Custom evaluator là prompt template với judge model, nên khác model của agent, kèm nhãn thang điểm."
+   },
+   {
+    "en": "Results appear in CloudWatch with alarms; cross-region inference cannot be disabled, which matters for data residency.",
+    "vi": "Kết quả hiển thị trong CloudWatch kèm alarm; không tắt được cross-region inference, quan trọng với data residency."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock AgentCore Evaluations",
+    "use": {
+     "en": "Automatically assess agent quality, tool use and safety.",
+     "vi": "Tự động đánh giá chất lượng, việc dùng tool và độ an toàn của agent."
+    }
+   },
+   {
+    "name": "Amazon CloudWatch",
+    "use": {
+     "en": "Dashboards and alarms for evaluation results.",
+     "vi": "Dashboard và alarm cho kết quả evaluation."
+    }
+   },
+   {
+    "name": "OpenTelemetry",
+    "use": {
+     "en": "Telemetry source that evaluations can analyze.",
+     "vi": "Nguồn telemetry mà evaluation có thể phân tích."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Agent traces and logs\"] --> B[\"Filter and sample\"]\n  B --> C[\"LLM judge evaluators\"]\n  C --> D[\"Scores by session trace tool call\"]\n  D --> E[\"CloudWatch dashboards and alarms\"]",
+   "vi": "flowchart LR\n  A[\"Trace và log của agent\"] --> B[\"Lọc và lấy mẫu\"]\n  B --> C[\"Evaluator LLM judge\"]\n  C --> D[\"Điểm theo session trace tool call\"]\n  D --> E[\"Dashboard và alarm CloudWatch\"]"
+  }
+ },
+ "08-037": {
+  "tldr": {
+   "en": "Lab: an AgentCore harness builds an agent with no code, by picking a model, system prompt, tools and skills in the console, then testing it in the playground. Delete it afterward to stop costs.",
+   "vi": "Lab: AgentCore harness tạo agent không cần code bằng cách chọn model, system prompt, tool và skill trên console, rồi test trong playground. Xóa sau khi xong để khỏi tốn phí."
+  },
+  "points": [
+   {
+    "en": "A harness creates an agent from configuration, MCP servers and skills, with no code.",
+    "vi": "Harness tạo agent từ cấu hình, MCP server và skill, không cần code."
+   },
+   {
+    "en": "Pick a model (Bedrock or others) that you can access and that supports reasoning, and set a system prompt.",
+    "vi": "Chọn model (Bedrock hoặc khác) bạn truy cập được và hỗ trợ reasoning, và đặt system prompt."
+   },
+   {
+    "en": "Built-in tools are the browser and code interpreter; add Gateway targets or remote MCP servers for more.",
+    "vi": "Tool có sẵn là browser và code interpreter; thêm Gateway target hoặc remote MCP server để mở rộng."
+   },
+   {
+    "en": "A skill is a markdown file with guidance and links that teaches the model a domain; load it from AWS, Git or S3.",
+    "vi": "Skill là file markdown chứa hướng dẫn và liên kết dạy model một lĩnh vực; nạp từ AWS, Git hoặc S3."
+   },
+   {
+    "en": "The playground trace shows which skill the agent consulted; delete the harness to avoid charges.",
+    "vi": "Trace trong playground cho thấy agent đã dùng skill nào; xóa harness để tránh phí."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock AgentCore Harness",
+    "use": {
+     "en": "Build and deploy agents from configuration without code.",
+     "vi": "Tạo và deploy agent từ cấu hình, không cần code."
+    }
+   },
+   {
+    "name": "AgentCore Browser and Code Interpreter",
+    "use": {
+     "en": "Built-in tools for web browsing and running code.",
+     "vi": "Tool có sẵn để duyệt web và chạy code."
+    }
+   },
+   {
+    "name": "AgentCore Gateway and MCP servers",
+    "use": {
+     "en": "Add external tools to the harness.",
+     "vi": "Thêm tool bên ngoài vào harness."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "In the demo the agent was told to talk like a chicken, and the trace proved it really used the Amazon Bedrock skill.",
+   "vi": "Trong demo agent được bảo nói như con gà, và trace chứng minh nó thật sự dùng skill Amazon Bedrock."
+  }
+ },
+ "08-038": {
+  "tldr": {
+   "en": "AgentCore failure modes are coordination failures, truncated streaming and tool failures. Fix them with checkpoints, idempotency, retries with backoff, structured errors and observability.",
+   "vi": "Các failure mode của AgentCore gồm lỗi phối hợp, streaming bị cắt và lỗi tool. Xử lý bằng checkpoint, idempotency, retry với backoff, lỗi có cấu trúc và observability."
+  },
+  "points": [
+   {
+    "en": "Coordination failures in multi-agent flows: checkpoint state in AgentCore Memory, use timeouts and retries, add a supervisor agent.",
+    "vi": "Lỗi phối hợp trong multi-agent: checkpoint state trong AgentCore Memory, dùng timeout và retry, thêm supervisor agent."
+   },
+   {
+    "en": "Truncated streaming: check the stop reason, resume from the last chunk, or fall back to a non-streaming retry.",
+    "vi": "Streaming bị cắt: kiểm tra stop reason, resume từ chunk cuối, hoặc fallback sang retry không streaming."
+   },
+   {
+    "en": "Tool failures: return structured errors the agent can act on; use exponential backoff, circuit breakers and fallback tools.",
+    "vi": "Lỗi tool: trả lỗi có cấu trúc để agent xử lý; dùng exponential backoff, circuit breaker và tool dự phòng."
+   },
+   {
+    "en": "Keep tools and workflows idempotent so retries are safe.",
+    "vi": "Giữ tool và workflow idempotent để retry an toàn."
+   },
+   {
+    "en": "Use CloudWatch or OpenTelemetry with alarms on error rates.",
+    "vi": "Dùng CloudWatch hoặc OpenTelemetry với alarm trên error rate."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock AgentCore Memory",
+    "use": {
+     "en": "Stores checkpoint state to resume workflows.",
+     "vi": "Lưu checkpoint state để resume workflow."
+    }
+   },
+   {
+    "name": "Amazon CloudWatch",
+    "use": {
+     "en": "Monitor errors and alarm on error rates.",
+     "vi": "Giám sát lỗi và đặt alarm theo error rate."
+    }
+   },
+   {
+    "name": "OpenTelemetry",
+    "use": {
+     "en": "Tracing for agent and tool failures.",
+     "vi": "Tracing cho lỗi của agent và tool."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart TD\n  A[\"AgentCore failure modes\"] --> B[\"Coordination: checkpoint and supervisor agent\"]\n  A --> C[\"Truncated stream: stop reason and resume\"]\n  A --> D[\"Tool failure: structured error, backoff, circuit breaker\"]",
+   "vi": "flowchart TD\n  A[\"Failure mode của AgentCore\"] --> B[\"Phối hợp: checkpoint và supervisor agent\"]\n  A --> C[\"Stream bị cắt: stop reason và resume\"]\n  A --> D[\"Lỗi tool: lỗi có cấu trúc, backoff, circuit breaker\"]"
+  }
+ },
+ "08-039": {
+  "tldr": {
+   "en": "More Bedrock features: import your own models, automatic and human model evaluation, provisioned throughput, Titan image watermark detection, and Bedrock Studio.",
+   "vi": "Thêm tính năng Bedrock: import model riêng, model evaluation tự động và bởi con người, provisioned throughput, phát hiện watermark ảnh Titan và Bedrock Studio."
+  },
+  "points": [
+   {
+    "en": "Import custom models trained from scratch, from SageMaker or from S3.",
+    "vi": "Import model tự train từ đầu, từ SageMaker hoặc S3."
+   },
+   {
+    "en": "Automatic model evaluation measures accuracy, toxicity, robustness, BERTScore and F1 using your or built-in prompt datasets.",
+    "vi": "Model evaluation tự động đo accuracy, toxicity, robustness, BERTScore và F1 bằng dataset prompt của bạn hoặc có sẵn."
+   },
+   {
+    "en": "Human evaluation uses your own team or an AWS-managed workforce to rate responses.",
+    "vi": "Đánh giá bởi con người dùng đội của bạn hoặc workforce do AWS quản lý để chấm response."
+   },
+   {
+    "en": "Provisioned throughput reserves inference capacity for steady load.",
+    "vi": "Provisioned throughput dành riêng công suất inference cho tải ổn định."
+   },
+   {
+    "en": "Titan Image Generator watermarks its images, and Bedrock has watermark detection; Bedrock Studio is a web workspace using SSO without AWS accounts.",
+    "vi": "Titan Image Generator gắn watermark vào ảnh và Bedrock có watermark detection; Bedrock Studio là workspace web dùng SSO, không cần tài khoản AWS."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock Model Evaluation",
+    "use": {
+     "en": "Compare models with automatic metrics or human reviewers.",
+     "vi": "So sánh model bằng metric tự động hoặc người đánh giá."
+    }
+   },
+   {
+    "name": "Amazon Bedrock Custom Model Import",
+    "use": {
+     "en": "Bring your own trained model into Bedrock.",
+     "vi": "Đưa model tự train vào Bedrock."
+    }
+   },
+   {
+    "name": "Provisioned Throughput",
+    "use": {
+     "en": "Guaranteed capacity for steady inference load.",
+     "vi": "Công suất đảm bảo cho tải inference ổn định."
+    }
+   },
+   {
+    "name": "Amazon Bedrock Studio",
+    "use": {
+     "en": "Web workspace for teams with SSO and no AWS accounts.",
+     "vi": "Workspace web cho nhóm dùng SSO, không cần tài khoản AWS."
+    }
+   },
+   {
+    "name": "Amazon Titan Image Generator",
+    "use": {
+     "en": "Embeds a detectable watermark in images.",
+     "vi": "Gắn watermark có thể phát hiện vào ảnh."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Titan Image Generator embeds an invisible watermark so Bedrock can later detect whether an image came from it.",
+   "vi": "Titan Image Generator gắn watermark ẩn để Bedrock sau này phát hiện ảnh có do nó tạo ra hay không."
+  }
+ },
+ "08-040": {
+  "tldr": {
+   "en": "MCP is a standard protocol for connecting agents to tools, like a USB-C port for AI. Host stateless, lightweight MCP servers on Lambda and more complex ones on ECS or Fargate.",
+   "vi": "MCP là giao thức chuẩn kết nối agent với tool, như cổng USB-C cho AI. Host MCP server stateless, nhẹ trên Lambda và loại phức tạp hơn trên ECS hoặc Fargate."
+  },
+  "points": [
+   {
+    "en": "MCP standardizes how agents get context and tools from external systems; most agent SDKs including Strands support it.",
+    "vi": "MCP chuẩn hóa cách agent lấy context và tool từ hệ thống ngoài; hầu hết agent SDK, kể cả Strands, đều hỗ trợ."
+   },
+   {
+    "en": "MCP servers expose tools, resources and prompts; transport is stdio for local or HTTP streaming for remote.",
+    "vi": "MCP server cung cấp tool, resource và prompt; transport là stdio cho local hoặc HTTP streaming cho remote."
+   },
+   {
+    "en": "Exam: stateless and lightweight MCP server goes on AWS Lambda; more complex goes on Amazon ECS (Fargate) or AgentCore.",
+    "vi": "Đề thi: MCP server stateless, nhẹ chạy trên AWS Lambda; phức tạp hơn chạy trên Amazon ECS (Fargate) hoặc AgentCore."
+   },
+   {
+    "en": "API Gateway can expose MCP endpoints; use MCP client libraries instead of re-implementing the protocol.",
+    "vi": "API Gateway có thể expose endpoint MCP; dùng MCP client library thay vì tự cài giao thức."
+   },
+   {
+    "en": "Examples: GitHub, Atlassian Jira, PostgreSQL, Slack, Google Maps.",
+    "vi": "Ví dụ: GitHub, Atlassian Jira, PostgreSQL, Slack, Google Maps."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS Lambda",
+    "use": {
+     "en": "Host stateless, lightweight MCP servers.",
+     "vi": "Host MCP server stateless, nhẹ."
+    }
+   },
+   {
+    "name": "Amazon ECS and AWS Fargate",
+    "use": {
+     "en": "Host complex or stateful MCP servers.",
+     "vi": "Host MCP server phức tạp hoặc có state."
+    }
+   },
+   {
+    "name": "Amazon API Gateway",
+    "use": {
+     "en": "Expose MCP endpoints.",
+     "vi": "Expose endpoint MCP."
+    }
+   },
+   {
+    "name": "Amazon Cognito",
+    "use": {
+     "en": "Authenticate access to MCP servers.",
+     "vi": "Xác thực truy cập MCP server."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Anthropic originally described MCP as a USB-C port for AI applications.",
+   "vi": "Anthropic ban đầu mô tả MCP như một cổng USB-C cho ứng dụng AI."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"AI agent\"] --> B[\"MCP client\"]\n  B --> C[\"MCP server\"]\n  C --> D[\"Tools\"]\n  C --> E[\"Resources\"]\n  C --> F[\"Prompts\"]\n  G[\"Stateless light: Lambda\"] -.-> C\n  H[\"Complex: ECS Fargate\"] -.-> C",
+   "vi": "flowchart LR\n  A[\"AI agent\"] --> B[\"MCP client\"]\n  B --> C[\"MCP server\"]\n  C --> D[\"Tool\"]\n  C --> E[\"Resource\"]\n  C --> F[\"Prompt\"]\n  G[\"Stateless nhẹ: Lambda\"] -.-> C\n  H[\"Phức tạp: ECS Fargate\"] -.-> C"
+  }
+ },
+ "08-041": {
+  "tldr": {
+   "en": "Humans in the loop add human judgment to AI systems: escalate uncertain cases to people and collect human feedback to compare and improve models.",
+   "vi": "Human in the loop thêm phán đoán của con người vào hệ thống AI: chuyển ca không chắc chắn cho người xử lý và thu phản hồi của người dùng để so sánh và cải thiện model."
+  },
+  "points": [
+   {
+    "en": "Escalation: when confidence is low or risk is high, route to a human, for example by filing a ticket.",
+    "vi": "Escalation: khi độ tin cậy thấp hoặc rủi ro cao, chuyển cho người, ví dụ tạo ticket."
+   },
+   {
+    "en": "MCP integrations can open tickets in external systems such as Jira.",
+    "vi": "MCP có thể tạo ticket trong hệ thống ngoài như Jira."
+   },
+   {
+    "en": "Human preference feedback, such as choosing between two answers, helps refine and compare models.",
+    "vi": "Phản hồi ưa thích của người dùng, như chọn giữa hai câu trả lời, giúp cải thiện và so sánh model."
+   },
+   {
+    "en": "Feedback pipeline: API Gateway, then Lambda, then DynamoDB, indexed for later analysis.",
+    "vi": "Pipeline phản hồi: API Gateway, rồi Lambda, rồi DynamoDB, đánh index để phân tích sau."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon API Gateway",
+    "use": {
+     "en": "Front door to collect user feedback.",
+     "vi": "Cửa vào để thu phản hồi của người dùng."
+    }
+   },
+   {
+    "name": "AWS Lambda",
+    "use": {
+     "en": "Processes feedback requests.",
+     "vi": "Xử lý các request phản hồi."
+    }
+   },
+   {
+    "name": "Amazon DynamoDB",
+    "use": {
+     "en": "Stores preference data for analysis.",
+     "vi": "Lưu dữ liệu ưa thích để phân tích."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Too much preference tuning has backfired: ChatGPT went through a period of being overly sycophantic.",
+   "vi": "Tối ưu theo sở thích người dùng quá mức từng phản tác dụng: ChatGPT có giai đoạn quá nịnh người dùng."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"User\"] --> B[\"Feedback via API Gateway\"]\n  B --> C[\"Lambda\"]\n  C --> D[\"DynamoDB\"]\n  D --> E[\"Analyze which model is preferred\"]",
+   "vi": "flowchart LR\n  A[\"Người dùng\"] --> B[\"Phản hồi qua API Gateway\"]\n  B --> C[\"Lambda\"]\n  C --> D[\"DynamoDB\"]\n  D --> E[\"Phân tích model nào được ưa thích\"]"
+  }
+ },
+ "08-042": {
+  "tldr": {
+   "en": "Save cost by picking smaller models when the data does the heavy lifting, and by routing prompts dynamically to the cheapest capable model. Measure price against performance.",
+   "vi": "Tiết kiệm chi phí bằng cách chọn model nhỏ hơn khi dữ liệu đã gánh phần khó, và route prompt động tới model rẻ nhất đủ khả năng. Đo giá so với hiệu năng."
+  },
+  "points": [
+   {
+    "en": "Do you need the biggest model? In RAG or tool-heavy apps, a smaller model may be enough.",
+    "vi": "Có cần model lớn nhất không? Với ứng dụng RAG hoặc nhiều tool, model nhỏ có thể đủ."
+   },
+   {
+    "en": "Preprocessing such as summarization, classification and chunking rarely needs an expensive model.",
+    "vi": "Tiền xử lý như tóm tắt, phân loại, chunking hiếm khi cần model đắt."
+   },
+   {
+    "en": "Dynamic routing sends each prompt to a model matched to its complexity.",
+    "vi": "Dynamic routing gửi mỗi prompt tới model phù hợp độ phức tạp."
+   },
+   {
+    "en": "Bedrock intelligent prompt routing does this automatically; alternatives are Flows conditions, Lambda, Agent Squad or Strands.",
+    "vi": "Intelligent prompt routing của Bedrock tự làm việc này; lựa chọn khác là điều kiện trong Flows, Lambda, Agent Squad hoặc Strands."
+   },
+   {
+    "en": "Bedrock Evaluations compares models with humans, LLM judges or metrics; combine with token counts to weigh price and performance.",
+    "vi": "Bedrock Evaluations so sánh model bằng người, LLM judge hoặc metric; kết hợp đếm token để cân giá và hiệu năng."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock Intelligent Prompt Routing",
+    "use": {
+     "en": "Automatically routes prompts to cheaper or stronger models.",
+     "vi": "Tự động route prompt tới model rẻ hơn hoặc mạnh hơn."
+    }
+   },
+   {
+    "name": "Amazon Bedrock Evaluations",
+    "use": {
+     "en": "Compare model quality to judge price to performance.",
+     "vi": "So sánh chất lượng model để đánh giá giá so với hiệu năng."
+    }
+   },
+   {
+    "name": "Amazon Bedrock Flows",
+    "use": {
+     "en": "Conditional routing to different models.",
+     "vi": "Route có điều kiện tới các model khác nhau."
+    }
+   },
+   {
+    "name": "Agent Squad",
+    "use": {
+     "en": "Prompt-based routing between agents and models.",
+     "vi": "Route theo prompt giữa agent và model."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Incoming prompt\"] --> B[\"Complexity check or router\"]\n  B -->|\"simple\"| C[\"Small cheap model\"]\n  B -->|\"complex\"| D[\"Large model\"]\n  C --> E[\"Response\"]\n  D --> E",
+   "vi": "flowchart LR\n  A[\"Prompt đến\"] --> B[\"Kiểm tra độ phức tạp hoặc router\"]\n  B -->|\"đơn giản\"| C[\"Model nhỏ rẻ\"]\n  B -->|\"phức tạp\"| D[\"Model lớn\"]\n  C --> E[\"Response\"]\n  D --> E"
+  }
+ },
+ "08-043": {
+  "tldr": {
+   "en": "Evaluating foundation models is hard: use human judgment, benchmark datasets, LLM-as-a-judge, or a hybrid. Watch for test data leaking into training data.",
+   "vi": "Đánh giá foundation model rất khó: dùng đánh giá của người, benchmark dataset, LLM làm judge, hoặc kết hợp. Cẩn thận dữ liệu test lọt vào dữ liệu train."
+  },
+  "points": [
+   {
+    "en": "Human evaluation rates experience, relevance and creativity, but humans can be fooled by confident wrong answers.",
+    "vi": "Đánh giá bởi người chấm trải nghiệm, độ liên quan, sáng tạo, nhưng người có thể bị đánh lừa bởi câu sai nghe tự tin."
+   },
+   {
+    "en": "Benchmark datasets compare model output with expert ideal answers, measuring accuracy, speed, scalability and retrieval relevance.",
+    "vi": "Benchmark dataset so output với đáp án lý tưởng của chuyên gia, đo accuracy, tốc độ, khả năng mở rộng và độ liên quan khi retrieval."
+   },
+   {
+    "en": "Benchmark leakage: if test prompts enter the training data, the exam becomes open book.",
+    "vi": "Rò rỉ benchmark: nếu prompt test lọt vào dữ liệu train, bài thi thành open book."
+   },
+   {
+    "en": "LLM-as-a-judge uses a trusted, stronger model to score relevance, accuracy or completeness, best for small models.",
+    "vi": "LLM-as-a-judge dùng model mạnh đáng tin để chấm relevance, accuracy, completeness, hợp nhất cho model nhỏ."
+   },
+   {
+    "en": "Hybrid human plus automated evaluation reveals when the two disagree.",
+    "vi": "Kết hợp người và tự động giúp lộ ra khi hai bên không đồng ý."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock Evaluations",
+    "use": {
+     "en": "Run human, benchmark and LLM-judge evaluations.",
+     "vi": "Chạy đánh giá bằng người, benchmark và LLM judge."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Coding models are often tested on interview-style exercises such as LeetCode, which may already be in their training data.",
+   "vi": "Model code thường được test bằng bài tập kiểu phỏng vấn như LeetCode, vốn có thể đã nằm trong dữ liệu train."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Test prompts\"] --> B[\"Your model\"]\n  B --> C[\"Generated responses\"]\n  C --> D[\"Evaluator or judge model\"]\n  E[\"Ideal responses\"] --> D\n  D --> F[\"Scores\"]",
+   "vi": "flowchart LR\n  A[\"Prompt test\"] --> B[\"Model của bạn\"]\n  B --> C[\"Response sinh ra\"]\n  C --> D[\"Evaluator hoặc judge model\"]\n  E[\"Response lý tưởng\"] --> D\n  D --> F[\"Điểm số\"]"
+  }
+ },
+ "08-044": {
+  "tldr": {
+   "en": "ROUGE (summarization) and BLEU (translation) count n-gram overlap with a reference; BERTScore compares embedding meaning and tolerates paraphrase.",
+   "vi": "ROUGE (tóm tắt) và BLEU (dịch) đếm n-gram trùng với bản tham chiếu; BERTScore so sánh ý nghĩa qua embedding và chịu được diễn đạt lại."
+  },
+  "points": [
+   {
+    "en": "ROUGE measures overlapping units with a reference; used for summarization and translation.",
+    "vi": "ROUGE đo đơn vị trùng với bản tham chiếu; dùng cho tóm tắt và dịch."
+   },
+   {
+    "en": "ROUGE-1 uses single words, ROUGE-2 word pairs, ROUGE-L the longest common subsequence (word order).",
+    "vi": "ROUGE-1 dùng từ đơn, ROUGE-2 cặp từ, ROUGE-L dãy con chung dài nhất (thứ tự từ)."
+   },
+   {
+    "en": "BLEU is for machine translation, focuses on precision, works per sentence and has a brevity penalty.",
+    "vi": "BLEU dùng cho dịch máy, tập trung precision, tính theo câu và có brevity penalty."
+   },
+   {
+    "en": "BERTScore compares embedding vectors for semantic similarity, so synonyms and paraphrases score well.",
+    "vi": "BERTScore so sánh embedding vector về độ giống ngữ nghĩa, nên từ đồng nghĩa và diễn đạt lại vẫn được điểm cao."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock Model Evaluation",
+    "use": {
+     "en": "Computes automatic metrics such as these.",
+     "vi": "Tính các metric tự động như thế này."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "In the lecture's example, certified ML practitioner vs certified AI practitioner scores 2/3 on ROUGE-1 but 0 on ROUGE-2.",
+   "vi": "Trong ví dụ của bài, certified ML practitioner so với certified AI practitioner được 2/3 ở ROUGE-1 nhưng 0 ở ROUGE-2."
+  },
+  "diagram": {
+   "en": "flowchart TD\n  A[\"LLM output vs reference\"] --> B[\"ROUGE: n-gram overlap, summarization\"]\n  A --> C[\"BLEU: precision, translation\"]\n  A --> D[\"BERTScore: embedding similarity\"]",
+   "vi": "flowchart TD\n  A[\"Output LLM so với tham chiếu\"] --> B[\"ROUGE: n-gram trùng, tóm tắt\"]\n  A --> C[\"BLEU: precision, dịch\"]\n  A --> D[\"BERTScore: độ giống embedding\"]"
+  }
+ },
+ "08-045": {
+  "tldr": {
+   "en": "Bedrock Model Evaluations run automatic jobs with built-in datasets and metrics, human evaluation, LLM-as-a-judge, and RAG evaluation (retrieve-only or retrieve-and-generate).",
+   "vi": "Bedrock Model Evaluations chạy job tự động với dataset và metric có sẵn, đánh giá bởi người, LLM-as-a-judge và RAG evaluation (retrieve-only hoặc retrieve-and-generate)."
+  },
+  "points": [
+   {
+    "en": "Automatic evaluation covers text classification, summarization, Q&A with metrics like accuracy, robustness, toxicity and BERTScore.",
+    "vi": "Đánh giá tự động bao gồm phân loại text, tóm tắt, Q&A với metric như accuracy, robustness, toxicity, BERTScore."
+   },
+   {
+    "en": "Human evaluation pits two models or variants against each other, using your Cognito work team or AWS managed reviewers.",
+    "vi": "Đánh giá bởi người cho hai model hoặc biến thể đối đầu nhau, dùng work team Cognito của bạn hoặc reviewer do AWS quản lý."
+   },
+   {
+    "en": "LLM-as-a-judge uses an evaluator model to score a generator model's responses to your prompt dataset.",
+    "vi": "LLM-as-a-judge dùng evaluator model chấm response của generator model trên prompt dataset của bạn."
+   },
+   {
+    "en": "RAG evaluation: retrieve-only checks relevance and coverage; retrieve-and-generate checks correctness, completeness, helpfulness, coherence.",
+    "vi": "RAG evaluation: retrieve-only kiểm tra relevance và coverage; retrieve-and-generate kiểm tra correctness, completeness, helpfulness, coherence."
+   },
+   {
+    "en": "RAG jobs need a prompt dataset in S3 in JSON Lines format; you can add custom metrics via a judge prompt.",
+    "vi": "Job RAG cần prompt dataset trên S3 ở định dạng JSON Lines; có thể thêm custom metric bằng prompt cho judge."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Bedrock Model Evaluations",
+    "use": {
+     "en": "Automatic, human, LLM-judge and RAG evaluation jobs.",
+     "vi": "Job đánh giá tự động, bởi người, LLM judge và RAG."
+    }
+   },
+   {
+    "name": "Amazon S3",
+    "use": {
+     "en": "Holds the JSON Lines prompt dataset.",
+     "vi": "Chứa prompt dataset JSON Lines."
+    }
+   },
+   {
+    "name": "Amazon Cognito",
+    "use": {
+     "en": "Work team for human evaluators.",
+     "vi": "Work team cho người đánh giá."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Prompt dataset JSONL in S3\"] --> B[\"Model or RAG system\"]\n  B --> C[\"Responses\"]\n  C --> D[\"Judge: LLM or human\"]\n  D --> E[\"Metrics report\"]",
+   "vi": "flowchart LR\n  A[\"Prompt dataset JSONL trên S3\"] --> B[\"Model hoặc hệ RAG\"]\n  B --> C[\"Response\"]\n  C --> D[\"Judge: LLM hoặc người\"]\n  D --> E[\"Báo cáo metric\"]"
+  }
+ },
+ "08-046": {
+  "tldr": {
+   "en": "Validate GenAI deployments with synthetic user workflows and AI-specific output checks (hallucination rate, drift, faithfulness), since exact-output unit tests do not work.",
+   "vi": "Xác thực deployment GenAI bằng synthetic user workflow và kiểm tra output riêng cho AI (hallucination rate, drift, faithfulness), vì unit test kiểu output chính xác không dùng được."
+  },
+  "points": [
+   {
+    "en": "Unit tests fail for GenAI because outputs are non-deterministic and models change.",
+    "vi": "Unit test không hợp với GenAI vì output không xác định và model thay đổi."
+   },
+   {
+    "en": "Synthetic user workflows simulate end-to-end usage before and after deployment and continuously.",
+    "vi": "Synthetic user workflow mô phỏng việc dùng end-to-end trước và sau deployment và liên tục."
+   },
+   {
+    "en": "Tools: CloudWatch Synthetics canaries, or Step Functions plus EventBridge plus Lambda; analyze with S3, Athena, QuickSight.",
+    "vi": "Công cụ: CloudWatch Synthetics canary, hoặc Step Functions cộng EventBridge cộng Lambda; phân tích bằng S3, Athena, QuickSight."
+   },
+   {
+    "en": "Check hallucination rate against ground truth, plus semantic drift, faithfulness and compliance.",
+    "vi": "Kiểm tra hallucination rate với ground truth, cùng semantic drift, faithfulness và compliance."
+   },
+   {
+    "en": "Check consistency with a judge model or semantic similarity within a tuned threshold.",
+    "vi": "Kiểm tra tính nhất quán bằng judge model hoặc semantic similarity trong ngưỡng đã tinh chỉnh."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon CloudWatch Synthetics (canaries)",
+    "use": {
+     "en": "Simulate user workflows for deployment validation.",
+     "vi": "Mô phỏng workflow người dùng để xác thực deployment."
+    }
+   },
+   {
+    "name": "AWS Step Functions",
+    "use": {
+     "en": "Orchestrate custom validation workflows.",
+     "vi": "Điều phối workflow xác thực tùy chỉnh."
+    }
+   },
+   {
+    "name": "Amazon EventBridge",
+    "use": {
+     "en": "Triggers validation runs.",
+     "vi": "Kích hoạt các lần chạy xác thực."
+    }
+   },
+   {
+    "name": "AWS Lambda",
+    "use": {
+     "en": "Runs validation logic at each step.",
+     "vi": "Chạy logic xác thực ở mỗi bước."
+    }
+   },
+   {
+    "name": "Amazon Athena and QuickSight",
+    "use": {
+     "en": "Analyze and visualize validation results.",
+     "vi": "Phân tích và trực quan hóa kết quả xác thực."
+    }
+   },
+   {
+    "name": "Amazon Bedrock Model Evaluations",
+    "use": {
+     "en": "Built-in hallucination and faithfulness checks.",
+     "vi": "Kiểm tra hallucination và faithfulness có sẵn."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"EventBridge trigger\"] --> B[\"Step Functions workflow\"]\n  B --> C[\"Lambda: test prompts\"]\n  C --> D[\"GenAI app\"]\n  D --> E[\"Judge or similarity check\"]\n  E --> F[\"S3 then Athena then QuickSight\"]",
+   "vi": "flowchart LR\n  A[\"EventBridge kích hoạt\"] --> B[\"Workflow Step Functions\"]\n  B --> C[\"Lambda: prompt test\"]\n  C --> D[\"Ứng dụng GenAI\"]\n  D --> E[\"Judge hoặc kiểm tra similarity\"]\n  E --> F[\"S3 rồi Athena rồi QuickSight\"]"
+  }
+ }
+}

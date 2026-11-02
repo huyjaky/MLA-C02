@@ -1,0 +1,987 @@
+{
+ "10-002": {
+  "tldr": {
+   "en": "Give identities only the permissions needed for their task, and lock down broad dev-time permissions once the workload is known.",
+   "vi": "Chỉ cấp đúng quyền cần thiết cho tác vụ, và siết lại các quyền rộng dùng lúc phát triển khi đã biết workload cần gì."
+  },
+  "points": [
+   {
+    "en": "Least privilege: grant only the permissions required to perform a given task, nothing extra.",
+    "vi": "Least privilege: chỉ cấp quyền cần để thực hiện tác vụ, không thừa."
+   },
+   {
+    "en": "Broad permissions are fine while developing, but lock them down once you know what the system needs.",
+    "vi": "Quyền rộng chấp nhận được khi đang phát triển, nhưng phải siết lại khi đã biết hệ thống cần gì."
+   },
+   {
+    "en": "Example IAM policy: allow ListBucket only on one bucket prefix and GetObject only on .csv files under it.",
+    "vi": "Ví dụ IAM policy: chỉ cho ListBucket trên một prefix và GetObject chỉ với file .csv bên dưới."
+   },
+   {
+    "en": "IAM Access Analyzer generates least-privilege policies from observed access activity.",
+    "vi": "IAM Access Analyzer tạo policy least privilege từ hoạt động truy cập thực tế."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS IAM",
+    "use": {
+     "en": "Defines who can do what; write narrow policies scoped to resources.",
+     "vi": "Định nghĩa ai được làm gì; viết policy hẹp theo từng resource."
+    }
+   },
+   {
+    "name": "IAM Access Analyzer",
+    "use": {
+     "en": "Auto-generates least-privilege policies from observed activity.",
+     "vi": "Tự sinh policy least privilege từ hoạt động quan sát được."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Develop with broad permissions\"] --> B[\"Test the workload\"]\n  B --> C[\"IAM Access Analyzer reads activity\"]\n  C --> D[\"Generate least privilege policy\"]\n  D --> E[\"Lock down permissions\"]",
+   "vi": "flowchart LR\n  A[\"Phát triển với quyền rộng\"] --> B[\"Test workload\"]\n  B --> C[\"IAM Access Analyzer đọc hoạt động\"]\n  C --> D[\"Sinh policy least privilege\"]\n  D --> E[\"Siết lại quyền\"]"
+  }
+ },
+ "10-003": {
+  "tldr": {
+   "en": "SageMaker security basics: IAM, MFA, TLS, CloudTrail, plus KMS encryption at rest and TLS in transit, including optional inter-container encryption.",
+   "vi": "Bảo mật SageMaker cơ bản: IAM, MFA, TLS, CloudTrail, cùng mã hóa KMS at rest và TLS in transit, gồm cả mã hóa inter-container tùy chọn."
+  },
+  "points": [
+   {
+    "en": "Use IAM with least privilege, MFA for root and admins, and SSL/TLS for all connections.",
+    "vi": "Dùng IAM với least privilege, MFA cho root và admin, và SSL/TLS cho mọi kết nối."
+   },
+   {
+    "en": "CloudTrail is for auditing who did what; CloudWatch is for monitoring logs and alarms. A favorite exam question.",
+    "vi": "CloudTrail để audit ai làm gì; CloudWatch để monitor log và alarm. Câu hỏi thi rất hay gặp."
+   },
+   {
+    "en": "At rest: notebooks and jobs accept a KMS key for training, tuning, batch transform and endpoint artifacts, plus /opt/ml and /tmp.",
+    "vi": "At rest: notebook và job nhận KMS key cho artifact của training, tuning, batch transform, endpoint, cùng /opt/ml và /tmp."
+   },
+   {
+    "en": "Training data and models in S3 use standard S3 encryption; all SageMaker traffic supports TLS.",
+    "vi": "Dữ liệu training và model trong S3 dùng mã hóa S3 chuẩn; mọi traffic SageMaker hỗ trợ TLS."
+   },
+   {
+    "en": "Inter-container traffic encryption protects multi-node training but increases training time and cost.",
+    "vi": "Mã hóa inter-container traffic bảo vệ training đa node nhưng làm tăng thời gian và chi phí training."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS KMS",
+    "use": {
+     "en": "Provides keys to encrypt SageMaker notebooks, jobs and artifacts at rest.",
+     "vi": "Cung cấp key để mã hóa notebook, job, artifact của SageMaker at rest."
+    }
+   },
+   {
+    "name": "AWS CloudTrail",
+    "use": {
+     "en": "Audit trail of API and user activity.",
+     "vi": "Audit trail cho API và hoạt động người dùng."
+    }
+   },
+   {
+    "name": "Amazon CloudWatch",
+    "use": {
+     "en": "Monitoring, logs and alarms.",
+     "vi": "Monitoring, log và alarm."
+    }
+   },
+   {
+    "name": "Amazon S3",
+    "use": {
+     "en": "Encrypted storage for training data and model artifacts.",
+     "vi": "Lưu trữ mã hóa cho dữ liệu training và model artifact."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Encrypting traffic between training nodes can lengthen training, and the lecture notes that time is money for distributed deep learning.",
+   "vi": "Mã hóa traffic giữa các node training có thể kéo dài thời gian training; bài giảng nhấn mạnh thời gian là tiền với deep learning phân tán."
+  }
+ },
+ "10-004": {
+  "tldr": {
+   "en": "Private VPC training needs S3 VPC endpoints; disabling notebook internet or enabling network isolation requires PrivateLink or NAT. IAM controls SageMaker actions; CloudWatch and CloudTrail handle monitoring and audit.",
+   "vi": "Training trong private VPC cần S3 VPC endpoint; tắt internet cho notebook hoặc bật network isolation cần PrivateLink hoặc NAT. IAM kiểm soát hành động SageMaker; CloudWatch và CloudTrail lo monitoring và audit."
+  },
+  "points": [
+   {
+    "en": "Training in a private VPC still needs S3 access, so create S3 VPC endpoints.",
+    "vi": "Training trong private VPC vẫn cần truy cập S3, nên phải tạo S3 VPC endpoint."
+   },
+   {
+    "en": "Notebooks are internet-enabled by default; if disabled, use an interface endpoint (PrivateLink) or NAT gateway for training and hosting.",
+    "vi": "Notebook mặc định có internet; nếu tắt, dùng interface endpoint (PrivateLink) hoặc NAT gateway cho training và hosting."
+   },
+   {
+    "en": "Training and inference containers are internet-enabled by default; network isolation blocks S3 access too.",
+    "vi": "Container training và inference mặc định có internet; network isolation cũng chặn luôn truy cập S3."
+   },
+   {
+    "en": "IAM can limit who creates training jobs, models, endpoints, tuning jobs and notebooks; predefined policies exist.",
+    "vi": "IAM giới hạn ai được tạo training job, model, endpoint, tuning job, notebook; có sẵn các policy định nghĩa trước."
+   },
+   {
+    "en": "CloudWatch monitors endpoint invocations, latency, CPU and memory, even Ground Truth workers; CloudTrail logs go to S3.",
+    "vi": "CloudWatch giám sát invocation, latency, CPU, memory của endpoint, cả worker Ground Truth; log CloudTrail đưa vào S3."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon SageMaker",
+    "use": {
+     "en": "Managed ML platform; secure via VPC, IAM and encryption.",
+     "vi": "Nền tảng ML managed; bảo mật qua VPC, IAM và mã hóa."
+    }
+   },
+   {
+    "name": "VPC endpoints / PrivateLink",
+    "use": {
+     "en": "Private connectivity from a VPC to S3 and other services.",
+     "vi": "Kết nối riêng từ VPC tới S3 và dịch vụ khác."
+    }
+   },
+   {
+    "name": "NAT gateway",
+    "use": {
+     "en": "Outbound internet from private subnets when notebooks have no direct internet.",
+     "vi": "Ra internet từ private subnet khi notebook không có internet trực tiếp."
+    }
+   },
+   {
+    "name": "Amazon CloudWatch",
+    "use": {
+     "en": "Monitor endpoint invocations, latency and node health.",
+     "vi": "Giám sát invocation, latency và sức khỏe node của endpoint."
+    }
+   },
+   {
+    "name": "AWS CloudTrail",
+    "use": {
+     "en": "Audit SageMaker actions; logs delivered to S3.",
+     "vi": "Audit hành động SageMaker; log gửi về S3."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "CloudWatch can monitor humans too: it tracks how many Ground Truth workers are active and how much labeling they do.",
+   "vi": "CloudWatch cũng giám sát được con người: nó theo dõi số worker Ground Truth đang hoạt động và lượng việc gán nhãn họ làm."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"SageMaker training in private VPC\"] --> B[\"S3 VPC endpoint\"]\n  B --> C[\"Amazon S3 data and model artifacts\"]\n  D[\"Notebook with no internet\"] --> E[\"PrivateLink or NAT gateway\"]\n  E --> F[\"Training and hosting outbound access\"]",
+   "vi": "flowchart LR\n  A[\"SageMaker training trong private VPC\"] --> B[\"S3 VPC endpoint\"]\n  B --> C[\"Amazon S3 dữ liệu và model artifact\"]\n  D[\"Notebook không có internet\"] --> E[\"PrivateLink hoặc NAT gateway\"]\n  E --> F[\"Truy cập outbound cho training và hosting\"]"
+  }
+ },
+ "10-005": {
+  "tldr": {
+   "en": "IAM is a global service for users, groups and policies. Never use root for daily work; grant least privilege through JSON policies.",
+   "vi": "IAM là dịch vụ global quản lý user, group và policy. Không dùng root hằng ngày; cấp least privilege qua policy JSON."
+  },
+  "points": [
+   {
+    "en": "IAM is global; the root user is only for initial account setup, never shared or used daily.",
+    "vi": "IAM là global; root user chỉ dùng để thiết lập ban đầu, không chia sẻ hay dùng hằng ngày."
+   },
+   {
+    "en": "One IAM user represents one person; groups contain only users, not other groups.",
+    "vi": "Một IAM user đại diện một người; group chỉ chứa user, không chứa group khác."
+   },
+   {
+    "en": "A user can belong to multiple groups, or to none (not best practice).",
+    "vi": "Một user có thể thuộc nhiều group, hoặc không group nào (không phải best practice)."
+   },
+   {
+    "en": "Users and groups get permissions via JSON IAM policies; apply least privilege.",
+    "vi": "User và group nhận quyền qua IAM policy JSON; áp dụng least privilege."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS IAM",
+    "use": {
+     "en": "Global identity and access service for users, groups, roles and policies.",
+     "vi": "Dịch vụ danh tính và truy cập global cho user, group, role và policy."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Developers group\"] --> B[\"Alice\"]\n  A --> C[\"Bob\"]\n  A --> D[\"Charles\"]\n  E[\"Audit group\"] --> D\n  E --> F[\"David\"]\n  G[\"IAM policy JSON\"] --> A\n  G --> E",
+   "vi": "flowchart TD\n  A[\"Group Developers\"] --> B[\"Alice\"]\n  A --> C[\"Bob\"]\n  A --> D[\"Charles\"]\n  E[\"Group Audit\"] --> D\n  E --> F[\"David\"]\n  G[\"IAM policy JSON\"] --> A\n  G --> E"
+  }
+ },
+ "10-006": {
+  "tldr": {
+   "en": "Hands-on: create an admin IAM user in an admin group with AdministratorAccess, set an account alias, and sign in as that user instead of root.",
+   "vi": "Thực hành: tạo IAM user admin trong group admin với AdministratorAccess, đặt account alias và đăng nhập bằng user đó thay vì root."
+  },
+  "points": [
+   {
+    "en": "IAM has no region selector because it is a global service.",
+    "vi": "IAM không có chọn region vì là dịch vụ global."
+   },
+   {
+    "en": "Create an admin user and put it in a group with AdministratorAccess instead of using root.",
+    "vi": "Tạo user admin và cho vào group có AdministratorAccess thay vì dùng root."
+   },
+   {
+    "en": "A user inherits permissions from its group, which makes managing permissions simpler.",
+    "vi": "User kế thừa quyền từ group, giúp quản lý quyền đơn giản hơn."
+   },
+   {
+    "en": "An account alias customizes the sign-in URL and must be globally unique.",
+    "vi": "Account alias tùy biến sign-in URL và phải là duy nhất toàn cầu."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS IAM",
+    "use": {
+     "en": "Create users, groups and attach managed policies.",
+     "vi": "Tạo user, group và gắn managed policy."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "A private browser window lets you stay signed in as root and as an IAM user side by side.",
+   "vi": "Cửa sổ ẩn danh cho phép đăng nhập root và IAM user cùng lúc, song song."
+  }
+ },
+ "10-007": {
+  "tldr": {
+   "en": "Multi-session support lets you sign in to several AWS accounts or roles at once in the same browser.",
+   "vi": "Multi-session support cho phép đăng nhập nhiều tài khoản hoặc role AWS cùng lúc trong một trình duyệt."
+  },
+  "points": [
+   {
+    "en": "Turn on multi-session, then add a session to sign into another identity in the same browser.",
+    "vi": "Bật multi-session, rồi thêm session để đăng nhập danh tính khác trong cùng trình duyệt."
+   },
+   {
+    "en": "Each session has its own account ID and sees its own resources (e.g., EBS volumes differ).",
+    "vi": "Mỗi session có account ID riêng và thấy resource riêng (ví dụ EBS volume khác nhau)."
+   },
+   {
+    "en": "Helpful when using AWS at scale across multiple accounts.",
+    "vi": "Hữu ích khi dùng AWS quy mô lớn với nhiều account."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS Management Console",
+    "use": {
+     "en": "Multi-session sign-in to multiple accounts in one browser.",
+     "vi": "Đăng nhập multi-session nhiều account trong một trình duyệt."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "The instructor, with over 10 years on AWS, calls this feature a little revolution.",
+   "vi": "Giảng viên, hơn 10 năm dùng AWS, gọi tính năng này là một cuộc cách mạng nhỏ."
+  }
+ },
+ "10-008": {
+  "tldr": {
+   "en": "IAM policies attach to groups or users (inline) and are JSON documents with Version, Statement, Effect, Principal, Action, Resource and optional Condition.",
+   "vi": "IAM policy gắn vào group hoặc user (inline) và là tài liệu JSON gồm Version, Statement, Effect, Principal, Action, Resource và Condition tùy chọn."
+  },
+  "points": [
+   {
+    "en": "A group policy is inherited by every member; users can also get inline policies and inherit from multiple groups.",
+    "vi": "Policy của group được mọi thành viên kế thừa; user còn có inline policy và kế thừa từ nhiều group."
+   },
+   {
+    "en": "Policy fields: Version (2012-10-17), optional Id, and one or more Statements with optional Sid.",
+    "vi": "Các trường policy: Version (2012-10-17), Id tùy chọn, và một hoặc nhiều Statement với Sid tùy chọn."
+   },
+   {
+    "en": "Effect is Allow or Deny; Principal is the account, user or role the policy applies to.",
+    "vi": "Effect là Allow hoặc Deny; Principal là account, user hoặc role mà policy áp dụng."
+   },
+   {
+    "en": "Action lists API calls, Resource lists targets, and Condition is optional. Know these for the exam.",
+    "vi": "Action liệt kê API call, Resource liệt kê đối tượng, Condition là tùy chọn. Cần nắm cho kỳ thi."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS IAM",
+    "use": {
+     "en": "Policies define allowed or denied actions on resources.",
+     "vi": "Policy định nghĩa hành động được phép hoặc bị từ chối trên resource."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart TD\n  A[\"IAM policy\"] --> B[\"Version\"]\n  A --> C[\"Statement\"]\n  C --> D[\"Effect Allow or Deny\"]\n  C --> E[\"Principal\"]\n  C --> F[\"Action\"]\n  C --> G[\"Resource\"]\n  C --> H[\"Condition optional\"]",
+   "vi": "flowchart TD\n  A[\"IAM policy\"] --> B[\"Version\"]\n  A --> C[\"Statement\"]\n  C --> D[\"Effect Allow hoặc Deny\"]\n  C --> E[\"Principal\"]\n  C --> F[\"Action\"]\n  C --> G[\"Resource\"]\n  C --> H[\"Condition tùy chọn\"]"
+  }
+ },
+ "10-009": {
+  "tldr": {
+   "en": "Hands-on: removing a user from a group removes its permissions; permissions can come from groups or be attached directly, and read-only access cannot create anything.",
+   "vi": "Thực hành: xóa user khỏi group sẽ mất quyền; quyền có thể đến từ group hoặc gắn trực tiếp, và read-only không thể tạo gì."
+  },
+  "points": [
+   {
+    "en": "Removing the user from the admin group caused access denied on iam:ListUsers.",
+    "vi": "Xóa user khỏi group admin gây access denied với iam:ListUsers."
+   },
+   {
+    "en": "IAMReadOnlyAccess lets you view users and groups but not create a group.",
+    "vi": "IAMReadOnlyAccess cho xem user và group nhưng không tạo được group."
+   },
+   {
+    "en": "A user's effective permissions combine group-inherited and directly attached policies.",
+    "vi": "Quyền hiệu lực của user là tổng hợp policy kế thừa từ group và policy gắn trực tiếp."
+   },
+   {
+    "en": "AdministratorAccess is Allow, Action star, Resource star; Get* and List* wildcards cover read operations.",
+    "vi": "AdministratorAccess là Allow, Action star, Resource star; wildcard Get* và List* bao các thao tác đọc."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS IAM",
+    "use": {
+     "en": "Managed policies like AdministratorAccess and IAMReadOnlyAccess; inline policies.",
+     "vi": "Managed policy như AdministratorAccess và IAMReadOnlyAccess; inline policy."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Star in an IAM policy means anything, so Action star on Resource star is exactly administrator access.",
+   "vi": "Dấu sao trong IAM policy nghĩa là bất cứ thứ gì, nên Action star trên Resource star chính là quyền administrator."
+  }
+ },
+ "10-010": {
+  "tldr": {
+   "en": "Protect IAM users with a password policy and MFA (password you know plus a device you own); know the MFA device options.",
+   "vi": "Bảo vệ IAM user bằng password policy và MFA (mật khẩu bạn biết cộng thiết bị bạn sở hữu); cần biết các loại thiết bị MFA."
+  },
+  "points": [
+   {
+    "en": "Password policy: minimum length, required character types, expiration, own-password changes and reuse prevention.",
+    "vi": "Password policy: độ dài tối thiểu, loại ký tự bắt buộc, hết hạn, tự đổi mật khẩu và chống dùng lại."
+   },
+   {
+    "en": "MFA combines something you know with something you own, so a stolen password alone is not enough.",
+    "vi": "MFA kết hợp thứ bạn biết với thứ bạn sở hữu, nên mật khẩu bị lộ vẫn chưa đủ."
+   },
+   {
+    "en": "Virtual MFA: Google Authenticator (one phone) or Authy (multiple tokens on one device).",
+    "vi": "Virtual MFA: Google Authenticator (một điện thoại) hoặc Authy (nhiều token trên một thiết bị)."
+   },
+   {
+    "en": "U2F security key such as YubiKey: physical, one key supports multiple root and IAM users.",
+    "vi": "U2F security key như YubiKey: thiết bị vật lý, một key hỗ trợ nhiều root và IAM user."
+   },
+   {
+    "en": "Hardware key fob (Gemalto) and a special key fob from SurePassID for AWS GovCloud US.",
+    "vi": "Hardware key fob (Gemalto) và key fob đặc biệt của SurePassID cho AWS GovCloud US."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS IAM",
+    "use": {
+     "en": "Password policy and MFA enforcement for users and root.",
+     "vi": "Password policy và MFA cho user và root."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Password you know\"] --> C[\"Successful login\"]\n  B[\"MFA device you own\"] --> C\n  B --> D[\"Virtual MFA\"]\n  B --> E[\"U2F key YubiKey\"]\n  B --> F[\"Hardware key fob\"]",
+   "vi": "flowchart LR\n  A[\"Mật khẩu bạn biết\"] --> C[\"Đăng nhập thành công\"]\n  B[\"Thiết bị MFA bạn sở hữu\"] --> C\n  B --> D[\"Virtual MFA\"]\n  B --> E[\"U2F key YubiKey\"]\n  B --> F[\"Hardware key fob\"]"
+  }
+ },
+ "10-011": {
+  "tldr": {
+   "en": "Hands-on: edit the account password policy and enable an authenticator-app MFA device on the root account.",
+   "vi": "Thực hành: chỉnh password policy của account và bật MFA bằng app authenticator cho root account."
+  },
+  "points": [
+   {
+    "en": "Password policy lives under account settings: length, character types, 90-day expiry, reuse prevention.",
+    "vi": "Password policy nằm trong account settings: độ dài, loại ký tự, hết hạn 90 ngày, chống dùng lại."
+   },
+   {
+    "en": "Protect the root user with MFA via Security Credentials.",
+    "vi": "Bảo vệ root user bằng MFA qua Security Credentials."
+   },
+   {
+    "en": "MFA types offered: authenticator app, security key, hardware TOTP token.",
+    "vi": "Các loại MFA: authenticator app, security key, hardware TOTP token."
+   },
+   {
+    "en": "Setup: scan the QR code, then enter two consecutive codes.",
+    "vi": "Thiết lập: quét mã QR rồi nhập hai mã liên tiếp."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS IAM",
+    "use": {
+     "en": "Password policy and MFA device registration.",
+     "vi": "Password policy và đăng ký thiết bị MFA."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Some students have locked themselves out of their accounts by losing their MFA device.",
+   "vi": "Một số học viên đã tự khóa tài khoản vì làm mất thiết bị MFA."
+  }
+ },
+ "10-012": {
+  "tldr": {
+   "en": "IAM roles give permissions to AWS services (not people) so they can act on your behalf.",
+   "vi": "IAM role cấp quyền cho dịch vụ AWS (không phải con người) để chúng hành động thay bạn."
+  },
+  "points": [
+   {
+    "en": "A role is like a user but intended for AWS services, not physical people.",
+    "vi": "Role giống user nhưng dành cho dịch vụ AWS, không phải người."
+   },
+   {
+    "en": "An EC2 instance uses its attached IAM role to call AWS APIs.",
+    "vi": "EC2 instance dùng IAM role được gắn để gọi AWS API."
+   },
+   {
+    "en": "Common roles: EC2 instance roles, Lambda function roles, CloudFormation roles.",
+    "vi": "Role phổ biến: EC2 instance role, Lambda function role, CloudFormation role."
+   }
+  ],
+  "services": [
+   {
+    "name": "IAM roles",
+    "use": {
+     "en": "Give AWS services permissions to call other AWS services.",
+     "vi": "Cấp quyền cho dịch vụ AWS gọi các dịch vụ AWS khác."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"EC2 instance\"] --> B[\"IAM role\"]\n  B --> C[\"Policy permissions\"]\n  C --> D[\"AWS API call allowed\"]",
+   "vi": "flowchart LR\n  A[\"EC2 instance\"] --> B[\"IAM role\"]\n  B --> C[\"Quyền từ policy\"]\n  C --> D[\"AWS API call được phép\"]"
+  }
+ },
+ "10-013": {
+  "tldr": {
+   "en": "Hands-on: create an IAM role for an AWS service (EC2) with the IAMReadOnlyAccess policy and a trusted entity.",
+   "vi": "Thực hành: tạo IAM role cho dịch vụ AWS (EC2) với policy IAMReadOnlyAccess và trusted entity."
+  },
+  "points": [
+   {
+    "en": "Choose trusted entity type AWS service, then pick EC2 as the use case.",
+    "vi": "Chọn trusted entity là AWS service, rồi chọn EC2 làm use case."
+   },
+   {
+    "en": "Attach a permission policy, here IAMReadOnlyAccess.",
+    "vi": "Gắn permission policy, ở đây là IAMReadOnlyAccess."
+   },
+   {
+    "en": "The trusted entity defines which service can assume the role.",
+    "vi": "Trusted entity xác định dịch vụ nào được assume role."
+   }
+  ],
+  "services": [
+   {
+    "name": "IAM roles",
+    "use": {
+     "en": "Role for EC2 with attached permissions and trust policy.",
+     "vi": "Role cho EC2 với quyền gắn kèm và trust policy."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Trusted entity EC2 service\"] -->|\"assumes\"| B[\"DemoRoleForEC2\"]\n  C[\"IAMReadOnlyAccess policy\"] --> B",
+   "vi": "flowchart LR\n  A[\"Trusted entity dịch vụ EC2\"] -->|\"assume\"| B[\"DemoRoleForEC2\"]\n  C[\"Policy IAMReadOnlyAccess\"] --> B"
+  }
+ },
+ "10-014": {
+  "tldr": {
+   "en": "Three encryption models: in flight (TLS), server-side at rest, and client-side where the server can never decrypt.",
+   "vi": "Ba mô hình mã hóa: in flight (TLS), server-side at rest, và client-side nơi server không bao giờ giải mã được."
+  },
+  "points": [
+   {
+    "en": "In-flight encryption uses TLS/SSL (HTTPS) to stop man-in-the-middle attacks on the network.",
+    "vi": "Mã hóa in flight dùng TLS/SSL (HTTPS) để chống tấn công man-in-the-middle trên mạng."
+   },
+   {
+    "en": "Server-side encryption at rest: server encrypts after receiving and decrypts before sending, using a data key.",
+    "vi": "Server-side encryption at rest: server mã hóa sau khi nhận và giải mã trước khi gửi, dùng data key."
+   },
+   {
+    "en": "Client-side encryption: the client encrypts and decrypts; the server never sees plaintext or the key.",
+    "vi": "Client-side encryption: client mã hóa và giải mã; server không bao giờ thấy plaintext hay key."
+   },
+   {
+    "en": "Use client-side when you do not trust the server or storage service.",
+    "vi": "Dùng client-side khi không tin tưởng server hoặc dịch vụ lưu trữ."
+   }
+  ],
+  "services": [],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Client\"] -->|\"TLS in flight\"| B[\"Server\"]\n  B --> C[\"Encrypt with data key\"]\n  C --> D[\"Storage encrypted at rest\"]\n  E[\"Client encrypts locally\"] --> F[\"Storage holds ciphertext only\"]",
+   "vi": "flowchart LR\n  A[\"Client\"] -->|\"TLS in flight\"| B[\"Server\"]\n  B --> C[\"Mã hóa bằng data key\"]\n  C --> D[\"Storage mã hóa at rest\"]\n  E[\"Client mã hóa tại chỗ\"] --> F[\"Storage chỉ giữ ciphertext\"]"
+  }
+ },
+ "10-015": {
+  "tldr": {
+   "en": "AWS KMS manages encryption keys integrated with IAM and CloudTrail; know key types, rotation, regional scope and key policies.",
+   "vi": "AWS KMS quản lý khóa mã hóa, tích hợp IAM và CloudTrail; cần biết loại key, rotation, phạm vi region và key policy."
+  },
+  "points": [
+   {
+    "en": "KMS integrates with most services (EBS, S3, RDS, SSM) and every key API call is auditable in CloudTrail.",
+    "vi": "KMS tích hợp hầu hết dịch vụ (EBS, S3, RDS, SSM) và mọi API call dùng key đều audit được qua CloudTrail."
+   },
+   {
+    "en": "Symmetric keys use one key and you never see it; asymmetric keys have a public and private pair.",
+    "vi": "Symmetric key dùng một khóa và bạn không bao giờ thấy nó; asymmetric có cặp public và private."
+   },
+   {
+    "en": "AWS owned keys are free; AWS managed keys (aws/service) are free; customer managed keys cost $1 per month.",
+    "vi": "AWS owned key miễn phí; AWS managed key (aws/service) miễn phí; customer managed key $1 mỗi tháng."
+   },
+   {
+    "en": "KMS keys are regional: copying an encrypted snapshot to another region re-encrypts it with a different key.",
+    "vi": "KMS key theo region: copy snapshot mã hóa sang region khác sẽ mã hóa lại bằng key khác."
+   },
+   {
+    "en": "Key policies control access; cross-account sharing needs a customer managed key with a custom key policy.",
+    "vi": "Key policy kiểm soát truy cập; chia sẻ cross-account cần customer managed key với custom key policy."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS KMS",
+    "use": {
+     "en": "Managed encryption keys for AWS services; pick it for encryption at rest with auditable key use.",
+     "vi": "Quản lý khóa mã hóa cho dịch vụ AWS; chọn khi cần encryption at rest và audit việc dùng key."
+    }
+   },
+   {
+    "name": "AWS CloudTrail",
+    "use": {
+     "en": "Audits all KMS API calls.",
+     "vi": "Audit mọi API call của KMS."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "KMS keys used to be called customer master keys, renamed because it clashed with customer managed keys.",
+   "vi": "KMS key từng gọi là customer master key, được đổi tên vì dễ nhầm với customer managed key."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"EBS volume in region A\"] --> B[\"Snapshot with key A\"]\n  B --> C[\"Copy to region B\"]\n  C --> D[\"Re-encrypt with key B\"]\n  D --> E[\"Restore volume in region B\"]",
+   "vi": "flowchart LR\n  A[\"EBS volume ở region A\"] --> B[\"Snapshot với key A\"]\n  B --> C[\"Copy sang region B\"]\n  C --> D[\"Mã hóa lại bằng key B\"]\n  D --> E[\"Restore volume ở region B\"]"
+  }
+ },
+ "10-016": {
+  "tldr": {
+   "en": "Hands-on: create a symmetric single-region KMS key, review its key policy and rotation options, then use the CLI to encrypt and decrypt.",
+   "vi": "Thực hành: tạo symmetric KMS key single-region, xem key policy và tùy chọn rotation, rồi dùng CLI để encrypt và decrypt."
+  },
+  "points": [
+   {
+    "en": "The default key policy lets IAM permissions govern use; a custom policy restricts administrators and users.",
+    "vi": "Default key policy cho IAM permission quyết định việc dùng; custom policy giới hạn administrator và user."
+   },
+   {
+    "en": "Other AWS accounts can be added as key users, e.g. for sharing encrypted snapshots.",
+    "vi": "Có thể thêm account AWS khác làm key user, ví dụ để chia sẻ snapshot mã hóa."
+   },
+   {
+    "en": "Automatic rotation period is configurable from 90 to 2,560 days, plus on-demand rotation.",
+    "vi": "Chu kỳ automatic rotation cấu hình từ 90 đến 2.560 ngày, kèm on-demand rotation."
+   },
+   {
+    "en": "An alias gives a simpler reference to a key; keys can be disabled or scheduled for deletion.",
+    "vi": "Alias giúp tham chiếu key đơn giản hơn; key có thể disable hoặc lên lịch xóa."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS KMS",
+    "use": {
+     "en": "Create customer managed keys, rotate and alias them.",
+     "vi": "Tạo customer managed key, rotate và đặt alias."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Rotation can be set anywhere from 90 days up to 2,560 days.",
+   "vi": "Rotation có thể đặt từ 90 ngày đến tận 2.560 ngày."
+  }
+ },
+ "10-017": {
+  "tldr": {
+   "en": "Amazon Macie uses ML and pattern matching to find sensitive data such as PII in S3 and alerts you via EventBridge.",
+   "vi": "Amazon Macie dùng ML và pattern matching để tìm dữ liệu nhạy cảm như PII trong S3 và cảnh báo qua EventBridge."
+  },
+  "points": [
+   {
+    "en": "Macie is a fully managed data security and privacy service for discovering PII.",
+    "vi": "Macie là dịch vụ bảo mật và quyền riêng tư dữ liệu fully managed để phát hiện PII."
+   },
+   {
+    "en": "It analyzes S3 buckets you specify; it only finds sensitive data in S3.",
+    "vi": "Nó phân tích các S3 bucket bạn chỉ định; chỉ tìm dữ liệu nhạy cảm trong S3."
+   },
+   {
+    "en": "Findings go to EventBridge, then to SNS, Lambda and others.",
+    "vi": "Finding gửi tới EventBridge, rồi tới SNS, Lambda và các dịch vụ khác."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Macie",
+    "use": {
+     "en": "Pick it when asked to discover PII in S3.",
+     "vi": "Chọn khi đề yêu cầu phát hiện PII trong S3."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"S3 buckets\"] --> B[\"Amazon Macie\"]\n  B --> C[\"EventBridge\"]\n  C --> D[\"SNS topic\"]\n  C --> E[\"Lambda function\"]",
+   "vi": "flowchart LR\n  A[\"S3 bucket\"] --> B[\"Amazon Macie\"]\n  B --> C[\"EventBridge\"]\n  C --> D[\"SNS topic\"]\n  C --> E[\"Lambda function\"]"
+  }
+ },
+ "10-018": {
+  "tldr": {
+   "en": "Secrets Manager stores secrets with automatic rotation via Lambda, RDS and Aurora integration, KMS encryption and multi-region replication.",
+   "vi": "Secrets Manager lưu secret với automatic rotation qua Lambda, tích hợp RDS và Aurora, mã hóa KMS và replication multi-region."
+  },
+  "points": [
+   {
+    "en": "Secrets Manager forces rotation every X days and generates new secrets via a Lambda function.",
+    "vi": "Secrets Manager bắt buộc rotation mỗi X ngày và sinh secret mới qua Lambda function."
+   },
+   {
+    "en": "It integrates with RDS and Aurora, so database credentials are stored and rotated automatically.",
+    "vi": "Tích hợp RDS và Aurora nên credential database được lưu và rotate tự động."
+   },
+   {
+    "en": "Secrets are encrypted with KMS; on the exam, secrets plus RDS means think Secrets Manager.",
+    "vi": "Secret được mã hóa bằng KMS; trong đề thi, secret kèm RDS thì nghĩ tới Secrets Manager."
+   },
+   {
+    "en": "Multi-region secrets replicate to other regions for disaster recovery and multi-region apps.",
+    "vi": "Multi-region secret nhân bản sang region khác cho disaster recovery và ứng dụng multi-region."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS Secrets Manager",
+    "use": {
+     "en": "Store and auto-rotate secrets; choose over SSM Parameter Store when rotation is needed.",
+     "vi": "Lưu và tự rotate secret; chọn thay SSM Parameter Store khi cần rotation."
+    }
+   },
+   {
+    "name": "AWS KMS",
+    "use": {
+     "en": "Encrypts the stored secrets.",
+     "vi": "Mã hóa secret đã lưu."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Secrets Manager\"] -->|\"rotate every X days\"| B[\"Lambda rotation function\"]\n  B --> C[\"New secret\"]\n  C --> D[\"RDS or Aurora credentials\"]\n  A -->|\"replicate\"| E[\"Secret in second region\"]",
+   "vi": "flowchart LR\n  A[\"Secrets Manager\"] -->|\"rotate mỗi X ngày\"| B[\"Lambda rotation function\"]\n  B --> C[\"Secret mới\"]\n  C --> D[\"Credential RDS hoặc Aurora\"]\n  A -->|\"replicate\"| E[\"Secret ở region thứ hai\"]"
+  }
+ },
+ "10-019": {
+  "tldr": {
+   "en": "Hands-on: store a secret in Secrets Manager, optionally replicate it to another region and set a rotation Lambda; RDS credentials are a built-in secret type.",
+   "vi": "Thực hành: lưu secret trong Secrets Manager, tùy chọn replicate sang region khác và đặt Lambda rotation; credential RDS là loại secret có sẵn."
+  },
+  "points": [
+   {
+    "en": "You can create secrets as key-value pairs and replicate them to another region.",
+    "vi": "Có thể tạo secret dạng key-value và replicate sang region khác."
+   },
+   {
+    "en": "Enabling rotation requires specifying a rotation Lambda function.",
+    "vi": "Bật rotation cần chỉ định Lambda function rotation."
+   },
+   {
+    "en": "The console provides sample code to retrieve the secret in your application.",
+    "vi": "Console cung cấp code mẫu để lấy secret trong ứng dụng."
+   },
+   {
+    "en": "RDS credentials secrets keep the database password in sync when rotated.",
+    "vi": "Secret credential RDS giữ password database đồng bộ khi rotate."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS Secrets Manager",
+    "use": {
+     "en": "Store, replicate and rotate secrets and RDS credentials.",
+     "vi": "Lưu, replicate và rotate secret và credential RDS."
+    }
+   }
+  ]
+ },
+ "10-020": {
+  "tldr": {
+   "en": "A VPC is a regional private network split into per-AZ subnets; internet gateways make subnets public and NAT gateways give private subnets outbound access.",
+   "vi": "VPC là mạng riêng theo region chia thành subnet theo AZ; internet gateway làm subnet public còn NAT gateway cho private subnet ra internet một chiều."
+  },
+  "points": [
+   {
+    "en": "A VPC is regional; subnets are defined per Availability Zone and routed with route tables.",
+    "vi": "VPC theo region; subnet định nghĩa theo Availability Zone và định tuyến bằng route table."
+   },
+   {
+    "en": "Public subnets have a direct route to an internet gateway; private subnets are not reachable from the internet.",
+    "vi": "Public subnet có route trực tiếp tới internet gateway; private subnet không truy cập được từ internet."
+   },
+   {
+    "en": "NAT gateway (managed) or NAT instance (self-managed) in a public subnet lets private subnets reach the internet.",
+    "vi": "NAT gateway (managed) hoặc NAT instance (tự quản lý) trong public subnet cho private subnet ra internet."
+   },
+   {
+    "en": "The default VPC has one public subnet per AZ in every region.",
+    "vi": "Default VPC có một public subnet mỗi AZ trong mọi region."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon VPC",
+    "use": {
+     "en": "Private network for your resources, with public and private subnets.",
+     "vi": "Mạng riêng cho resource, với public và private subnet."
+    }
+   },
+   {
+    "name": "Internet gateway",
+    "use": {
+     "en": "Gives public subnets internet access.",
+     "vi": "Cho public subnet truy cập internet."
+    }
+   },
+   {
+    "name": "NAT gateway",
+    "use": {
+     "en": "Outbound-only internet for private subnets.",
+     "vi": "Chỉ cho private subnet ra internet một chiều."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Internet\"] <--> B[\"Internet gateway\"]\n  B <--> C[\"Public subnet\"]\n  C --> D[\"NAT gateway\"]\n  E[\"Private subnet\"] --> D",
+   "vi": "flowchart LR\n  A[\"Internet\"] <--> B[\"Internet gateway\"]\n  B <--> C[\"Public subnet\"]\n  C --> D[\"NAT gateway\"]\n  E[\"Private subnet\"] --> D"
+  }
+ },
+ "10-021": {
+  "tldr": {
+   "en": "NACLs are stateless subnet firewalls with allow and deny rules; security groups are stateful, instance-level, allow-only; VPC Flow Logs capture IP traffic.",
+   "vi": "NACL là firewall stateless cấp subnet có rule allow và deny; security group là stateful, cấp instance, chỉ allow; VPC Flow Logs ghi lại traffic IP."
+  },
+  "points": [
+   {
+    "en": "NACL works at subnet level with allow and deny rules, based on IP addresses; first line of defense.",
+    "vi": "NACL hoạt động cấp subnet với rule allow và deny, dựa trên IP; là lớp phòng thủ đầu tiên."
+   },
+   {
+    "en": "Security groups attach to an ENI or EC2 instance, allow rules only, and can reference other security groups.",
+    "vi": "Security group gắn vào ENI hoặc EC2 instance, chỉ có rule allow, và có thể tham chiếu security group khác."
+   },
+   {
+    "en": "Security groups are stateful (return traffic allowed); NACLs are stateless.",
+    "vi": "Security group là stateful (traffic trả về tự được phép); NACL là stateless."
+   },
+   {
+    "en": "VPC Flow Logs capture VPC, subnet and ENI traffic, including allowed and denied, for troubleshooting.",
+    "vi": "VPC Flow Logs ghi traffic VPC, subnet và ENI, gồm cả allowed và denied, để troubleshoot."
+   },
+   {
+    "en": "Flow logs can go to S3, CloudWatch Logs or Kinesis Data Firehose.",
+    "vi": "Flow log có thể gửi tới S3, CloudWatch Logs hoặc Kinesis Data Firehose."
+   }
+  ],
+  "services": [
+   {
+    "name": "Network ACL",
+    "use": {
+     "en": "Stateless subnet firewall with allow and deny rules.",
+     "vi": "Firewall stateless cấp subnet với rule allow và deny."
+    }
+   },
+   {
+    "name": "Security groups",
+    "use": {
+     "en": "Stateful instance firewall, allow rules only.",
+     "vi": "Firewall stateful cấp instance, chỉ rule allow."
+    }
+   },
+   {
+    "name": "VPC Flow Logs",
+    "use": {
+     "en": "Debug connectivity by logging accepted and rejected traffic.",
+     "vi": "Debug kết nối bằng cách log traffic accepted và rejected."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Internet traffic\"] --> B[\"NACL at subnet\"]\n  B --> C[\"Security group at ENI\"]\n  C --> D[\"EC2 instance\"]\n  B -.-> E[\"VPC Flow Logs\"]",
+   "vi": "flowchart LR\n  A[\"Traffic từ internet\"] --> B[\"NACL ở subnet\"]\n  B --> C[\"Security group ở ENI\"]\n  C --> D[\"EC2 instance\"]\n  B -.-> E[\"VPC Flow Logs\"]"
+  }
+ },
+ "10-022": {
+  "tldr": {
+   "en": "Connect VPCs with non-transitive peering, reach AWS services privately via VPC endpoints, and link on-premises with Site-to-Site VPN or Direct Connect.",
+   "vi": "Kết nối VPC bằng peering không bắc cầu, truy cập dịch vụ AWS riêng tư qua VPC endpoint, và nối on-premises bằng Site-to-Site VPN hoặc Direct Connect."
+  },
+  "points": [
+   {
+    "en": "VPC peering needs non-overlapping CIDR ranges and is not transitive; each pair needs its own connection.",
+    "vi": "VPC peering cần dải CIDR không chồng lấn và không bắc cầu; mỗi cặp cần connection riêng."
+   },
+   {
+    "en": "VPC endpoints give private access to AWS services; gateway endpoints cover only S3 and DynamoDB.",
+    "vi": "VPC endpoint cho truy cập riêng tới dịch vụ AWS; gateway endpoint chỉ cho S3 và DynamoDB."
+   },
+   {
+    "en": "Interface endpoints (ENI) cover most other services; private access to an AWS service means VPC endpoint.",
+    "vi": "Interface endpoint (ENI) cho các dịch vụ còn lại; truy cập riêng tới dịch vụ AWS nghĩa là VPC endpoint."
+   },
+   {
+    "en": "Site-to-Site VPN is encrypted over the public internet and quick to set up.",
+    "vi": "Site-to-Site VPN mã hóa qua internet public và thiết lập nhanh."
+   },
+   {
+    "en": "Direct Connect is a private physical line, secure and fast, but takes at least a month to establish.",
+    "vi": "Direct Connect là đường vật lý riêng, bảo mật và nhanh, nhưng mất ít nhất một tháng để thiết lập."
+   }
+  ],
+  "services": [
+   {
+    "name": "VPC peering",
+    "use": {
+     "en": "Connect two VPCs privately, non-transitive.",
+     "vi": "Nối hai VPC riêng tư, không bắc cầu."
+    }
+   },
+   {
+    "name": "VPC endpoints",
+    "use": {
+     "en": "Private access to AWS services without the internet.",
+     "vi": "Truy cập riêng tới dịch vụ AWS không qua internet."
+    }
+   },
+   {
+    "name": "Site-to-Site VPN",
+    "use": {
+     "en": "Quick encrypted link to on-premises over the internet.",
+     "vi": "Liên kết mã hóa nhanh tới on-premises qua internet."
+    }
+   },
+   {
+    "name": "AWS Direct Connect",
+    "use": {
+     "en": "Private dedicated connection to on-premises.",
+     "vi": "Kết nối riêng chuyên dụng tới on-premises."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Everything in AWS is public by default, so even your EC2 instances talk to AWS services publicly unless you use an endpoint.",
+   "vi": "Theo mặc định mọi dịch vụ AWS đều public, nên ngay cả EC2 cũng gọi dịch vụ AWS qua mạng public trừ khi dùng endpoint."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Private subnet EC2\"] --> B[\"Gateway endpoint\"]\n  B --> C[\"S3 and DynamoDB\"]\n  A --> D[\"Interface endpoint\"]\n  D --> E[\"CloudWatch and other services\"]",
+   "vi": "flowchart LR\n  A[\"EC2 trong private subnet\"] --> B[\"Gateway endpoint\"]\n  B --> C[\"S3 và DynamoDB\"]\n  A --> D[\"Interface endpoint\"]\n  D --> E[\"CloudWatch và dịch vụ khác\"]"
+  }
+ },
+ "10-023": {
+  "tldr": {
+   "en": "VPC recap: subnets per AZ, internet gateway for public access, NAT for private, NACL stateless vs security group stateful, peering, endpoints, flow logs, VPN and Direct Connect.",
+   "vi": "Tóm tắt VPC: subnet theo AZ, internet gateway cho public, NAT cho private, NACL stateless so với security group stateful, peering, endpoint, flow logs, VPN và Direct Connect."
+  },
+  "points": [
+   {
+    "en": "One default VPC per region; subnets are tied to an AZ; the internet gateway serves public subnets.",
+    "vi": "Mỗi region một default VPC; subnet gắn với một AZ; internet gateway phục vụ public subnet."
+   },
+   {
+    "en": "NAT gateways and instances give private subnets internet access; NACL is stateless, security group stateful.",
+    "vi": "NAT gateway và instance cho private subnet ra internet; NACL stateless, security group stateful."
+   },
+   {
+    "en": "Peering needs non-overlapping ranges and is non-transitive; endpoints give private access to AWS services.",
+    "vi": "Peering cần dải không chồng lấn và không bắc cầu; endpoint cho truy cập riêng tới dịch vụ AWS."
+   },
+   {
+    "en": "Flow Logs debug traffic; Site-to-Site VPN goes over the internet, Direct Connect is private.",
+    "vi": "Flow Logs để debug traffic; Site-to-Site VPN đi qua internet, Direct Connect là đường riêng."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon VPC",
+    "use": {
+     "en": "Core networking concepts for the exam.",
+     "vi": "Các khái niệm networking cốt lõi cho kỳ thi."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"VPC\"] --> B[\"Subnet per AZ\"]\n  A --> C[\"Internet gateway\"]\n  A --> D[\"NAT gateway\"]\n  A --> E[\"NACL stateless and SG stateful\"]\n  A --> F[\"Peering non transitive\"]\n  A --> G[\"VPC endpoints\"]\n  A --> H[\"VPN and Direct Connect\"]",
+   "vi": "flowchart LR\n  A[\"VPC\"] --> B[\"Subnet theo AZ\"]\n  A --> C[\"Internet gateway\"]\n  A --> D[\"NAT gateway\"]\n  A --> E[\"NACL stateless và SG stateful\"]\n  A --> F[\"Peering không bắc cầu\"]\n  A --> G[\"VPC endpoints\"]\n  A --> H[\"VPN và Direct Connect\"]"
+  }
+ },
+ "10-024": {
+  "tldr": {
+   "en": "AWS PrivateLink privately exposes a service from one VPC to many consumer VPCs without peering, internet gateway or NAT.",
+   "vi": "AWS PrivateLink công khai riêng tư một dịch vụ từ một VPC cho nhiều VPC consumer mà không cần peering, internet gateway hay NAT."
+  },
+  "points": [
+   {
+    "en": "PrivateLink connects a service to other VPCs directly and privately, and scales better than VPC peering.",
+    "vi": "PrivateLink nối dịch vụ tới các VPC khác trực tiếp và riêng tư, scale tốt hơn VPC peering."
+   },
+   {
+    "en": "The provider exposes the service behind a Network Load Balancer; the consumer creates an ENI.",
+    "vi": "Provider đặt dịch vụ sau Network Load Balancer; consumer tạo một ENI."
+   },
+   {
+    "en": "No route tables, internet gateway or NAT needed; traffic stays on the private network.",
+    "vi": "Không cần route table, internet gateway hay NAT; traffic ở lại mạng riêng."
+   },
+   {
+    "en": "Each new customer just needs its own PrivateLink, making it easy to manage.",
+    "vi": "Mỗi khách hàng mới chỉ cần PrivateLink riêng, rất dễ quản lý."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS PrivateLink",
+    "use": {
+     "en": "Share a service privately across VPCs or accounts at scale.",
+     "vi": "Chia sẻ dịch vụ riêng tư giữa các VPC hoặc account ở quy mô lớn."
+    }
+   },
+   {
+    "name": "Network Load Balancer",
+    "use": {
+     "en": "Fronts the provider service.",
+     "vi": "Đứng trước dịch vụ của provider."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Consumer app in your VPC\"] --> B[\"Elastic Network Interface\"]\n  B -->|\"PrivateLink\"| C[\"Network Load Balancer\"]\n  C --> D[\"Vendor service in vendor VPC\"]",
+   "vi": "flowchart LR\n  A[\"Ứng dụng consumer trong VPC của bạn\"] --> B[\"Elastic Network Interface\"]\n  B -->|\"PrivateLink\"| C[\"Network Load Balancer\"]\n  C --> D[\"Dịch vụ vendor trong VPC của vendor\"]"
+  }
+ }
+}

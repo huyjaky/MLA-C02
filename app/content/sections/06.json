@@ -1,0 +1,280 @@
+{
+ "id": "06",
+ "order": 6,
+ "title": {
+  "en": "Model Training, Tuning, and Evaluation",
+  "vi": "Huấn luyện, tinh chỉnh và đánh giá mô hình"
+ },
+ "lectures": [
+  {
+   "id": "06-001",
+   "title": {
+    "en": "Intro Model Training, Tuning, and Evaluation",
+    "vi": "Giới thiệu: Huấn luyện, tinh chỉnh và đánh giá mô hình"
+   },
+   "kind": "video",
+   "video": "06 - Model Training, Tuning, and Evaluation/001 Intro Model Training, Tuning, and Evaluation.mp4",
+   "transcript": true
+  },
+  {
+   "id": "06-002",
+   "title": {
+    "en": "Introduction to Deep Learning",
+    "vi": "Giới thiệu về Deep Learning"
+   },
+   "kind": "video",
+   "video": "06 - Model Training, Tuning, and Evaluation/002 Introduction to Deep Learning.mp4",
+   "transcript": true
+  },
+  {
+   "id": "06-003",
+   "title": {
+    "en": "Deep Learning History and Overview",
+    "vi": "Lịch sử và tổng quan về Deep Learning"
+   },
+   "kind": "video",
+   "video": "06 - Model Training, Tuning, and Evaluation/003 Deep Learning History and Overview.mp4",
+   "transcript": true
+  },
+  {
+   "id": "06-004",
+   "title": {
+    "en": "Activation Functions",
+    "vi": "Activation Function (hàm kích hoạt)"
+   },
+   "kind": "video",
+   "video": "06 - Model Training, Tuning, and Evaluation/004 Activation Functions.mp4",
+   "transcript": true
+  },
+  {
+   "id": "06-005",
+   "title": {
+    "en": "Convolutional Neural Networks",
+    "vi": "Convolutional Neural Network (CNN)"
+   },
+   "kind": "video",
+   "video": "06 - Model Training, Tuning, and Evaluation/005 Convolutional Neural Networks.mp4",
+   "transcript": true
+  },
+  {
+   "id": "06-006",
+   "title": {
+    "en": "Recurrent Neural Networks",
+    "vi": "Recurrent Neural Network (RNN)"
+   },
+   "kind": "video",
+   "video": "06 - Model Training, Tuning, and Evaluation/006 Recurrent Neural Networks.mp4",
+   "transcript": true
+  },
+  {
+   "id": "06-007",
+   "title": {
+    "en": "Tuning Neural Networks",
+    "vi": "Tinh chỉnh Neural Network"
+   },
+   "kind": "video",
+   "video": "06 - Model Training, Tuning, and Evaluation/007 Tuning Neural Networks.mp4",
+   "transcript": true
+  },
+  {
+   "id": "06-008",
+   "title": {
+    "en": "Regularization Techniques for Neural Networks (Dropout, Early Stopping)",
+    "vi": "Kỹ thuật regularization cho Neural Network (Dropout, Early Stopping)"
+   },
+   "kind": "video",
+   "video": "06 - Model Training, Tuning, and Evaluation/008 Regularization Techniques for Neural Networks (Dropout, Early Stopping).mp4",
+   "transcript": true
+  },
+  {
+   "id": "06-009",
+   "title": {
+    "en": "L1 and L2 Regularization",
+    "vi": "Regularization L1 và L2"
+   },
+   "kind": "video",
+   "video": "06 - Model Training, Tuning, and Evaluation/009 L1 and L2 Regularization.mp4",
+   "transcript": true
+  },
+  {
+   "id": "06-010",
+   "title": {
+    "en": "The Vanishing Gradient Problem",
+    "vi": "Vấn đề Vanishing Gradient"
+   },
+   "kind": "video",
+   "video": "06 - Model Training, Tuning, and Evaluation/010 The Vanishing Gradient Problem.mp4",
+   "transcript": true
+  },
+  {
+   "id": "06-011",
+   "title": {
+    "en": "The Confusion Matrix",
+    "vi": "Confusion Matrix"
+   },
+   "kind": "video",
+   "video": "06 - Model Training, Tuning, and Evaluation/011 The Confusion Matrix.mp4",
+   "transcript": true
+  },
+  {
+   "id": "06-012",
+   "title": {
+    "en": "Precision, Recall, F1, AUC, and more",
+    "vi": "Precision, Recall, F1, AUC và các chỉ số khác"
+   },
+   "kind": "video",
+   "video": "06 - Model Training, Tuning, and Evaluation/012 Precision, Recall, F1, AUC, and more.mp4",
+   "transcript": true
+  },
+  {
+   "id": "06-013",
+   "title": {
+    "en": "RMSE, R-squared, MAE",
+    "vi": "RMSE, R-squared, MAE"
+   },
+   "kind": "video",
+   "video": "06 - Model Training, Tuning, and Evaluation/013 RMSE, R-squared, MAE.mp4",
+   "transcript": true
+  },
+  {
+   "id": "06-014",
+   "title": {
+    "en": "Ensemble Methods Bagging and Boosting",
+    "vi": "Ensemble Method: Bagging và Boosting"
+   },
+   "kind": "video",
+   "video": "06 - Model Training, Tuning, and Evaluation/014 Ensemble Methods Bagging and Boosting.mp4",
+   "transcript": true
+  },
+  {
+   "id": "06-015",
+   "title": {
+    "en": "Automatic Model Tuning (AMT) in SageMaker",
+    "vi": "Automatic Model Tuning (AMT) trong SageMaker"
+   },
+   "kind": "video",
+   "video": "06 - Model Training, Tuning, and Evaluation/015 Automatic Model Tuning (AMT) in SageMaker.mp4",
+   "transcript": true
+  },
+  {
+   "id": "06-016",
+   "title": {
+    "en": "Hyperparameter Tuning in AMT",
+    "vi": "Hyperparameter Tuning trong AMT"
+   },
+   "kind": "video",
+   "video": "06 - Model Training, Tuning, and Evaluation/016 Hyperparameter Tuning in AMT.mp4",
+   "transcript": true
+  },
+  {
+   "id": "06-017",
+   "title": {
+    "en": "SageMaker Autopilot  AutoML",
+    "vi": "SageMaker Autopilot (AutoML)"
+   },
+   "kind": "video",
+   "video": "06 - Model Training, Tuning, and Evaluation/017 SageMaker Autopilot  AutoML.mp4",
+   "transcript": true
+  },
+  {
+   "id": "06-018",
+   "title": {
+    "en": "SageMaker Studio, SageMaker Experiments",
+    "vi": "SageMaker Studio, SageMaker Experiments"
+   },
+   "kind": "video",
+   "video": "06 - Model Training, Tuning, and Evaluation/018 SageMaker Studio, SageMaker Experiments.mp4",
+   "transcript": true
+  },
+  {
+   "id": "06-019",
+   "title": {
+    "en": "Debugging Model Convergence and Training Performance",
+    "vi": "Debug hội tụ mô hình và hiệu năng huấn luyện"
+   },
+   "kind": "video",
+   "video": "06 - Model Training, Tuning, and Evaluation/019 Debugging Model Convergence and Training Performance.mp4",
+   "transcript": true
+  },
+  {
+   "id": "06-020",
+   "title": {
+    "en": "SageMaker Model Registry",
+    "vi": "SageMaker Model Registry"
+   },
+   "kind": "video",
+   "video": "06 - Model Training, Tuning, and Evaluation/020 SageMaker Model Registry.mp4",
+   "transcript": true
+  },
+  {
+   "id": "06-021",
+   "title": {
+    "en": "MLFlow for LLM Experimentation",
+    "vi": "MLflow cho thử nghiệm LLM"
+   },
+   "kind": "video",
+   "video": "06 - Model Training, Tuning, and Evaluation/021 MLFlow for LLM Experimentation.mp4",
+   "transcript": true
+  },
+  {
+   "id": "06-022",
+   "title": {
+    "en": "Analyzing Training Jobs with TensorBoard",
+    "vi": "Phân tích training job với TensorBoard"
+   },
+   "kind": "video",
+   "video": "06 - Model Training, Tuning, and Evaluation/022 Analyzing Training Jobs with TensorBoard.mp4",
+   "transcript": true
+  },
+  {
+   "id": "06-023",
+   "title": {
+    "en": "SageMaker Training at Large Scale Training Compiler, Warm Pools",
+    "vi": "Huấn luyện quy mô lớn trên SageMaker: Training Compiler, Warm Pools"
+   },
+   "kind": "video",
+   "video": "06 - Model Training, Tuning, and Evaluation/023 SageMaker Training at Large Scale Training Compiler, Warm Pools.mp4",
+   "transcript": true
+  },
+  {
+   "id": "06-024",
+   "title": {
+    "en": "SageMaker Checkpointing, Cluster Health Checks, Automatic Restarts",
+    "vi": "SageMaker Checkpointing, Cluster Health Check, tự động khởi động lại"
+   },
+   "kind": "video",
+   "video": "06 - Model Training, Tuning, and Evaluation/024 SageMaker Checkpointing, Cluster Health Checks, Automatic Restarts.mp4",
+   "transcript": true
+  },
+  {
+   "id": "06-025",
+   "title": {
+    "en": "SageMaker Distributed Training Libraries and Distributed Data Parallelism",
+    "vi": "Thư viện huấn luyện phân tán của SageMaker và Distributed Data Parallelism"
+   },
+   "kind": "video",
+   "video": "06 - Model Training, Tuning, and Evaluation/025 SageMaker Distributed Training Libraries and Distributed Data Parallelism.mp4",
+   "transcript": true
+  },
+  {
+   "id": "06-026",
+   "title": {
+    "en": "SageMaker Model Parallelism Library",
+    "vi": "Thư viện Model Parallelism của SageMaker"
+   },
+   "kind": "video",
+   "video": "06 - Model Training, Tuning, and Evaluation/026 SageMaker Model Parallelism Library.mp4",
+   "transcript": true
+  },
+  {
+   "id": "06-027",
+   "title": {
+    "en": "Elastic Fabric Adapter (EFA) and MiCS",
+    "vi": "Elastic Fabric Adapter (EFA) và MiCS"
+   },
+   "kind": "video",
+   "video": "06 - Model Training, Tuning, and Evaluation/027 Elastic Fabric Adapter (EFA) and MiCS.mp4",
+   "transcript": true
+  }
+ ]
+}

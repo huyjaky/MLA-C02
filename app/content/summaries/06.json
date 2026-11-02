@@ -1,0 +1,1095 @@
+{
+ "06-001": {
+  "tldr": {
+   "en": "This section covers how deep learning works, how to tune and evaluate models, and how SageMaker automates tuning and scales training.",
+   "vi": "Phần này nói về cách deep learning hoạt động, cách tinh chỉnh và đánh giá mô hình, và cách SageMaker tự động hóa tuning cũng như mở rộng training."
+  },
+  "points": [
+   {
+    "en": "Start with deep learning basics and common architectures for images and time series.",
+    "vi": "Bắt đầu với nền tảng deep learning và các kiến trúc phổ biến cho ảnh và time series."
+   },
+   {
+    "en": "Then tune neural networks and measure classification models.",
+    "vi": "Sau đó tinh chỉnh neural network và đo lường các mô hình classification."
+   },
+   {
+    "en": "SageMaker topics: automatic model tuning, Autopilot, TensorBoard, Experiments, Debugger.",
+    "vi": "Chủ đề SageMaker: automatic model tuning, Autopilot, TensorBoard, Experiments, Debugger."
+   },
+   {
+    "en": "Also covers scaling SageMaker to massive datasets and large language model training.",
+    "vi": "Cũng bao gồm mở rộng SageMaker cho dataset khổng lồ và huấn luyện large language model."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Automatic Model Tuning",
+    "use": {
+     "en": "Automates hyperparameter search.",
+     "vi": "Tự động tìm kiếm hyperparameter."
+    }
+   },
+   {
+    "name": "SageMaker Autopilot",
+    "use": {
+     "en": "AutoML that builds and tunes models for you.",
+     "vi": "AutoML tự xây dựng và tinh chỉnh mô hình."
+    }
+   },
+   {
+    "name": "SageMaker Experiments",
+    "use": {
+     "en": "Tracks and compares training runs.",
+     "vi": "Theo dõi và so sánh các lần training."
+    }
+   },
+   {
+    "name": "SageMaker Debugger",
+    "use": {
+     "en": "Monitors training for problems.",
+     "vi": "Giám sát quá trình training để phát hiện vấn đề."
+    }
+   }
+  ]
+ },
+ "06-002": {
+  "tldr": {
+   "en": "Modeling is the most heavily weighted exam domain. Expect deep neural networks, tuning, overfitting, SageMaker, and evaluation metrics.",
+   "vi": "Modeling là domain có trọng số lớn nhất trong đề thi. Sẽ có deep neural network, tuning, overfitting, SageMaker và các metric đánh giá."
+  },
+  "points": [
+   {
+    "en": "Learn CNNs and RNNs, then the real-world tuning nuances that catch many people by surprise.",
+    "vi": "Học CNN và RNN, rồi các chi tiết tuning thực tế hay làm nhiều người bất ngờ."
+   },
+   {
+    "en": "Know how to spot overfitting and decide network topology and depth.",
+    "vi": "Biết cách nhận ra overfitting và quyết định topology cũng như độ sâu của network."
+   },
+   {
+    "en": "Know SageMaker built-in algorithms and automatic model tuning in depth.",
+    "vi": "Nắm sâu các built-in algorithm của SageMaker và automatic model tuning."
+   },
+   {
+    "en": "Know accuracy, precision, recall, F1, confusion matrix and ROC curve: how computed and interpreted.",
+    "vi": "Nắm accuracy, precision, recall, F1, confusion matrix và ROC curve: cách tính và diễn giải."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon SageMaker",
+    "use": {
+     "en": "Core platform for built-in algorithms and automatic model tuning.",
+     "vi": "Nền tảng chính với built-in algorithm và automatic model tuning."
+    }
+   },
+   {
+    "name": "Amazon Comprehend, Translate, Transcribe, Lex",
+    "use": {
+     "en": "Higher-level AI services also tested on the exam.",
+     "vi": "Các dịch vụ AI cấp cao cũng được thi."
+    }
+   }
+  ]
+ },
+ "06-003": {
+  "tldr": {
+   "en": "Deep neural networks grew from simple artificial neurons (1943) to perceptrons and multi-layer perceptrons; stacking simple units gives emergent complex behavior.",
+   "vi": "Deep neural network phát triển từ neuron nhân tạo đơn giản (1943) đến perceptron và multi-layer perceptron; xếp chồng các đơn vị đơn giản tạo ra hành vi phức tạp."
+  },
+  "points": [
+   {
+    "en": "A Linear Threshold Unit adds weights to inputs and fires through a step function.",
+    "vi": "Linear Threshold Unit thêm weight cho input và kích hoạt qua step function."
+   },
+   {
+    "en": "A perceptron is a layer of LTUs plus a bias neuron; weights are learned.",
+    "vi": "Perceptron là một layer các LTU cộng bias neuron; weight được học."
+   },
+   {
+    "en": "A multi-layer perceptron adds hidden layers, which is what makes a network deep.",
+    "vi": "Multi-layer perceptron thêm hidden layer, đây là điều làm network trở nên deep."
+   },
+   {
+    "en": "Modern networks replace the step function with ReLU and use softmax on the output for class probabilities.",
+    "vi": "Network hiện đại thay step function bằng ReLU và dùng softmax ở output để ra xác suất các class."
+   },
+   {
+    "en": "Training starts from random weights and reinforces connections that give correct results; GPUs fit this parallel structure.",
+    "vi": "Training bắt đầu từ weight ngẫu nhiên và củng cố các kết nối cho kết quả đúng; GPU phù hợp với cấu trúc song song này."
+   }
+  ],
+  "services": [],
+  "funFact": {
+   "en": "Artificial neurons date back to 1943, and the Linear Threshold Unit to 1957. AI is not new.",
+   "vi": "Neuron nhân tạo xuất hiện từ năm 1943, còn Linear Threshold Unit từ 1957. AI không hề mới."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Inputs\"] --> B[\"Hidden layers with ReLU\"]\n  B --> C[\"Output layer\"]\n  C --> D[\"Softmax\"]\n  D --> E[\"Class probabilities\"]",
+   "vi": "flowchart LR\n  A[\"Input\"] --> B[\"Hidden layer với ReLU\"]\n  B --> C[\"Output layer\"]\n  C --> D[\"Softmax\"]\n  D --> E[\"Xác suất các class\"]"
+  }
+ },
+ "06-004": {
+  "tldr": {
+   "en": "Activation functions decide a neuron output. Use softmax for single-label multiclass output, tanh for RNNs, and start with ReLU for everything else.",
+   "vi": "Activation function quyết định output của neuron. Dùng softmax cho output multiclass một nhãn, tanh cho RNN, và bắt đầu với ReLU cho phần còn lại."
+  },
+  "points": [
+   {
+    "en": "Linear and binary step functions are not useful: no real learning, and step breaks calculus.",
+    "vi": "Linear và binary step không hữu ích: không học được gì và step làm hỏng phép tính đạo hàm."
+   },
+   {
+    "en": "Sigmoid scales 0 to 1, tanh scales -1 to 1; both suffer vanishing gradient and are costly.",
+    "vi": "Sigmoid cho 0 đến 1, tanh cho -1 đến 1; cả hai bị vanishing gradient và tốn tính toán."
+   },
+   {
+    "en": "ReLU is fast and popular; its dying ReLU problem is fixed by leaky ReLU, then PReLU.",
+    "vi": "ReLU nhanh và phổ biến; lỗi dying ReLU được sửa bằng leaky ReLU, rồi PReLU."
+   },
+   {
+    "en": "Swish helps only in very deep networks (about 40+ layers); Maxout doubles parameters.",
+    "vi": "Swish chỉ có lợi với network rất sâu (khoảng 40+ layer); Maxout nhân đôi số tham số."
+   },
+   {
+    "en": "Softmax gives exactly one label; use sigmoid when one item can have multiple labels.",
+    "vi": "Softmax chỉ cho đúng một nhãn; dùng sigmoid khi một đối tượng có nhiều nhãn."
+   }
+  ],
+  "services": [],
+  "funFact": {
+   "en": "Swish was developed by Google, not Amazon, so it is unlikely to appear on an AWS exam.",
+   "vi": "Swish do Google phát triển chứ không phải Amazon, nên khó xuất hiện trong đề thi AWS."
+  },
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Choose activation\"] --> B[\"Single-label multiclass output?\"]\n  B -->|\"Yes\"| C[\"Softmax\"]\n  B -->|\"No\"| D[\"RNN?\"]\n  D -->|\"Yes\"| E[\"tanh\"]\n  D -->|\"No\"| F[\"ReLU\"]\n  F -->|\"Not good enough\"| G[\"Leaky ReLU, PReLU, Maxout\"]\n  G -->|\"40+ layers\"| H[\"Swish\"]",
+   "vi": "flowchart TD\n  A[\"Chọn activation\"] --> B[\"Output multiclass một nhãn?\"]\n  B -->|\"Có\"| C[\"Softmax\"]\n  B -->|\"Không\"| D[\"RNN?\"]\n  D -->|\"Có\"| E[\"tanh\"]\n  D -->|\"Không\"| F[\"ReLU\"]\n  F -->|\"Chưa đủ tốt\"| G[\"Leaky ReLU, PReLU, Maxout\"]\n  G -->|\"40+ layer\"| H[\"Swish\"]"
+  }
+ },
+ "06-005": {
+  "tldr": {
+   "en": "CNNs find features wherever they appear in the data (feature-location invariant), mostly in images. They stack convolution, pooling, dropout, flatten, and dense layers.",
+   "vi": "CNN tìm feature ở bất kỳ vị trí nào trong dữ liệu (feature-location invariant), chủ yếu cho ảnh. Chúng xếp chồng các layer convolution, pooling, dropout, flatten và dense."
+  },
+  "points": [
+   {
+    "en": "Local receptive fields scan overlapping chunks: edges first, then shapes, then objects.",
+    "vi": "Local receptive field quét các vùng chồng lấn: cạnh trước, rồi hình dạng, rồi đối tượng."
+   },
+   {
+    "en": "Input shape is width x height x color channels (1 for grayscale, 3 for RGB).",
+    "vi": "Shape input là rộng x cao x số kênh màu (1 cho grayscale, 3 cho RGB)."
+   },
+   {
+    "en": "Typical stack: Conv2D, MaxPooling2D, Dropout, Flatten, Dense, Dropout, Softmax.",
+    "vi": "Cấu trúc điển hình: Conv2D, MaxPooling2D, Dropout, Flatten, Dense, Dropout, Softmax."
+   },
+   {
+    "en": "Max pooling shrinks data to cut compute; CNNs are heavy on CPU, GPU and memory.",
+    "vi": "Max pooling thu nhỏ dữ liệu để giảm tính toán; CNN tốn nhiều CPU, GPU và bộ nhớ."
+   },
+   {
+    "en": "Known architectures: LeNet-5, AlexNet, GoogLeNet (inception modules), ResNet (skip connections).",
+    "vi": "Các kiến trúc nổi tiếng: LeNet-5, AlexNet, GoogLeNet (inception module), ResNet (skip connection)."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Image Classification",
+    "use": {
+     "en": "Built-in algorithm that uses ResNet variants such as ResNet 50.",
+     "vi": "Built-in algorithm dùng các biến thể ResNet như ResNet 50."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Tesla cars send camera images back to data centers, e.g. after a hard brake, so the company can train its networks on them.",
+   "vi": "Xe Tesla gửi ảnh từ camera về data center, ví dụ sau khi phanh gấp, để hãng huấn luyện neural network của mình."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Image\"] --> B[\"Conv2D\"]\n  B --> C[\"MaxPooling2D\"]\n  C --> D[\"Dropout\"]\n  D --> E[\"Flatten\"]\n  E --> F[\"Dense\"]\n  F --> G[\"Dropout\"]\n  G --> H[\"Softmax\"]",
+   "vi": "flowchart LR\n  A[\"Ảnh\"] --> B[\"Conv2D\"]\n  B --> C[\"MaxPooling2D\"]\n  C --> D[\"Dropout\"]\n  D --> E[\"Flatten\"]\n  E --> F[\"Dense\"]\n  F --> G[\"Dropout\"]\n  G --> H[\"Softmax\"]"
+  }
+ },
+ "06-006": {
+  "tldr": {
+   "en": "RNNs handle sequence data such as time series, text, and music by feeding each step output back into the neuron as memory.",
+   "vi": "RNN xử lý dữ liệu dạng chuỗi như time series, văn bản, âm nhạc bằng cách đưa output của mỗi bước quay lại neuron làm bộ nhớ."
+  },
+  "points": [
+   {
+    "en": "Use cases: web and sensor logs, stock prediction, machine translation, captioning, music generation.",
+    "vi": "Ứng dụng: web log, sensor log, dự đoán chứng khoán, dịch máy, tạo caption, sinh nhạc."
+   },
+   {
+    "en": "Four topologies: sequence-to-sequence, sequence-to-vector, vector-to-sequence, and encoder-decoder.",
+    "vi": "Bốn topology: sequence-to-sequence, sequence-to-vector, vector-to-sequence và encoder-decoder."
+   },
+   {
+    "en": "Training uses backpropagation through time; truncated backpropagation caps the cost.",
+    "vi": "Training dùng backpropagation through time; truncated backpropagation giới hạn chi phí."
+   },
+   {
+    "en": "Plain RNNs favor recent data; use LSTM when older data matters equally.",
+    "vi": "RNN thường ưu tiên dữ liệu gần đây; dùng LSTM khi dữ liệu cũ quan trọng ngang nhau."
+   },
+   {
+    "en": "GRU is a simpler LSTM that performs almost as well and trains faster.",
+    "vi": "GRU là LSTM đơn giản hơn, hiệu quả gần bằng và train nhanh hơn."
+   }
+  ],
+  "services": [],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Input step 0\"] --> B[\"Neuron t0\"]\n  B -->|\"memory\"| C[\"Neuron t1\"]\n  D[\"Input step 1\"] --> C\n  C -->|\"memory\"| E[\"Neuron t2\"]\n  F[\"Input step 2\"] --> E\n  E --> G[\"Output\"]",
+   "vi": "flowchart LR\n  A[\"Input bước 0\"] --> B[\"Neuron t0\"]\n  B -->|\"bộ nhớ\"| C[\"Neuron t1\"]\n  D[\"Input bước 1\"] --> C\n  C -->|\"bộ nhớ\"| E[\"Neuron t2\"]\n  F[\"Input bước 2\"] --> E\n  E --> G[\"Output\"]"
+  }
+ },
+ "06-007": {
+  "tldr": {
+   "en": "Learning rate and batch size are key hyperparameters. Too high a learning rate overshoots; too large a batch size can get stuck in a wrong local minimum.",
+   "vi": "Learning rate và batch size là hyperparameter quan trọng. Learning rate quá cao thì vượt qua nghiệm tối ưu; batch size quá lớn có thể kẹt ở local minimum sai."
+  },
+  "points": [
+   {
+    "en": "Gradient descent samples weights over many epochs to minimize a cost function.",
+    "vi": "Gradient descent thử các weight qua nhiều epoch để tối thiểu hóa cost function."
+   },
+   {
+    "en": "Too high a learning rate overshoots the solution.",
+    "vi": "Learning rate quá cao sẽ vượt qua nghiệm tối ưu."
+   },
+   {
+    "en": "Too small a learning rate makes training take much longer.",
+    "vi": "Learning rate quá nhỏ làm training lâu hơn nhiều."
+   },
+   {
+    "en": "Small batch sizes escape local minima better; large batches can converge on the wrong solution.",
+    "vi": "Batch size nhỏ thoát local minima tốt hơn; batch lớn có thể hội tụ về nghiệm sai."
+   },
+   {
+    "en": "Large batches can cause inconsistent results from run to run because data is shuffled each epoch.",
+    "vi": "Batch lớn có thể gây kết quả không ổn định giữa các lần chạy vì dữ liệu được shuffle mỗi epoch."
+   }
+  ],
+  "services": [],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Learning rate\"] --> B[\"Too high: overshoots\"]\n  A --> C[\"Too low: slow training\"]\n  D[\"Batch size\"] --> E[\"Small: escapes local minima\"]\n  D --> F[\"Large: may get stuck\"]",
+   "vi": "flowchart LR\n  A[\"Learning rate\"] --> B[\"Quá cao: vượt nghiệm\"]\n  A --> C[\"Quá thấp: training chậm\"]\n  D[\"Batch size\"] --> E[\"Nhỏ: thoát local minima\"]\n  D --> F[\"Lớn: có thể kẹt\"]"
+  }
+ },
+ "06-008": {
+  "tldr": {
+   "en": "Regularization prevents overfitting. For neural networks, simplify the model, use dropout, or use early stopping.",
+   "vi": "Regularization giúp tránh overfitting. Với neural network: đơn giản hóa model, dùng dropout hoặc early stopping."
+  },
+  "points": [
+   {
+    "en": "Overfitting: high training accuracy but lower accuracy on evaluation or test data.",
+    "vi": "Overfitting: accuracy cao trên training nhưng thấp hơn trên evaluation hoặc test data."
+   },
+   {
+    "en": "Three datasets: training, evaluation (validation) during training, and a final test set.",
+    "vi": "Ba dataset: training, evaluation (validation) trong lúc train, và test set cuối cùng."
+   },
+   {
+    "en": "Simplest fix: fewer layers or fewer neurons.",
+    "vi": "Cách đơn giản nhất: ít layer hoặc ít neuron hơn."
+   },
+   {
+    "en": "Dropout randomly removes neurons each step, spreading learning out; 50% is common in CNNs.",
+    "vi": "Dropout loại ngẫu nhiên neuron mỗi bước, giúp phân tán việc học; 50% phổ biến trong CNN."
+   },
+   {
+    "en": "Early stopping halts training when validation accuracy plateaus while training accuracy keeps rising.",
+    "vi": "Early stopping dừng training khi validation accuracy chững lại trong lúc training accuracy vẫn tăng."
+   }
+  ],
+  "services": [],
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Training accuracy high, validation low\"] --> B[\"Overfitting\"]\n  B --> C[\"Simplify model\"]\n  B --> D[\"Dropout\"]\n  B --> E[\"Early stopping\"]",
+   "vi": "flowchart TD\n  A[\"Training accuracy cao, validation thấp\"] --> B[\"Overfitting\"]\n  B --> C[\"Đơn giản hóa model\"]\n  B --> D[\"Dropout\"]\n  B --> E[\"Early stopping\"]"
+  }
+ },
+ "06-009": {
+  "tldr": {
+   "en": "L1 adds the sum of weights as a penalty and performs feature selection; L2 adds the sum of squared weights and keeps all features with different weights.",
+   "vi": "L1 cộng tổng các weight làm penalty và thực hiện feature selection; L2 cộng tổng bình phương weight và giữ mọi feature với weight khác nhau."
+  },
+  "points": [
+   {
+    "en": "L1 (sum of weights) can push weights to zero, removing features: sparse output.",
+    "vi": "L1 (tổng weight) có thể đẩy weight về 0, loại bỏ feature: output thưa."
+   },
+   {
+    "en": "L2 (sum of squared weights) keeps all features, only weighting them differently: denser output.",
+    "vi": "L2 (tổng bình phương weight) giữ mọi feature, chỉ đặt weight khác nhau: output dày hơn."
+   },
+   {
+    "en": "L1 is computationally less efficient, but the smaller feature set can speed up later training.",
+    "vi": "L1 tốn tính toán hơn, nhưng tập feature nhỏ hơn có thể làm training nhanh hơn."
+   },
+   {
+    "en": "Pick L1 if some features likely do not matter; pick L2 if all features are important.",
+    "vi": "Chọn L1 nếu một số feature có thể không quan trọng; chọn L2 nếu mọi feature đều quan trọng."
+   },
+   {
+    "en": "Applies to all of machine learning, not just deep learning.",
+    "vi": "Áp dụng cho toàn bộ machine learning, không chỉ deep learning."
+   }
+  ],
+  "services": [],
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Regularization term on weights\"] --> B[\"L1: sum of weights\"]\n  A --> C[\"L2: sum of squared weights\"]\n  B --> D[\"Feature selection, sparse\"]\n  C --> E[\"Keeps all features, dense\"]",
+   "vi": "flowchart TD\n  A[\"Regularization term trên weight\"] --> B[\"L1: tổng weight\"]\n  A --> C[\"L2: tổng bình phương weight\"]\n  B --> D[\"Feature selection, thưa\"]\n  C --> E[\"Giữ mọi feature, dày\"]"
+  }
+ },
+ "06-010": {
+  "tldr": {
+   "en": "Vanishing gradients (slope near zero) and exploding gradients cause numerical trouble in deep networks and RNNs. Fix with ReLU, LSTM, ResNet, or multi-level hierarchies.",
+   "vi": "Vanishing gradient (độ dốc gần 0) và exploding gradient gây lỗi số học trong network sâu và RNN. Khắc phục bằng ReLU, LSTM, ResNet hoặc multi-level hierarchy."
+  },
+  "points": [
+   {
+    "en": "Vanishing gradient: slope approaches zero, slowing training and causing precision errors.",
+    "vi": "Vanishing gradient: độ dốc tiến về 0, làm training chậm và gây lỗi precision."
+   },
+   {
+    "en": "It is worse in deeper networks and RNNs because it propagates to deeper layers.",
+    "vi": "Tệ hơn ở network sâu và RNN vì nó lan sang các layer sâu hơn."
+   },
+   {
+    "en": "Exploding gradients are the opposite problem: slopes become too steep.",
+    "vi": "Exploding gradient là vấn đề ngược lại: độ dốc quá lớn."
+   },
+   {
+    "en": "Fixes: multi-level hierarchy, LSTM, ResNet, and ReLU activation.",
+    "vi": "Cách sửa: multi-level hierarchy, LSTM, ResNet và activation ReLU."
+   },
+   {
+    "en": "Gradient checking is a debugging technique that numerically verifies computed derivatives.",
+    "vi": "Gradient checking là kỹ thuật debug kiểm tra số học các đạo hàm đã tính."
+   }
+  ],
+  "services": [],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Vanishing gradient\"] --> B[\"Multi-level hierarchy\"]\n  A --> C[\"LSTM\"]\n  A --> D[\"ResNet\"]\n  A --> E[\"ReLU activation\"]",
+   "vi": "flowchart LR\n  A[\"Vanishing gradient\"] --> B[\"Multi-level hierarchy\"]\n  A --> C[\"LSTM\"]\n  A --> D[\"ResNet\"]\n  A --> E[\"Activation ReLU\"]"
+  }
+ },
+ "06-011": {
+  "tldr": {
+   "en": "A confusion matrix shows true/false positives and negatives, revealing what accuracy hides, such as a rare-disease model that always says no.",
+   "vi": "Confusion matrix thể hiện true/false positive và negative, cho thấy điều mà accuracy che giấu, ví dụ model bệnh hiếm luôn trả lời không."
+  },
+  "points": [
+   {
+    "en": "Cells: true positive, false positive, false negative, true negative; good models have large diagonal values.",
+    "vi": "Các ô: true positive, false positive, false negative, true negative; model tốt có đường chéo lớn."
+   },
+   {
+    "en": "Layouts are not standardized: rows may be predicted or actual, so always read the labels.",
+    "vi": "Layout không chuẩn hóa: hàng có thể là predicted hoặc actual, luôn đọc kỹ nhãn."
+   },
+   {
+    "en": "Multiclass matrices are bigger and often shown as heat maps; darker means higher count.",
+    "vi": "Matrix multiclass lớn hơn và thường là heat map; màu đậm hơn nghĩa là số lớn hơn."
+   },
+   {
+    "en": "Example: 50 TP, 5 FP, 10 FN, 100 TN for a cat detector.",
+    "vi": "Ví dụ: 50 TP, 5 FP, 10 FN, 100 TN cho bộ nhận diện mèo."
+   },
+   {
+    "en": "The AWS ML docs format shows per-class F1, true class frequencies (total column) and predicted class frequencies (total row).",
+    "vi": "Định dạng trong tài liệu AWS ML hiển thị F1 theo class, true class frequency (cột tổng) và predicted class frequency (hàng tổng)."
+   }
+  ],
+  "services": [],
+  "funFact": {
+   "en": "A rare-disease test that always guesses no can be 99.9% accurate and still be worse than useless.",
+   "vi": "Một bài test bệnh hiếm luôn đoán không có thể đạt 99.9% accuracy nhưng vẫn vô dụng."
+  },
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Prediction vs actual\"] --> B[\"Predicted yes, actual yes: TP\"]\n  A --> C[\"Predicted yes, actual no: FP\"]\n  A --> D[\"Predicted no, actual yes: FN\"]\n  A --> E[\"Predicted no, actual no: TN\"]",
+   "vi": "flowchart TD\n  A[\"Dự đoán vs thực tế\"] --> B[\"Dự đoán có, thực tế có: TP\"]\n  A --> C[\"Dự đoán có, thực tế không: FP\"]\n  A --> D[\"Dự đoán không, thực tế có: FN\"]\n  A --> E[\"Dự đoán không, thực tế không: TN\"]"
+  }
+ },
+ "06-012": {
+  "tldr": {
+   "en": "Memorize the metrics from the confusion matrix: recall for false negatives (fraud), precision for false positives (drug testing), F1 to balance both, plus ROC/AUC and PR curves.",
+   "vi": "Học thuộc các metric từ confusion matrix: recall khi quan tâm false negative (fraud), precision khi quan tâm false positive (drug test), F1 để cân bằng, cùng ROC/AUC và PR curve."
+  },
+  "points": [
+   {
+    "en": "Recall = TP / (TP + FN); also sensitivity, true positive rate, completeness. Use when false negatives hurt.",
+    "vi": "Recall = TP / (TP + FN); còn gọi sensitivity, true positive rate, completeness. Dùng khi false negative gây hại."
+   },
+   {
+    "en": "Precision = TP / (TP + FP). Use when false positives hurt, e.g. drug testing.",
+    "vi": "Precision = TP / (TP + FP). Dùng khi false positive gây hại, ví dụ drug test."
+   },
+   {
+    "en": "Specificity = TN / (TN + FP). F1 = 2TP / (2TP + FP + FN), the harmonic mean of precision and recall.",
+    "vi": "Specificity = TN / (TN + FP). F1 = 2TP / (2TP + FP + FN), trung bình điều hòa của precision và recall."
+   },
+   {
+    "en": "ROC plots TPR vs FPR; the closer to the upper left the better. AUC 0.5 is random, 1.0 is perfect.",
+    "vi": "ROC vẽ TPR theo FPR; càng gần góc trên trái càng tốt. AUC 0.5 là ngẫu nhiên, 1.0 là hoàn hảo."
+   },
+   {
+    "en": "PR curve (precision vs recall) is similar to ROC but better for large-scale information retrieval; bigger area is better.",
+    "vi": "PR curve (precision theo recall) giống ROC nhưng phù hợp hơn cho information retrieval quy mô lớn; diện tích lớn hơn thì tốt hơn."
+   }
+  ],
+  "services": [],
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Which error matters more?\"] --> B[\"False negatives: fraud\"]\n  A --> C[\"False positives: drug test\"]\n  A --> D[\"Both\"]\n  B --> E[\"Recall\"]\n  C --> F[\"Precision\"]\n  D --> G[\"F1 score\"]",
+   "vi": "flowchart TD\n  A[\"Lỗi nào quan trọng hơn?\"] --> B[\"False negative: fraud\"]\n  A --> C[\"False positive: drug test\"]\n  A --> D[\"Cả hai\"]\n  B --> E[\"Recall\"]\n  C --> F[\"Precision\"]\n  D --> G[\"F1 score\"]"
+  }
+ },
+ "06-013": {
+  "tldr": {
+   "en": "For numeric predictions such as regression, use R-squared, RMSE, and MAE instead of classification metrics.",
+   "vi": "Với dự đoán số như regression, dùng R-squared, RMSE và MAE thay vì các metric classification."
+  },
+  "points": [
+   {
+    "en": "Accuracy, precision, recall and F1 are classification metrics.",
+    "vi": "Accuracy, precision, recall và F1 là metric của classification."
+   },
+   {
+    "en": "R-squared is the squared correlation between observed and predicted values.",
+    "vi": "R-squared là bình phương hệ số tương quan giữa giá trị thực và dự đoán."
+   },
+   {
+    "en": "MAE is the mean of absolute distances between predictions and actual points.",
+    "vi": "MAE là trung bình khoảng cách tuyệt đối giữa dự đoán và giá trị thực."
+   },
+   {
+    "en": "RMSE squares errors first, so it punishes outliers more.",
+    "vi": "RMSE bình phương lỗi trước nên phạt outlier nặng hơn."
+   }
+  ],
+  "services": []
+ },
+ "06-014": {
+  "tldr": {
+   "en": "Ensembles let many models vote. Bagging trains models in parallel on resampled data and reduces overfitting; boosting trains sequentially with reweighted data and maximizes accuracy.",
+   "vi": "Ensemble cho nhiều model cùng bỏ phiếu. Bagging train song song trên dữ liệu resample và giảm overfitting; boosting train tuần tự với dữ liệu được đặt lại trọng số và tối đa accuracy."
+  },
+  "points": [
+   {
+    "en": "Random forest is an ensemble of decision trees voting on the result.",
+    "vi": "Random forest là ensemble của các decision tree bỏ phiếu cho kết quả."
+   },
+   {
+    "en": "Bagging: random sampling with replacement, models trained in parallel, then vote.",
+    "vi": "Bagging: lấy mẫu ngẫu nhiên có hoàn lại, train song song rồi bỏ phiếu."
+   },
+   {
+    "en": "Boosting: weights on observations are refined each stage, so it runs sequentially.",
+    "vi": "Boosting: weight của các observation được tinh chỉnh qua từng giai đoạn nên chạy tuần tự."
+   },
+   {
+    "en": "Choose boosting for accuracy; choose bagging to avoid overfitting and parallelize easily.",
+    "vi": "Chọn boosting để có accuracy; chọn bagging để tránh overfitting và dễ chạy song song."
+   }
+  ],
+  "services": [
+   {
+    "name": "XGBoost",
+    "use": {
+     "en": "Boosting algorithm built into SageMaker; often wins Kaggle contests.",
+     "vi": "Thuật toán boosting có sẵn trong SageMaker; thường thắng các cuộc thi Kaggle."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  subgraph g1[\"Bagging\"]\n    A[\"Resampled sets\"] --> B[\"Models in parallel\"]\n    B --> C[\"Vote\"]\n  end\n  subgraph g2[\"Boosting\"]\n    D[\"Equal weights\"] --> E[\"Model\"]\n    E --> F[\"Reweight data\"]\n    F --> E\n  end",
+   "vi": "flowchart LR\n  subgraph g1[\"Bagging\"]\n    A[\"Tập resample\"] --> B[\"Model song song\"]\n    B --> C[\"Bỏ phiếu\"]\n  end\n  subgraph g2[\"Boosting\"]\n    D[\"Weight bằng nhau\"] --> E[\"Model\"]\n    E --> F[\"Đặt lại weight dữ liệu\"]\n    F --> E\n  end"
+  }
+ },
+ "06-015": {
+  "tldr": {
+   "en": "SageMaker Automatic Model Tuning runs a hyperparameter tuning job over ranges you define and learns from earlier runs, so it does not try every combination.",
+   "vi": "SageMaker Automatic Model Tuning chạy hyperparameter tuning job trên các khoảng giá trị bạn định nghĩa và học từ các lần chạy trước nên không thử mọi tổ hợp."
+  },
+  "points": [
+   {
+    "en": "You define hyperparameters, ranges, and the objective metric; set a cap on training jobs to control cost.",
+    "vi": "Bạn định nghĩa hyperparameter, khoảng giá trị và objective metric; đặt giới hạn số training job để kiểm soát chi phí."
+   },
+   {
+    "en": "Combinations explode exponentially, so tune only the most impactful hyperparameters first.",
+    "vi": "Số tổ hợp tăng theo cấp số nhân, nên chỉ tune các hyperparameter ảnh hưởng nhất trước."
+   },
+   {
+    "en": "Use the narrowest ranges possible and logarithmic scales for values like 0.001 to 0.1.",
+    "vi": "Dùng khoảng hẹp nhất có thể và thang logarithmic cho giá trị như 0.001 đến 0.1."
+   },
+   {
+    "en": "Do not run too many training jobs concurrently; tuning learns best from sequential results.",
+    "vi": "Đừng chạy quá nhiều training job đồng thời; tuning học tốt nhất từ kết quả tuần tự."
+   },
+   {
+    "en": "With multi-instance training, make sure the correct objective metric is reported at the end.",
+    "vi": "Với training nhiều instance, đảm bảo objective metric đúng được báo cáo ở cuối."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Automatic Model Tuning",
+    "use": {
+     "en": "Finds best hyperparameters by running and learning from many training jobs.",
+     "vi": "Tìm hyperparameter tốt nhất bằng cách chạy và học từ nhiều training job."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Define hyperparameters, ranges, metric\"] --> B[\"Tuning job\"]\n  B --> C[\"Training jobs in parallel\"]\n  C -->|\"learns from results\"| B\n  B --> D[\"Best hyperparameters\"]\n  D --> E[\"Deploy tuned model\"]",
+   "vi": "flowchart LR\n  A[\"Định nghĩa hyperparameter, khoảng, metric\"] --> B[\"Tuning job\"]\n  B --> C[\"Training job song song\"]\n  C -->|\"học từ kết quả\"| B\n  B --> D[\"Hyperparameter tốt nhất\"]\n  D --> E[\"Deploy model đã tune\"]"
+  }
+ },
+ "06-016": {
+  "tldr": {
+   "en": "Know the tuning options: early stopping, warm start, resource limits, and the search strategies grid, random, Bayesian, and Hyperband (the best for iterative algorithms).",
+   "vi": "Cần biết các tùy chọn tuning: early stopping, warm start, resource limit và các chiến lược tìm kiếm grid, random, Bayesian, Hyperband (tốt nhất cho thuật toán lặp)."
+  },
+  "points": [
+   {
+    "en": "Early stopping set to auto ends unproductive runs; needs an algorithm that emits metrics after each epoch.",
+    "vi": "Early stopping đặt auto sẽ dừng các lần chạy kém hiệu quả; cần thuật toán phát metric sau mỗi epoch."
+   },
+   {
+    "en": "Warm start reuses earlier tuning jobs: identical data and algorithm, or transfer learning for new datasets.",
+    "vi": "Warm start dùng lại tuning job trước: identical data and algorithm, hoặc transfer learning cho dataset mới."
+   },
+   {
+    "en": "Resource limits exist by default; raising them requires a quota increase via AWS support.",
+    "vi": "Có resource limit mặc định; muốn tăng phải xin quota increase qua AWS support."
+   },
+   {
+    "en": "Grid search is brute force; random search is parallel with no dependence on prior runs.",
+    "vi": "Grid search là vét cạn; random search chạy song song, không phụ thuộc lần chạy trước."
+   },
+   {
+    "en": "Bayesian treats tuning as regression and learns run to run; Hyperband is fastest with auto early stopping and parallelism.",
+    "vi": "Bayesian coi tuning là regression và học qua từng lần chạy; Hyperband nhanh nhất với early stopping và song song tự động."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Automatic Model Tuning",
+    "use": {
+     "en": "Supports grid, random, Bayesian, and Hyperband strategies plus early stopping and warm start.",
+     "vi": "Hỗ trợ grid, random, Bayesian, Hyperband cùng early stopping và warm start."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Grid search: all combinations\"] --> B[\"Random search: parallel, no learning\"]\n  B --> C[\"Bayesian: learns, mostly sequential\"]\n  C --> D[\"Hyperband: fastest, iterative algorithms\"]",
+   "vi": "flowchart LR\n  A[\"Grid search: mọi tổ hợp\"] --> B[\"Random search: song song, không học\"]\n  B --> C[\"Bayesian: có học, chủ yếu tuần tự\"]\n  C --> D[\"Hyperband: nhanh nhất, thuật toán lặp\"]"
+  }
+ },
+ "06-017": {
+  "tldr": {
+   "en": "SageMaker Autopilot is AutoML: point it at tabular data in S3 and a target column, and it picks algorithms, preprocesses, tunes, and ranks models while staying transparent through notebooks and Clarify.",
+   "vi": "SageMaker Autopilot là AutoML: chỉ cần dữ liệu dạng bảng trong S3 và cột target, nó tự chọn thuật toán, tiền xử lý, tuning và xếp hạng model, đồng thời minh bạch qua notebook và Clarify."
+  },
+  "points": [
+   {
+    "en": "Workflow: load data from S3, pick the target column, auto model creation, model notebook, leaderboard, deploy and monitor.",
+    "vi": "Quy trình: tải dữ liệu từ S3, chọn cột target, tự tạo model, model notebook, leaderboard, deploy và monitor."
+   },
+   {
+    "en": "Handles binary classification, multiclass classification and regression; input is CSV or Parquet.",
+    "vi": "Hỗ trợ binary classification, multiclass classification và regression; input là CSV hoặc Parquet."
+   },
+   {
+    "en": "HPO mode uses Linear Learner, XGBoost, deep learning; up to 100 trials. Bayesian under 100MB, multi-fidelity above.",
+    "vi": "HPO mode dùng Linear Learner, XGBoost, deep learning; tối đa 100 trial. Bayesian dưới 100MB, multi-fidelity khi lớn hơn."
+   },
+   {
+    "en": "Ensembling mode uses AutoGluon, trains 10 trials and stacks them. Auto mode: over 100MB means HPO, under means ensembling.",
+    "vi": "Ensembling mode dùng AutoGluon, chạy 10 trial và stack lại. Auto mode: trên 100MB dùng HPO, dưới thì ensembling."
+   },
+   {
+    "en": "Auto defaults to HPO if size is unknown: data in a VPC, manifest file, or S3 URI with over 1000 items.",
+    "vi": "Auto mặc định về HPO khi không biết kích thước: dữ liệu trong VPC, manifest file, hoặc S3 URI có hơn 1000 item."
+   },
+   {
+    "en": "Autopilot integrates with SageMaker Clarify, which uses SHAP baselines to explain feature importance and reveal bias.",
+    "vi": "Autopilot tích hợp SageMaker Clarify, dùng SHAP baseline để giải thích mức quan trọng của feature và phát hiện bias."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Autopilot",
+    "use": {
+     "en": "AutoML wizard: picks algorithm, preprocesses, tunes, and ranks models for tabular data.",
+     "vi": "AutoML dạng wizard: chọn thuật toán, tiền xử lý, tuning và xếp hạng model cho dữ liệu bảng."
+    }
+   },
+   {
+    "name": "SageMaker Clarify",
+    "use": {
+     "en": "Explains feature contributions and detects bias using SHAP values.",
+     "vi": "Giải thích đóng góp của feature và phát hiện bias bằng SHAP value."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Clarify's SHAP attribution is based on Shapley values, which come from cooperative game theory.",
+   "vi": "Cơ chế SHAP của Clarify dựa trên Shapley value, vốn xuất phát từ lý thuyết trò chơi hợp tác."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Data in S3\"] --> B[\"Select target column\"]\n  B --> C[\"Automatic model creation\"]\n  C --> D[\"Model notebook\"]\n  C --> E[\"Leaderboard\"]\n  E --> F[\"Deploy and monitor\"]\n  C -.-> G[\"Clarify explainability\"]",
+   "vi": "flowchart LR\n  A[\"Dữ liệu trong S3\"] --> B[\"Chọn cột target\"]\n  B --> C[\"Tự động tạo model\"]\n  C --> D[\"Model notebook\"]\n  C --> E[\"Leaderboard\"]\n  E --> F[\"Deploy và monitor\"]\n  C -.-> G[\"Clarify giải thích\"]"
+  }
+ },
+ "06-018": {
+  "tldr": {
+   "en": "SageMaker Studio is a visual IDE for machine learning, with shareable Jupyter notebooks and SageMaker Experiments to organize and compare all your ML jobs.",
+   "vi": "SageMaker Studio là IDE trực quan cho machine learning, có Jupyter notebook chia sẻ được và SageMaker Experiments để tổ chức và so sánh mọi ML job."
+  },
+  "points": [
+   {
+    "en": "Studio gives SageMaker an IDE-like experience instead of the plain console.",
+    "vi": "Studio mang lại trải nghiệm như IDE cho SageMaker thay vì console thuần."
+   },
+   {
+    "en": "Notebooks can be shared with teammates and hardware can be switched; no infrastructure to manage.",
+    "vi": "Notebook có thể chia sẻ với đồng đội và đổi cấu hình hardware; không cần quản lý hạ tầng."
+   },
+   {
+    "en": "SageMaker Experiments organizes, captures, compares and searches historical ML jobs in one place.",
+    "vi": "SageMaker Experiments tổ chức, ghi lại, so sánh và tìm kiếm các ML job trong quá khứ ở một nơi."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Studio",
+    "use": {
+     "en": "Visual IDE with shareable Jupyter notebooks on managed hardware.",
+     "vi": "IDE trực quan với Jupyter notebook chia sẻ được trên hardware được quản lý."
+    }
+   },
+   {
+    "name": "SageMaker Experiments",
+    "use": {
+     "en": "Find and compare past training jobs to see which model did best.",
+     "vi": "Tìm và so sánh các training job cũ để biết model nào tốt nhất."
+    }
+   }
+  ]
+ },
+ "06-019": {
+  "tldr": {
+   "en": "Learn to read loss curves: plateau means learning rate too low, oscillation means too high, NaN means bad normalization, and validation stalling while training improves means overfitting.",
+   "vi": "Học cách đọc loss curve: chững lại là learning rate quá thấp, dao động là quá cao, NaN là normalization kém, validation đứng yên trong khi training tốt lên là overfitting."
+  },
+  "points": [
+   {
+    "en": "Loss plateaus early: learning rate too low, vanishing gradient, underfitting, or bad data.",
+    "vi": "Loss chững sớm: learning rate quá thấp, vanishing gradient, underfitting hoặc dữ liệu xấu."
+   },
+   {
+    "en": "Loss oscillates or diverges: learning rate too high or batch size too small.",
+    "vi": "Loss dao động hoặc phân kỳ: learning rate quá cao hoặc batch size quá nhỏ."
+   },
+   {
+    "en": "Loss goes infinite or NaN: exploding gradients, usually from missing normalization.",
+    "vi": "Loss thành vô cực hoặc NaN: exploding gradient, thường do thiếu normalization."
+   },
+   {
+    "en": "Training improves but validation stalls: overfitting. Regularize, simplify, or add data.",
+    "vi": "Training tốt lên nhưng validation đứng yên: overfitting. Regularize, đơn giản hóa hoặc thêm dữ liệu."
+   },
+   {
+    "en": "Tools: MLflow for tracking runs, TensorBoard for model internals, CloudWatch for CPU, GPU, memory and disk bottlenecks.",
+    "vi": "Công cụ: MLflow theo dõi run, TensorBoard xem bên trong model, CloudWatch cho nghẽn CPU, GPU, memory và disk."
+   }
+  ],
+  "services": [
+   {
+    "name": "MLflow with SageMaker AI",
+    "use": {
+     "en": "Experiment tracking: log losses, parameters, compare runs, track lineage.",
+     "vi": "Theo dõi experiment: ghi loss, parameter, so sánh run, theo dõi lineage."
+    }
+   },
+   {
+    "name": "TensorBoard",
+    "use": {
+     "en": "Visualize training and validation curves, gradients, weights, activations.",
+     "vi": "Trực quan hóa training và validation curve, gradient, weight, activation."
+    }
+   },
+   {
+    "name": "Amazon CloudWatch",
+    "use": {
+     "en": "Infrastructure metrics and alarms to find hardware bottlenecks.",
+     "vi": "Metric hạ tầng và alarm để tìm nút thắt phần cứng."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "SageMaker Debugger has been put into maintenance mode, replaced by MLflow, TensorBoard and CloudWatch.",
+   "vi": "SageMaker Debugger đã chuyển sang chế độ maintenance, được thay bằng MLflow, TensorBoard và CloudWatch."
+  },
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Loss curve symptom\"] --> B[\"Plateau: learning rate too low\"]\n  A --> C[\"Oscillating: learning rate too high or batch too small\"]\n  A --> D[\"NaN: poor normalization\"]\n  A --> E[\"Validation stalls: overfitting\"]",
+   "vi": "flowchart TD\n  A[\"Triệu chứng loss curve\"] --> B[\"Chững lại: learning rate quá thấp\"]\n  A --> C[\"Dao động: learning rate quá cao hoặc batch quá nhỏ\"]\n  A --> D[\"NaN: normalization kém\"]\n  A --> E[\"Validation đứng yên: overfitting\"]"
+  }
+ },
+ "06-020": {
+  "tldr": {
+   "en": "SageMaker Model Registry is a central catalog of model versions and metadata that manages approval status and feeds CI/CD deployment pipelines.",
+   "vi": "SageMaker Model Registry là catalog trung tâm cho các phiên bản model và metadata, quản lý trạng thái phê duyệt và đưa vào pipeline CI/CD."
+  },
+  "points": [
+   {
+    "en": "Catalogs models, versions and arbitrary metadata, like a fancy database.",
+    "vi": "Catalog các model, version và metadata tùy ý, giống một database nâng cao."
+   },
+   {
+    "en": "Tracks approval so a model can require manual approval before production.",
+    "vi": "Theo dõi trạng thái phê duyệt để model cần duyệt thủ công trước khi lên production."
+   },
+   {
+    "en": "Shares models across applications and plugs into CI/CD pipelines.",
+    "vi": "Chia sẻ model giữa các ứng dụng và tích hợp vào pipeline CI/CD."
+   },
+   {
+    "en": "Links to SageMaker Model Cards that describe a model's properties, limits and training data.",
+    "vi": "Liên kết với SageMaker Model Card mô tả thuộc tính, giới hạn và dữ liệu training của model."
+   },
+   {
+    "en": "Example flow: register model, EventBridge triggers Lambda, human approves, deployment pipeline runs.",
+    "vi": "Ví dụ: đăng ký model, EventBridge kích hoạt Lambda, người duyệt, pipeline deploy chạy."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Model Registry",
+    "use": {
+     "en": "Versioned model catalog with approval status; use for governance and CI/CD.",
+     "vi": "Catalog model có version và trạng thái duyệt; dùng cho governance và CI/CD."
+    }
+   },
+   {
+    "name": "SageMaker Model Cards",
+    "use": {
+     "en": "Governance documentation about a model.",
+     "vi": "Tài liệu governance về một model."
+    }
+   },
+   {
+    "name": "Amazon EventBridge",
+    "use": {
+     "en": "Captures the model-registered event to start the approval workflow.",
+     "vi": "Bắt sự kiện model được đăng ký để khởi động quy trình duyệt."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Train model\"] --> B[\"Model Registry\"]\n  B --> C[\"EventBridge\"]\n  C --> D[\"Lambda\"]\n  D --> E[\"Human approval\"]\n  E --> F[\"Update status\"]\n  F --> G[\"Deploy via inference pipeline\"]",
+   "vi": "flowchart LR\n  A[\"Train model\"] --> B[\"Model Registry\"]\n  B --> C[\"EventBridge\"]\n  C --> D[\"Lambda\"]\n  D --> E[\"Người duyệt\"]\n  E --> F[\"Cập nhật trạng thái\"]\n  F --> G[\"Deploy qua inference pipeline\"]"
+  }
+ },
+ "06-021": {
+  "tldr": {
+   "en": "MLflow is an open-source ML and GenAI platform that is fully managed and integrated in SageMaker AI, so you can keep using it on AWS.",
+   "vi": "MLflow là nền tảng ML và GenAI mã nguồn mở, được quản lý hoàn toàn và tích hợp trong SageMaker AI, nên bạn vẫn dùng được trên AWS."
+  },
+  "points": [
+   {
+    "en": "MLflow offers tracking, tracing, evaluations, observability, an AI gateway, and model management.",
+    "vi": "MLflow cung cấp tracking, tracing, evaluation, observability, AI gateway và quản lý model."
+   },
+   {
+    "en": "It is fully managed; compute and storage come from SageMaker and artifacts go to your S3 buckets.",
+    "vi": "Được quản lý hoàn toàn; compute và storage đến từ SageMaker và artifact nằm trong S3 của bạn."
+   },
+   {
+    "en": "Integrates with Studio, Model Registry, SageMaker Inference, IAM, CloudTrail and EventBridge.",
+    "vi": "Tích hợp với Studio, Model Registry, SageMaker Inference, IAM, CloudTrail và EventBridge."
+   }
+  ],
+  "services": [
+   {
+    "name": "MLflow on SageMaker AI",
+    "use": {
+     "en": "Managed MLflow for experiment tracking when your team already uses MLflow.",
+     "vi": "MLflow được quản lý để theo dõi experiment khi team đã quen dùng MLflow."
+    }
+   }
+  ]
+ },
+ "06-022": {
+  "tldr": {
+   "en": "TensorBoard visualizes loss, accuracy, model graphs, and weight histograms; SageMaker can launch it from the console or via a URL.",
+   "vi": "TensorBoard trực quan hóa loss, accuracy, model graph và histogram weight; SageMaker có thể mở nó từ console hoặc qua URL."
+  },
+  "points": [
+   {
+    "en": "Originally part of TensorFlow, it now also works with PyTorch.",
+    "vi": "Ban đầu thuộc TensorFlow, nay cũng dùng được với PyTorch."
+   },
+   {
+    "en": "Shows loss and accuracy, model graph, and histograms of weights and biases over time.",
+    "vi": "Hiển thị loss và accuracy, model graph, và histogram của weight, bias theo thời gian."
+   },
+   {
+    "en": "Projects high-dimensional embeddings down to 2 or 3 dimensions and offers profiling tools.",
+    "vi": "Chiếu embedding nhiều chiều xuống 2 hoặc 3 chiều và có công cụ profiling."
+   },
+   {
+    "en": "Access via the SageMaker console or a generated URL; training script needs a few modifications.",
+    "vi": "Truy cập qua SageMaker console hoặc URL được tạo; training script cần chỉnh sửa đôi chút."
+   }
+  ],
+  "services": [
+   {
+    "name": "TensorBoard on SageMaker",
+    "use": {
+     "en": "Visualize training internals when debugging training jobs.",
+     "vi": "Trực quan hóa bên trong quá trình training khi debug training job."
+    }
+   }
+  ]
+ },
+ "06-023": {
+  "tldr": {
+   "en": "For massive training, SageMaker offers the (now unmaintained) Training Compiler and warm pools that keep instances alive between repeated training jobs.",
+   "vi": "Cho training quy mô lớn, SageMaker có Training Compiler (nay không còn bảo trì) và warm pool giữ instance giữa các training job lặp lại."
+  },
+  "points": [
+   {
+    "en": "Training Compiler is in deep learning containers, set via compiler_config in the estimator, and can speed training up to 50%.",
+    "vi": "Training Compiler nằm trong deep learning container, bật bằng compiler_config trong estimator, tăng tốc training tới 50%."
+   },
+   {
+    "en": "It needs GPU instances, cannot use bring-your-own containers, and is incompatible with SageMaker distributed training libraries.",
+    "vi": "Cần GPU instance, không dùng được bring-your-own container và không tương thích với thư viện distributed training của SageMaker."
+   },
+   {
+    "en": "Warm pools keep hardware for a keep-alive period to skip re-provisioning on repeated training.",
+    "vi": "Warm pool giữ hardware trong một keep-alive period để bỏ qua việc provision lại khi train lặp lại."
+   },
+   {
+    "en": "Warm pools set KeepAlivePeriodInSeconds in resource config and require a service limit increase.",
+    "vi": "Warm pool đặt KeepAlivePeriodInSeconds trong resource config và cần yêu cầu tăng service limit."
+   },
+   {
+    "en": "Warm pools also use a persistent cache to keep data across training jobs.",
+    "vi": "Warm pool còn dùng persistent cache để giữ dữ liệu giữa các training job."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Training Compiler",
+    "use": {
+     "en": "Optimizes training on GPU for up to 50% speedup; no longer maintained.",
+     "vi": "Tối ưu training trên GPU, tăng tốc tới 50%; không còn bảo trì."
+    }
+   },
+   {
+    "name": "SageMaker Warm Pools",
+    "use": {
+     "en": "Retain training instances between jobs to cut startup time for repeated training.",
+     "vi": "Giữ instance giữa các job để giảm thời gian khởi động khi train lặp lại."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Training job 1\"] --> B[\"Instances kept alive\"]\n  B -->|\"within keep-alive period\"| C[\"Training job 2 reuses hardware and cache\"]\n  B -.->|\"period expires\"| D[\"Instances released\"]",
+   "vi": "flowchart LR\n  A[\"Training job 1\"] --> B[\"Instance được giữ lại\"]\n  B -->|\"trong keep-alive period\"| C[\"Training job 2 dùng lại hardware và cache\"]\n  B -.->|\"hết thời gian\"| D[\"Instance được giải phóng\"]"
+  }
+ },
+ "06-024": {
+  "tldr": {
+   "en": "Checkpointing saves training snapshots to S3 so you can resume or debug, and cluster health checks automatically replace faulty instances and restart jobs.",
+   "vi": "Checkpointing lưu snapshot training vào S3 để resume hoặc debug, còn cluster health check tự động thay instance lỗi và khởi động lại job."
+  },
+  "points": [
+   {
+    "en": "Checkpoints let you resume after failure and analyze the model at points during training.",
+    "vi": "Checkpoint cho phép resume sau lỗi và phân tích model tại các thời điểm trong training."
+   },
+   {
+    "en": "State syncs from /opt/ml/checkpoints to your S3 URI; set checkpoint_s3_uri and optionally checkpoint_local_path.",
+    "vi": "State đồng bộ từ /opt/ml/checkpoints lên S3 URI của bạn; đặt checkpoint_s3_uri và tùy chọn checkpoint_local_path."
+   },
+   {
+    "en": "Health checks run GPU checks and verify NCCL before training starts, on ml instance types.",
+    "vi": "Health check chạy kiểm tra GPU và xác minh NCCL trước khi training bắt đầu, trên các ml instance."
+   },
+   {
+    "en": "Faulty instances are replaced and the job restarts after SageMaker internal errors.",
+    "vi": "Instance lỗi được thay thế và job khởi động lại sau lỗi nội bộ của SageMaker."
+   },
+   {
+    "en": "The bigger the cluster, the more likely an instance fails mid-training.",
+    "vi": "Cluster càng lớn thì càng dễ có instance hỏng giữa lúc training."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Checkpointing",
+    "use": {
+     "en": "Snapshots training state to S3 for resume and troubleshooting.",
+     "vi": "Lưu snapshot trạng thái training vào S3 để resume và xử lý sự cố."
+    }
+   },
+   {
+    "name": "SageMaker cluster health checks",
+    "use": {
+     "en": "Automatic GPU and NCCL checks plus instance replacement and job restart.",
+     "vi": "Tự động kiểm tra GPU và NCCL, thay instance và khởi động lại job."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Training job\"] --> B[\"/opt/ml/checkpoints\"]\n  B -->|\"sync\"| C[\"Amazon S3\"]\n  C -->|\"resume after failure\"| A",
+   "vi": "flowchart LR\n  A[\"Training job\"] --> B[\"/opt/ml/checkpoints\"]\n  B -->|\"đồng bộ\"| C[\"Amazon S3\"]\n  C -->|\"resume sau lỗi\"| A"
+  }
+ },
+ "06-025": {
+  "tldr": {
+   "en": "Distributed training spreads work across instances via data parallelism or model parallelism, but first max out a single large instance because parallelism has overhead.",
+   "vi": "Distributed training chia việc cho nhiều instance bằng data parallelism hoặc model parallelism, nhưng nên tận dụng tối đa một instance lớn trước vì parallelism có overhead."
+  },
+  "points": [
+   {
+    "en": "Job parallelism trains separate models at once; data parallelism splits the data; model parallelism splits the model.",
+    "vi": "Job parallelism train nhiều model riêng cùng lúc; data parallelism chia dữ liệu; model parallelism chia model."
+   },
+   {
+    "en": "Max out one big instance (ml.p4d.24xlarge, 8 GPUs) before going multi-instance: it is cheaper and faster.",
+    "vi": "Tận dụng tối đa một instance lớn (ml.p4d.24xlarge, 8 GPU) trước khi dùng nhiều instance: rẻ và nhanh hơn."
+   },
+   {
+    "en": "SageMaker Distributed Data Parallelism (SMDDP) uses AllReduce to distribute gradient computation, like MapReduce for gradients.",
+    "vi": "SageMaker Distributed Data Parallelism (SMDDP) dùng AllReduce để phân tán tính gradient, giống MapReduce cho gradient."
+   },
+   {
+    "en": "AllGather offloads communication overhead to the CPU, freeing GPU capacity.",
+    "vi": "AllGather chuyển overhead giao tiếp sang CPU, giải phóng GPU."
+   },
+   {
+    "en": "Alternatives: PyTorch DDP, torchrun, mpirun, DeepSpeed (Microsoft, PyTorch), Horovod.",
+    "vi": "Lựa chọn khác: PyTorch DDP, torchrun, mpirun, DeepSpeed (Microsoft, PyTorch), Horovod."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Distributed Data Parallelism library",
+    "use": {
+     "en": "Scales training across multiple GPUs and instances with AllReduce.",
+     "vi": "Mở rộng training trên nhiều GPU và instance bằng AllReduce."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Need more training capacity\"] --> B[\"Max out largest single instance\"]\n  B --> C[\"Many models: job parallelism\"]\n  B --> D[\"Big dataset: data parallelism\"]\n  B --> E[\"Model too big: model parallelism\"]",
+   "vi": "flowchart TD\n  A[\"Cần thêm năng lực training\"] --> B[\"Tận dụng tối đa instance lớn nhất\"]\n  B --> C[\"Nhiều model: job parallelism\"]\n  B --> D[\"Dữ liệu lớn: data parallelism\"]\n  B --> E[\"Model quá lớn: model parallelism\"]"
+  }
+ },
+ "06-026": {
+  "tldr": {
+   "en": "The SageMaker model parallelism library (PyTorch only) splits huge models across GPUs using optimizer state sharding, activation checkpointing, and activation offloading; sharded data parallelism adds parameter and gradient sharding.",
+   "vi": "Thư viện model parallelism của SageMaker (chỉ PyTorch) chia model khổng lồ qua nhiều GPU bằng optimizer state sharding, activation checkpointing và activation offloading; sharded data parallelism thêm sharding cho parameter và gradient."
+  },
+  "points": [
+   {
+    "en": "Use it when a model does not fit in one GPU memory, or to free memory for larger batches.",
+    "vi": "Dùng khi model không vừa bộ nhớ một GPU, hoặc để dành bộ nhớ cho batch lớn hơn."
+   },
+   {
+    "en": "Optimizer state sharding shards weights across GPUs; needs a stateful optimizer and helps above about 1 billion parameters.",
+    "vi": "Optimizer state sharding chia weight qua các GPU; cần stateful optimizer và hữu ích khi trên khoảng 1 tỷ parameter."
+   },
+   {
+    "en": "Activation checkpointing trades computation for memory by recomputing activations in the backward pass.",
+    "vi": "Activation checkpointing đổi tính toán lấy bộ nhớ bằng cách tính lại activation ở backward pass."
+   },
+   {
+    "en": "Activation offloading swaps checkpointed activations between GPU and CPU in micro-batches.",
+    "vi": "Activation offloading hoán đổi activation đã checkpoint giữa GPU và CPU theo micro-batch."
+   },
+   {
+    "en": "Sharded data parallelism also shards trainable parameters and gradients; built into PyTorch deep learning containers.",
+    "vi": "Sharded data parallelism còn chia trainable parameter và gradient; có sẵn trong PyTorch deep learning container."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Model Parallelism library",
+    "use": {
+     "en": "Splits models too large for one GPU across GPUs; PyTorch only.",
+     "vi": "Chia model quá lớn cho một GPU qua nhiều GPU; chỉ PyTorch."
+    }
+   }
+  ]
+ },
+ "06-027": {
+  "tldr": {
+   "en": "EFA is a network device that speeds up inter-instance communication with NCCL on NVIDIA GPUs, and the MiCS approach combines it with sharding to train models beyond 1 trillion parameters.",
+   "vi": "EFA là thiết bị mạng tăng tốc giao tiếp giữa các instance với NCCL trên GPU NVIDIA, và hướng MiCS kết hợp nó với sharding để train model trên 1 nghìn tỷ parameter."
+  },
+  "points": [
+   {
+    "en": "Elastic Fabric Adapter gives on-premises HPC-like network performance in the cloud.",
+    "vi": "Elastic Fabric Adapter mang lại hiệu năng mạng như HPC on-premises trên cloud."
+   },
+   {
+    "en": "It works with NCCL, so it requires NVIDIA GPUs; the container needs NCCL, EFA and the AWS OFI NCCL plugin.",
+    "vi": "Hoạt động với NCCL nên cần GPU NVIDIA; container cần NCCL, EFA và plugin AWS OFI NCCL."
+   },
+   {
+    "en": "MiCS (minimize the communication scale) bundles sharded data parallelism, EFA and large instances.",
+    "vi": "MiCS (minimize the communication scale) gồm sharded data parallelism, EFA và instance lớn."
+   },
+   {
+    "en": "Training over 1 trillion parameters relies on distributed training, model and data parallelism, EFA, and MiCS.",
+    "vi": "Train trên 1 nghìn tỷ parameter dựa vào distributed training, model và data parallelism, EFA và MiCS."
+   },
+   {
+    "en": "Bigger instances mean less communication overhead between instances.",
+    "vi": "Instance càng lớn thì overhead giao tiếp giữa các instance càng thấp."
+   }
+  ],
+  "services": [
+   {
+    "name": "Elastic Fabric Adapter (EFA)",
+    "use": {
+     "en": "High-bandwidth network device for multi-node GPU training with NCCL.",
+     "vi": "Thiết bị mạng băng thông cao cho training GPU nhiều node với NCCL."
+    }
+   },
+   {
+    "name": "Amazon FSx",
+    "use": {
+     "en": "Fast low-latency storage feeding the large training cluster.",
+     "vi": "Storage nhanh, độ trễ thấp cấp dữ liệu cho cluster training lớn."
+    }
+   },
+   {
+    "name": "EC2 P4d instances",
+    "use": {
+     "en": "Each has 8 NVIDIA A100 GPUs and 400 Gbps networking.",
+     "vi": "Mỗi instance có 8 GPU NVIDIA A100 và mạng 400 Gbps."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "The example MiCS cluster uses 4000+ NVIDIA A100 GPUs on P4d instances, an EC2 UltraCluster.",
+   "vi": "Cluster MiCS minh họa dùng hơn 4000 GPU NVIDIA A100 trên instance P4d, tức EC2 UltraCluster."
+  },
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Amazon FSx storage\"] --> B[\"P4d instances with 8 A100 GPUs\"]\n  B <-->|\"400 Gbps EFA with NCCL\"| C[\"4000+ GPU UltraCluster\"]\n  C --> D[\"Models over 1 trillion parameters\"]",
+   "vi": "flowchart TD\n  A[\"Storage Amazon FSx\"] --> B[\"Instance P4d với 8 GPU A100\"]\n  B <-->|\"EFA 400 Gbps với NCCL\"| C[\"UltraCluster 4000+ GPU\"]\n  C --> D[\"Model trên 1 nghìn tỷ parameter\"]"
+  }
+ }
+}

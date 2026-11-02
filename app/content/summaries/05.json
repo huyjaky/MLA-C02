@@ -1,0 +1,898 @@
+{
+ "05-001": {
+  "tldr": {
+   "en": "SageMaker ships with many built-in algorithms, so for most common ML tasks you do not need to build your own container.",
+   "vi": "SageMaker có nhiều thuật toán dựng sẵn, nên với hầu hết bài toán ML phổ biến bạn không cần tự đóng gói container."
+  },
+  "points": [
+   {
+    "en": "Built-in models cover image recognition, NLP, clustering and more.",
+    "vi": "Các model dựng sẵn bao gồm nhận dạng ảnh, NLP, clustering và nhiều hơn."
+   },
+   {
+    "en": "Using an existing algorithm saves time versus packaging your own container.",
+    "vi": "Dùng thuật toán có sẵn tiết kiệm thời gian so với tự đóng gói container."
+   },
+   {
+    "en": "XGBoost is described as almost always a good idea to try.",
+    "vi": "XGBoost được nhắc là gần như luôn đáng thử."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker built-in algorithms",
+    "use": {
+     "en": "Ready-made training algorithms; pick them instead of a custom container.",
+     "vi": "Thuật toán huấn luyện dựng sẵn; chọn thay vì container tự viết."
+    }
+   }
+  ]
+ },
+ "05-002": {
+  "tldr": {
+   "en": "SageMaker manages the whole ML workflow: data in S3, training on hosts from ECR images, model artifacts back to S3, then endpoints for inference.",
+   "vi": "SageMaker quản lý toàn bộ workflow ML: dữ liệu ở S3, huấn luyện bằng image từ ECR, model artifact lưu về S3, rồi triển khai endpoint để suy luận."
+  },
+  "points": [
+   {
+    "en": "Training data sits in S3; training code comes from a Docker image in ECR; the trained model is saved back to S3.",
+    "vi": "Dữ liệu huấn luyện ở S3; code train lấy từ Docker image trong ECR; model đã train lưu lại S3."
+   },
+   {
+    "en": "Built-in algorithms prefer RecordIO protobuf input, but usually accept CSV; protobuf is more efficient.",
+    "vi": "Thuật toán dựng sẵn ưu tiên RecordIO protobuf, thường cũng nhận CSV; protobuf hiệu quả hơn."
+   },
+   {
+    "en": "Deploy as a persistent endpoint for on-demand predictions, or use batch transform for a whole dataset.",
+    "vi": "Triển khai endpoint thường trực cho dự đoán theo yêu cầu, hoặc batch transform cho cả dataset."
+   },
+   {
+    "en": "Extras: inference pipelines, Neo for edge devices, auto scaling, and shadow testing of a new model against the live one.",
+    "vi": "Thêm: inference pipeline, Neo cho thiết bị edge, auto scaling, và shadow testing model mới với model đang chạy."
+   },
+   {
+    "en": "Data can also come from Athena, EMR, Redshift and Keyspaces; Spark can integrate with SageMaker.",
+    "vi": "Dữ liệu cũng có thể đến từ Athena, EMR, Redshift, Keyspaces; Spark tích hợp được với SageMaker."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker notebook",
+    "use": {
+     "en": "Jupyter instance to prep data and launch training, tuning and deployment.",
+     "vi": "Jupyter instance để chuẩn bị dữ liệu, chạy training, tuning và deploy."
+    }
+   },
+   {
+    "name": "Amazon ECR",
+    "use": {
+     "en": "Holds the Docker images for training and inference code.",
+     "vi": "Chứa Docker image cho code training và inference."
+    }
+   },
+   {
+    "name": "Batch transform",
+    "use": {
+     "en": "Get predictions for a whole dataset, then shut down.",
+     "vi": "Dự đoán cho cả dataset rồi tắt."
+    }
+   },
+   {
+    "name": "SageMaker Neo",
+    "use": {
+     "en": "Deploy models to edge devices.",
+     "vi": "Triển khai model lên thiết bị edge."
+    }
+   },
+   {
+    "name": "Shadow testing",
+    "use": {
+     "en": "Compare a new model with the deployed one before promoting.",
+     "vi": "So sánh model mới với model đang chạy trước khi thay thế."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "The lecture opens by saying SageMaker is the service that comes up the most on the exam.",
+   "vi": "Bài giảng mở đầu bằng việc nói SageMaker là dịch vụ xuất hiện nhiều nhất trong đề thi."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Training data in S3\"] --> B[\"Training hosts\"]\n  C[\"Training image in ECR\"] --> B\n  B --> D[\"Model artifacts in S3\"]\n  D --> E[\"Endpoint\"]\n  F[\"Inference image in ECR\"] --> E\n  G[\"Client app\"] -->|\"request\"| E\n  E -->|\"prediction\"| G",
+   "vi": "flowchart LR\n  A[\"Dữ liệu train ở S3\"] --> B[\"Training hosts\"]\n  C[\"Training image ở ECR\"] --> B\n  B --> D[\"Model artifact ở S3\"]\n  D --> E[\"Endpoint\"]\n  F[\"Inference image ở ECR\"] --> E\n  G[\"Ứng dụng client\"] -->|\"request\"| E\n  E -->|\"dự đoán\"| G"
+  }
+ },
+ "05-003": {
+  "tldr": {
+   "en": "Input modes decide how training data gets from storage to the training instance: copy it (File), stream it (Fast File, Pipe), or mount a shared filesystem.",
+   "vi": "Input mode quyết định cách dữ liệu đi từ storage tới instance train: copy (File), stream (Fast File, Pipe), hoặc mount filesystem dùng chung."
+  },
+  "points": [
+   {
+    "en": "S3 File mode (default) copies all data to local disk first: simple, but slow start and needs enough disk.",
+    "vi": "S3 File mode (mặc định) copy hết dữ liệu về local trước: đơn giản nhưng khởi động chậm và cần đủ ổ đĩa."
+   },
+   {
+    "en": "Fast File mode streams from S3 with no wait, needs no full local copy, and supports random access; preferred over Pipe.",
+    "vi": "Fast File mode stream từ S3, không cần chờ, không cần copy hết, hỗ trợ random access; được ưu tiên hơn Pipe."
+   },
+   {
+    "en": "Pipe mode streams sequentially; still available but mostly replaced by Fast File.",
+    "vi": "Pipe mode stream tuần tự; vẫn còn nhưng phần lớn bị Fast File thay thế."
+   },
+   {
+    "en": "S3 Express One Zone is a fast single-AZ storage class that works with File, Fast File and Pipe modes.",
+    "vi": "S3 Express One Zone là storage class nhanh trong một AZ, dùng được với File, Fast File và Pipe."
+   },
+   {
+    "en": "FSx for Lustre gives hundreds of GB/s and millions of IOPS for huge jobs like LLMs; single AZ and needs a VPC. EFS also needs a VPC.",
+    "vi": "FSx for Lustre đạt hàng trăm GB/s và hàng triệu IOPS cho job rất lớn như LLM; một AZ và cần VPC. EFS cũng cần VPC."
+   }
+  ],
+  "services": [
+   {
+    "name": "S3 Fast File mode",
+    "use": {
+     "en": "Stream training data from S3 without waiting for a download.",
+     "vi": "Stream dữ liệu train từ S3 không cần chờ tải."
+    }
+   },
+   {
+    "name": "Amazon FSx for Lustre",
+    "use": {
+     "en": "Highest throughput and lowest latency for massive training data.",
+     "vi": "Throughput cao nhất, latency thấp nhất cho dữ liệu train khổng lồ."
+    }
+   },
+   {
+    "name": "Amazon EFS",
+    "use": {
+     "en": "Use when the data already lives in EFS (needs a VPC).",
+     "vi": "Dùng khi dữ liệu đã nằm ở EFS (cần VPC)."
+    }
+   },
+   {
+    "name": "S3 Express One Zone",
+    "use": {
+     "en": "High-performance single-AZ storage to speed up data loading.",
+     "vi": "Storage hiệu năng cao một AZ để tăng tốc nạp dữ liệu."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Training data\"] --> B[\"How big or fast?\"]\n  B -->|\"small\"| C[\"S3 File mode\"]\n  B -->|\"large\"| D[\"S3 Fast File mode\"]\n  B -->|\"sequential stream\"| E[\"Pipe mode\"]\n  B -->|\"massive, LLM scale\"| F[\"FSx for Lustre\"]\n  B -->|\"already in EFS\"| G[\"Amazon EFS\"]",
+   "vi": "flowchart TD\n  A[\"Dữ liệu train\"] --> B[\"Lớn hay cần nhanh?\"]\n  B -->|\"nhỏ\"| C[\"S3 File mode\"]\n  B -->|\"lớn\"| D[\"S3 Fast File mode\"]\n  B -->|\"stream tuần tự\"| E[\"Pipe mode\"]\n  B -->|\"khổng lồ, cỡ LLM\"| F[\"FSx for Lustre\"]\n  B -->|\"đã ở EFS\"| G[\"Amazon EFS\"]"
+  }
+ },
+ "05-004": {
+  "tldr": {
+   "en": "Linear Learner fits a linear function for regression and for binary or multi-class classification, trained with SGD variants.",
+   "vi": "Linear Learner khớp hàm tuyến tính cho regression và phân loại nhị phân hoặc nhiều lớp, huấn luyện bằng các biến thể SGD."
+  },
+  "points": [
+   {
+    "en": "Input: RecordIO protobuf Float32 is best; CSV works with the label in the first column. File or Pipe mode.",
+    "vi": "Input: RecordIO protobuf Float32 tốt nhất; CSV nhận được với label ở cột đầu. Hỗ trợ File hoặc Pipe."
+   },
+   {
+    "en": "Data must be normalized (yourself or via the algorithm) and shuffled.",
+    "vi": "Dữ liệu phải được normalize (tự làm hoặc để thuật toán làm) và shuffle."
+   },
+   {
+    "en": "Trains multiple models in parallel and picks the best on validation; offers L1 (feature selection) and L2 (weight decay).",
+    "vi": "Train nhiều model song song và chọn model tốt nhất khi validation; có L1 (chọn feature) và L2 (weight decay)."
+   },
+   {
+    "en": "Key hyperparameters: balance_multiclass_weights, learning rate, batch size, L1, L2; target precision or recall via model selection criteria.",
+    "vi": "Hyperparameter chính: balance_multiclass_weights, learning rate, batch size, L1, L2; target precision hoặc recall qua tiêu chí chọn model."
+   },
+   {
+    "en": "Instances: CPU or GPU, single or multi-machine; more machines help, more than one GPU per machine does not.",
+    "vi": "Instance: CPU hoặc GPU, một hoặc nhiều máy; nhiều máy có ích, nhiều GPU trên một máy thì không."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Linear Learner",
+    "use": {
+     "en": "Regression or classification when a linear fit is appropriate.",
+     "vi": "Regression hoặc phân loại khi dữ liệu phù hợp với đường thẳng."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "The AWS example uses Linear Learner as a classifier on raw MNIST handwriting pixels, and it works.",
+   "vi": "Ví dụ của AWS dùng Linear Learner phân loại chữ số MNIST từ pixel thô, và nó vẫn hoạt động."
+  }
+ },
+ "05-005": {
+  "tldr": {
+   "en": "XGBoost is boosted decision trees for classification and regression; tuning its many hyperparameters is the main work.",
+   "vi": "XGBoost là các cây quyết định boosting cho phân loại và regression; việc chính là tune nhiều hyperparameter."
+  },
+  "points": [
+   {
+    "en": "Each new tree corrects earlier errors using gradient descent; based on open-source XGBoost, models saved with pickle.",
+    "vi": "Mỗi cây mới sửa lỗi cây trước bằng gradient descent; dựa trên XGBoost mã nguồn mở, model lưu bằng pickle."
+   },
+   {
+    "en": "Input: CSV, libsvm, and now RecordIO protobuf and parquet.",
+    "vi": "Input: CSV, libsvm, và nay có cả RecordIO protobuf và parquet."
+   },
+   {
+    "en": "Overfitting controls: subsample, eta, gamma, alpha (L1), lambda (L2), and a lower max_depth.",
+    "vi": "Chống overfitting: subsample, eta, gamma, alpha (L1), lambda (L2), và max_depth thấp hơn."
+   },
+   {
+    "en": "eval_metric sets the optimized metric (error, RMSE, AUC); scale_pos_weight handles imbalance (negatives over positives).",
+    "vi": "eval_metric chọn metric tối ưu (error, RMSE, AUC); scale_pos_weight xử lý mất cân bằng (negative chia positive)."
+   },
+   {
+    "en": "CPU XGBoost is memory-bound, so use M5; GPU needs tree_method gpu_hist, and distributed GPU adds use_dask_gpu_training and fully replicated.",
+    "vi": "XGBoost CPU bị giới hạn bộ nhớ nên dùng M5; GPU cần tree_method gpu_hist, GPU phân tán thêm use_dask_gpu_training và fully replicated."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker XGBoost",
+    "use": {
+     "en": "Go-to algorithm for tabular classification or regression.",
+     "vi": "Thuật toán nên chọn cho bài toán tabular phân loại hoặc regression."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "XGBoost has won many Kaggle competitions, and AWS built its SageMaker version on the open-source code rather than from scratch.",
+   "vi": "XGBoost từng thắng nhiều cuộc thi Kaggle, và AWS xây bản SageMaker trên mã nguồn mở thay vì viết mới."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Tree 1\"] -->|\"errors\"| B[\"Tree 2\"]\n  B -->|\"remaining errors\"| C[\"Tree 3\"]\n  C --> D[\"Sum of trees = final model\"]",
+   "vi": "flowchart LR\n  A[\"Cây 1\"] -->|\"lỗi\"| B[\"Cây 2\"]\n  B -->|\"lỗi còn lại\"| C[\"Cây 3\"]\n  C --> D[\"Tổng các cây = model cuối\"]"
+  }
+ },
+ "05-006": {
+  "tldr": {
+   "en": "LightGBM is a gradient boosting decision tree algorithm like XGBoost, for classification, regression and ranking; CPU only and memory-bound.",
+   "vi": "LightGBM là thuật toán gradient boosting decision tree giống XGBoost, cho phân loại, regression và ranking; chỉ chạy CPU và bị giới hạn bộ nhớ."
+  },
+  "points": [
+   {
+    "en": "LightGBM and CatBoost are both gradient boosted decision tree algorithms built into SageMaker.",
+    "vi": "LightGBM và CatBoost đều là thuật toán gradient boosted decision tree dựng sẵn trong SageMaker."
+   },
+   {
+    "en": "Input is text CSV for training and inference; validation data is optional.",
+    "vi": "Input là CSV text cho training và inference; validation data là tùy chọn."
+   },
+   {
+    "en": "Tunable: learning rate, num_leaves, feature fraction, bagging fraction and bagging_freq, max depth, min_data_in_leaf (helps overfitting).",
+    "vi": "Có thể tune: learning rate, num_leaves, feature fraction, bagging fraction và bagging_freq, max depth, min_data_in_leaf (giúp chống overfitting)."
+   },
+   {
+    "en": "CPU only, single or multi-instance via instance_count; memory-bound so choose M5 over C5.",
+    "vi": "Chỉ CPU, một hoặc nhiều instance qua instance_count; bị giới hạn bộ nhớ nên chọn M5 thay vì C5."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker LightGBM",
+    "use": {
+     "en": "Boosted trees for classification, regression or ranking on CPU.",
+     "vi": "Boosted tree cho phân loại, regression hoặc ranking trên CPU."
+    }
+   },
+   {
+    "name": "SageMaker CatBoost",
+    "use": {
+     "en": "Similar gradient boosting tree algorithm.",
+     "vi": "Thuật toán gradient boosting tree tương tự."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "LightGBM got its name from extensions like gradient-based one-side sampling and exclusive feature bundling.",
+   "vi": "LightGBM có tên vậy nhờ các mở rộng như gradient-based one-side sampling và exclusive feature bundling."
+  }
+ },
+ "05-007": {
+  "tldr": {
+   "en": "Seq2Seq turns one sequence of tokens into another, mainly for machine translation, text summarization and speech to text.",
+   "vi": "Seq2Seq biến một chuỗi token thành chuỗi khác, chủ yếu cho dịch máy, tóm tắt văn bản và speech to text."
+  },
+  "points": [
+   {
+    "en": "Built on RNNs or CNNs with attention.",
+    "vi": "Xây dựng trên RNN hoặc CNN có attention."
+   },
+   {
+    "en": "Input: RecordIO protobuf with integer tokens, plus a vocabulary file mapping words to numbers; training and validation sets required.",
+    "vi": "Input: RecordIO protobuf với token dạng số nguyên, cộng file vocabulary ánh xạ từ sang số; cần train và validation set."
+   },
+   {
+    "en": "Hyperparameters: batch size, optimizer (Adam, SGD, RMSprop), learning rate, number of layers.",
+    "vi": "Hyperparameter: batch size, optimizer (Adam, SGD, RMSprop), learning rate, số layer."
+   },
+   {
+    "en": "Evaluate with BLEU score and perplexity, suited to machine translation.",
+    "vi": "Đánh giá bằng BLEU score và perplexity, phù hợp với dịch máy."
+   },
+   {
+    "en": "GPU only, single machine (no multi-machine), but multi-GPU on that machine works; use P3.",
+    "vi": "Chỉ GPU, một máy (không đa máy), nhưng dùng nhiều GPU trên máy đó được; dùng P3."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Seq2Seq",
+    "use": {
+     "en": "Translation, summarization and speech to text from token sequences.",
+     "vi": "Dịch, tóm tắt và speech to text từ chuỗi token."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Training a translation model can take days even on SageMaker, so pre-trained models and public datasets are available.",
+   "vi": "Huấn luyện model dịch có thể mất nhiều ngày ngay cả trên SageMaker, nên có sẵn pre-trained model và dataset công khai."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Input token sequence\"] --> B[\"Encoder\"]\n  B --> C[\"Decoder\"]\n  C --> D[\"Output token sequence\"]",
+   "vi": "flowchart LR\n  A[\"Chuỗi token đầu vào\"] --> B[\"Encoder\"]\n  B --> C[\"Decoder\"]\n  C --> D[\"Chuỗi token đầu ra\"]"
+  }
+ },
+ "05-008": {
+  "tldr": {
+   "en": "DeepAR forecasts one-dimensional time series with an RNN, and gets stronger when trained on many related time series at once.",
+   "vi": "DeepAR dự báo chuỗi thời gian một chiều bằng RNN, và mạnh hơn khi huấn luyện trên nhiều chuỗi liên quan cùng lúc."
+  },
+  "points": [
+   {
+    "en": "Input: JSON Lines (optionally gzipped) or parquet; each record has start timestamp and target values, optional dynamic and categorical features.",
+    "vi": "Input: JSON Lines (có thể gzip) hoặc parquet; mỗi record có start timestamp và target, tùy chọn dynamic và categorical feature."
+   },
+   {
+    "en": "Always give the entire time series for training, testing and inference; test on the full set with the last points withheld for training.",
+    "vi": "Luôn đưa toàn bộ chuỗi cho training, testing và inference; test trên toàn bộ, còn training bỏ các điểm cuối."
+   },
+   {
+    "en": "Do not use very large prediction length (beyond about 400 points).",
+    "vi": "Không dùng prediction length quá lớn (hơn khoảng 400 điểm)."
+   },
+   {
+    "en": "Hyperparameters: epochs, batch size, learning rate, num cells, context length (points seen before predicting).",
+    "vi": "Hyperparameter: epochs, batch size, learning rate, num cells, context length (số điểm model thấy trước khi dự đoán)."
+   },
+   {
+    "en": "Start on CPU (ml.c4.2xlarge or 4xlarge); GPU only for big models or batch over 512; inference is CPU only.",
+    "vi": "Bắt đầu với CPU (ml.c4.2xlarge hoặc 4xlarge); GPU chỉ cho model lớn hoặc batch trên 512; inference chỉ CPU."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker DeepAR",
+    "use": {
+     "en": "Forecasting time series, especially many related series.",
+     "vi": "Dự báo time series, đặc biệt nhiều chuỗi liên quan."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Even with a short context length, DeepAR can pick up seasonality up to one year back because the model lags by one year.",
+   "vi": "Dù context length ngắn, DeepAR vẫn bắt được tính mùa vụ tới một năm trước vì model lag một năm."
+  }
+ },
+ "05-009": {
+  "tldr": {
+   "en": "BlazingText does only two things: supervised text classification of sentences, and Word2vec word embeddings.",
+   "vi": "BlazingText chỉ làm hai việc: phân loại văn bản có giám sát ở mức câu, và word embedding Word2vec."
+  },
+  "points": [
+   {
+    "en": "Text classification works on sentences, not entire documents; Word2vec works on words only.",
+    "vi": "Phân loại văn bản làm việc với câu, không phải cả tài liệu; Word2vec chỉ làm việc với từ."
+   },
+   {
+    "en": "Supervised input: one sentence per line starting with __label__ and the label, tokenized and lowercased; augmented manifest also accepted.",
+    "vi": "Input có giám sát: mỗi dòng một câu bắt đầu bằng __label__ và nhãn, đã tokenize và lowercase; nhận cả augmented manifest."
+   },
+   {
+    "en": "Word2vec input is a text file with one training sentence per line.",
+    "vi": "Input Word2vec là file text, mỗi dòng một câu huấn luyện."
+   },
+   {
+    "en": "Word2vec modes: CBOW ignores word order; skip-gram and batch skip-gram keep it, and batch skip-gram can use many CPU nodes.",
+    "vi": "Mode Word2vec: CBOW bỏ qua thứ tự từ; skip-gram và batch skip-gram giữ thứ tự, batch skip-gram dùng được nhiều node CPU."
+   },
+   {
+    "en": "Instances: CBOW and skip-gram on a single CPU or GPU (P3); text classification C5 under 2 GB, else P2 or P3.",
+    "vi": "Instance: CBOW và skip-gram một CPU hoặc GPU (P3); text classification dùng C5 dưới 2 GB, lớn hơn dùng P2 hoặc P3."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker BlazingText",
+    "use": {
+     "en": "Sentence classification or word embeddings for NLP pipelines.",
+     "vi": "Phân loại câu hoặc word embedding cho pipeline NLP."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Despite its grand name, BlazingText is narrow in scope: it is not a general-purpose NLP service.",
+   "vi": "Dù tên nghe to tát, BlazingText khá hẹp: không phải dịch vụ NLP đa dụng."
+  }
+ },
+ "05-010": {
+  "tldr": {
+   "en": "Object2Vec is a general-purpose embedding algorithm that learns similarity between pairs of arbitrary objects, such as users and items.",
+   "vi": "Object2Vec là thuật toán embedding đa dụng học độ tương đồng giữa các cặp đối tượng bất kỳ, như user và item."
+  },
+  "points": [
+   {
+    "en": "It creates low-dimensional dense embeddings; unlike Word2vec it works on arbitrary objects, not just words.",
+    "vi": "Tạo embedding dày, chiều thấp; khác Word2vec, nó làm việc với đối tượng bất kỳ, không chỉ từ."
+   },
+   {
+    "en": "Uses: nearest neighbors, clustering and visualization, genre prediction, recommender systems.",
+    "vi": "Ứng dụng: nearest neighbors, clustering và trực quan hóa, dự đoán thể loại, hệ thống recommender."
+   },
+   {
+    "en": "Input: integer-tokenized pairs of tokens or sequences, such as sentence pairs or user-item pairs.",
+    "vi": "Input: các cặp token hoặc chuỗi đã tokenize thành số nguyên, như cặp câu hoặc cặp user-item."
+   },
+   {
+    "en": "Architecture: two input channels with their own encoders (average pooled embeddings, CNN or BiLSTM), a comparator, then a feedforward network.",
+    "vi": "Kiến trúc: hai kênh input có encoder riêng (pooled embedding, CNN hoặc BiLSTM), một comparator, rồi feedforward network."
+   },
+   {
+    "en": "Single machine only, CPU or GPU; start with ml.m5.2xlarge or ml.p2.xlarge; infer on ml.p3.2xlarge.",
+    "vi": "Chỉ một máy, CPU hoặc GPU; bắt đầu với ml.m5.2xlarge hoặc ml.p2.xlarge; infer trên ml.p3.2xlarge."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Object2Vec",
+    "use": {
+     "en": "Embeddings of any object pairs, for similarity and recommendations.",
+     "vi": "Embedding cho cặp đối tượng bất kỳ, dùng cho similarity và recommendation."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Input object 1\"] --> B[\"Encoder 1\"]\n  C[\"Input object 2\"] --> D[\"Encoder 2\"]\n  B --> E[\"Comparator\"]\n  D --> E\n  E --> F[\"Feedforward network\"]\n  F --> G[\"Similarity label\"]",
+   "vi": "flowchart LR\n  A[\"Đối tượng 1\"] --> B[\"Encoder 1\"]\n  C[\"Đối tượng 2\"] --> D[\"Encoder 2\"]\n  B --> E[\"Comparator\"]\n  D --> E\n  E --> F[\"Feedforward network\"]\n  F --> G[\"Nhãn tương đồng\"]"
+  }
+ },
+ "05-011": {
+  "tldr": {
+   "en": "Object detection finds every object in an image with its class, confidence score and bounding box.",
+   "vi": "Object detection tìm mọi đối tượng trong ảnh cùng class, confidence score và bounding box."
+  },
+  "points": [
+   {
+    "en": "Two versions: Object Detection MXNet (SSD with VGG16 or ResNet50) and Object Detection TensorFlow (TensorFlow model garden models).",
+    "vi": "Hai phiên bản: Object Detection MXNet (SSD với VGG16 hoặc ResNet50) và Object Detection TensorFlow (model từ TensorFlow model garden)."
+   },
+   {
+    "en": "Train from scratch or with transfer learning from pre-trained ImageNet weights; incremental training supported.",
+    "vi": "Train từ đầu hoặc transfer learning từ trọng số ImageNet; hỗ trợ incremental training."
+   },
+   {
+    "en": "MXNet input: RecordIO or JPEG/PNG images plus a JSON annotation file per image.",
+    "vi": "Input MXNet: RecordIO hoặc ảnh JPEG/PNG kèm file JSON annotation cho mỗi ảnh."
+   },
+   {
+    "en": "Hyperparameters: mini-batch size, learning rate, optimizer.",
+    "vi": "Hyperparameter: mini-batch size, learning rate, optimizer."
+   },
+   {
+    "en": "Train on GPU (P2, P3, G4, G5, multi-GPU allowed); infer on CPU (M5) or GPU.",
+    "vi": "Train trên GPU (P2, P3, G4, G5, nhiều GPU được); infer trên CPU (M5) hoặc GPU."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Object Detection",
+    "use": {
+     "en": "Locate and classify multiple objects in images with bounding boxes.",
+     "vi": "Định vị và phân loại nhiều đối tượng trong ảnh bằng bounding box."
+    }
+   }
+  ]
+ },
+ "05-012": {
+  "tldr": {
+   "en": "Image classification only says what is in an image (labels), while object detection also says where.",
+   "vi": "Image classification chỉ cho biết có gì trong ảnh (nhãn), còn object detection cho biết cả vị trí."
+  },
+  "points": [
+   {
+    "en": "Expect an exam question on this difference: classification returns labels, no locations.",
+    "vi": "Dễ có câu hỏi về khác biệt này: classification trả về nhãn, không có vị trí."
+   },
+   {
+    "en": "Separate MXNet and TensorFlow versions; MXNet has full training mode and transfer learning mode with a new top layer.",
+    "vi": "Có bản MXNet và TensorFlow riêng; MXNet có full training và transfer learning với top layer mới."
+   },
+   {
+    "en": "MXNet default image size is 3-channel 224 by 224, matching ImageNet.",
+    "vi": "Kích thước ảnh mặc định MXNet là 3 kênh 224x224, khớp với ImageNet."
+   },
+   {
+    "en": "TensorFlow offers MobileNet, Inception, ResNet, EfficientNet; hyperparameters are batch size, learning rate, optimizer and its parameters.",
+    "vi": "TensorFlow có MobileNet, Inception, ResNet, EfficientNet; hyperparameter là batch size, learning rate, optimizer và tham số của nó."
+   },
+   {
+    "en": "Train on GPU (P2, P3, G4, G5); infer on M5 CPU or GPU.",
+    "vi": "Train trên GPU (P2, P3, G4, G5); infer trên CPU M5 hoặc GPU."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Image Classification",
+    "use": {
+     "en": "Assign one or more labels to a whole image.",
+     "vi": "Gán một hoặc nhiều nhãn cho toàn bộ ảnh."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Image classification\"] -->|\"what\"| B[\"Labels only\"]\n  C[\"Object detection\"] -->|\"what and where\"| D[\"Bounding boxes\"]\n  E[\"Semantic segmentation\"] -->|\"every pixel\"| F[\"Segmentation mask\"]",
+   "vi": "flowchart LR\n  A[\"Image classification\"] -->|\"cái gì\"| B[\"Chỉ có nhãn\"]\n  C[\"Object detection\"] -->|\"cái gì và ở đâu\"| D[\"Bounding box\"]\n  E[\"Semantic segmentation\"] -->|\"từng pixel\"| F[\"Segmentation mask\"]"
+  }
+ },
+ "05-013": {
+  "tldr": {
+   "en": "Semantic segmentation classifies every pixel of an image into an object class, producing a segmentation mask.",
+   "vi": "Semantic segmentation phân loại từng pixel của ảnh thành một lớp đối tượng, tạo ra segmentation mask."
+  },
+  "points": [
+   {
+    "en": "Finer than detection: used for self-driving cars, medical imaging, robot sensing.",
+    "vi": "Chi tiết hơn detection: dùng cho xe tự lái, ảnh y tế, cảm biến robot."
+   },
+   {
+    "en": "Input: JPEG or PNG with annotations, label maps, train and validation data; augmented manifest and Pipe mode supported; inference takes a JPEG.",
+    "vi": "Input: JPEG hoặc PNG kèm annotation, label map, dữ liệu train và validation; hỗ trợ augmented manifest và Pipe mode; inference nhận ảnh JPEG."
+   },
+   {
+    "en": "Built on Gluon and GluonCV over MXNet; algorithms FCN, PSP or DeepLabV3; backbone ResNet50 or ResNet101 pre-trained on ImageNet.",
+    "vi": "Xây trên Gluon và GluonCV của MXNet; thuật toán FCN, PSP hoặc DeepLabV3; backbone ResNet50 hoặc ResNet101 pre-train trên ImageNet."
+   },
+   {
+    "en": "Tune epochs, learning rate, batch size, optimizer, algorithm and backbone.",
+    "vi": "Tune epochs, learning rate, batch size, optimizer, algorithm và backbone."
+   },
+   {
+    "en": "Training is GPU only and single machine (P2, P3, G4, G5); inference can be CPU (C5, M5) or GPU.",
+    "vi": "Training chỉ GPU và một máy (P2, P3, G4, G5); inference dùng được CPU (C5, M5) hoặc GPU."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Semantic Segmentation",
+    "use": {
+     "en": "Pixel-level labeling of images.",
+     "vi": "Gán nhãn ở mức pixel cho ảnh."
+    }
+   }
+  ]
+ },
+ "05-014": {
+  "tldr": {
+   "en": "Random Cut Forest is Amazon's unsupervised anomaly detection algorithm that gives every data point an anomaly score.",
+   "vi": "Random Cut Forest là thuật toán phát hiện bất thường không giám sát của Amazon, gán anomaly score cho từng điểm dữ liệu."
+  },
+  "points": [
+   {
+    "en": "It flags breaks in periodicity and unclassifiable points; works on streaming data too.",
+    "vi": "Nó đánh dấu điểm phá vỡ chu kỳ và điểm không phân loại được; dùng được cả với dữ liệu streaming."
+   },
+   {
+    "en": "Input: CSV or RecordIO protobuf, File or Pipe mode; an optional test channel computes accuracy, precision, recall, F1 on labeled data.",
+    "vi": "Input: CSV hoặc RecordIO protobuf, File hoặc Pipe; test channel tùy chọn để tính accuracy, precision, recall, F1 trên dữ liệu có nhãn."
+   },
+   {
+    "en": "Builds a forest of trees; a point that forces many new branches is likely anomalous.",
+    "vi": "Xây một rừng cây; điểm làm cây phải tạo nhiều nhánh mới có khả năng là bất thường."
+   },
+   {
+    "en": "Hyperparameters: num_trees (more trees reduce noise) and num_samples_per_tree, where 1 over it should approximate the anomaly ratio.",
+    "vi": "Hyperparameter: num_trees (nhiều cây giảm nhiễu) và num_samples_per_tree, với 1 chia nó xấp xỉ tỷ lệ bất thường."
+   },
+   {
+    "en": "No GPU: train on M4, C4 or C5; infer on ml.c5.xlarge.",
+    "vi": "Không dùng GPU: train trên M4, C4 hoặc C5; infer trên ml.c5.xlarge."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Random Cut Forest",
+    "use": {
+     "en": "Unsupervised anomaly detection on tabular or time series data.",
+     "vi": "Phát hiện bất thường không giám sát trên dữ liệu bảng hoặc time series."
+    }
+   },
+   {
+    "name": "Kinesis Data Analytics",
+    "use": {
+     "en": "Also offers Random Cut Forest for anomaly detection on streams.",
+     "vi": "Cũng cung cấp Random Cut Forest để phát hiện bất thường trên stream."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Amazon developed Random Cut Forest itself, wrote a paper on it, and it keeps appearing across its services.",
+   "vi": "Amazon tự phát triển Random Cut Forest, có cả bài báo khoa học, và nó xuất hiện trong nhiều dịch vụ của họ."
+  }
+ },
+ "05-015": {
+  "tldr": {
+   "en": "Neural Topic Model groups documents into a chosen number of unsupervised topics using a neural network.",
+   "vi": "Neural Topic Model nhóm tài liệu thành số topic bạn chọn một cách không giám sát bằng neural network."
+  },
+  "points": [
+   {
+    "en": "Topics are abstract word groupings; you must interpret them yourself (for example bike, car, train, speed imply transportation).",
+    "vi": "Topic là nhóm từ trừu tượng; bạn phải tự diễn giải (ví dụ bike, car, train, speed suy ra transportation)."
+   },
+   {
+    "en": "Input: RecordIO protobuf or CSV with documents tokenized to integer word counts, plus a vocabulary file on the auxiliary channel.",
+    "vi": "Input: RecordIO protobuf hoặc CSV, tài liệu được tokenize thành đếm từ dạng số nguyên, kèm file vocabulary ở auxiliary channel."
+   },
+   {
+    "en": "Main hyperparameter is the number of topics; also batch size and learning rate.",
+    "vi": "Hyperparameter chính là số topic; ngoài ra batch size và learning rate."
+   },
+   {
+    "en": "Based on neural variational inference; GPU recommended for training, CPU fine for inference.",
+    "vi": "Dựa trên neural variational inference; nên dùng GPU để train, CPU đủ cho inference."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Neural Topic Model",
+    "use": {
+     "en": "Unsupervised topic modeling with a neural network.",
+     "vi": "Topic modeling không giám sát bằng neural network."
+    }
+   }
+  ]
+ },
+ "05-016": {
+  "tldr": {
+   "en": "LDA is SageMaker's non-neural, CPU-based topic modeling algorithm; it is unsupervised and works like Neural Topic Model from the outside.",
+   "vi": "LDA là thuật toán topic modeling không dùng neural network, chạy trên CPU của SageMaker; không giám sát và dùng giống Neural Topic Model."
+  },
+  "points": [
+   {
+    "en": "Groups documents by shared words; can also cluster customers by purchases or do harmonic analysis in music.",
+    "vi": "Nhóm tài liệu theo từ chung; cũng có thể gom nhóm khách hàng theo mua hàng hoặc phân tích hòa âm trong nhạc."
+   },
+   {
+    "en": "Input: RecordIO protobuf or CSV of word counts per document; Pipe mode only with RecordIO.",
+    "vi": "Input: RecordIO protobuf hoặc CSV đếm từ theo tài liệu; Pipe mode chỉ với RecordIO."
+   },
+   {
+    "en": "Tune num_topics and alpha0 (smaller gives sparser topic mixtures, larger gives uniform).",
+    "vi": "Tune num_topics và alpha0 (nhỏ cho hỗn hợp topic thưa, lớn cho hỗn hợp đồng đều)."
+   },
+   {
+    "en": "Scored by per-word log likelihood on an optional test channel.",
+    "vi": "Chấm điểm bằng per-word log likelihood trên test channel tùy chọn."
+   },
+   {
+    "en": "Single-instance CPU training only, so no parallelization.",
+    "vi": "Chỉ train trên một instance CPU, không song song hóa."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker LDA",
+    "use": {
+     "en": "Latent Dirichlet Allocation topic modeling on CPU, cheaper than the neural version.",
+     "vi": "Topic modeling Latent Dirichlet Allocation trên CPU, rẻ hơn bản neural."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Documents\"] --> B[\"Tokenize to word counts\"]\n  B --> C[\"LDA or Neural Topic Model\"]\n  C --> D[\"N unlabeled topics\"]\n  D --> E[\"You interpret the topics\"]",
+   "vi": "flowchart LR\n  A[\"Tài liệu\"] --> B[\"Tokenize thành đếm từ\"]\n  B --> C[\"LDA hoặc Neural Topic Model\"]\n  C --> D[\"N topic chưa có nhãn\"]\n  D --> E[\"Bạn tự diễn giải topic\"]"
+  }
+ },
+ "05-017": {
+  "tldr": {
+   "en": "KNN looks at the k nearest points and returns the most common label (classification) or the average value (regression).",
+   "vi": "KNN xem k điểm gần nhất và trả về nhãn phổ biến nhất (phân loại) hoặc giá trị trung bình (regression)."
+  },
+  "points": [
+   {
+    "en": "Supervised; input RecordIO protobuf or CSV with the label in the first column; File or Pipe mode.",
+    "vi": "Có giám sát; input RecordIO protobuf hoặc CSV với label ở cột đầu; File hoặc Pipe."
+   },
+   {
+    "en": "SageMaker samples the data, reduces dimensionality (sign or fjlt), builds an index, then serializes the model.",
+    "vi": "SageMaker lấy mẫu dữ liệu, giảm chiều (sign hoặc fjlt), dựng index, rồi serialize model."
+   },
+   {
+    "en": "Dimensionality reduction avoids the curse of dimensionality but adds some noise.",
+    "vi": "Giảm chiều tránh curse of dimensionality nhưng thêm chút nhiễu."
+   },
+   {
+    "en": "Key hyperparameters: k and sample size.",
+    "vi": "Hyperparameter chính: k và sample size."
+   },
+   {
+    "en": "Train on CPU or GPU (ml.m5.2xlarge or ml.p2.xlarge); inference CPU gives lower latency, GPU higher throughput.",
+    "vi": "Train trên CPU hoặc GPU (ml.m5.2xlarge hoặc ml.p2.xlarge); inference CPU latency thấp hơn, GPU throughput cao hơn."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker KNN",
+    "use": {
+     "en": "Simple classification or regression by nearest neighbors.",
+     "vi": "Phân loại hoặc regression đơn giản theo láng giềng gần nhất."
+    }
+   }
+  ]
+ },
+ "05-018": {
+  "tldr": {
+   "en": "K-Means is unsupervised clustering into k groups; SageMaker adds web-scale training, extra cluster centers and k-means++ initialization.",
+   "vi": "K-Means là clustering không giám sát thành k nhóm; SageMaker thêm huấn luyện quy mô web, extra cluster centers và khởi tạo k-means++."
+  },
+  "points": [
+   {
+    "en": "Unsupervised (unlike KNN); you define similarity, often Euclidean distance on normalized features.",
+    "vi": "Không giám sát (khác KNN); bạn định nghĩa độ tương đồng, thường là khoảng cách Euclid trên feature đã normalize."
+   },
+   {
+    "en": "Input: RecordIO protobuf or CSV; train channel required, test channel optional; use ShardedByS3Key for training and FullyReplicated for testing.",
+    "vi": "Input: RecordIO protobuf hoặc CSV; cần train channel, test channel tùy chọn; dùng ShardedByS3Key cho training và FullyReplicated cho test."
+   },
+   {
+    "en": "Starts with K = k times extra center factor clusters, then reduces to k; k-means++ spreads initial centers far apart.",
+    "vi": "Bắt đầu với K = k nhân extra center factor cụm rồi giảm về k; k-means++ đặt tâm ban đầu cách xa nhau."
+   },
+   {
+    "en": "Choose k with the elbow method on within-cluster sum of squares; also tune mini batch size, extra center factor, init method.",
+    "vi": "Chọn k bằng elbow method trên within-cluster sum of squares; tune thêm mini batch size, extra center factor, init method."
+   },
+   {
+    "en": "CPU recommended; with GPU only one GPU per instance is used (ml.g4dn.xlarge).",
+    "vi": "Khuyến nghị CPU; nếu dùng GPU chỉ một GPU mỗi instance được dùng (ml.g4dn.xlarge)."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker K-Means",
+    "use": {
+     "en": "Unsupervised clustering at large scale.",
+     "vi": "Clustering không giám sát ở quy mô lớn."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Pick k and extra center factor\"] --> B[\"Init K = k times x centers with k-means++\"]\n  B --> C[\"Iterate: improve centers\"]\n  C --> D[\"Reduce K clusters to k\"]\n  D --> E[\"Final k clusters\"]",
+   "vi": "flowchart LR\n  A[\"Chọn k và extra center factor\"] --> B[\"Khởi tạo K = k nhân x tâm bằng k-means++\"]\n  B --> C[\"Lặp: cải thiện tâm cụm\"]\n  C --> D[\"Giảm K cụm xuống k\"]\n  D --> E[\"k cụm cuối cùng\"]"
+  }
+ },
+ "05-019": {
+  "tldr": {
+   "en": "PCA is unsupervised dimensionality reduction: it projects many features into fewer principal components while keeping as much variance as possible.",
+   "vi": "PCA là giảm chiều không giám sát: chiếu nhiều feature thành ít principal component hơn mà giữ nhiều phương sai nhất."
+  },
+  "points": [
+   {
+    "en": "The first component captures the largest variability, the second the next largest, and so on.",
+    "vi": "Component đầu nắm phương sai lớn nhất, component hai lớn kế tiếp, và cứ thế."
+   },
+   {
+    "en": "Components are new dimensions without names; they help avoid the curse of dimensionality.",
+    "vi": "Component là các chiều mới không có tên; giúp tránh curse of dimensionality."
+   },
+   {
+    "en": "Input: RecordIO protobuf or CSV, File or Pipe mode.",
+    "vi": "Input: RecordIO protobuf hoặc CSV, File hoặc Pipe."
+   },
+   {
+    "en": "Uses a covariance matrix and SVD; modes: regular (sparse or moderate data) and randomized (many observations and features).",
+    "vi": "Dùng covariance matrix và SVD; mode: regular (dữ liệu thưa hoặc vừa phải) và randomized (nhiều quan sát và feature)."
+   },
+   {
+    "en": "Hyperparameters: algorithm mode and subtract_mean; CPU or GPU depends on the data, so experiment.",
+    "vi": "Hyperparameter: algorithm mode và subtract_mean; CPU hay GPU tùy dữ liệu, nên thử nghiệm."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker PCA",
+    "use": {
+     "en": "Reduce a wide feature set to fewer dimensions.",
+     "vi": "Giảm tập feature rộng xuống ít chiều hơn."
+    }
+   }
+  ]
+ },
+ "05-020": {
+  "tldr": {
+   "en": "Factorization Machines handle classification or regression on sparse data, classically recommender systems and click prediction.",
+   "vi": "Factorization Machines xử lý phân loại hoặc regression trên dữ liệu thưa, kinh điển là recommender system và dự đoán click."
+  },
+  "points": [
+   {
+    "en": "Sparse data means most user-item cells are empty, since users interact with few items.",
+    "vi": "Dữ liệu thưa nghĩa là hầu hết ô user-item trống, vì user tương tác với rất ít item."
+   },
+   {
+    "en": "Supervised; limited to pairwise interactions such as user-item or user-page.",
+    "vi": "Có giám sát; giới hạn ở tương tác theo cặp như user-item hoặc user-page."
+   },
+   {
+    "en": "Input must be RecordIO protobuf with Float32; CSV is impractical for sparse data.",
+    "vi": "Input phải là RecordIO protobuf Float32; CSV không thực tế với dữ liệu thưa."
+   },
+   {
+    "en": "Works by factorizing the sparse matrix to predict ratings for unseen user-item pairs.",
+    "vi": "Hoạt động bằng cách phân rã ma trận thưa để dự đoán rating cho cặp user-item chưa thấy."
+   },
+   {
+    "en": "Hyperparameters are initialization methods (uniform, normal, constant); CPU recommended, GPU helps only with dense data.",
+    "vi": "Hyperparameter là phương pháp khởi tạo (uniform, normal, constant); khuyến nghị CPU, GPU chỉ có ích với dữ liệu dày."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker Factorization Machines",
+    "use": {
+     "en": "Pick for recommender systems or sparse pairwise data.",
+     "vi": "Chọn cho recommender system hoặc dữ liệu thưa theo cặp."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Sparse user-item matrix\"] --> B[\"Factorization Machines\"]\n  B --> C[\"Learned factors\"]\n  C --> D[\"Predicted rating or click for unseen pairs\"]",
+   "vi": "flowchart LR\n  A[\"Ma trận user-item thưa\"] --> B[\"Factorization Machines\"]\n  B --> C[\"Các factor đã học\"]\n  C --> D[\"Dự đoán rating hoặc click cho cặp chưa thấy\"]"
+  }
+ },
+ "05-021": {
+  "tldr": {
+   "en": "IP Insights is an unsupervised neural network that learns usage patterns of IP addresses to flag suspicious behavior in web logs.",
+   "vi": "IP Insights là neural network không giám sát học mẫu sử dụng của địa chỉ IP để đánh dấu hành vi đáng ngờ trong web log."
+  },
+  "points": [
+   {
+    "en": "Spots logins or resource creation from anomalous IPs; a security tool.",
+    "vi": "Phát hiện đăng nhập hoặc tạo resource từ IP bất thường; là công cụ bảo mật."
+   },
+   {
+    "en": "Input must be CSV with two columns: entity (username or account ID) and IP address.",
+    "vi": "Input phải là CSV hai cột: entity (username hoặc account ID) và địa chỉ IP."
+   },
+   {
+    "en": "Entities and IPs are hashed and embedded; negative samples are generated by randomly pairing entities and IPs.",
+    "vi": "Entity và IP được hash và embedding; negative sample được tạo bằng cách ghép ngẫu nhiên entity với IP."
+   },
+   {
+    "en": "Hyperparameters: num_entity_vectors (hash size, set to twice the unique entities), vector_dim (too large overfits), epochs, learning rate, batch size.",
+    "vi": "Hyperparameter: num_entity_vectors (hash size, đặt gấp đôi số entity duy nhất), vector_dim (quá lớn dễ overfit), epochs, learning rate, batch size."
+   },
+   {
+    "en": "GPU recommended (ml.p3.2xlarge or higher, multi-GPU on one machine); validation channel optional for AUC.",
+    "vi": "Khuyến nghị GPU (ml.p3.2xlarge trở lên, nhiều GPU trên một máy); validation channel tùy chọn để tính AUC."
+   }
+  ],
+  "services": [
+   {
+    "name": "SageMaker IP Insights",
+    "use": {
+     "en": "Detect anomalous IP behavior per user or account.",
+     "vi": "Phát hiện hành vi IP bất thường theo user hoặc account."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "IP Insights creates its own anomalous training examples by randomly pairing entities with IPs.",
+   "vi": "IP Insights tự tạo ví dụ bất thường để train bằng cách ghép ngẫu nhiên entity với IP."
+  }
+ }
+}

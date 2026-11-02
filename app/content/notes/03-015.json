@@ -1,0 +1,12 @@
+{
+ "id": "03-015",
+ "section": "03",
+ "title": {
+  "en": "UPDATE SageMaker is now SageMaker AI",
+  "vi": "CẬP NHẬT: SageMaker nay là SageMaker AI"
+ },
+ "body": {
+  "en": "<p>A quick note - in 2025, AWS rebranded SageMaker as \"SageMaker AI.\" If you're looking for it in the AWS Console, look for it under that new name.</p><p>Just plain \"SageMaker\" takes you instead to \"SageMaker Unified Studio\" or the \"SageMaker Platform,\" which is a wrapper around SageMaker and Amazon DataZone.</p><p>The exam only covers SageMaker AI at this time.</p>",
+  "vi": "<p>Lưu ý nhanh - năm 2025, AWS đã đổi thương hiệu SageMaker thành \"SageMaker AI.\" Nếu bạn tìm nó trong AWS Console, hãy tìm theo tên mới.</p><p>Chỉ gõ \"SageMaker\" sẽ đưa bạn tới \"SageMaker Unified Studio\" hoặc \"SageMaker Platform,\" là một lớp bao bọc quanh SageMaker và Amazon DataZone.</p><p>Hiện tại kỳ thi chỉ bao gồm SageMaker AI.</p>"
+ }
+}

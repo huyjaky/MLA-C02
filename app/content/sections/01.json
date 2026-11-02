@@ -1,0 +1,104 @@
+{
+ "id": "01",
+ "order": 1,
+ "title": {
+  "en": "Introduction",
+  "vi": "Giới thiệu"
+ },
+ "lectures": [
+  {
+   "id": "01-001",
+   "title": {
+    "en": "Introduction and Course Overview",
+    "vi": "Giới thiệu và tổng quan khóa học"
+   },
+   "kind": "video",
+   "video": "01 - Introduction/001 Introduction and Course Overview.mp4",
+   "transcript": true
+  },
+  {
+   "id": "01-002",
+   "title": {
+    "en": "Optimizing your Udemy Learning Environment",
+    "vi": "Tối ưu môi trường học trên Udemy"
+   },
+   "kind": "note",
+   "transcript": false
+  },
+  {
+   "id": "01-003",
+   "title": {
+    "en": "Get the Course Materials and Slides",
+    "vi": "Tải tài liệu và slide của khóa học"
+   },
+   "kind": "note",
+   "transcript": false,
+   "materials": [
+    "Keras-CNN-Tuning.ipynb",
+    "MagazineReviews/citation.txt",
+    "MagazineReviews/metadata/meta_Magazine_Subscriptions.json",
+    "MagazineReviews/reviews/Magazine_Subscriptions.json",
+    "TF-IDF.ipynb",
+    "Transformers_MLCourse_SageMaker.ipynb",
+    "aws-course/beach.jpg",
+    "aws-course/coffee.jpg",
+    "aws-course/index.html",
+    "book.txt",
+    "cdk/.DS_Store",
+    "cdk/images/kid_and_pigeons.jpeg",
+    "cdk/images/penguins.jpeg",
+    "cdk/images/swans.jpeg",
+    "cdk/lambda/index.py",
+    "cdk/lib/.DS_Store",
+    "cdk/lib/cdk-app-stack.js",
+    "cdk/steps.sh",
+    "cfas-bylaws-rev-9.docx",
+    "cloudformation/.DS_Store",
+    "cloudformation/0-just-ec2.yaml",
+    "cloudformation/1-ec2-with-sg-eip.yaml",
+    "instructor-data.csv",
+    "keras-mnist-sagemaker.ipynb",
+    "kinesis/kinesis-data-streams.sh",
+    "kms/ExampleSecretFile.txt",
+    "kms/kms-demo-cli.sh",
+    "lab-1/kinesis-data-firehose.txt",
+    "mnist-train-cnn.py",
+    "s3/beach.jpg",
+    "s3/coffee.jpg",
+    "s3/index.html",
+    "subset-small.tsv",
+    "weather.py",
+    "x-ray/eb-java-scorekeep-xray-simplified.yml"
+   ]
+  },
+  {
+   "id": "01-004",
+   "title": {
+    "en": "Heads Up! Choose the correct AWS Sign Up experience",
+    "vi": "Lưu ý! Chọn đúng trải nghiệm đăng ký AWS"
+   },
+   "kind": "note",
+   "transcript": false
+  },
+  {
+   "id": "01-005",
+   "title": {
+    "en": "[Important] AWS Console UI Update",
+    "vi": "[Quan trọng] Cập nhật giao diện AWS Console"
+   },
+   "kind": "video",
+   "video": "01 - Introduction/005 [Important] AWS Console UI Update.mp4",
+   "transcript": true
+  },
+  {
+   "id": "01-006",
+   "title": {
+    "en": "Setting Up an AWS Billing Alarm",
+    "vi": "Thiết lập cảnh báo chi phí (Billing Alarm) trên AWS"
+   },
+   "kind": "video",
+   "video": "01 - Introduction/006 Setting Up an AWS Billing Alarm.mp4",
+   "transcript": true
+  }
+ ]
+}

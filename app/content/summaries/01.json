@@ -1,0 +1,126 @@
+{
+ "01-001": {
+  "tldr": {
+   "en": "Course roadmap: data engineering, SageMaker algorithms and tuning, generative AI with Bedrock, MLOps, security, governance, then best practices.",
+   "vi": "Lộ trình khóa học: data engineering, thuật toán và tuning trong SageMaker, generative AI với Bedrock, MLOps, bảo mật, governance, rồi best practices."
+  },
+  "points": [
+   {
+    "en": "The exam targets someone with about one year of SageMaker and ML engineering experience.",
+    "vi": "Đề thi nhắm tới người có khoảng một năm kinh nghiệm với SageMaker và ML engineering."
+   },
+   {
+    "en": "SageMaker is the heart of the exam; Glue and EMR are alternative ways to process data.",
+    "vi": "SageMaker là trọng tâm của đề thi; Glue và EMR là các cách khác để xử lý dữ liệu."
+   },
+   {
+    "en": "You must know what each managed AI service does and the built-in SageMaker algorithms.",
+    "vi": "Bạn cần biết mỗi managed AI service làm gì và các built-in algorithm của SageMaker."
+   },
+   {
+    "en": "Bedrock topics: RAG with knowledge bases and vector stores, guardrails, and agents.",
+    "vi": "Chủ đề Bedrock: RAG với knowledge base và vector store, guardrails và agents."
+   },
+   {
+    "en": "Exam does not require designing end-to-end ML systems or deep NLP/vision expertise.",
+    "vi": "Đề thi không yêu cầu thiết kế hệ thống ML end-to-end hay chuyên sâu NLP/vision."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon SageMaker",
+    "use": {
+     "en": "Core ML platform; the bulk of the exam.",
+     "vi": "Nền tảng ML chính; chiếm phần lớn đề thi."
+    }
+   },
+   {
+    "name": "Amazon Bedrock",
+    "use": {
+     "en": "Common API over foundation models; RAG, guardrails, agents.",
+     "vi": "API chung cho foundation model; RAG, guardrails, agents."
+    }
+   },
+   {
+    "name": "AWS Glue",
+    "use": {
+     "en": "Another way to transform and process data.",
+     "vi": "Một cách khác để biến đổi và xử lý dữ liệu."
+    }
+   },
+   {
+    "name": "Amazon EMR",
+    "use": {
+     "en": "Managed Hadoop/Spark for big parallel data jobs.",
+     "vi": "Hadoop/Spark được quản lý cho các job dữ liệu song song lớn."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "As usual with Amazon there is more than one way to do it, so the exam expects you to know them all (e.g. Glue vs SageMaker for data processing).",
+   "vi": "Như thường lệ ở AWS, một việc có nhiều cách làm, nên đề thi muốn bạn biết hết (ví dụ Glue vs SageMaker để xử lý dữ liệu)."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Data ingestion and storage\"] --> B[\"Transformation and features\"]\n  B --> C[\"Algorithms and training\"]\n  C --> D[\"Tuning and evaluation\"]\n  D --> E[\"Generative AI and Bedrock\"]\n  E --> F[\"MLOps\"]\n  F --> G[\"Security and governance\"]",
+   "vi": "flowchart LR\n  A[\"Thu thập và lưu trữ dữ liệu\"] --> B[\"Biến đổi và feature\"]\n  B --> C[\"Thuật toán và training\"]\n  C --> D[\"Tuning và đánh giá\"]\n  D --> E[\"Generative AI và Bedrock\"]\n  E --> F[\"MLOps\"]\n  F --> G[\"Bảo mật và governance\"]"
+  }
+ },
+ "01-005": {
+  "tldr": {
+   "en": "AWS console has a new look with rounder buttons and brighter colors, but usability is the same.",
+   "vi": "Console AWS có giao diện mới với nút bo tròn và màu sáng hơn, nhưng cách dùng không đổi."
+  },
+  "points": [
+   {
+    "en": "Old videos show the older grayer UI; the new UI works the same way.",
+    "vi": "Video cũ dùng UI xám cũ; UI mới hoạt động giống hệt."
+   },
+   {
+    "en": "Only colors and button shapes changed, not the functions.",
+    "vi": "Chỉ đổi màu và hình dạng nút, không đổi chức năng."
+   },
+   {
+    "en": "If buttons move places, the instructor may update videos.",
+    "vi": "Nếu nút đổi vị trí, giảng viên có thể cập nhật video."
+   }
+  ],
+  "services": []
+ },
+ "01-006": {
+  "tldr": {
+   "en": "Set up an AWS budget with an email alert before doing labs so forgotten resources do not cause a surprise bill.",
+   "vi": "Hãy tạo AWS budget kèm cảnh báo email trước khi làm lab để tài nguyên bị quên không gây hóa đơn bất ngờ."
+  },
+  "points": [
+   {
+    "en": "Follow the labs and clean up afterwards: it should cost only a couple of dollars.",
+    "vi": "Làm theo lab và dọn dẹp sau đó: chỉ tốn vài đô la."
+   },
+   {
+    "en": "In Billing, go to Budgets and create a budget from a template.",
+    "vi": "Vào Billing, chọn Budgets và tạo budget từ template."
+   },
+   {
+    "en": "Choose zero spend budget or a monthly cost budget, for example 20 dollars.",
+    "vi": "Chọn zero spend budget hoặc monthly cost budget, ví dụ 20 đô la."
+   },
+   {
+    "en": "Enter an email address to be notified when spending exceeds the threshold.",
+    "vi": "Nhập email để được báo khi chi phí vượt ngưỡng."
+   }
+  ],
+  "services": [
+   {
+    "name": "AWS Budgets",
+    "use": {
+     "en": "Alerts you by email when spend passes a threshold.",
+     "vi": "Gửi email cảnh báo khi chi phí vượt ngưỡng."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Billing console\"] --> B[\"Budgets\"]\n  B --> C[\"Monthly cost budget\"]\n  C --> D[\"Set amount and email\"]\n  D --> E[\"Alert if exceeded\"]",
+   "vi": "flowchart LR\n  A[\"Billing console\"] --> B[\"Budgets\"]\n  B --> C[\"Monthly cost budget\"]\n  C --> D[\"Đặt số tiền và email\"]\n  D --> E[\"Cảnh báo nếu vượt\"]"
+  }
+ }
+}

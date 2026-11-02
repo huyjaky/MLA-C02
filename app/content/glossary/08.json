@@ -1,0 +1,293 @@
+{
+ "section": "08",
+ "terms": [
+  {
+   "id": "bedrock-api-endpoints",
+   "term": "Bedrock API endpoints",
+   "lecture": "08-002",
+   "definition": {
+    "en": "bedrock (control plane) manages and customizes models; bedrock-runtime performs inference via Converse and InvokeModel; bedrock-agent manages agents and knowledge bases; bedrock-agent-runtime invokes agents or queries knowledge bases. To send a prompt to a foundation model, call bedrock-runtime.",
+    "vi": "bedrock (control plane) quản lý và tùy chỉnh model; bedrock-runtime thực hiện inference qua Converse và InvokeModel; bedrock-agent quản lý agent và knowledge base; bedrock-agent-runtime gọi agent hoặc truy vấn knowledge base. Muốn gửi prompt tới foundation model thì gọi bedrock-runtime."
+   }
+  },
+  {
+   "id": "bedrock-iam-vs-api-keys",
+   "term": "Bedrock IAM vs API keys",
+   "lecture": "08-003",
+   "definition": {
+    "en": "IAM (for example an execution role with temporary credentials and least-privilege policies) is the preferred way to access Bedrock in production. Long-term Bedrock API keys are meant for exploration and development, never for production workloads.",
+    "vi": "IAM (ví dụ execution role với credential tạm thời và policy least privilege) là cách ưu tiên để truy cập Bedrock trong production. Bedrock API key dài hạn chỉ dành cho khám phá và phát triển, không dùng cho workload production."
+   }
+  },
+  {
+   "id": "fine-tuning-vs-continued-pretraining",
+   "term": "Fine-tuning vs continued pre-training",
+   "lecture": "08-006",
+   "definition": {
+    "en": "Fine-tuning (supervised) adapts a foundation model with labeled prompt-completion pairs; continued pre-training adapts it with large amounts of unlabeled domain text. Both bake knowledge into the model weights, so they are poor for frequently changing facts (use RAG instead).",
+    "vi": "Fine-tuning (supervised) điều chỉnh foundation model bằng các cặp prompt-completion có nhãn; continued pre-training điều chỉnh bằng lượng lớn văn bản miền không nhãn. Cả hai đều nhúng kiến thức vào trọng số nên không phù hợp với dữ kiện hay thay đổi (hãy dùng RAG)."
+   }
+  },
+  {
+   "id": "lora",
+   "term": "Low-Rank Adaptation (LoRA)",
+   "lecture": "08-007",
+   "definition": {
+    "en": "Parameter-efficient fine-tuning that trains small low-rank weight additions beside the frozen base model instead of retraining all parameters. Choose it when you want task-specific behavior with few trainable parameters and an unchanged base model.",
+    "vi": "Kỹ thuật fine-tuning tiết kiệm tham số: huấn luyện các phần bổ sung low-rank nhỏ bên cạnh base model được đóng băng thay vì huấn luyện lại toàn bộ. Chọn khi muốn hành vi riêng cho tác vụ với ít tham số huấn luyện và base model không đổi."
+   }
+  },
+  {
+   "id": "catastrophic-forgetting",
+   "term": "Catastrophic forgetting",
+   "lecture": "08-008",
+   "definition": {
+    "en": "Heavy fine-tuning on narrow data improves the target task but degrades general capabilities such as reasoning, coding and instruction following. Mitigate by mixing in general data (for example Amazon Nova data mixing), using a modest learning rate and few epochs, and evaluating on the original capabilities too.",
+    "vi": "Fine-tuning mạnh trên dữ liệu hẹp làm tốt tác vụ đích nhưng làm suy giảm năng lực chung như suy luận, lập trình, làm theo chỉ dẫn. Giảm thiểu bằng cách trộn thêm dữ liệu tổng quát (ví dụ data mixing của Amazon Nova), dùng learning rate vừa phải, ít epoch, và đánh giá cả các năng lực ban đầu."
+   }
+  },
+  {
+   "id": "model-distillation",
+   "term": "Model distillation",
+   "lecture": "08-009",
+   "definition": {
+    "en": "A large teacher model generates synthetic responses to representative prompts, and those responses fine-tune a smaller student model, giving lower cost and latency for a specific workload. It is different from quantization and pruning, which compress the original model. Data preparation starts with representative prompts.",
+    "vi": "Model teacher lớn sinh phản hồi tổng hợp cho các prompt tiêu biểu, rồi dùng chúng để fine-tune model student nhỏ hơn, giúp giảm chi phí và độ trễ cho một workload cụ thể. Khác với quantization và pruning vốn nén chính model gốc. Chuẩn bị dữ liệu bắt đầu từ các prompt tiêu biểu."
+   }
+  },
+  {
+   "id": "rag",
+   "term": "Retrieval-Augmented Generation (RAG)",
+   "lecture": "08-010",
+   "definition": {
+    "en": "Retrieves relevant documents at query time and adds them to the prompt, like an open-book exam. It handles frequently changing data without retraining, gives source-grounded context, and is the usual alternative to fine-tuning for knowledge. In Bedrock it is implemented as Knowledge Bases.",
+    "vi": "Truy xuất tài liệu liên quan tại thời điểm truy vấn và thêm vào prompt, giống bài thi mở sách. Xử lý dữ liệu hay thay đổi mà không cần huấn luyện lại, cho ngữ cảnh bám sát nguồn, và là lựa chọn thay thế thường dùng cho fine-tuning khi cần kiến thức. Trong Bedrock, RAG được triển khai dưới dạng Knowledge Bases."
+   }
+  },
+  {
+   "id": "bedrock-knowledge-bases",
+   "term": "Bedrock Knowledge Bases",
+   "lecture": "08-014",
+   "definition": {
+    "en": "Managed RAG: ingest documents from S3, a web crawler or connectors (Confluence, Salesforce, SharePoint), chunk them, embed them with an embedding model (Titan or Cohere) and store vectors in a vector store. Choose it for a fully managed RAG pipeline over changing documents.",
+    "vi": "RAG được quản lý: ingest tài liệu từ S3, web crawler hoặc connector (Confluence, Salesforce, SharePoint), chunk, tạo embedding bằng embedding model (Titan hoặc Cohere) và lưu vector vào vector store. Chọn khi cần pipeline RAG được quản lý hoàn toàn trên tài liệu thay đổi."
+   }
+  },
+  {
+   "id": "embeddings-vector-dimensions",
+   "term": "Embeddings and vector dimensions",
+   "lecture": "08-012",
+   "definition": {
+    "en": "Embeddings are dense numeric vectors whose closeness (typically cosine similarity) represents semantic similarity, so retrieval works without shared keywords. More dimensions capture more meaning but cost more to store and process; use smaller dimensions when the domain is simple. Sparse vectors (like one-hot) are mostly empty and less common in generative AI.",
+    "vi": "Embedding là vector số dense mà độ gần nhau (thường đo bằng cosine similarity) biểu diễn độ tương đồng ngữ nghĩa, nên truy xuất được ngay cả khi không chung từ khóa. Nhiều chiều giữ được nhiều ý nghĩa hơn nhưng tốn chi phí lưu trữ và xử lý hơn; dùng số chiều nhỏ khi miền dữ liệu đơn giản. Vector sparse (như one-hot) chủ yếu là số 0 và ít dùng trong generative AI."
+   }
+  },
+  {
+   "id": "kb-metadata-filtering",
+   "term": "Knowledge base metadata",
+   "lecture": "08-012",
+   "definition": {
+    "en": "A metadata.json file attaches fields (document ID, category, access control, lineage, keywords) to each chunk without chunking or embedding them as content. Metadata enables filtering and re-ranking of retrieval and supports citations.",
+    "vi": "Tệp metadata.json gắn các trường (document ID, category, kiểm soát truy cập, lineage, từ khóa) vào từng chunk mà không bị chunk hay embed như nội dung. Metadata cho phép lọc và re-rank kết quả truy xuất và hỗ trợ trích dẫn nguồn."
+   }
+  },
+  {
+   "id": "opensearch-vector-store",
+   "term": "OpenSearch as vector store",
+   "lecture": "08-017",
+   "definition": {
+    "en": "Historically the default Bedrock Knowledge Base backend, with a vector index type. OpenSearch Serverless does NOT scale to zero and keeps costing money when idle, so delete both the knowledge base and its collection; deleting a knowledge base does not delete the vector store.",
+    "vi": "Trước đây là backend mặc định của Bedrock Knowledge Base, có loại vector index. OpenSearch Serverless KHÔNG scale về 0 và vẫn tốn tiền khi nhàn rỗi, nên phải xóa cả knowledge base lẫn collection; xóa knowledge base không xóa vector store."
+   }
+  },
+  {
+   "id": "semantic-vs-hybrid-search",
+   "term": "Semantic vs hybrid search",
+   "lecture": "08-017",
+   "definition": {
+    "en": "Semantic search compares embedding distances only; hybrid search combines vector and keyword search (needs filterable keyword fields). Use hybrid when semantic search alone returns irrelevant results.",
+    "vi": "Semantic search chỉ so sánh khoảng cách embedding; hybrid search kết hợp tìm kiếm vector và từ khóa (cần các trường từ khóa có thể lọc). Dùng hybrid khi chỉ dùng semantic search cho kết quả không liên quan."
+   }
+  },
+  {
+   "id": "s3-vectors",
+   "term": "Amazon S3 Vectors",
+   "lecture": "08-017",
+   "definition": {
+    "en": "Vector buckets and vector indexes in S3 (PutVectors / QueryVectors), strongly consistent and up to about 90% cheaper, but retrieval takes roughly 100 ms to 1 s. Choose it for cost-sensitive, not latency-critical retrieval. Limits: 10,000 indexes per bucket and 2 billion vectors per index.",
+    "vi": "Vector bucket và vector index trong S3 (PutVectors / QueryVectors), strongly consistent và rẻ hơn tới khoảng 90%, nhưng truy xuất mất khoảng 100 ms đến 1 s. Chọn cho truy xuất ưu tiên chi phí, không quá nhạy độ trễ. Giới hạn: 10.000 index mỗi bucket và 2 tỷ vector mỗi index."
+   }
+  },
+  {
+   "id": "aurora-pgvector",
+   "term": "Aurora with pgvector",
+   "lecture": "08-017",
+   "definition": {
+    "en": "The pgvector extension adds a vector column type and similarity operators to SQL. Best for small to medium RAG systems with mostly structured data that need vector similarity plus complex SQL filters in the same relational database; it does not scale as well as OpenSearch.",
+    "vi": "Extension pgvector thêm kiểu cột vector và các toán tử tương đồng vào SQL. Phù hợp nhất cho hệ thống RAG nhỏ đến vừa, chủ yếu dữ liệu có cấu trúc, cần tìm kiếm vector cùng bộ lọc SQL phức tạp trong cùng một database quan hệ; khả năng scale kém hơn OpenSearch."
+   }
+  },
+  {
+   "id": "advanced-rag",
+   "term": "Advanced RAG (pre- and post-retrieval)",
+   "lecture": "08-019",
+   "definition": {
+    "en": "Splits retrieval into pre-retrieval (data granularity and chunking, extracting tables and images from PDFs, query rewriting), retrieval, and post-retrieval (filtering and re-ranking results before the LLM). Naive RAG is just retrieve-then-augment.",
+    "vi": "Tách bước truy xuất thành pre-retrieval (độ mịn dữ liệu và chunking, trích xuất bảng và ảnh từ PDF, viết lại truy vấn), retrieval và post-retrieval (lọc và re-rank kết quả trước khi đưa vào LLM). Naive RAG chỉ là truy xuất rồi bổ sung vào prompt."
+   }
+  },
+  {
+   "id": "fixed-size-chunking",
+   "term": "Fixed-size and no chunking",
+   "lecture": "08-020",
+   "definition": {
+    "en": "Standard Bedrock chunking uses a token count and an overlap percentage; the default is about 300 tokens while honoring sentence boundaries. 'No chunking' makes each document its own chunk, used when you pre-chunked data yourself.",
+    "vi": "Chunking chuẩn của Bedrock dùng số token và phần trăm overlap; mặc định khoảng 300 token và tôn trọng ranh giới câu. 'No chunking' coi mỗi tài liệu là một chunk, dùng khi bạn đã tự chunk trước."
+   }
+  },
+  {
+   "id": "hierarchical-chunking",
+   "term": "Hierarchical chunking",
+   "lecture": "08-020",
+   "definition": {
+    "en": "Nested parent-child chunks: the search matches small child chunks for precision, then returns the larger parent chunk for broader context. Choose it when you need precise retrieval but also more surrounding context for the model.",
+    "vi": "Các chunk parent-child lồng nhau: tìm kiếm khớp với child chunk nhỏ để chính xác, sau đó trả về parent chunk lớn hơn để có ngữ cảnh rộng hơn. Chọn khi cần truy xuất chính xác nhưng vẫn muốn cho model nhiều ngữ cảnh xung quanh."
+   }
+  },
+  {
+   "id": "semantic-chunking",
+   "term": "Semantic chunking",
+   "lecture": "08-020",
+   "definition": {
+    "en": "Uses a foundation model to split text by meaning, with parameters for max tokens, buffer size (too large adds noise, too small loses context) and breakpoint percentile threshold. You pay for the underlying foundation model cost.",
+    "vi": "Dùng foundation model để tách văn bản theo ý nghĩa, với các tham số max token, buffer size (quá lớn thêm nhiễu, quá nhỏ mất ngữ cảnh) và breakpoint percentile threshold. Bạn phải trả chi phí foundation model bên dưới."
+   }
+  },
+  {
+   "id": "rerank-models",
+   "term": "Re-ranker models",
+   "lecture": "08-021",
+   "definition": {
+    "en": "Reorder retrieved chunks by their relevance to the original query instead of only by vector distance, using the Rerank API or a reranker model (Amazon or Cohere) on a knowledge base query. Availability is limited to certain regions.",
+    "vi": "Sắp xếp lại các chunk đã truy xuất theo mức liên quan với truy vấn gốc thay vì chỉ theo khoảng cách vector, bằng Rerank API hoặc reranker model (Amazon hoặc Cohere) khi truy vấn knowledge base. Chỉ khả dụng ở một số region."
+   }
+  },
+  {
+   "id": "bedrock-guardrails",
+   "term": "Amazon Bedrock Guardrails",
+   "lecture": "08-022",
+   "definition": {
+    "en": "Filters both prompts and responses for text models, with denied topics, word and profanity filters, content-harm categories, and PII detection that blocks or masks. Guardrails attach to agents and knowledge bases, and you control the blocked-message text.",
+    "vi": "Lọc cả prompt lẫn phản hồi cho các text model, gồm denied topic, bộ lọc từ và từ tục, các nhóm nội dung có hại, và phát hiện PII để chặn hoặc che. Guardrail gắn được vào agent và knowledge base, và bạn kiểm soát nội dung thông báo bị chặn."
+   }
+  },
+  {
+   "id": "contextual-grounding-check",
+   "term": "Contextual grounding check",
+   "lecture": "08-022",
+   "definition": {
+    "en": "A Guardrails feature to reduce hallucinations: it scores grounding (how well the response matches the retrieved source data) and relevance (to the query), and filters responses below your thresholds. It is only as good as the retrieval behind it.",
+    "vi": "Tính năng của Guardrails để giảm hallucination: chấm điểm grounding (phản hồi khớp với dữ liệu nguồn đã truy xuất đến đâu) và relevance (mức liên quan tới truy vấn), rồi lọc phản hồi dưới ngưỡng bạn đặt. Chất lượng phụ thuộc vào khâu truy xuất phía sau."
+   }
+  },
+  {
+   "id": "bedrock-prompt-management",
+   "term": "Bedrock Prompt Management",
+   "lecture": "08-028",
+   "definition": {
+    "en": "Stores reusable prompts shared across applications with versioning, so you can keep history and roll back. Versioned prompts are managed as AI artifacts in CI/CD.",
+    "vi": "Lưu các prompt tái sử dụng, chia sẻ giữa các ứng dụng và có versioning, giúp giữ lịch sử và rollback. Prompt có version được quản lý như artifact AI trong CI/CD."
+   }
+  },
+  {
+   "id": "multi-agent-orchestrator",
+   "term": "Multi-agent orchestrator pattern",
+   "lecture": "08-030",
+   "definition": {
+    "en": "An orchestrator agent breaks a task into pieces run by specialized agents (in sequence or parallel) and a synthesizer combines the results. Use it only for genuinely complex problems, or when one agent has too many tools; do not use it for simple use cases.",
+    "vi": "Orchestrator agent chia tác vụ thành các phần do các agent chuyên biệt xử lý (tuần tự hoặc song song), rồi synthesizer tổng hợp kết quả. Chỉ dùng cho bài toán thực sự phức tạp hoặc khi một agent có quá nhiều tool; không dùng cho trường hợp đơn giản."
+   }
+  },
+  {
+   "id": "agent-memory",
+   "term": "Agent short-term and long-term memory",
+   "lecture": "08-031",
+   "definition": {
+    "en": "Short-term memory is the current session history passed back in the prompt (in memory, ElastiCache, MemoryDB or DynamoDB). Long-term memory persists across sessions (for example DynamoDB), including summaries and learned user preferences.",
+    "vi": "Short-term memory là lịch sử của phiên hiện tại được đưa lại vào prompt (trong bộ nhớ, ElastiCache, MemoryDB hoặc DynamoDB). Long-term memory được lưu bền qua các phiên (ví dụ DynamoDB), gồm bản tóm tắt và sở thích người dùng đã học được."
+   }
+  },
+  {
+   "id": "agentcore",
+   "term": "Amazon Bedrock AgentCore",
+   "lecture": "08-032",
+   "definition": {
+    "en": "AWS's current service for deploying agents at scale in a serverless way (no Docker/ECR/ECS to manage), with built-in identity, memory, tools, gateway, policy and observability. It works with many frameworks (Strands, LangGraph, LangChain, OpenAI Agents SDK) and is replacing the older console-based Bedrock Agents.",
+    "vi": "Dịch vụ hiện tại của AWS để triển khai agent ở quy mô lớn theo kiểu serverless (không cần quản lý Docker/ECR/ECS), có sẵn identity, memory, tools, gateway, policy và observability. Hoạt động với nhiều framework (Strands, LangGraph, LangChain, OpenAI Agents SDK) và đang thay thế Bedrock Agents cũ dựa trên console."
+   }
+  },
+  {
+   "id": "agentcore-gateway",
+   "term": "AgentCore Gateway",
+   "lecture": "08-034",
+   "definition": {
+    "en": "Exposes external APIs (OpenAPI, Smithy models) and Lambda functions as MCP tools, and centrally manages their authorization and credentials. An existing Bedrock agent can be imported into AgentCore with the agentcore import-agent command.",
+    "vi": "Expose API bên ngoài (OpenAPI, Smithy model) và Lambda function dưới dạng MCP tool, đồng thời quản lý tập trung việc ủy quyền và credential. Có thể import Bedrock agent hiện có vào AgentCore bằng lệnh agentcore import-agent."
+   }
+  },
+  {
+   "id": "agentcore-policy",
+   "term": "AgentCore Policy",
+   "lecture": "08-035",
+   "definition": {
+    "en": "Intercepts every tool call at the Gateway, outside the agent's own code, and evaluates it against Cedar policies (for example allow refunds only under $200). Enforcement is deny by default; policies can be written in natural language and converted to Cedar.",
+    "vi": "Chặn mọi tool call tại Gateway, nằm ngoài code của agent, và đánh giá chúng theo các policy Cedar (ví dụ chỉ cho phép hoàn tiền dưới $200). Cơ chế mặc định là deny; policy có thể viết bằng ngôn ngữ tự nhiên rồi chuyển thành Cedar."
+   }
+  },
+  {
+   "id": "agentcore-evaluations",
+   "term": "AgentCore Evaluations",
+   "lecture": "08-036",
+   "definition": {
+    "en": "Automatically scores agent quality (correctness, helpfulness, faithfulness, harmfulness and so on) at session, trace or span level, with results in CloudWatch next to AgentCore observability so you can alarm on them. Evaluations use cross-region inference automatically, which matters for data residency.",
+    "vi": "Tự động chấm chất lượng agent (correctness, helpfulness, faithfulness, harmfulness, v.v.) ở cấp session, trace hoặc span, kết quả nằm trong CloudWatch cạnh AgentCore observability để đặt alarm. Evaluations tự động dùng cross-region inference, điều này quan trọng với data residency."
+   }
+  },
+  {
+   "id": "agentcore-failure-modes",
+   "term": "AgentCore failure handling",
+   "lecture": "08-038",
+   "definition": {
+    "en": "Coordination failures in multi-agent flows: checkpoint state in AgentCore memory, timeouts with retries, a supervisor agent. Truncated streaming: check the stop reason, resume from the last chunk, or fall back to non-streaming. Tool failures: return structured errors, use exponential backoff or circuit breakers, keep tools idempotent, and monitor with CloudWatch/OpenTelemetry.",
+    "vi": "Lỗi phối hợp trong luồng multi-agent: lưu checkpoint trong AgentCore memory, timeout kèm retry, dùng supervisor agent. Streaming bị cắt: kiểm tra stop reason, tiếp tục từ chunk cuối, hoặc fallback sang non-streaming. Lỗi tool: trả lỗi có cấu trúc, dùng exponential backoff hoặc circuit breaker, giữ tool idempotent, và giám sát bằng CloudWatch/OpenTelemetry."
+   }
+  },
+  {
+   "id": "mcp",
+   "term": "Model Context Protocol (MCP)",
+   "lecture": "08-040",
+   "definition": {
+    "en": "A standardized interface between agents and tools, often described as a USB-C port for AI. MCP servers expose tools, resources and prompts; the transport is stdio for local and HTTP streaming for remote servers. Most agent SDKs, including Strands, support it.",
+    "vi": "Giao diện chuẩn hóa giữa agent và tool, thường được ví như cổng USB-C cho AI. MCP server expose tool, resource và prompt; transport là stdio cho local và HTTP streaming cho server từ xa. Hầu hết agent SDK, kể cả Strands, đều hỗ trợ."
+   }
+  },
+  {
+   "id": "rouge-bleu-bertscore",
+   "term": "ROUGE, BLEU and BERTScore",
+   "lecture": "08-044",
+   "definition": {
+    "en": "ROUGE counts n-gram overlap with a reference (ROUGE-1 unigrams, ROUGE-2 bigrams, ROUGE-L longest common subsequence) and suits summarization. BLEU is precision-oriented and suits machine translation. BERTScore compares semantic similarity using embeddings rather than exact words.",
+    "vi": "ROUGE đếm mức chồng lặp n-gram với bản tham chiếu (ROUGE-1 unigram, ROUGE-2 bigram, ROUGE-L chuỗi con chung dài nhất) và phù hợp cho tóm tắt. BLEU thiên về precision và phù hợp cho dịch máy. BERTScore so sánh độ tương đồng ngữ nghĩa bằng embedding thay vì từ khớp chính xác."
+   }
+  },
+  {
+   "id": "bedrock-model-evaluations",
+   "term": "Bedrock Model Evaluations",
+   "lecture": "08-045",
+   "definition": {
+    "en": "Automatic evaluation with built-in task types, datasets and metrics (accuracy, robustness, toxicity, BERTScore) or your own datasets, human evaluation by your work team or an AWS-managed team, and LLM-as-a-judge using a separate evaluator model.",
+    "vi": "Đánh giá tự động với task type, dataset và metric có sẵn (accuracy, robustness, toxicity, BERTScore) hoặc dataset của riêng bạn, đánh giá bởi con người (đội của bạn hoặc đội do AWS quản lý), và LLM-as-a-judge dùng một evaluator model riêng."
+   }
+  }
+ ]
+}

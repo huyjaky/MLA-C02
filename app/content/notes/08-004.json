@@ -1,0 +1,12 @@
+{
+ "id": "08-004",
+ "section": "08",
+ "title": {
+  "en": "A note on Bedrock model access",
+  "vi": "Lưu ý về quyền truy cập model trong Bedrock"
+ },
+ "body": {
+  "en": "<p>Access to all Bedrock foundation models is now <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-access.html\">supposed to be enabled by default</a>, but apparently an exception (for now) is models from Anthropic, like the one we show in the following activity. If you are using an Anthropic model for the first time (like Claude Sonnet) you need to first submit a use case and request access to it.</p><p>You should be able to do this by visiting the Model Catalog in the Bedrock console before using a Claude model. A use case of \"educational use with an online course\" sounds reasonable to me.</p><p>Or, you could simply choose a foundation model that is not from Anthropic.</p>",
+  "vi": "<p>Quyền truy cập vào tất cả foundation model của Bedrock hiện nay <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-access.html\">được cho là đã bật mặc định</a>, nhưng dường như có một ngoại lệ (tạm thời) là các model của Anthropic, như model chúng ta dùng trong bài thực hành tiếp theo. Nếu bạn dùng model của Anthropic lần đầu (như Claude Sonnet), trước tiên bạn cần gửi một use case và yêu cầu quyền truy cập.</p><p>Bạn có thể làm việc này bằng cách vào Model Catalog trong Bedrock console trước khi dùng model Claude. Use case kiểu \"sử dụng cho mục đích giáo dục với một khóa học online\" theo mình là hợp lý.</p><p>Hoặc bạn có thể đơn giản chọn một foundation model không phải của Anthropic.</p>"
+ }
+}

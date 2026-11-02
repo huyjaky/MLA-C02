@@ -1,0 +1,140 @@
+{
+ "section": "12",
+ "terms": [
+  {
+   "id": "responsible-ai-dimensions",
+   "term": "Responsible AI dimensions",
+   "lecture": "12-002",
+   "definition": {
+    "en": "Fairness, explainability, privacy and security, safety, controllability, veracity and robustness, governance and transparency. Exam questions describe a scenario and ask which dimension applies.",
+    "vi": "Fairness, explainability, privacy và security, safety, controllability, veracity và robustness, governance và transparency. Đề thi mô tả một tình huống và hỏi khía cạnh nào áp dụng."
+   }
+  },
+  {
+   "id": "fairness",
+   "term": "Fairness",
+   "lecture": "12-002",
+   "definition": {
+    "en": "Whether the data and model outcomes treat demographic groups equitably. Bias and fairness metrics can be measured on training data before any model is trained.",
+    "vi": "Dữ liệu và kết quả mô hình có đối xử công bằng giữa các nhóm nhân khẩu học hay không. Có thể đo metric bias và fairness trên dữ liệu training trước khi huấn luyện mô hình."
+   }
+  },
+  {
+   "id": "explainability-shap",
+   "term": "Explainability and SHAP",
+   "lecture": "12-002",
+   "definition": {
+    "en": "Ability to explain why a model made a decision. SHAP provides feature attribution values for individual or aggregate predictions; it is the go-to answer for explaining a specific prediction in classical ML.",
+    "vi": "Khả năng giải thích vì sao mô hình đưa ra một quyết định. SHAP cung cấp giá trị feature attribution cho từng dự đoán hoặc tổng hợp; là đáp án thường gặp để giải thích một dự đoán cụ thể trong ML cổ điển."
+   }
+  },
+  {
+   "id": "privacy-security-ai",
+   "term": "Privacy and security (responsible AI)",
+   "lecture": "12-002",
+   "definition": {
+    "en": "Protecting PII, sensitive and confidential data from disclosure by filtering it and controlling access.",
+    "vi": "Bảo vệ PII, dữ liệu nhạy cảm và bí mật khỏi bị tiết lộ bằng cách lọc và kiểm soát truy cập."
+   }
+  },
+  {
+   "id": "safety-ai",
+   "term": "Safety",
+   "lecture": "12-002",
+   "definition": {
+    "en": "Preventing harmful outputs or actions and managing risk, for example falling back to a safe state when confidence is low.",
+    "vi": "Ngăn chặn đầu ra hoặc hành động gây hại và quản lý rủi ro, ví dụ chuyển về trạng thái an toàn khi độ tin cậy thấp."
+   }
+  },
+  {
+   "id": "controllability",
+   "term": "Controllability",
+   "lecture": "12-002",
+   "definition": {
+    "en": "Ability to direct, constrain, override or stop an AI system, such as an emergency stop and enforced action limits.",
+    "vi": "Khả năng điều khiển, giới hạn, ghi đè hoặc dừng hệ thống AI, như nút dừng khẩn cấp và giới hạn hành động có hiệu lực."
+   }
+  },
+  {
+   "id": "veracity-robustness",
+   "term": "Veracity and robustness",
+   "lecture": "12-002",
+   "definition": {
+    "en": "Truthfulness of outputs (no hallucination) and stability under varied prompts or prompt attacks. Measured by comparing outputs to ground truth.",
+    "vi": "Tính trung thực của đầu ra (không hallucination) và độ ổn định với các prompt khác nhau hoặc prompt attack. Đo bằng cách so sánh đầu ra với ground truth."
+   }
+  },
+  {
+   "id": "governance-transparency",
+   "term": "Governance and transparency",
+   "lecture": "12-002",
+   "definition": {
+    "en": "Governance: compliance with regulations, ownership, approvals, audit and risk reviews. Transparency: disclosing AI involvement, sources and reasoning to users.",
+    "vi": "Governance: tuân thủ quy định, người chịu trách nhiệm, phê duyệt, audit và đánh giá rủi ro. Transparency: công bố cho người dùng về sự tham gia của AI, nguồn và lập luận."
+   }
+  },
+  {
+   "id": "sagemaker-mlflow",
+   "term": "SageMaker with MLflow",
+   "lecture": "12-002",
+   "definition": {
+    "en": "Managed MLflow tracks experiments, parameters, metrics, artifacts and model versions for reproducibility and audit. It is the modern replacement for deprecated SageMaker experiment-tracking tools.",
+    "vi": "Managed MLflow theo dõi experiment, tham số, metric, artifact và phiên bản mô hình để tái hiện và audit. Là giải pháp thay thế hiện đại cho các công cụ theo dõi experiment cũ của SageMaker đã deprecated."
+   }
+  },
+  {
+   "id": "human-in-the-loop",
+   "term": "Human in the loop",
+   "lecture": "12-002",
+   "definition": {
+    "en": "Add human review before deployment or action when stakes, uncertainty or consequences are high.",
+    "vi": "Thêm bước con người xem xét trước khi triển khai hoặc hành động khi rủi ro, độ bất định hoặc hậu quả cao."
+   }
+  },
+  {
+   "id": "production-monitoring",
+   "term": "Monitoring after deployment",
+   "lecture": "12-002",
+   "definition": {
+    "en": "A deployed model is not fire-and-forget: keep monitoring behavior over time with CloudWatch, QuickSight and other AWS monitoring tools. SageMaker Clarify, Model Monitor, A2I and Role Manager are in maintenance mode.",
+    "vi": "Mô hình đã triển khai không phải \"làm xong bỏ đó\": tiếp tục giám sát hành vi theo thời gian bằng CloudWatch, QuickSight và các công cụ giám sát AWS khác. SageMaker Clarify, Model Monitor, A2I và Role Manager đang ở chế độ maintenance."
+   }
+  },
+  {
+   "id": "bedrock-model-evaluations",
+   "term": "Amazon Bedrock Model Evaluations",
+   "lecture": "12-002",
+   "definition": {
+    "en": "Evaluates generative AI models against a dataset of prompts and expected responses for correctness, relevance, safety and bias, using automatic metrics, human reviewers or an LLM as a judge.",
+    "vi": "Đánh giá model generative AI trên dataset gồm prompt và phản hồi kỳ vọng về độ đúng, mức liên quan, an toàn và bias, bằng metric tự động, người đánh giá hoặc LLM làm giám khảo."
+   }
+  },
+  {
+   "id": "llm-as-a-judge",
+   "term": "LLM as a judge",
+   "lecture": "12-002",
+   "definition": {
+    "en": "Pattern where another model scores the outputs of the model under evaluation, since generative output cannot be checked by exact string matching.",
+    "vi": "Mẫu trong đó một model khác chấm điểm đầu ra của model đang được đánh giá, vì đầu ra generative không thể kiểm tra bằng so khớp chuỗi chính xác."
+   }
+  },
+  {
+   "id": "bedrock-guardrails",
+   "term": "Guardrails at runtime",
+   "lecture": "12-002",
+   "definition": {
+    "en": "Check every incoming prompt and outgoing response at runtime against safety and policy rules (for example PII filtering), independent of offline evaluation. Evaluating the model alone is not enough.",
+    "vi": "Kiểm tra mọi prompt đầu vào và phản hồi đầu ra tại runtime theo rule an toàn và chính sách (ví dụ lọc PII), độc lập với đánh giá offline. Chỉ đánh giá model là chưa đủ."
+   }
+  },
+  {
+   "id": "well-architected-ml-lens",
+   "term": "AWS Well-Architected Machine Learning Lens",
+   "lecture": "12-003",
+   "definition": {
+    "en": "A custom lens (a JSON file) in the AWS Well-Architected Tool that interviews you about your ML workload and guides improvements based on ML best practices. Working backwards from its practices points to the AWS services to know for the exam.",
+    "vi": "Một custom lens (file JSON) trong AWS Well-Architected Tool, phỏng vấn bạn về workload ML và hướng dẫn cải thiện dựa trên best practice ML. Đi ngược từ các best practice này sẽ chỉ ra các dịch vụ AWS cần biết cho kỳ thi."
+   }
+  }
+ ]
+}

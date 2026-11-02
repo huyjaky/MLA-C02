@@ -1,0 +1,220 @@
+{
+ "id": "05",
+ "order": 5,
+ "title": {
+  "en": "SageMaker Built-In Algorithms",
+  "vi": "Các thuật toán tích hợp sẵn của SageMaker"
+ },
+ "lectures": [
+  {
+   "id": "05-001",
+   "title": {
+    "en": "Intro SageMaker Built-In Algorithms",
+    "vi": "Giới thiệu các thuật toán tích hợp sẵn của SageMaker"
+   },
+   "kind": "video",
+   "video": "05 - SageMaker Built-In Algorithms/001 Intro SageMaker Built-In Algorithms.mp4",
+   "transcript": true
+  },
+  {
+   "id": "05-002",
+   "title": {
+    "en": "Introducing Amazon SageMaker",
+    "vi": "Giới thiệu Amazon SageMaker"
+   },
+   "kind": "video",
+   "video": "05 - SageMaker Built-In Algorithms/002 Introducing Amazon SageMaker.mp4",
+   "transcript": true
+  },
+  {
+   "id": "05-003",
+   "title": {
+    "en": "SageMaker Input Modes",
+    "vi": "Các chế độ input của SageMaker"
+   },
+   "kind": "video",
+   "video": "05 - SageMaker Built-In Algorithms/003 SageMaker Input Modes.mp4",
+   "transcript": true
+  },
+  {
+   "id": "05-004",
+   "title": {
+    "en": "Linear Learner in SageMaker",
+    "vi": "Linear Learner trong SageMaker"
+   },
+   "kind": "video",
+   "video": "05 - SageMaker Built-In Algorithms/004 Linear Learner in SageMaker.mp4",
+   "transcript": true
+  },
+  {
+   "id": "05-005",
+   "title": {
+    "en": "XGBoost in SageMaker",
+    "vi": "XGBoost trong SageMaker"
+   },
+   "kind": "video",
+   "video": "05 - SageMaker Built-In Algorithms/005 XGBoost in SageMaker.mp4",
+   "transcript": true
+  },
+  {
+   "id": "05-006",
+   "title": {
+    "en": "LightGBM in SageMaker",
+    "vi": "LightGBM trong SageMaker"
+   },
+   "kind": "video",
+   "video": "05 - SageMaker Built-In Algorithms/006 LightGBM in SageMaker.mp4",
+   "transcript": true
+  },
+  {
+   "id": "05-007",
+   "title": {
+    "en": "Seq2Seq in SageMaker",
+    "vi": "Seq2Seq trong SageMaker"
+   },
+   "kind": "video",
+   "video": "05 - SageMaker Built-In Algorithms/007 Seq2Seq in SageMaker.mp4",
+   "transcript": true
+  },
+  {
+   "id": "05-008",
+   "title": {
+    "en": "DeepAR in SageMaker",
+    "vi": "DeepAR trong SageMaker"
+   },
+   "kind": "video",
+   "video": "05 - SageMaker Built-In Algorithms/008 DeepAR in SageMaker.mp4",
+   "transcript": true
+  },
+  {
+   "id": "05-009",
+   "title": {
+    "en": "BlazingText in SageMaker",
+    "vi": "BlazingText trong SageMaker"
+   },
+   "kind": "video",
+   "video": "05 - SageMaker Built-In Algorithms/009 BlazingText in SageMaker.mp4",
+   "transcript": true
+  },
+  {
+   "id": "05-010",
+   "title": {
+    "en": "Object2Vec in SageMaker",
+    "vi": "Object2Vec trong SageMaker"
+   },
+   "kind": "video",
+   "video": "05 - SageMaker Built-In Algorithms/010 Object2Vec in SageMaker.mp4",
+   "transcript": true
+  },
+  {
+   "id": "05-011",
+   "title": {
+    "en": "Object Detection in SageMaker",
+    "vi": "Object Detection trong SageMaker"
+   },
+   "kind": "video",
+   "video": "05 - SageMaker Built-In Algorithms/011 Object Detection in SageMaker.mp4",
+   "transcript": true
+  },
+  {
+   "id": "05-012",
+   "title": {
+    "en": "Image Classification in SageMaker",
+    "vi": "Image Classification trong SageMaker"
+   },
+   "kind": "video",
+   "video": "05 - SageMaker Built-In Algorithms/012 Image Classification in SageMaker.mp4",
+   "transcript": true
+  },
+  {
+   "id": "05-013",
+   "title": {
+    "en": "Semantic Segmentation in SageMaker",
+    "vi": "Semantic Segmentation trong SageMaker"
+   },
+   "kind": "video",
+   "video": "05 - SageMaker Built-In Algorithms/013 Semantic Segmentation in SageMaker.mp4",
+   "transcript": true
+  },
+  {
+   "id": "05-014",
+   "title": {
+    "en": "Random Cut Forest in SageMaker",
+    "vi": "Random Cut Forest trong SageMaker"
+   },
+   "kind": "video",
+   "video": "05 - SageMaker Built-In Algorithms/014 Random Cut Forest in SageMaker.mp4",
+   "transcript": true
+  },
+  {
+   "id": "05-015",
+   "title": {
+    "en": "Neural Topic Model in SageMaker",
+    "vi": "Neural Topic Model trong SageMaker"
+   },
+   "kind": "video",
+   "video": "05 - SageMaker Built-In Algorithms/015 Neural Topic Model in SageMaker.mp4",
+   "transcript": true
+  },
+  {
+   "id": "05-016",
+   "title": {
+    "en": "Latent Dirichlet Allocation (LDA) in SageMaker",
+    "vi": "Latent Dirichlet Allocation (LDA) trong SageMaker"
+   },
+   "kind": "video",
+   "video": "05 - SageMaker Built-In Algorithms/016 Latent Dirichlet Allocation (LDA) in SageMaker.mp4",
+   "transcript": true
+  },
+  {
+   "id": "05-017",
+   "title": {
+    "en": "K-Nearest-Neighbors (KNN) in SageMaker",
+    "vi": "K-Nearest-Neighbors (KNN) trong SageMaker"
+   },
+   "kind": "video",
+   "video": "05 - SageMaker Built-In Algorithms/017 K-Nearest-Neighbors (KNN) in SageMaker.mp4",
+   "transcript": true
+  },
+  {
+   "id": "05-018",
+   "title": {
+    "en": "K-Means Clustering in SageMaker",
+    "vi": "K-Means Clustering trong SageMaker"
+   },
+   "kind": "video",
+   "video": "05 - SageMaker Built-In Algorithms/018 K-Means Clustering in SageMaker.mp4",
+   "transcript": true
+  },
+  {
+   "id": "05-019",
+   "title": {
+    "en": "Principal Component Analysis (PCA) in SageMaker",
+    "vi": "Principal Component Analysis (PCA) trong SageMaker"
+   },
+   "kind": "video",
+   "video": "05 - SageMaker Built-In Algorithms/019 Principal Component Analysis (PCA) in SageMaker.mp4",
+   "transcript": true
+  },
+  {
+   "id": "05-020",
+   "title": {
+    "en": "Factorization Machines in SageMaker",
+    "vi": "Factorization Machines trong SageMaker"
+   },
+   "kind": "video",
+   "video": "05 - SageMaker Built-In Algorithms/020 Factorization Machines in SageMaker.mp4",
+   "transcript": true
+  },
+  {
+   "id": "05-021",
+   "title": {
+    "en": "IP Insights in SageMaker",
+    "vi": "IP Insights trong SageMaker"
+   },
+   "kind": "video",
+   "video": "05 - SageMaker Built-In Algorithms/021 IP Insights in SageMaker.mp4",
+   "transcript": true
+  }
+ ]
+}

@@ -1,0 +1,934 @@
+{
+ "04-001": {
+  "tldr": {
+   "en": "AWS offers managed AI services where specialized models are already trained and deployed for you.",
+   "vi": "AWS cung cấp managed AI service với các model chuyên biệt đã được train và deploy sẵn."
+  },
+  "points": [
+   {
+    "en": "Use cases: image analysis, translation, text-to-speech, speech-to-text, chatbots on your data.",
+    "vi": "Use case: phân tích ảnh, dịch, text-to-speech, speech-to-text, chatbot trên dữ liệu của bạn."
+   },
+   {
+    "en": "For the exam, just know what each service does; depth is not needed.",
+    "vi": "Với đề thi, chỉ cần biết mỗi service làm gì; không cần quá sâu."
+   }
+  ],
+  "services": []
+ },
+ "04-002": {
+  "tldr": {
+   "en": "Managed AI services are pre-trained, task-specific, highly available, cost-efficient, and often token-priced.",
+   "vi": "Managed AI service là dịch vụ pre-trained, chuyên cho từng tác vụ, sẵn sàng cao, tiết kiệm chi phí và thường tính tiền theo token."
+  },
+  "points": [
+   {
+    "en": "Text and documents: Comprehend, Translate, Textract. Vision: Rekognition. Search: Kendra.",
+    "vi": "Văn bản và tài liệu: Comprehend, Translate, Textract. Vision: Rekognition. Search: Kendra."
+   },
+   {
+    "en": "Chatbots: Lex. Speech: Polly and Transcribe. Recommendations: Personalize.",
+    "vi": "Chatbot: Lex. Speech: Polly và Transcribe. Recommendation: Personalize."
+   },
+   {
+    "en": "They run across multiple Availability Zones and use specialized CPU and GPU.",
+    "vi": "Chúng chạy trên nhiều Availability Zone và dùng CPU, GPU chuyên dụng."
+   },
+   {
+    "en": "Pay only for what you use; provisioned throughput suits predictable workloads.",
+    "vi": "Chỉ trả cho phần dùng; provisioned throughput phù hợp workload dự đoán được."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Comprehend",
+    "use": {
+     "en": "Text NLP insights.",
+     "vi": "Phân tích NLP cho văn bản."
+    }
+   },
+   {
+    "name": "Amazon Translate",
+    "use": {
+     "en": "Language translation.",
+     "vi": "Dịch ngôn ngữ."
+    }
+   },
+   {
+    "name": "Amazon Textract",
+    "use": {
+     "en": "Extract text and data from scans.",
+     "vi": "Trích text và dữ liệu từ tài liệu scan."
+    }
+   },
+   {
+    "name": "Amazon Rekognition",
+    "use": {
+     "en": "Image and video analysis.",
+     "vi": "Phân tích ảnh và video."
+    }
+   },
+   {
+    "name": "Amazon Kendra",
+    "use": {
+     "en": "Intelligent search.",
+     "vi": "Tìm kiếm thông minh."
+    }
+   },
+   {
+    "name": "Amazon Lex",
+    "use": {
+     "en": "Chatbots.",
+     "vi": "Chatbot."
+    }
+   },
+   {
+    "name": "Amazon Polly",
+    "use": {
+     "en": "Text to speech.",
+     "vi": "Chuyển text thành giọng nói."
+    }
+   },
+   {
+    "name": "Amazon Transcribe",
+    "use": {
+     "en": "Speech to text.",
+     "vi": "Chuyển giọng nói thành text."
+    }
+   },
+   {
+    "name": "Amazon Personalize",
+    "use": {
+     "en": "Recommendations.",
+     "vi": "Gợi ý cá nhân hóa."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "mindmap\n  root[\"Managed AI services\"]\n    Text\n      Comprehend\n      Translate\n      Textract\n    Vision\n      Rekognition\n    Search\n      Kendra\n    Conversation\n      Lex\n    Speech\n      Polly\n      Transcribe\n    Recommend\n      Personalize",
+   "vi": "mindmap\n  root[\"Managed AI services\"]\n    Văn bản\n      Comprehend\n      Translate\n      Textract\n    Hình ảnh\n      Rekognition\n    Tìm kiếm\n      Kendra\n    Hội thoại\n      Lex\n    Giọng nói\n      Polly\n      Transcribe\n    Gợi ý\n      Personalize"
+  }
+ },
+ "04-003": {
+  "tldr": {
+   "en": "Amazon Comprehend is a serverless NLP service that finds entities, sentiment, key phrases and topics, with optional custom models.",
+   "vi": "Amazon Comprehend là dịch vụ NLP serverless tìm entity, sentiment, key phrase và topic, có thể thêm custom model."
+  },
+  "points": [
+   {
+    "en": "Out of the box: language, key phrases, sentiment, tokenization, part of speech, topic grouping.",
+    "vi": "Có sẵn: ngôn ngữ, key phrase, sentiment, tokenization, part of speech, gom topic."
+   },
+   {
+    "en": "Named entity recognition extracts people, places, organizations and dates.",
+    "vi": "Named entity recognition trích người, địa điểm, tổ chức và ngày tháng."
+   },
+   {
+    "en": "Custom classification: train on labeled documents in S3 to sort emails into your categories.",
+    "vi": "Custom classification: train bằng tài liệu có nhãn trong S3 để phân loại email theo nhóm của bạn."
+   },
+   {
+    "en": "Custom entity recognition: train it to find your own terms such as policy numbers.",
+    "vi": "Custom entity recognition: train để tìm thuật ngữ riêng như số hợp đồng bảo hiểm."
+   },
+   {
+    "en": "Analysis can be real-time, or asynchronous for big batches.",
+    "vi": "Phân tích có thể real-time, hoặc asynchronous cho batch lớn."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Comprehend",
+    "use": {
+     "en": "Pick for NLP: entities, sentiment, classification, topics.",
+     "vi": "Chọn khi cần NLP: entity, sentiment, phân loại, topic."
+    }
+   },
+   {
+    "name": "Amazon S3",
+    "use": {
+     "en": "Stores training data for custom models.",
+     "vi": "Lưu dữ liệu train cho custom model."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Labeled docs in S3\"] --> B[\"Amazon Comprehend training\"]\n  B --> C[\"Custom classifier\"]\n  D[\"New email\"] --> C\n  C --> E[\"Category such as complaint\"]",
+   "vi": "flowchart LR\n  A[\"Tài liệu có nhãn trong S3\"] --> B[\"Train Amazon Comprehend\"]\n  B --> C[\"Custom classifier\"]\n  D[\"Email mới\"] --> C\n  C --> E[\"Nhóm như complaint\"]"
+  }
+ },
+ "04-004": {
+  "tldr": {
+   "en": "Comprehend custom models are versioned automatically and can be shared with another account in the same region via an IAM policy.",
+   "vi": "Custom model của Comprehend được tự động quản lý version và có thể chia sẻ sang account khác cùng region qua IAM policy."
+  },
+  "points": [
+   {
+    "en": "Custom entity recognizers and document classifiers are trained on your own data.",
+    "vi": "Custom entity recognizer và document classifier được train bằng dữ liệu của bạn."
+   },
+   {
+    "en": "Attach an IAM policy to a model version to authorize the other account.",
+    "vi": "Gắn IAM policy vào một model version để cấp quyền cho account khác."
+   },
+   {
+    "en": "The other account imports it in the Comprehend console; both must use the same region.",
+    "vi": "Account kia import trong Comprehend console; cả hai phải cùng region."
+   },
+   {
+    "en": "Importing needs the model ARN, region, and optionally the KMS key.",
+    "vi": "Import cần model ARN, region và tùy chọn KMS key."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Comprehend",
+    "use": {
+     "en": "Custom models with automatic versioning and cross-account sharing.",
+     "vi": "Custom model có versioning tự động và chia sẻ cross-account."
+    }
+   },
+   {
+    "name": "AWS IAM",
+    "use": {
+     "en": "Resource policy authorizes the other account.",
+     "vi": "Policy cấp quyền cho account khác."
+    }
+   },
+   {
+    "name": "AWS KMS",
+    "use": {
+     "en": "Needed at import if the model was encrypted.",
+     "vi": "Cần khi import nếu model được mã hóa."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Account A model version\"] --> B[\"IAM policy authorizes Account B\"]\n  B --> C[\"Account B imports with ARN and region\"]\n  C --> D[\"Optional KMS key\"]",
+   "vi": "flowchart LR\n  A[\"Model version ở Account A\"] --> B[\"IAM policy cấp quyền cho Account B\"]\n  B --> C[\"Account B import bằng ARN và region\"]\n  C --> D[\"KMS key tùy chọn\"]"
+  }
+ },
+ "04-005": {
+  "tldr": {
+   "en": "Console demo of Comprehend: entities, key phrases, language, PII, sentiment, syntax, and custom classification with a real-time endpoint.",
+   "vi": "Demo console Comprehend: entity, key phrase, ngôn ngữ, PII, sentiment, syntax và custom classification với real-time endpoint."
+  },
+  "points": [
+   {
+    "en": "Turns unstructured text into structured entities, key phrases, language, PII, sentiment and syntax.",
+    "vi": "Biến text phi cấu trúc thành entity, key phrase, ngôn ngữ, PII, sentiment và syntax có cấu trúc."
+   },
+   {
+    "en": "PII detection flags names, account numbers and routing numbers.",
+    "vi": "PII detection đánh dấu tên, số tài khoản và routing number."
+   },
+   {
+    "en": "Custom classification needs training data as a CSV in S3, at least 10 documents per class.",
+    "vi": "Custom classification cần dữ liệu train dạng CSV trong S3, tối thiểu 10 tài liệu mỗi class."
+   },
+   {
+    "en": "Real-time classification requires a custom endpoint; analysis jobs read large data from S3.",
+    "vi": "Phân loại real-time cần custom endpoint; analysis job đọc dữ liệu lớn từ S3."
+   },
+   {
+    "en": "Use it to route support text such as billing, support or feature request.",
+    "vi": "Dùng để định tuyến text hỗ trợ như billing, support hay feature request."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Comprehend",
+    "use": {
+     "en": "PII detection, sentiment and custom classification.",
+     "vi": "Phát hiện PII, sentiment và custom classification."
+    }
+   },
+   {
+    "name": "Amazon S3",
+    "use": {
+     "en": "Holds training CSV and batch input.",
+     "vi": "Chứa CSV train và dữ liệu batch."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "A language detection result in the demo showed 99 percent confidence for English.",
+   "vi": "Demo phát hiện ngôn ngữ cho ra độ tin cậy 99 phần trăm là tiếng Anh."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Training CSV in S3\"] --> B[\"Train classifier\"]\n  B --> C[\"Custom endpoint\"]\n  D[\"Incoming text\"] --> C\n  C --> E[\"Class label\"]",
+   "vi": "flowchart LR\n  A[\"CSV train trong S3\"] --> B[\"Train classifier\"]\n  B --> C[\"Custom endpoint\"]\n  D[\"Text đến\"] --> C\n  C --> E[\"Nhãn class\"]"
+  }
+ },
+ "04-006": {
+  "tldr": {
+   "en": "Amazon Translate gives natural, accurate language translation to localize content for international users.",
+   "vi": "Amazon Translate dịch ngôn ngữ tự nhiên, chính xác để địa phương hóa nội dung cho người dùng quốc tế."
+  },
+  "points": [
+   {
+    "en": "Use it to localize websites and applications.",
+    "vi": "Dùng để địa phương hóa website và ứng dụng."
+   },
+   {
+    "en": "It translates large volumes of text efficiently.",
+    "vi": "Dịch khối lượng text lớn hiệu quả."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Translate",
+    "use": {
+     "en": "Pick for translating or localizing text.",
+     "vi": "Chọn khi cần dịch hoặc localize text."
+    }
+   }
+  ]
+ },
+ "04-007": {
+  "tldr": {
+   "en": "Translate console tour: text, document and batch translation, custom terminology, and parallel data for style.",
+   "vi": "Tour console Translate: dịch text, tài liệu, batch, custom terminology và parallel data để chỉnh phong cách."
+  },
+  "points": [
+   {
+    "en": "Translate real-time text or whole documents (plain text, HTML, docx).",
+    "vi": "Dịch text real-time hoặc cả tài liệu (plain text, HTML, docx)."
+   },
+   {
+    "en": "Batch jobs read documents from S3 and write results to an S3 location.",
+    "vi": "Batch job đọc tài liệu từ S3 và ghi kết quả ra S3."
+   },
+   {
+    "en": "Custom terminology keeps brand or character names right; formats CSV, TSV or TMX.",
+    "vi": "Custom terminology giữ đúng tên thương hiệu hay nhân vật; định dạng CSV, TSV hoặc TMX."
+   },
+   {
+    "en": "Parallel data customizes style, such as formal versus informal tone.",
+    "vi": "Parallel data tùy chỉnh phong cách, như giọng trang trọng hay thân mật."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Translate",
+    "use": {
+     "en": "Neural machine translation with terminology and parallel data.",
+     "vi": "Dịch máy neural với terminology và parallel data."
+    }
+   },
+   {
+    "name": "Amazon S3",
+    "use": {
+     "en": "Input and output location for batch translation.",
+     "vi": "Nơi chứa input và output cho batch translation."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Documents in S3\"] --> B[\"Batch translation job\"]\n  C[\"Custom terminology\"] --> B\n  D[\"Parallel data\"] --> B\n  B --> E[\"Translated files in S3\"]",
+   "vi": "flowchart LR\n  A[\"Tài liệu trong S3\"] --> B[\"Batch translation job\"]\n  C[\"Custom terminology\"] --> B\n  D[\"Parallel data\"] --> B\n  B --> E[\"File đã dịch trong S3\"]"
+  }
+ },
+ "04-008": {
+  "tldr": {
+   "en": "Amazon Transcribe converts speech to text using ASR, with PII redaction, language identification, custom vocabulary and toxicity detection.",
+   "vi": "Amazon Transcribe chuyển giọng nói thành text bằng ASR, có PII redaction, nhận diện ngôn ngữ, custom vocabulary và toxicity detection."
+  },
+  "points": [
+   {
+    "en": "Redaction removes PII automatically; language identification handles multilingual audio.",
+    "vi": "Redaction tự động xóa PII; language identification xử lý audio đa ngôn ngữ."
+   },
+   {
+    "en": "Custom vocabulary teaches words and acronyms; custom language model teaches context.",
+    "vi": "Custom vocabulary dạy từ và từ viết tắt; custom language model dạy ngữ cảnh."
+   },
+   {
+    "en": "Use both together for the highest accuracy.",
+    "vi": "Dùng cả hai để có độ chính xác cao nhất."
+   },
+   {
+    "en": "Toxicity detection combines audio tone cues and text cues.",
+    "vi": "Toxicity detection kết hợp tín hiệu giọng điệu và tín hiệu văn bản."
+   },
+   {
+    "en": "Use cases: call transcripts, closed captions, searchable media metadata.",
+    "vi": "Use case: bản ghi cuộc gọi, phụ đề, metadata media có thể tìm kiếm."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Transcribe",
+    "use": {
+     "en": "Pick for speech to text, call analytics, captions.",
+     "vi": "Chọn cho speech-to-text, phân tích cuộc gọi, phụ đề."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "Without a custom language model, Transcribe may hear AWS microservices as my crow services; context fixes it.",
+   "vi": "Nếu không có custom language model, Transcribe có thể nghe AWS microservices thành my crow services; ngữ cảnh giúp sửa lỗi này."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Audio\"] --> B[\"Amazon Transcribe ASR\"]\n  C[\"Custom vocabulary\"] --> B\n  D[\"Custom language model\"] --> B\n  B --> E[\"Text with PII redacted\"]\n  B --> F[\"Toxicity flags\"]",
+   "vi": "flowchart LR\n  A[\"Audio\"] --> B[\"Amazon Transcribe ASR\"]\n  C[\"Custom vocabulary\"] --> B\n  D[\"Custom language model\"] --> B\n  B --> E[\"Text đã redact PII\"]\n  B --> F[\"Cờ toxicity\"]"
+  }
+ },
+ "04-009": {
+  "tldr": {
+   "en": "Transcribe console demo: live streaming transcription, PII redaction, and automatic multi-language identification.",
+   "vi": "Demo console Transcribe: transcribe streaming trực tiếp, redact PII và tự nhận diện nhiều ngôn ngữ."
+  },
+  "points": [
+   {
+    "en": "Start streaming and speech appears directly as text.",
+    "vi": "Bấm start streaming và giọng nói hiện thành text ngay."
+   },
+   {
+    "en": "Enable PII identification and redaction so names and phone numbers are hidden.",
+    "vi": "Bật PII identification và redaction để ẩn tên và số điện thoại."
+   },
+   {
+    "en": "Automatic language identification can handle English and French in one stream.",
+    "vi": "Automatic language identification xử lý được cả tiếng Anh và Pháp trong một stream."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Transcribe",
+    "use": {
+     "en": "Streaming speech to text with redaction and language ID.",
+     "vi": "Speech-to-text streaming có redaction và nhận diện ngôn ngữ."
+    }
+   }
+  ]
+ },
+ "04-010": {
+  "tldr": {
+   "en": "Amazon Polly turns text into lifelike speech and is the opposite of Transcribe; know lexicons, SSML, engines and speech marks.",
+   "vi": "Amazon Polly chuyển text thành giọng nói tự nhiên, ngược với Transcribe; cần biết lexicon, SSML, engine và speech mark."
+  },
+  "points": [
+   {
+    "en": "Lexicons define how to read terms, e.g. AWS read as Amazon Web Services.",
+    "vi": "Lexicon định nghĩa cách đọc từ, ví dụ AWS đọc là Amazon Web Services."
+   },
+   {
+    "en": "SSML markup controls breaks, whispering, emphasis and abbreviations.",
+    "vi": "SSML markup điều khiển ngắt nghỉ, thì thầm, nhấn mạnh và từ viết tắt."
+   },
+   {
+    "en": "Engines: standard, neural, long-form and generative, the newest and most human-like.",
+    "vi": "Engine: standard, neural, long-form và generative, mới nhất và giống người nhất."
+   },
+   {
+    "en": "Speech marks give word or sentence timing for lip-syncing or highlighting words.",
+    "vi": "Speech mark cho thời điểm từ hoặc câu, dùng cho lip-sync hoặc highlight từ."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Polly",
+    "use": {
+     "en": "Pick for text to speech and talking apps.",
+     "vi": "Chọn cho text-to-speech và ứng dụng biết nói."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Text\"] --> B[\"Lexicon and SSML\"]\n  B --> C[\"Amazon Polly engine\"]\n  C --> D[\"Audio\"]\n  C --> E[\"Speech marks\"]",
+   "vi": "flowchart LR\n  A[\"Text\"] --> B[\"Lexicon và SSML\"]\n  B --> C[\"Engine của Amazon Polly\"]\n  C --> D[\"Audio\"]\n  C --> E[\"Speech mark\"]"
+  }
+ },
+ "04-011": {
+  "tldr": {
+   "en": "Polly console demo: pick an engine and voice, and use SSML such as a break tag to add a pause.",
+   "vi": "Demo console Polly: chọn engine và giọng, dùng SSML như thẻ break để thêm khoảng ngừng."
+  },
+  "points": [
+   {
+    "en": "Engines: generative (most expressive), long-form, neural, standard.",
+    "vi": "Engine: generative (biểu cảm nhất), long-form, neural, standard."
+   },
+   {
+    "en": "SSML text must be wrapped in speak tags; a break tag adds a pause.",
+    "vi": "Text SSML phải bọc trong thẻ speak; thẻ break thêm khoảng ngừng."
+   },
+   {
+    "en": "Additional settings customize pronunciation and output format.",
+    "vi": "Cài đặt bổ sung tùy chỉnh cách phát âm và định dạng output."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Polly",
+    "use": {
+     "en": "Text to speech with SSML control.",
+     "vi": "Text-to-speech có điều khiển bằng SSML."
+    }
+   }
+  ]
+ },
+ "04-012": {
+  "tldr": {
+   "en": "Amazon Rekognition analyzes images and videos; Custom Labels and custom moderation adapters extend it, with Amazon A2I for human review.",
+   "vi": "Amazon Rekognition phân tích ảnh và video; Custom Labels và custom moderation adapter mở rộng nó, kèm Amazon A2I để người duyệt."
+  },
+  "points": [
+   {
+    "en": "Features: labels, text, face analysis and search, celebrities, liveness, pathing.",
+    "vi": "Tính năng: label, text, phân tích và tìm khuôn mặt, người nổi tiếng, liveness, pathing."
+   },
+   {
+    "en": "Custom Labels: train on a few hundred labeled images in S3 to find your own logo or products.",
+    "vi": "Custom Labels: train bằng vài trăm ảnh có nhãn trong S3 để tìm logo hay sản phẩm của bạn."
+   },
+   {
+    "en": "Content moderation cuts human review to about 1 to 5 percent of content.",
+    "vi": "Content moderation giảm việc người duyệt còn khoảng 1 đến 5 phần trăm nội dung."
+   },
+   {
+    "en": "Uncertain items go to Amazon A2I; results can be fed back into training.",
+    "vi": "Mục không chắc chắn gửi tới Amazon A2I; kết quả có thể đưa lại vào training."
+   },
+   {
+    "en": "DetectModerationLabels API can check images, e.g. from a generative chatbot, before returning them.",
+    "vi": "DetectModerationLabels API kiểm tra ảnh, ví dụ từ chatbot generative, trước khi trả về."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Rekognition",
+    "use": {
+     "en": "Pick for image and video analysis and moderation.",
+     "vi": "Chọn cho phân tích và kiểm duyệt ảnh, video."
+    }
+   },
+   {
+    "name": "Amazon Augmented AI (A2I)",
+    "use": {
+     "en": "Human review for low-confidence predictions.",
+     "vi": "Người duyệt cho dự đoán độ tin cậy thấp."
+    }
+   },
+   {
+    "name": "Amazon S3",
+    "use": {
+     "en": "Stores labeled images for custom training.",
+     "vi": "Lưu ảnh có nhãn để train custom."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "The NFL is the example given for using Custom Labels to find its own logos in pictures.",
+   "vi": "NFL là ví dụ được nêu về việc dùng Custom Labels để tìm logo của chính họ trong ảnh."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"User asks chatbot for image\"] --> B[\"Generated image\"]\n  B --> C[\"Rekognition DetectModerationLabels\"]\n  C -->|\"Safe\"| D[\"Return to user\"]\n  C -->|\"Unsure\"| E[\"Amazon A2I human review\"]",
+   "vi": "flowchart LR\n  A[\"User nhờ chatbot tạo ảnh\"] --> B[\"Ảnh được tạo\"]\n  B --> C[\"Rekognition DetectModerationLabels\"]\n  C -->|\"An toàn\"| D[\"Trả về cho user\"]\n  C -->|\"Không chắc\"| E[\"Amazon A2I người duyệt\"]"
+  }
+ },
+ "04-013": {
+  "tldr": {
+   "en": "Tour of Rekognition capabilities: labels, image properties, moderation, face analysis and comparison, liveness, celebrities, text in image, PPE.",
+   "vi": "Tour khả năng của Rekognition: label, thuộc tính ảnh, moderation, phân tích và so sánh khuôn mặt, liveness, người nổi tiếng, text trong ảnh, PPE."
+  },
+  "points": [
+   {
+    "en": "Label detection returns objects with confidence scores.",
+    "vi": "Label detection trả về đối tượng kèm confidence score."
+   },
+   {
+    "en": "Face analysis gives attributes like age range and emotion; comparison checks if two faces match.",
+    "vi": "Face analysis cho thuộc tính như độ tuổi và cảm xúc; comparison kiểm tra hai khuôn mặt có khớp không."
+   },
+   {
+    "en": "Text in image extracts text from pictures; PPE detection checks face, head and hand covers.",
+    "vi": "Text in image trích text từ ảnh; PPE detection kiểm tra đồ che mặt, đầu và tay."
+   },
+   {
+    "en": "Custom labels and custom moderation extend it by training on your own samples.",
+    "vi": "Custom label và custom moderation mở rộng bằng cách train trên mẫu của bạn."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Rekognition",
+    "use": {
+     "en": "Broad image and video analysis capabilities.",
+     "vi": "Nhiều khả năng phân tích ảnh và video."
+    }
+   }
+  ]
+ },
+ "04-014": {
+  "tldr": {
+   "en": "Amazon Lex builds voice and text chatbots that detect intents, collect slots, and call Lambda to fulfill requests.",
+   "vi": "Amazon Lex xây chatbot giọng nói và text, nhận diện intent, thu thập slot và gọi Lambda để thực hiện yêu cầu."
+  },
+  "points": [
+   {
+    "en": "Lex provides conversational AI in multiple languages.",
+    "vi": "Lex cung cấp conversational AI nhiều ngôn ngữ."
+   },
+   {
+    "en": "The bot recognizes the user intent, then invokes a Lambda function to fulfill it.",
+    "vi": "Bot nhận diện intent của user, rồi gọi hàm Lambda để thực hiện."
+   },
+   {
+    "en": "Slots are input parameters the bot asks for, such as city and check-in date.",
+    "vi": "Slot là tham số đầu vào bot hỏi user, như thành phố và ngày check-in."
+   },
+   {
+    "en": "Integrates with Lambda, Amazon Connect, Comprehend and Kendra.",
+    "vi": "Tích hợp với Lambda, Amazon Connect, Comprehend và Kendra."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Lex",
+    "use": {
+     "en": "Pick for chatbots with voice or text.",
+     "vi": "Chọn cho chatbot bằng giọng nói hoặc text."
+    }
+   },
+   {
+    "name": "AWS Lambda",
+    "use": {
+     "en": "Runs the backend action for an intent.",
+     "vi": "Chạy hành động backend cho một intent."
+    }
+   },
+   {
+    "name": "Amazon Connect",
+    "use": {
+     "en": "Contact center integration.",
+     "vi": "Tích hợp contact center."
+    }
+   },
+   {
+    "name": "Amazon Kendra",
+    "use": {
+     "en": "Search integration for answers.",
+     "vi": "Tích hợp tìm kiếm để trả lời."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"User says book a hotel\"] --> B[\"Lex detects intent\"]\n  B --> C[\"Ask for slots\"]\n  C --> D[\"Lambda books hotel\"]\n  D --> E[\"Lex confirms to user\"]",
+   "vi": "flowchart LR\n  A[\"User nói đặt khách sạn\"] --> B[\"Lex nhận diện intent\"]\n  B --> C[\"Hỏi các slot\"]\n  C --> D[\"Lambda đặt khách sạn\"]\n  D --> E[\"Lex xác nhận với user\"]"
+  }
+ },
+ "04-015": {
+  "tldr": {
+   "en": "Lex console demo: create a bot from an example, with intents, sample utterances, slots, Lambda fulfillment, and a visual builder.",
+   "vi": "Demo console Lex: tạo bot từ ví dụ, với intent, sample utterance, slot, Lambda fulfillment và visual builder."
+  },
+  "points": [
+   {
+    "en": "Create traditional bots or generative AI bots, which require Amazon Bedrock.",
+    "vi": "Tạo bot truyền thống hoặc bot generative AI, loại này cần Amazon Bedrock."
+   },
+   {
+    "en": "An intent is what the user wants; a default intent catches unmatched requests.",
+    "vi": "Intent là điều user muốn; default intent bắt các yêu cầu không khớp."
+   },
+   {
+    "en": "Utterances are example phrases that trigger an intent.",
+    "vi": "Utterance là câu mẫu kích hoạt một intent."
+   },
+   {
+    "en": "Slots such as location, check-in date and nights are sent to Lambda to fulfill.",
+    "vi": "Slot như địa điểm, ngày check-in và số đêm được gửi tới Lambda để thực hiện."
+   },
+   {
+    "en": "Exam: Lex builds chatbots and conversational AI in one place.",
+    "vi": "Đề thi: Lex dùng để xây chatbot và conversational AI tại một nơi."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Lex",
+    "use": {
+     "en": "Define intents, utterances and slots for chatbots.",
+     "vi": "Định nghĩa intent, utterance và slot cho chatbot."
+    }
+   },
+   {
+    "name": "AWS Lambda",
+    "use": {
+     "en": "Fulfillment code receiving the slot values.",
+     "vi": "Code fulfillment nhận giá trị slot."
+    }
+   },
+   {
+    "name": "Amazon Bedrock",
+    "use": {
+     "en": "Needed for generative AI bot creation in Lex.",
+     "vi": "Cần để tạo bot generative AI trong Lex."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart TD\n  A[\"Bot\"] --> B[\"Intent BookHotel\"]\n  A --> C[\"Intent BookCar\"]\n  A --> D[\"Default intent\"]\n  B --> E[\"Utterances\"]\n  B --> F[\"Slots\"]\n  F --> G[\"Lambda fulfillment\"]",
+   "vi": "flowchart TD\n  A[\"Bot\"] --> B[\"Intent BookHotel\"]\n  A --> C[\"Intent BookCar\"]\n  A --> D[\"Default intent\"]\n  B --> E[\"Utterance\"]\n  B --> F[\"Slot\"]\n  F --> G[\"Lambda fulfillment\"]"
+  }
+ },
+ "04-016": {
+  "tldr": {
+   "en": "Amazon Personalize builds real-time personalized recommendations using the same technology as Amazon.com, via ready-made recipes.",
+   "vi": "Amazon Personalize xây gợi ý cá nhân hóa real-time bằng công nghệ giống Amazon.com, thông qua các recipe có sẵn."
+  },
+  "points": [
+   {
+    "en": "Input data comes from S3 or the real-time API; output is a personalized API for apps.",
+    "vi": "Dữ liệu đầu vào từ S3 hoặc API real-time; đầu ra là API cá nhân hóa cho ứng dụng."
+   },
+   {
+    "en": "Takes days, not months, and no need to build, train and deploy ML yourself.",
+    "vi": "Mất vài ngày thay vì vài tháng, không cần tự build, train và deploy ML."
+   },
+   {
+    "en": "Recipes: USER_PERSONALIZATION, Personalized-Ranking, Trending-Now, Popularity-Count, RELATED_ITEMS.",
+    "vi": "Recipe: USER_PERSONALIZATION, Personalized-Ranking, Trending-Now, Popularity-Count, RELATED_ITEMS."
+   },
+   {
+    "en": "Exam rule: recommendations mean Personalize; it is not for forecasting.",
+    "vi": "Quy tắc đề thi: gợi ý nghĩa là Personalize; không dùng cho forecasting."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Personalize",
+    "use": {
+     "en": "Pick for personalized recommendations and ranking.",
+     "vi": "Chọn cho gợi ý và xếp hạng cá nhân hóa."
+    }
+   },
+   {
+    "name": "Amazon S3",
+    "use": {
+     "en": "Source of user interaction data.",
+     "vi": "Nguồn dữ liệu tương tác của user."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Interactions in S3 or real-time API\"] --> B[\"Amazon Personalize recipe\"]\n  B --> C[\"Personalized API\"]\n  C --> D[\"Website or app\"]\n  C --> E[\"Email or SMS\"]",
+   "vi": "flowchart LR\n  A[\"Tương tác trong S3 hoặc API real-time\"] --> B[\"Recipe của Amazon Personalize\"]\n  B --> C[\"API cá nhân hóa\"]\n  C --> D[\"Website hoặc app\"]\n  C --> E[\"Email hoặc SMS\"]"
+  }
+ },
+ "04-017": {
+  "tldr": {
+   "en": "Amazon Textract extracts text, handwriting, forms and tables from scanned documents using ML.",
+   "vi": "Amazon Textract trích text, chữ viết tay, form và bảng từ tài liệu scan bằng ML."
+  },
+  "points": [
+   {
+    "en": "Reads PDFs and images and returns structured data, such as fields from a driver license.",
+    "vi": "Đọc PDF và ảnh, trả dữ liệu có cấu trúc, như các trường từ bằng lái xe."
+   },
+   {
+    "en": "Handles forms and tables, not just raw text.",
+    "vi": "Xử lý form và bảng, không chỉ text thô."
+   },
+   {
+    "en": "Use cases: invoices and financial reports, medical records and claims, tax forms and IDs.",
+    "vi": "Use case: hóa đơn và báo cáo tài chính, hồ sơ y tế và claim, tờ khai thuế và ID."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Textract",
+    "use": {
+     "en": "Pick to extract text and data from scanned documents.",
+     "vi": "Chọn để trích text và dữ liệu từ tài liệu scan."
+    }
+   }
+  ]
+ },
+ "04-018": {
+  "tldr": {
+   "en": "Textract console demo: raw text, layout, forms as key-value pairs, tables, natural-language queries, expenses and ID analysis.",
+   "vi": "Demo console Textract: text thô, layout, form dạng key-value, bảng, truy vấn ngôn ngữ tự nhiên, expense và phân tích ID."
+  },
+  "points": [
+   {
+    "en": "Extracts raw text and understands layout such as titles and section headers.",
+    "vi": "Trích text thô và hiểu layout như tiêu đề và section header."
+   },
+   {
+    "en": "Forms come back as key-value pairs; tables keep their rows and columns.",
+    "vi": "Form trả về dạng key-value; bảng giữ nguyên hàng và cột."
+   },
+   {
+    "en": "Queries let you ask questions such as the year to date gross pay.",
+    "vi": "Queries cho phép hỏi như year to date gross pay là bao nhiêu."
+   },
+   {
+    "en": "Expense analysis reads vendor and line items; ID analysis standardizes ID fields.",
+    "vi": "Expense analysis đọc vendor và line item; ID analysis chuẩn hóa các trường ID."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Textract",
+    "use": {
+     "en": "Documents, forms, tables, expenses, IDs and queries.",
+     "vi": "Tài liệu, form, bảng, expense, ID và queries."
+    }
+   }
+  ],
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Scanned document\"] --> B[\"Amazon Textract\"]\n  B --> C[\"Raw text and layout\"]\n  B --> D[\"Forms key-value\"]\n  B --> E[\"Tables\"]\n  B --> F[\"Query answers\"]",
+   "vi": "flowchart LR\n  A[\"Tài liệu scan\"] --> B[\"Amazon Textract\"]\n  B --> C[\"Text thô và layout\"]\n  B --> D[\"Form key-value\"]\n  B --> E[\"Bảng\"]\n  B --> F[\"Câu trả lời query\"]"
+  }
+ },
+ "04-019": {
+  "tldr": {
+   "en": "Amazon Quick, successor to Amazon Q Business, is an agentic AI assistant connected to company data, with Quick Index RAG, flows, automation and apps.",
+   "vi": "Amazon Quick, kế nhiệm Amazon Q Business, là trợ lý agentic AI kết nối dữ liệu công ty, với Quick Index RAG, flow, automation và app."
+  },
+  "points": [
+   {
+    "en": "Q Business on the exam now means Amazon Quick; it is built on Bedrock but your data never trains models.",
+    "vi": "Q Business trong đề thi giờ là Amazon Quick; xây trên Bedrock nhưng dữ liệu của bạn không dùng để train model."
+   },
+   {
+    "en": "Quick Index is fully managed RAG over S3, SharePoint, OneDrive, Google Drive, Confluence and web pages.",
+    "vi": "Quick Index là RAG được quản lý hoàn toàn trên S3, SharePoint, OneDrive, Google Drive, Confluence và web."
+   },
+   {
+    "en": "Capabilities: Quick Research, QuickFlow, Quick Automate, QuickSight dashboards, and spaces.",
+    "vi": "Khả năng: Quick Research, QuickFlow, Quick Automate, dashboard QuickSight và spaces."
+   },
+   {
+    "en": "Authentication uses IAM Identity Center so users only see permitted data; it supports external IdPs.",
+    "vi": "Xác thực dùng IAM Identity Center để user chỉ thấy dữ liệu được phép; hỗ trợ IdP bên ngoài."
+   },
+   {
+    "en": "Actions via Jira, Slack, Salesforce connectors or MCP and OpenAPI; apps built from natural language.",
+    "vi": "Action qua connector Jira, Slack, Salesforce hoặc MCP và OpenAPI; app xây từ ngôn ngữ tự nhiên."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon Quick",
+    "use": {
+     "en": "Pick to expose internal data to employees for Q and A, dashboards and agents.",
+     "vi": "Chọn để cho nhân viên hỏi đáp, dashboard và agent trên dữ liệu nội bộ."
+    }
+   },
+   {
+    "name": "AWS IAM Identity Center",
+    "use": {
+     "en": "Single sign-on with external IdP and per-user permissions.",
+     "vi": "Single sign-on với IdP ngoài và quyền theo từng user."
+    }
+   },
+   {
+    "name": "Amazon Bedrock",
+    "use": {
+     "en": "Foundation of Quick, but used without setup.",
+     "vi": "Nền tảng của Quick, dùng mà không cần cài đặt."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "QuickSight used to be written as one word and is now part of Amazon Quick.",
+   "vi": "QuickSight trước đây viết liền một từ và nay là một phần của Amazon Quick."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"Employee\"] --> B[\"IAM Identity Center\"]\n  B --> C[\"Amazon Quick\"]\n  D[\"S3 SharePoint Drive Confluence\"] --> E[\"Quick Index RAG\"]\n  E --> C\n  C --> F[\"Research flows dashboards apps\"]",
+   "vi": "flowchart LR\n  A[\"Nhân viên\"] --> B[\"IAM Identity Center\"]\n  B --> C[\"Amazon Quick\"]\n  D[\"S3 SharePoint Drive Confluence\"] --> E[\"Quick Index RAG\"]\n  E --> C\n  C --> F[\"Research flow dashboard app\"]"
+  }
+ },
+ "04-020": {
+  "tldr": {
+   "en": "EC2 is relevant for AI through GPU instances, AWS Trainium for training, and AWS Inferentia for inference.",
+   "vi": "EC2 liên quan tới AI qua instance GPU, AWS Trainium để training và AWS Inferentia để inference."
+  },
+  "points": [
+   {
+    "en": "GPU instance families such as P3, P4, P5 and G3 to G6 suit machine learning.",
+    "vi": "Các dòng instance GPU như P3, P4, P5 và G3 đến G6 phù hợp machine learning."
+   },
+   {
+    "en": "AWS Trainium (Trn1 instances) trains big models with about 50 percent cost reduction.",
+    "vi": "AWS Trainium (instance Trn1) train model lớn, giảm khoảng 50 phần trăm chi phí."
+   },
+   {
+    "en": "AWS Inferentia (Inf1, Inf2) gives up to 4x throughput and up to 70 percent lower cost.",
+    "vi": "AWS Inferentia (Inf1, Inf2) cho throughput gấp tới 4 lần và giảm tới 70 phần trăm chi phí."
+   },
+   {
+    "en": "Trainium and Inferentia have the lowest environmental footprint.",
+    "vi": "Trainium và Inferentia có dấu chân môi trường thấp nhất."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon EC2",
+    "use": {
+     "en": "Virtual servers; pick GPU, Trn or Inf instance types for ML.",
+     "vi": "Máy chủ ảo; chọn instance GPU, Trn hoặc Inf cho ML."
+    }
+   },
+   {
+    "name": "AWS Trainium",
+    "use": {
+     "en": "Chip for deep learning training of large models.",
+     "vi": "Chip train deep learning cho model lớn."
+    }
+   },
+   {
+    "name": "AWS Inferentia",
+    "use": {
+     "en": "Chip for high-performance, low-cost inference.",
+     "vi": "Chip cho inference hiệu năng cao, chi phí thấp."
+    }
+   }
+  ],
+  "funFact": {
+   "en": "A Trn1 instance carries 16 Trainium accelerators, aimed at models with 100 billion plus parameters.",
+   "vi": "Một instance Trn1 có 16 Trainium accelerator, nhắm tới model trên 100 tỷ tham số."
+  },
+  "diagram": {
+   "en": "flowchart LR\n  A[\"EC2 for ML\"] --> B[\"GPU P and G families\"]\n  A --> C[\"Trn1 with Trainium\"]\n  A --> D[\"Inf1 and Inf2 with Inferentia\"]\n  C --> E[\"Training\"]\n  D --> F[\"Inference\"]",
+   "vi": "flowchart LR\n  A[\"EC2 cho ML\"] --> B[\"GPU dòng P và G\"]\n  A --> C[\"Trn1 với Trainium\"]\n  A --> D[\"Inf1 và Inf2 với Inferentia\"]\n  C --> E[\"Training\"]\n  D --> F[\"Inference\"]"
+  }
+ },
+ "04-021": {
+  "tldr": {
+   "en": "EC2 console demo: use Get advice and search instance types such as trn1 and inf2 to compare ML options and prices.",
+   "vi": "Demo console EC2: dùng Get advice và tìm instance type như trn1 và inf2 để so sánh lựa chọn ML và giá."
+  },
+  "points": [
+   {
+    "en": "The launch wizard offers Get advice by workload, such as deep learning inference.",
+    "vi": "Launch wizard có Get advice theo workload, ví dụ deep learning inference."
+   },
+   {
+    "en": "Trn1 instances are for training and cost about 21 dollars per hour.",
+    "vi": "Instance Trn1 dùng để training, giá khoảng 21 đô la mỗi giờ."
+   },
+   {
+    "en": "Inf2 instances are for inference, for example inf2.48xlarge at about 14 dollars per hour.",
+    "vi": "Instance Inf2 dùng để inference, ví dụ inf2.48xlarge khoảng 14 đô la mỗi giờ."
+   },
+   {
+    "en": "Do not launch these in a course lab; they are expensive.",
+    "vi": "Đừng launch chúng khi làm lab; rất đắt."
+   }
+  ],
+  "services": [
+   {
+    "name": "Amazon EC2",
+    "use": {
+     "en": "Choose instance types for ML training or inference.",
+     "vi": "Chọn instance type cho training hoặc inference ML."
+    }
+   }
+  ]
+ }
+}

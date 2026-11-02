@@ -1,0 +1,254 @@
+{
+ "id": "10",
+ "order": 10,
+ "title": {
+  "en": "Security, Identity, and Compliance",
+  "vi": "Bảo mật, Danh tính và Tuân thủ"
+ },
+ "lectures": [
+  {
+   "id": "10-001",
+   "title": {
+    "en": "Intro Security, Identity, and Compliance",
+    "vi": "Giới thiệu Bảo mật, Danh tính và Tuân thủ"
+   },
+   "kind": "video",
+   "video": "10 - Security, Identity, and Compliance/001 Intro Security, Identity, and Compliance.mp4",
+   "transcript": false
+  },
+  {
+   "id": "10-002",
+   "title": {
+    "en": "Principle of Least Privilege",
+    "vi": "Nguyên tắc đặc quyền tối thiểu (Least Privilege)"
+   },
+   "kind": "video",
+   "video": "10 - Security, Identity, and Compliance/002 Principle of Least Privilege.mp4",
+   "transcript": true
+  },
+  {
+   "id": "10-003",
+   "title": {
+    "en": "SageMaker Security Encryption at Rest and in Transit",
+    "vi": "Bảo mật SageMaker: Mã hóa at rest và in transit"
+   },
+   "kind": "video",
+   "video": "10 - Security, Identity, and Compliance/003 SageMaker Security Encryption at Rest and in Transit.mp4",
+   "transcript": true
+  },
+  {
+   "id": "10-004",
+   "title": {
+    "en": "SageMaker Security VPC_s, IAM, Logging and Monitoring",
+    "vi": "Bảo mật SageMaker: VPC, IAM, Logging và Monitoring"
+   },
+   "kind": "video",
+   "video": "10 - Security, Identity, and Compliance/004 SageMaker Security VPC_s, IAM, Logging and Monitoring.mp4",
+   "transcript": true
+  },
+  {
+   "id": "10-005",
+   "title": {
+    "en": "IAM Introduction Users, Groups, Policies",
+    "vi": "Giới thiệu IAM: Users, Groups, Policies"
+   },
+   "kind": "video",
+   "video": "10 - Security, Identity, and Compliance/005 IAM Introduction Users, Groups, Policies.mp4",
+   "transcript": true
+  },
+  {
+   "id": "10-006",
+   "title": {
+    "en": "IAM Users & Groups - Hands On",
+    "vi": "IAM Users & Groups - Thực hành"
+   },
+   "kind": "video",
+   "video": "10 - Security, Identity, and Compliance/006 IAM Users & Groups - Hands On.mp4",
+   "transcript": true
+  },
+  {
+   "id": "10-007",
+   "title": {
+    "en": "AWS Console Simultaneous Sign-in",
+    "vi": "Đăng nhập đồng thời nhiều phiên trên AWS Console"
+   },
+   "kind": "video",
+   "video": "10 - Security, Identity, and Compliance/007 AWS Console Simultaneous Sign-in.mp4",
+   "transcript": true
+  },
+  {
+   "id": "10-008",
+   "title": {
+    "en": "IAM Policies",
+    "vi": "IAM Policies"
+   },
+   "kind": "video",
+   "video": "10 - Security, Identity, and Compliance/008 IAM Policies.mp4",
+   "transcript": true
+  },
+  {
+   "id": "10-009",
+   "title": {
+    "en": "IAM Policies - Hands On",
+    "vi": "IAM Policies - Thực hành"
+   },
+   "kind": "video",
+   "video": "10 - Security, Identity, and Compliance/009 IAM Policies - Hands On.mp4",
+   "transcript": true
+  },
+  {
+   "id": "10-010",
+   "title": {
+    "en": "IAM MFA",
+    "vi": "IAM MFA"
+   },
+   "kind": "video",
+   "video": "10 - Security, Identity, and Compliance/010 IAM MFA.mp4",
+   "transcript": true
+  },
+  {
+   "id": "10-011",
+   "title": {
+    "en": "IAM MFA - Hands On",
+    "vi": "IAM MFA - Thực hành"
+   },
+   "kind": "video",
+   "video": "10 - Security, Identity, and Compliance/011 IAM MFA - Hands On.mp4",
+   "transcript": true
+  },
+  {
+   "id": "10-012",
+   "title": {
+    "en": "IAM Roles",
+    "vi": "IAM Roles"
+   },
+   "kind": "video",
+   "video": "10 - Security, Identity, and Compliance/012 IAM Roles.mp4",
+   "transcript": true
+  },
+  {
+   "id": "10-013",
+   "title": {
+    "en": "IAM Roles - Hands On",
+    "vi": "IAM Roles - Thực hành"
+   },
+   "kind": "video",
+   "video": "10 - Security, Identity, and Compliance/013 IAM Roles - Hands On.mp4",
+   "transcript": true
+  },
+  {
+   "id": "10-014",
+   "title": {
+    "en": "Encryption 101",
+    "vi": "Kiến thức cơ bản về mã hóa"
+   },
+   "kind": "video",
+   "video": "10 - Security, Identity, and Compliance/014 Encryption 101.mp4",
+   "transcript": true
+  },
+  {
+   "id": "10-015",
+   "title": {
+    "en": "AWS KMS",
+    "vi": "AWS KMS"
+   },
+   "kind": "video",
+   "video": "10 - Security, Identity, and Compliance/015 AWS KMS.mp4",
+   "transcript": true
+  },
+  {
+   "id": "10-016",
+   "title": {
+    "en": "AWS KMS - Hands On",
+    "vi": "AWS KMS - Thực hành"
+   },
+   "kind": "video",
+   "video": "10 - Security, Identity, and Compliance/016 AWS KMS - Hands On.mp4",
+   "transcript": true,
+   "materials": [
+    "kms/kms-demo-cli.sh",
+    "kms/ExampleSecretFile.txt"
+   ]
+  },
+  {
+   "id": "10-017",
+   "title": {
+    "en": "Amazon Macie",
+    "vi": "Amazon Macie"
+   },
+   "kind": "video",
+   "video": "10 - Security, Identity, and Compliance/017 Amazon Macie.mp4",
+   "transcript": true
+  },
+  {
+   "id": "10-018",
+   "title": {
+    "en": "AWS Secrets Manager",
+    "vi": "AWS Secrets Manager"
+   },
+   "kind": "video",
+   "video": "10 - Security, Identity, and Compliance/018 AWS Secrets Manager.mp4",
+   "transcript": true
+  },
+  {
+   "id": "10-019",
+   "title": {
+    "en": "AWS Secrets Manager - Hands On",
+    "vi": "AWS Secrets Manager - Thực hành"
+   },
+   "kind": "video",
+   "video": "10 - Security, Identity, and Compliance/019 AWS Secrets Manager - Hands On.mp4",
+   "transcript": true
+  },
+  {
+   "id": "10-020",
+   "title": {
+    "en": "VPC, Subnets, Internet Gateway, NAT Gateway",
+    "vi": "VPC, Subnets, Internet Gateway, NAT Gateway"
+   },
+   "kind": "video",
+   "video": "10 - Security, Identity, and Compliance/020 VPC, Subnets, Internet Gateway, NAT Gateway.mp4",
+   "transcript": true
+  },
+  {
+   "id": "10-021",
+   "title": {
+    "en": "NACL, Security Groups, VPC Flow Logs",
+    "vi": "NACL, Security Groups, VPC Flow Logs"
+   },
+   "kind": "video",
+   "video": "10 - Security, Identity, and Compliance/021 NACL, Security Groups, VPC Flow Logs.mp4",
+   "transcript": true
+  },
+  {
+   "id": "10-022",
+   "title": {
+    "en": "VPC Peering, Endpoints, VPN, Direct Connect",
+    "vi": "VPC Peering, Endpoints, VPN, Direct Connect"
+   },
+   "kind": "video",
+   "video": "10 - Security, Identity, and Compliance/022 VPC Peering, Endpoints, VPN, Direct Connect.mp4",
+   "transcript": true
+  },
+  {
+   "id": "10-023",
+   "title": {
+    "en": "VPC Cheat Sheet & Closing Comments",
+    "vi": "Tóm tắt VPC & lời kết"
+   },
+   "kind": "video",
+   "video": "10 - Security, Identity, and Compliance/023 VPC Cheat Sheet & Closing Comments.mp4",
+   "transcript": true
+  },
+  {
+   "id": "10-024",
+   "title": {
+    "en": "AWS PrivateLink",
+    "vi": "AWS PrivateLink"
+   },
+   "kind": "video",
+   "video": "10 - Security, Identity, and Compliance/024 AWS PrivateLink.mp4",
+   "transcript": true
+  }
+ ]
+}
