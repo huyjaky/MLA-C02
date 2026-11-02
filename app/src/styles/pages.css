@@ -1838,22 +1838,15 @@ article.prose {
   }
 }
 
-/* a normal-size player: one compact row of controls so less of the slide is covered (J/L still skip 10s) */
-@container (max-width: 780px) {
-  .vp-group:first-child > .vp-btn:not(.vp-btn--play) {
-    display: none;
-  }
+/* keep the controls on one row so less of the slide is covered: tighter first, then fewer buttons (J/L still skip 10s) */
+.vp-row {
+  flex-wrap: nowrap;
+}
 
-  .vp-row {
-    gap: var(--s-1);
-  }
-
+@container (max-width: 980px) {
+  .vp-row,
   .vp-group--end {
     gap: var(--s-1);
-  }
-
-  .vp-time__total {
-    display: none;
   }
 
   .vp-controls .segmented__option {
@@ -1870,5 +1863,22 @@ article.prose {
     min-width: 3.25rem;
     padding: 0 var(--s-1);
     font-size: var(--fs-xs);
+  }
+}
+
+@container (max-width: 820px) {
+  .vp-group:first-child > .vp-btn:not(.vp-btn--play) {
+    display: none;
+  }
+
+  .vp-time__total {
+    display: none;
+  }
+}
+
+/* phone-size players have no room for one row */
+@container (max-width: 620px) {
+  .vp-row {
+    flex-wrap: wrap;
   }
 }
