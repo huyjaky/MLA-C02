@@ -2,7 +2,7 @@
 
 Reads every "NN - Section" folder in COURSE_DIR (set in the repo-root .env) and writes:
   app/content/sections/NN.json     section + lecture index (titles EN/VI)
-  app/content/transcripts/NN.json  EN/VI subtitle cues per lecture
+  app/content/subtitles/<en|vi>/NN.json  subtitle cues per lecture
   app/content/quizzes/*.json       quiz + practice exam questions (EN/VI)
   app/content/notes/*.json         instructor notes from the .html lectures
 
@@ -158,7 +158,9 @@ class CourseImporter:
             "title": bi(title),
             "lectures": [{**lec, "transcript": lec["id"] in transcripts} for lec in lectures.values()],
         })
-        self.writer.write(f"transcripts/{sid}.json", transcripts, derived=True)
+        for lang in ("en", "vi"):  # subtitles/vi-ai is the hand-made AI rewrite: never written here
+            cues = {lid: tracks[lang] for lid, tracks in transcripts.items() if lang in tracks}
+            self.writer.write(f"subtitles/{lang}/{sid}.json", cues, derived=True)
 
     def import_note(self, file: Path, sid: str, lid: str, name: str) -> None:
         raw = file.read_text(encoding="utf-8")

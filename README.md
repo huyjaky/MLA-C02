@@ -7,7 +7,6 @@ Song ngữ EN/VI: bài giảng (video + phụ đề đồng bộ), quiz & đề 
 
 ```bash
 cp .env.example .env                     # lần đầu, trỏ các đường dẫn tới thư mục khóa học
-python scripts/import_course.py          # lần đầu sau khi clone: tạo app/content/transcripts từ file .srt
 docker compose up -d --build             # http://localhost:8080
 ```
 
@@ -18,7 +17,7 @@ docker compose up -d --build             # http://localhost:8080
 - Máy khác trong mạng LAN mở `http://<IP máy này>:8080` (Windows có thể hỏi mở firewall). Kết nối là HTTP thường;
   đừng mở cổng này ra internet: video khoá học có bản quyền.
 
-Phụ đề "VI (AI)" nằm ở `app/content/transcripts-ai/`, không có trong git và không tạo lại được bằng script: hãy tự sao lưu thư mục này. Thiếu thư mục thì app dùng phụ đề VI gốc.
+Phụ đề nằm trong `app/content/subtitles/`, mỗi ngôn ngữ một thư mục: `en/`, `vi/`, `vi-ai/`. `python scripts/import_course.py` chỉ tạo lại `en/` và `vi/` từ file .srt; `vi-ai/` do AI viết nên chỉ sửa trực tiếp.
 
 ## Chạy để phát triển
 
@@ -58,7 +57,7 @@ app/
     quizzes/*.json         quiz/đề thi {id, kind, section, title, passPercent, questions[]}
     glossary/NN.json       thuật ngữ {section, terms:[{id, term, lecture, definition:{en,vi}}]}
     notes/*.json           ghi chú giảng viên {id, section, title, body}
-    transcripts/NN.json    phụ đề {lectureId: {en:[[start,end,text]], vi:[...]}}  (sinh tự động)
+    subtitles/<en|vi|vi-ai>/NN.json   phụ đề {lectureId: [[start,end,text]]}
     ui/en.json, vi.json    chuỗi giao diện
   src/
     core/                  class nghiệp vụ, không phụ thuộc React

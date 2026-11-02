@@ -9,9 +9,10 @@ import { MistakeCoach } from './MistakeCoach'
 
 // Large per-section files ({ lectureId: entry }), loaded only when a lecture asks for them.
 const lazySectionFiles = {
-  transcripts: import.meta.glob('../../content/transcripts/*.json', { import: 'default' }),
+  'subtitles/en': import.meta.glob('../../content/subtitles/en/*.json', { import: 'default' }),
+  'subtitles/vi': import.meta.glob('../../content/subtitles/vi/*.json', { import: 'default' }),
+  'subtitles/vi-ai': import.meta.glob('../../content/subtitles/vi-ai/*.json', { import: 'default' }),
   summaries: import.meta.glob('../../content/summaries/*.json', { import: 'default' }),
-  'transcripts-ai': import.meta.glob('../../content/transcripts-ai/*.json', { import: 'default' }),
 }
 
 const byOrder = (a, b) => a.order - b.order
@@ -98,8 +99,8 @@ export class ContentRepository {
 
   /** { en, vi, ai } subtitle cue lists for a lecture; ai is the natural rewrite, kept apart from the original vi. */
   async transcript(lectureId) {
-    const [cues, ai] = await Promise.all([this.#lectureEntry('transcripts', lectureId), this.#lectureEntry('transcripts-ai', lectureId)])
-    return { ...cues, ai }
+    const [en, vi, ai] = await Promise.all(['en', 'vi', 'vi-ai'].map((lang) => this.#lectureEntry(`subtitles/${lang}`, lectureId)))
+    return { en, vi, ai }
   }
 
   /** { tldr, points, services, funFact?, diagram? } for a lecture, or null when none was written. */

@@ -4,7 +4,3 @@ dist/
 __pycache__/
 data/
 .impeccable/
-# subtitles copied from the course: regenerate with scripts/import_course.py
-app/content/transcripts/
-# AI rewrite of those subtitles (not regenerable by the importer: back it up yourself)
-app/content/transcripts-ai/
