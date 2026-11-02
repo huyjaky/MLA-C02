@@ -41,7 +41,7 @@ export function AuthPage({ auth, dictionaries }) {
         <header className="auth__head">
           <span className="brand__mark" aria-hidden="true" />
           <div className="auth__title">
-            <h1>MLA-C01</h1>
+            <h1>MLA-C02</h1>
             <p className="muted small">{l.ui('app.tagline')}</p>
           </div>
           <Segmented

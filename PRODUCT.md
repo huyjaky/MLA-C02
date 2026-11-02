@@ -12,7 +12,7 @@ React + Vite, run from the `mla-c01` conda environment (Python 3.12 for the cont
 
 ## Users
 
-One learner (the owner of this course download), a Vietnamese engineer preparing for the AWS Certified Machine Learning Engineer – Associate (MLA-C01) exam. Studies mainly on a laptop/desktop, in focused sessions, switching between English and Vietnamese.
+One learner (the owner of this course download), a Vietnamese engineer preparing for the AWS Certified Machine Learning Engineer – Associate (MLA-C02) exam. Studies mainly on a laptop/desktop, in focused sessions, switching between English and Vietnamese.
 
 ## Product Purpose
 

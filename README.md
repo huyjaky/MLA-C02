@@ -1,4 +1,4 @@
-# MLA-C01 Study Box
+# MLA-C02 Study Box
 
 Web ôn thi AWS Certified Machine Learning Engineer – Associate, dựng từ khóa học nằm ngoài repo này (video, phụ đề, slide, tài liệu không có trong git).
 Song ngữ EN/VI: bài giảng (video + phụ đề đồng bộ), quiz & đề thi thử, flashcard Leitner, thuật ngữ, ghi chú giảng viên.

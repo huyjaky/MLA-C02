@@ -33,7 +33,7 @@ export function Shell() {
         <NavLink to="/" className="brand">
           <span className="brand__mark" aria-hidden="true" />
           <span>
-            <strong>MLA-C01</strong>
+            <strong>MLA-C02</strong>
             <small>{l.ui('app.tagline')}</small>
           </span>
         </NavLink>
