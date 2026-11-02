@@ -19,10 +19,24 @@ export function SchedulePage() {
   const exams = useMemo(() => repo.quizzes.filter((q) => q.kind === 'exam').sort((a, b) => a.questions.length - b.questions.length), [repo])
   const plan = useMemo(() => StudyPlanner.plan(lectures, start, exam, exams), [lectures, start, exam, exams])
   const todayRef = useRef(null)
+  // which days are expanded and the lecture last opened from here, so coming back lands on the same spot
+  const view = state.planView ?? { open: [today] }
+  const open = new Set(view.open)
+  const remember = (patch) => tracker.setPlanView({ ...view, ...patch })
+  const toggle = (date, isOpen) => {
+    if (isOpen === open.has(date)) return
+    remember({ open: isOpen ? [...open, date] : view.open.filter((d) => d !== date) })
+  }
 
   useEffect(() => {
-    todayRef.current?.scrollIntoView({ block: 'center' })
-  }, [])
+    // next tick: the Shell scrolls every new route to the top after this effect runs
+    const timer = setTimeout(() => {
+      const last = view.lecture && document.getElementById(`plan-${view.lecture}`)
+      const target = last?.closest('details')?.open ? last : todayRef.current
+      target?.scrollIntoView({ block: 'center' })
+    })
+    return () => clearTimeout(timer)
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const format = new Intl.DateTimeFormat(l.lang === 'vi' ? 'vi-VN' : 'en-GB', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' })
   const dateLabel = (date) => format.format(Date.parse(`${date}T00:00:00Z`))
@@ -32,7 +46,8 @@ export function SchedulePage() {
   const dayProps = (date) => ({
     className: 'plan-day',
     'data-today': date === today,
-    open: date === today || undefined,
+    open: open.has(date),
+    onToggle: (e) => toggle(date, e.currentTarget.open),
     ref: date === today ? todayRef : undefined,
   })
 
@@ -81,7 +96,7 @@ export function SchedulePage() {
                   {day.lectures.length > 0 ? (
                     <ol className="lecture-list">
                       {day.lectures.map((lecture) => (
-                        <li key={lecture.id}><LectureRow lecture={lecture} num={lecture.id} /></li>
+                        <li key={lecture.id} id={`plan-${lecture.id}`} onClick={() => remember({ lecture: lecture.id })}><LectureRow lecture={lecture} num={lecture.id} /></li>
                       ))}
                     </ol>
                   ) : (

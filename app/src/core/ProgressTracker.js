@@ -14,6 +14,7 @@ const DEFAULTS = {
   positions: {}, // lecture id -> { t, d, at }: last playback second, duration, saved at (ms)
   lastLecture: null,
   schedule: null, // { start, exam } as 'YYYY-MM-DD'
+  planView: null, // study plan page: { open: [expanded dates], lecture: last lecture opened from it }
 }
 
 /** One account's progress and preferences; `persist` saves them to that account on the server. */
@@ -119,6 +120,10 @@ export class ProgressTracker extends PersistentStore {
 
   setSchedule(schedule) {
     this.update('schedule', () => schedule)
+  }
+
+  setPlanView(view) {
+    this.update('planView', () => view)
   }
 
   get mistakeIds() {
