@@ -133,7 +133,7 @@ function VideoWithTranscript({ lecture, autoResume, onComplete }) {
   const tracks = useTracks(repo, lecture.id)
   const [time, setTime] = useState(0)
   const captions = state.settings.captions ?? 'both' // 'off' | 'en' | 'vi' | 'both', remembered across lectures
-  const [lang, setLang] = useState(l.lang)
+  const lang = state.settings.transcriptLang ?? l.lang
   const [follow, setFollow] = useState(true)
   const [videoError, setVideoError] = useState(false)
   const [resumeAt] = useState(() => tracker.resumePoint(lecture.id)) // captured on open so it does not move while watching
@@ -265,7 +265,7 @@ function VideoWithTranscript({ lecture, autoResume, onComplete }) {
           <Segmented
             label={l.ui('lecture.transcriptLang')}
             value={lang}
-            onChange={setLang}
+            onChange={(v) => tracker.setSetting('transcriptLang', v)}
             options={[
               ...Localizer.LANGS.map((lg) => ({ value: lg, label: lg.toUpperCase() })),
               { value: 'ai', label: l.ui('lecture.langAi'), title: l.ui('lecture.langAiHint') },

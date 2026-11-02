@@ -34,13 +34,24 @@ export function VideoPlayer({ src, videoRef, captions = [], extraControls, overl
   const togglePlay = () => (video().paused ? video().play() : video().pause())
   const seekTo = (t) => (video().currentTime = Math.min(Math.max(t, 0), media.duration || t))
   const seekBy = (d) => seekTo(video().currentTime + d)
-  const toggleMute = () => (video().muted = !video().muted)
+  // volume and mute are account settings, so every lecture opens the way the learner left them
+  const toggleMute = () => {
+    video().muted = !video().muted
+    tracker.setSetting('muted', video().muted)
+  }
   const setVolume = (value) => {
     video().volume = value
     video().muted = value === 0
+    tracker.setSetting('volume', value)
+    tracker.setSetting('muted', value === 0)
   }
   const toggleFullscreen = () =>
     document.fullscreenElement ? document.exitFullscreen() : stage.current.requestFullscreen().catch(() => {})
+
+  useEffect(() => {
+    video().volume = state.settings.volume ?? 1
+    video().muted = state.settings.muted ?? false
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (video()) video().playbackRate = video().defaultPlaybackRate = rate
