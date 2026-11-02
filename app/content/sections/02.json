@@ -14,7 +14,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/001 Intro Data Ingestion and Storage.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 0.8
   },
   {
    "id": "02-002",
@@ -24,7 +25,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/002 Types of Data.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 5.3
   },
   {
    "id": "02-003",
@@ -34,7 +36,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/003 Properties of Data (The Three V_s).mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.3
   },
   {
    "id": "02-004",
@@ -44,7 +47,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/004 Data Warehouses, Lakes, and Lakehouses.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 10.3
   },
   {
    "id": "02-005",
@@ -54,7 +58,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/005 Data Mesh.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.1
   },
   {
    "id": "02-006",
@@ -64,7 +69,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/006 ETL & ETL Pipelines and Orchestration.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 5.0
   },
   {
    "id": "02-007",
@@ -74,7 +80,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/007 Common Data Sources and Data Formats.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 8.8
   },
   {
    "id": "02-008",
@@ -84,7 +91,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/008 Amazon S3.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 5.5
   },
   {
    "id": "02-009",
@@ -99,7 +107,8 @@
     "s3/coffee.jpg",
     "s3/beach.jpg",
     "s3/index.html"
-   ]
+   ],
+   "minutes": 7.5
   },
   {
    "id": "02-010",
@@ -109,7 +118,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/010 Amazon S3 Security - Bucket Policy.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 5.0
   },
   {
    "id": "02-011",
@@ -124,7 +134,8 @@
     "s3/coffee.jpg",
     "s3/beach.jpg",
     "s3/index.html"
-   ]
+   ],
+   "minutes": 3.3
   },
   {
    "id": "02-012",
@@ -134,7 +145,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/012 Amazon S3 - Versioning.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.2
   },
   {
    "id": "02-013",
@@ -149,7 +161,8 @@
     "s3/coffee.jpg",
     "s3/beach.jpg",
     "s3/index.html"
-   ]
+   ],
+   "minutes": 4.3
   },
   {
    "id": "02-014",
@@ -159,7 +172,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/014 Amazon S3 - Replication.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.4
   },
   {
    "id": "02-015",
@@ -169,7 +183,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/015 Amazon S3 - Replication - Notes.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.0
   },
   {
    "id": "02-016",
@@ -184,7 +199,8 @@
     "s3/coffee.jpg",
     "s3/beach.jpg",
     "s3/index.html"
-   ]
+   ],
+   "minutes": 6.5
   },
   {
    "id": "02-017",
@@ -194,7 +210,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/017 Amazon S3 - Storage Classes.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 6.2
   },
   {
    "id": "02-018",
@@ -209,7 +226,8 @@
     "s3/coffee.jpg",
     "s3/beach.jpg",
     "s3/index.html"
-   ]
+   ],
+   "minutes": 3.6
   },
   {
    "id": "02-019",
@@ -219,7 +237,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/019 Amazon S3 - Lifecycle Rules.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.3
   },
   {
    "id": "02-020",
@@ -229,7 +248,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/020 Amazon S3 - Lifecycle Rules - Hands On.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.4
   },
   {
    "id": "02-021",
@@ -239,7 +259,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/021 Amazon S3 - Event Notifications.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.5
   },
   {
    "id": "02-022",
@@ -254,7 +275,8 @@
     "s3/coffee.jpg",
     "s3/beach.jpg",
     "s3/index.html"
-   ]
+   ],
+   "minutes": 5.7
   },
   {
    "id": "02-023",
@@ -264,7 +286,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/023 Amazon S3 - Performance.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.9
   },
   {
    "id": "02-024",
@@ -274,7 +297,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/024 Amazon S3 - Encryption.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 7.5
   },
   {
    "id": "02-025",
@@ -298,7 +322,8 @@
     "s3/coffee.jpg",
     "s3/beach.jpg",
     "s3/index.html"
-   ]
+   ],
+   "minutes": 4.9
   },
   {
    "id": "02-027",
@@ -308,7 +333,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/027 Amazon S3 - Default Encryption.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.4
   },
   {
    "id": "02-028",
@@ -318,7 +344,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/028 Amazon S3 - Access Points.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.5
   },
   {
    "id": "02-029",
@@ -328,7 +355,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/029 Amazon S3 - Object Lambda.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.2
   },
   {
    "id": "02-030",
@@ -338,7 +366,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/030 Amazon EBS.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.8
   },
   {
    "id": "02-031",
@@ -348,7 +377,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/031 Amazon EBS - Hands On.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 5.6
   },
   {
    "id": "02-032",
@@ -358,7 +388,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/032 Amazon EBS Elastic Volumes.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.8
   },
   {
    "id": "02-033",
@@ -368,7 +399,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/033 Amazon EFS.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 5.3
   },
   {
    "id": "02-034",
@@ -378,7 +410,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/034 Amazon EFS - Hands On.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 13.1
   },
   {
    "id": "02-035",
@@ -388,7 +421,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/035 Amazon EFS vs. Amazon EBS.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.2
   },
   {
    "id": "02-036",
@@ -398,7 +432,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/036 Amazon FSx.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 8.4
   },
   {
    "id": "02-037",
@@ -408,7 +443,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/037 Amazon FSx - Hands On.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.9
   },
   {
    "id": "02-038",
@@ -418,7 +454,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/038 Amazon Kinesis Data Streams.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.2
   },
   {
    "id": "02-039",
@@ -431,7 +468,8 @@
    "transcript": true,
    "materials": [
     "kinesis/kinesis-data-streams.sh"
-   ]
+   ],
+   "minutes": 9.6
   },
   {
    "id": "02-040",
@@ -441,7 +479,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/040 Amazon Data Firehose.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.0
   },
   {
    "id": "02-041",
@@ -451,7 +490,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/041 Kinesis Tuning and Troubleshooting.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 7.0
   },
   {
    "id": "02-042",
@@ -461,7 +501,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/042 Amazon Managed Service for Apache Flink.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 5.5
   },
   {
    "id": "02-043",
@@ -471,7 +512,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/043 Managed Service for Apache Flink - Hands On.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 10.7
   },
   {
    "id": "02-044",
@@ -481,7 +523,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/044 Kinesis Analytics Costs_ RANDOM_CUT_FOREST.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.2
   },
   {
    "id": "02-045",
@@ -491,7 +534,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/045 Amazon MSK.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 6.7
   },
   {
    "id": "02-046",
@@ -501,7 +545,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/046 Amazon MSK - Connect.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.5
   },
   {
    "id": "02-047",
@@ -511,7 +556,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/047 Amazon MSK - Serverless.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.1
   },
   {
    "id": "02-048",
@@ -521,7 +567,8 @@
    },
    "kind": "video",
    "video": "02 - Data Ingestion and Storage/048 Amazon Kinesis vs. Amazon MSK.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.0
   }
  ]
 }

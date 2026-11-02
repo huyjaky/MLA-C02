@@ -14,7 +14,8 @@
    },
    "kind": "video",
    "video": "07 - Generative AI Model Fundamentals/001 Intro Generative AI Model Fundamentals.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 0.5
   },
   {
    "id": "07-002",
@@ -24,7 +25,8 @@
    },
    "kind": "video",
    "video": "07 - Generative AI Model Fundamentals/002 The Transformer Architecture.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 8.9
   },
   {
    "id": "07-003",
@@ -34,7 +36,8 @@
    },
    "kind": "video",
    "video": "07 - Generative AI Model Fundamentals/003 Self-Attention and Attention-Based Neural Networks.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 8.5
   },
   {
    "id": "07-004",
@@ -44,7 +47,8 @@
    },
    "kind": "video",
    "video": "07 - Generative AI Model Fundamentals/004 Applications of Transformers.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.1
   },
   {
    "id": "07-005",
@@ -54,7 +58,8 @@
    },
    "kind": "video",
    "video": "07 - Generative AI Model Fundamentals/005 Generative Pre-Trained Transformers How they Work, Part 1.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 12.0
   },
   {
    "id": "07-006",
@@ -64,7 +69,8 @@
    },
    "kind": "video",
    "video": "07 - Generative AI Model Fundamentals/006 Generative Pre-Trained Transformers How they Work, Part 2.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.4
   },
   {
    "id": "07-007",
@@ -74,7 +80,8 @@
    },
    "kind": "video",
    "video": "07 - Generative AI Model Fundamentals/007 LLM Key Terms and Controls -tokens embeddings temperature etc.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.1
   },
   {
    "id": "07-008",
@@ -84,7 +91,8 @@
    },
    "kind": "video",
    "video": "07 - Generative AI Model Fundamentals/008 Fine-Tuning and Transfer Learning with Transformers.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.8
   },
   {
    "id": "07-009",
@@ -97,7 +105,8 @@
    "transcript": true,
    "materials": [
     "Transformers_MLCourse_SageMaker.ipynb"
-   ]
+   ],
+   "minutes": 10.7
   },
   {
    "id": "07-010",
@@ -110,7 +119,8 @@
    "transcript": true,
    "materials": [
     "Transformers_MLCourse_SageMaker.ipynb"
-   ]
+   ],
+   "minutes": 4.0
   },
   {
    "id": "07-011",
@@ -123,7 +133,8 @@
    "transcript": true,
    "materials": [
     "Transformers_MLCourse_SageMaker.ipynb"
-   ]
+   ],
+   "minutes": 4.1
   },
   {
    "id": "07-012",
@@ -133,7 +144,8 @@
    },
    "kind": "video",
    "video": "07 - Generative AI Model Fundamentals/012 AWS Foundation Models and SageMaker JumpStart with Generative AI.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 6.4
   },
   {
    "id": "07-013",
@@ -143,7 +155,8 @@
    },
    "kind": "video",
    "video": "07 - Generative AI Model Fundamentals/013 Lab Using Amazon SageMaker JumpStart with Huggingface.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 14.8
   }
  ]
 }

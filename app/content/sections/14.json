@@ -14,7 +14,8 @@
    },
    "kind": "video",
    "video": "14 - Wrapping Up/001 Intro Wrapping Up.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 0.4
   },
   {
    "id": "14-002",
@@ -24,7 +25,8 @@
    },
    "kind": "video",
    "video": "14 - Wrapping Up/002 Additional Training Resources.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.5
   },
   {
    "id": "14-003",
@@ -34,7 +36,8 @@
    },
    "kind": "video",
    "video": "14 - Wrapping Up/003 What to Expect.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.5
   },
   {
    "id": "14-004",
@@ -44,7 +47,8 @@
    },
    "kind": "video",
    "video": "14 - Wrapping Up/004 Exam Walkthrough and Signup.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.6
   },
   {
    "id": "14-005",
@@ -54,7 +58,8 @@
    },
    "kind": "video",
    "video": "14 - Wrapping Up/005 Save 50_ on your AWS Exam Cost!.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.2
   },
   {
    "id": "14-006",
@@ -64,7 +69,8 @@
    },
    "kind": "video",
    "video": "14 - Wrapping Up/006 Get an Extra 30 Minutes on your AWS Exam - Non Native English Speakers Only.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.1
   }
  ]
 }

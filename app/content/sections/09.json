@@ -14,7 +14,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/001 Intro MLOps.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 0.6
   },
   {
    "id": "09-002",
@@ -24,7 +25,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/002 Optimizing Foundation Model Deployments.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 5.9
   },
   {
    "id": "09-003",
@@ -34,7 +36,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/003 Deployment Guardrails and Shadow Tests.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.1
   },
   {
    "id": "09-004",
@@ -44,7 +47,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/004 SageMaker_s Inner Details and Production Variants.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 10.9
   },
   {
    "id": "09-005",
@@ -54,7 +58,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/005 SageMaker Resource Management Instance Types and Spot Training.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.9
   },
   {
    "id": "09-006",
@@ -64,7 +69,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/006 SageMaker Resource Management Automatic Scaling.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.2
   },
   {
    "id": "09-007",
@@ -74,7 +80,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/007 Token Efficiency.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 6.3
   },
   {
    "id": "09-008",
@@ -84,7 +91,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/008 Maximizing Resource Utilization and Throughput.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.8
   },
   {
    "id": "09-009",
@@ -94,7 +102,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/009 SageMaker Deploying Models for Inference.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 5.0
   },
   {
    "id": "09-010",
@@ -104,7 +113,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/010 SageMaker Serverless Inference and Inference Recommender.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.2
   },
   {
    "id": "09-011",
@@ -114,7 +124,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/011 AI-Specific Cost Drivers.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 7.0
   },
   {
    "id": "09-012",
@@ -124,7 +135,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/012 SageMaker Inference Pipelines.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.6
   },
   {
    "id": "09-013",
@@ -134,7 +146,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/013 Model Performance Readiness and Drift Detection.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 5.6
   },
   {
    "id": "09-014",
@@ -144,7 +157,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/014 Monitoring ML Models in Production.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.7
   },
   {
    "id": "09-015",
@@ -154,7 +168,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/015 MLOps with SageMaker, Kubernetes, SageMaker Projects, and SageMaker Pipelines.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.9
   },
   {
    "id": "09-016",
@@ -164,7 +179,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/016 What is Docker.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 5.2
   },
   {
    "id": "09-017",
@@ -174,7 +190,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/017 Amazon ECS.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 6.5
   },
   {
    "id": "09-018",
@@ -184,7 +201,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/018 Amazon ECS - Create Cluster - Hands On.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 5.9
   },
   {
    "id": "09-019",
@@ -194,7 +212,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/019 Amazon ECS - Create Service - Hands On.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 9.8
   },
   {
    "id": "09-020",
@@ -204,7 +223,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/020 Amazon ECR.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.6
   },
   {
    "id": "09-021",
@@ -214,7 +234,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/021 Amazon EKS.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.0
   },
   {
    "id": "09-022",
@@ -224,7 +245,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/022 Amazon EKS - Hands On.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 8.2
   },
   {
    "id": "09-023",
@@ -234,7 +256,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/023 AWS Batch.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.9
   },
   {
    "id": "09-024",
@@ -244,7 +267,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/024 AWS CloudFormation.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.5
   },
   {
    "id": "09-025",
@@ -258,7 +282,8 @@
    "materials": [
     "cloudformation/0-just-ec2.yaml",
     "cloudformation/1-ec2-with-sg-eip.yaml"
-   ]
+   ],
+   "minutes": 8.5
   },
   {
    "id": "09-026",
@@ -268,7 +293,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/026 AWS CDK.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.8
   },
   {
    "id": "09-027",
@@ -286,7 +312,8 @@
     "cdk/images/kid_and_pigeons.jpeg",
     "cdk/images/penguins.jpeg",
     "cdk/images/swans.jpeg"
-   ]
+   ],
+   "minutes": 11.5
   },
   {
    "id": "09-028",
@@ -296,7 +323,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/028 AWS CodeDeploy.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.7
   },
   {
    "id": "09-029",
@@ -306,7 +334,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/029 AWS CodeBuild.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.1
   },
   {
    "id": "09-030",
@@ -316,7 +345,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/030 AWS CodePipeline.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.6
   },
   {
    "id": "09-031",
@@ -326,7 +356,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/031 AWS CodeCommit and CodeConnections.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.2
   },
   {
    "id": "09-032",
@@ -336,7 +367,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/032 CICD for AI Artifacts.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.7
   },
   {
    "id": "09-033",
@@ -346,7 +378,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/033 Automating RAG Updates.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.5
   },
   {
    "id": "09-034",
@@ -356,7 +389,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/034 Prompt  GenAI Regression Testing in CICD.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.9
   },
   {
    "id": "09-035",
@@ -366,7 +400,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/035 Git Review Architecture and Commands.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 6.2
   },
   {
    "id": "09-036",
@@ -376,7 +411,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/036 Gitflow, GitHub Flow.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.0
   },
   {
    "id": "09-037",
@@ -386,7 +422,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/037 Amazon EventBridge.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 7.0
   },
   {
    "id": "09-038",
@@ -396,7 +433,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/038 Amazon EventBridge - Hands On.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 6.0
   },
   {
    "id": "09-039",
@@ -406,7 +444,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/039 AWS Step Functions(1).mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.9
   },
   {
    "id": "09-040",
@@ -416,7 +455,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/040 AWS Step Functions State Machines and States.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.3
   },
   {
    "id": "09-041",
@@ -426,7 +466,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/041 Amazon Managed Workflows for Apache Airflow (MWAA).mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.8
   },
   {
    "id": "09-042",
@@ -436,7 +477,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/042 AWS Lake Formation.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 9.1
   },
   {
    "id": "09-043",
@@ -446,7 +488,8 @@
    },
    "kind": "video",
    "video": "09 - Machine Learning and AI Operations (MLOps AIOps) with AWS/043 Lake Formation Data Filters.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.5
   }
  ]
 }

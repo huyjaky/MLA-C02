@@ -5,6 +5,7 @@ import { QuizSession } from '../src/core/QuizSession.js'
 import { TranscriptTrack } from '../src/core/TranscriptTrack.js'
 import { Localizer } from '../src/core/Localizer.js'
 import { MistakeCoach } from '../src/core/MistakeCoach.js'
+import { StudyPlanner } from '../src/core/StudyPlanner.js'
 
 const now = 1_000_000
 assert.equal(LeitnerScheduler.review(undefined, true, now).box, 2)
@@ -75,4 +76,14 @@ const l = new Localizer('vi', { en: { hi: 'Hi {name}' }, vi: {} })
 assert.equal(l.ui('hi', { name: 'A' }), 'Hi A')
 assert.equal(l.text({ en: 'E', vi: '' }), 'E')
 assert.equal(Localizer.clock(3725), '1:02:05')
+
+const lessons = [{ id: 'a', minutes: 30 }, { id: 'b', minutes: 30 }, { id: 'c', kind: 'note' }, { id: 'd', minutes: 60 }]
+const plan = StudyPlanner.plan(lessons, '2026-03-01', '2026-03-10', ['e1', 'e2', 'e3'])
+assert.deepEqual(plan.study.map((d) => d.lectures.map((x) => x.id)), [['a', 'b'], ['c', 'd']], 'balanced by minutes, in order')
+assert.equal(plan.study[1].date, '2026-03-02')
+assert.deepEqual(plan.review.map((d) => d.date), ['2026-03-03', '2026-03-04', '2026-03-05', '2026-03-06', '2026-03-07', '2026-03-08', '2026-03-09'], 'last 7 days before the exam are review')
+assert.deepEqual(plan.review.map((d) => d.exams.length), [1, 0, 0, 1, 0, 0, 1], 'exams spread over the review week')
+assert.equal(StudyPlanner.plan(lessons, '2026-03-01', '2026-03-08').error, 'tooShort')
+assert.equal(StudyPlanner.addDays('2026-03-28', 2), '2026-03-30', 'no DST drift')
+
 console.log('selfcheck OK')

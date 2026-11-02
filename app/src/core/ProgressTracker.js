@@ -13,6 +13,7 @@ const DEFAULTS = {
   subDelays: {}, // lecture id -> subtitle delay in seconds (+ = subtitles later)
   positions: {}, // lecture id -> { t, d, at }: last playback second, duration, saved at (ms)
   lastLecture: null,
+  schedule: null, // { start, exam } as 'YYYY-MM-DD'
 }
 
 /** One account's progress and preferences; `persist` saves them to that account on the server. */
@@ -77,23 +78,6 @@ export class ProgressTracker extends PersistentStore {
     })
   }
 
-  /** Unfinished attempt of a quiz (a QuizSession snapshot), or null. */
-  quizRun(quizId) {
-    return this.state.quizRuns?.[quizId] ?? null
-  }
-
-  saveQuizRun(quizId, snapshot) {
-    this.update('quizRuns', (all = {}) => ({ ...all, [quizId]: snapshot }))
-  }
-
-  clearQuizRun(quizId) {
-    if (!this.quizRun(quizId)) return
-    this.update('quizRuns', (all = {}) => {
-      const { [quizId]: _, ...rest } = all
-      return rest
-    })
-  }
-
   /** Forget all scores, missed questions and unfinished attempts; lectures and flashcards are kept. */
   clearExamHistory() {
     for (const slice of ['quizzes', 'mistakes', 'quizRuns']) this.update(slice, () => ({}))
@@ -131,6 +115,10 @@ export class ProgressTracker extends PersistentStore {
     if (this.isLectureDone(lectureId)) return 1
     const p = this.state.positions?.[lectureId]
     return p?.d ? Math.min(p.t / p.d, 1) : 0
+  }
+
+  setSchedule(schedule) {
+    this.update('schedule', () => schedule)
   }
 
   get mistakeIds() {

@@ -182,5 +182,20 @@
   "mistakes.noRelated": "Chưa tìm thấy bài liên quan rõ ràng.",
   "mistakes.advice": "Lời khuyên từ đề thi",
   "quizzes.clear": "Xóa lịch sử thi",
-  "quizzes.clearConfirm": "Xóa toàn bộ điểm, câu đã sai và bài đang làm dở của tài khoản này? Không thể hoàn tác. Tiến độ bài giảng và flashcard vẫn giữ nguyên."
+  "quizzes.clearConfirm": "Xóa toàn bộ điểm, câu đã sai và bài đang làm dở của tài khoản này? Không thể hoàn tác. Tiến độ bài giảng và flashcard vẫn giữ nguyên.",
+  "nav.schedule": "Lịch học",
+  "plan.lead": "Chọn ngày bắt đầu và ngày thi. Bài học được chia đều theo thời lượng video, đúng thứ tự khóa học; 7 ngày cuối trước kỳ thi dành để luyện đề.",
+  "plan.start": "Ngày bắt đầu",
+  "plan.exam": "Ngày thi",
+  "plan.summary": "{days} ngày học, khoảng {minutes} phút video mỗi ngày. Tuần ôn đề bắt đầu {review}.",
+  "plan.invalid": "Hãy chọn cả hai ngày.",
+  "plan.tooShort": "Cần ít nhất 8 ngày từ lúc bắt đầu tới ngày thi: 7 ngày cuối để ôn đề.",
+  "plan.late": "Còn {n} bài của những ngày trước chưa học xong.",
+  "plan.studyH": "Học bài",
+  "plan.reviewH": "Tuần ôn đề",
+  "plan.today": "Hôm nay",
+  "plan.dayMeta": "Ngày {n} · {lectures} bài · {minutes} phút",
+  "plan.free": "Hôm nay không có bài mới: học bù hoặc nghỉ.",
+  "plan.reviewTodo": "Câu sai và flashcard đến hạn",
+  "plan.examDay": "Ngày thi"
 }

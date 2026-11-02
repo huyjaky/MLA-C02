@@ -156,11 +156,18 @@ class CourseImporter:
             "id": sid,
             "order": int(sid),
             "title": bi(title),
-            "lectures": [{**lec, "transcript": lec["id"] in transcripts} for lec in lectures.values()],
+            "lectures": [self.lecture_entry(lec, transcripts.get(lec["id"])) for lec in lectures.values()],
         })
         for lang in ("en", "vi"):  # subtitles/vi-ai is the hand-made AI rewrite: never written here
             cues = {lid: tracks[lang] for lid, tracks in transcripts.items() if lang in tracks}
             self.writer.write(f"subtitles/{lang}/{sid}.json", cues, derived=True)
+
+    @staticmethod
+    def lecture_entry(lecture: dict, tracks: dict | None) -> dict:
+        entry = {**lecture, "transcript": bool(tracks)}
+        if tracks and tracks.get("en"):  # last cue end ~ video length; the study planner balances days by it
+            entry["minutes"] = round(tracks["en"][-1][1] / 60, 1)
+        return entry
 
     def import_note(self, file: Path, sid: str, lid: str, name: str) -> None:
         raw = file.read_text(encoding="utf-8")

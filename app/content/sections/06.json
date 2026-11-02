@@ -14,7 +14,8 @@
    },
    "kind": "video",
    "video": "06 - Model Training, Tuning, and Evaluation/001 Intro Model Training, Tuning, and Evaluation.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.0
   },
   {
    "id": "06-002",
@@ -24,7 +25,8 @@
    },
    "kind": "video",
    "video": "06 - Model Training, Tuning, and Evaluation/002 Introduction to Deep Learning.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.8
   },
   {
    "id": "06-003",
@@ -34,7 +36,8 @@
    },
    "kind": "video",
    "video": "06 - Model Training, Tuning, and Evaluation/003 Deep Learning History and Overview.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 13.7
   },
   {
    "id": "06-004",
@@ -44,7 +47,8 @@
    },
    "kind": "video",
    "video": "06 - Model Training, Tuning, and Evaluation/004 Activation Functions.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 10.8
   },
   {
    "id": "06-005",
@@ -54,7 +58,8 @@
    },
    "kind": "video",
    "video": "06 - Model Training, Tuning, and Evaluation/005 Convolutional Neural Networks.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 12.1
   },
   {
    "id": "06-006",
@@ -64,7 +69,8 @@
    },
    "kind": "video",
    "video": "06 - Model Training, Tuning, and Evaluation/006 Recurrent Neural Networks.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 10.8
   },
   {
    "id": "06-007",
@@ -74,7 +80,8 @@
    },
    "kind": "video",
    "video": "06 - Model Training, Tuning, and Evaluation/007 Tuning Neural Networks.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.8
   },
   {
    "id": "06-008",
@@ -84,7 +91,8 @@
    },
    "kind": "video",
    "video": "06 - Model Training, Tuning, and Evaluation/008 Regularization Techniques for Neural Networks (Dropout, Early Stopping).mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 6.7
   },
   {
    "id": "06-009",
@@ -94,7 +102,8 @@
    },
    "kind": "video",
    "video": "06 - Model Training, Tuning, and Evaluation/009 L1 and L2 Regularization.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.0
   },
   {
    "id": "06-010",
@@ -104,7 +113,8 @@
    },
    "kind": "video",
    "video": "06 - Model Training, Tuning, and Evaluation/010 The Vanishing Gradient Problem.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.4
   },
   {
    "id": "06-011",
@@ -114,7 +124,8 @@
    },
    "kind": "video",
    "video": "06 - Model Training, Tuning, and Evaluation/011 The Confusion Matrix.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 7.5
   },
   {
    "id": "06-012",
@@ -124,7 +135,8 @@
    },
    "kind": "video",
    "video": "06 - Model Training, Tuning, and Evaluation/012 Precision, Recall, F1, AUC, and more.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 7.9
   },
   {
    "id": "06-013",
@@ -134,7 +146,8 @@
    },
    "kind": "video",
    "video": "06 - Model Training, Tuning, and Evaluation/013 RMSE, R-squared, MAE.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.9
   },
   {
    "id": "06-014",
@@ -144,7 +157,8 @@
    },
    "kind": "video",
    "video": "06 - Model Training, Tuning, and Evaluation/014 Ensemble Methods Bagging and Boosting.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.6
   },
   {
    "id": "06-015",
@@ -154,7 +168,8 @@
    },
    "kind": "video",
    "video": "06 - Model Training, Tuning, and Evaluation/015 Automatic Model Tuning (AMT) in SageMaker.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 5.8
   },
   {
    "id": "06-016",
@@ -164,7 +179,8 @@
    },
    "kind": "video",
    "video": "06 - Model Training, Tuning, and Evaluation/016 Hyperparameter Tuning in AMT.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 5.0
   },
   {
    "id": "06-017",
@@ -174,7 +190,8 @@
    },
    "kind": "video",
    "video": "06 - Model Training, Tuning, and Evaluation/017 SageMaker Autopilot  AutoML.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 8.8
   },
   {
    "id": "06-018",
@@ -184,7 +201,8 @@
    },
    "kind": "video",
    "video": "06 - Model Training, Tuning, and Evaluation/018 SageMaker Studio, SageMaker Experiments.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.6
   },
   {
    "id": "06-019",
@@ -194,7 +212,8 @@
    },
    "kind": "video",
    "video": "06 - Model Training, Tuning, and Evaluation/019 Debugging Model Convergence and Training Performance.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 6.5
   },
   {
    "id": "06-020",
@@ -204,7 +223,8 @@
    },
    "kind": "video",
    "video": "06 - Model Training, Tuning, and Evaluation/020 SageMaker Model Registry.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.1
   },
   {
    "id": "06-021",
@@ -214,7 +234,8 @@
    },
    "kind": "video",
    "video": "06 - Model Training, Tuning, and Evaluation/021 MLFlow for LLM Experimentation.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.8
   },
   {
    "id": "06-022",
@@ -224,7 +245,8 @@
    },
    "kind": "video",
    "video": "06 - Model Training, Tuning, and Evaluation/022 Analyzing Training Jobs with TensorBoard.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.4
   },
   {
    "id": "06-023",
@@ -234,7 +256,8 @@
    },
    "kind": "video",
    "video": "06 - Model Training, Tuning, and Evaluation/023 SageMaker Training at Large Scale Training Compiler, Warm Pools.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.0
   },
   {
    "id": "06-024",
@@ -244,7 +267,8 @@
    },
    "kind": "video",
    "video": "06 - Model Training, Tuning, and Evaluation/024 SageMaker Checkpointing, Cluster Health Checks, Automatic Restarts.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.3
   },
   {
    "id": "06-025",
@@ -254,7 +278,8 @@
    },
    "kind": "video",
    "video": "06 - Model Training, Tuning, and Evaluation/025 SageMaker Distributed Training Libraries and Distributed Data Parallelism.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.8
   },
   {
    "id": "06-026",
@@ -264,7 +289,8 @@
    },
    "kind": "video",
    "video": "06 - Model Training, Tuning, and Evaluation/026 SageMaker Model Parallelism Library.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.4
   },
   {
    "id": "06-027",
@@ -274,7 +300,8 @@
    },
    "kind": "video",
    "video": "06 - Model Training, Tuning, and Evaluation/027 Elastic Fabric Adapter (EFA) and MiCS.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.7
   }
  ]
 }

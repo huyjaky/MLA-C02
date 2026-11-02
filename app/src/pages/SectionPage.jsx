@@ -1,11 +1,12 @@
 import { Link, useParams } from 'react-router-dom'
-import { Check, FileText, Layers, ListChecks, PlayCircle } from 'lucide-react'
+import { Layers, ListChecks } from 'lucide-react'
 import { useApp } from '../state/AppContext'
 import { PageHeader } from '../components/PageHeader'
 import { BiText } from '../components/BiText'
 import { SectionTab } from '../components/SectionTab'
 import { Meter } from '../components/Meter'
 import { TermList } from '../components/TermList'
+import { LectureRow } from '../components/LectureRow'
 import { NotFoundPage } from './NotFoundPage'
 
 export function SectionPage() {
@@ -43,24 +44,9 @@ export function SectionPage() {
         <section aria-labelledby="lectures-h">
           <h2 id="lectures-h">{l.ui('section.lectures')}</h2>
           <ol className="lecture-list">
-            {section.lectures.map((lecture) => {
-              const done = tracker.isLectureDone(lecture.id)
-              const Icon = lecture.kind === 'note' ? FileText : PlayCircle
-              return (
-                <li key={lecture.id}>
-                  <Link to={`/lecture/${lecture.id}`} className="lecture-row" data-done={done}>
-                    <span className="lecture-row__num num">{lecture.id.slice(3)}</span>
-                    <Icon size={16} strokeWidth={1.75} aria-hidden="true" className="lecture-row__icon" />
-                    <span className="lecture-row__title"><BiText pair={lecture.title} /></span>
-                    {done ? (
-                      <Check size={16} className="lecture-row__done" aria-label={l.ui('lecture.done')} />
-                    ) : (
-                      tracker.watchRatio(lecture.id) > 0 && <Meter value={tracker.watchRatio(lecture.id)} label={l.ui('lecture.watched')} />
-                    )}
-                  </Link>
-                </li>
-              )
-            })}
+            {section.lectures.map((lecture) => (
+              <li key={lecture.id}><LectureRow lecture={lecture} /></li>
+            ))}
           </ol>
         </section>
 

@@ -14,7 +14,8 @@
    },
    "kind": "video",
    "video": "04 - AWS Managed AI Services/001 Intro AWS Managed AI Services.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 0.6
   },
   {
    "id": "04-002",
@@ -24,7 +25,8 @@
    },
    "kind": "video",
    "video": "04 - AWS Managed AI Services/002 Why AWS Managed Services.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.1
   },
   {
    "id": "04-003",
@@ -34,7 +36,8 @@
    },
    "kind": "video",
    "video": "04 - AWS Managed AI Services/003 Amazon Comprehend.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.5
   },
   {
    "id": "04-004",
@@ -44,7 +47,8 @@
    },
    "kind": "video",
    "video": "04 - AWS Managed AI Services/004 Amazon Comprehend Custom Models.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.2
   },
   {
    "id": "04-005",
@@ -54,7 +58,8 @@
    },
    "kind": "video",
    "video": "04 - AWS Managed AI Services/005 Amazon Comprehend - Hands On.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.4
   },
   {
    "id": "04-006",
@@ -64,7 +69,8 @@
    },
    "kind": "video",
    "video": "04 - AWS Managed AI Services/006 Amazon Translate.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 0.6
   },
   {
    "id": "04-007",
@@ -74,7 +80,8 @@
    },
    "kind": "video",
    "video": "04 - AWS Managed AI Services/007 Amazon Translate - Hands On.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.6
   },
   {
    "id": "04-008",
@@ -84,7 +91,8 @@
    },
    "kind": "video",
    "video": "04 - AWS Managed AI Services/008 Amazon Transcribe.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.3
   },
   {
    "id": "04-009",
@@ -94,7 +102,8 @@
    },
    "kind": "video",
    "video": "04 - AWS Managed AI Services/009 Amazon Transcribe - Hands On.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.7
   },
   {
    "id": "04-010",
@@ -104,7 +113,8 @@
    },
    "kind": "video",
    "video": "04 - AWS Managed AI Services/010 Amazon Polly.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.8
   },
   {
    "id": "04-011",
@@ -114,7 +124,8 @@
    },
    "kind": "video",
    "video": "04 - AWS Managed AI Services/011 Amazon Polly - Hands On.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.2
   },
   {
    "id": "04-012",
@@ -124,7 +135,8 @@
    },
    "kind": "video",
    "video": "04 - AWS Managed AI Services/012 Amazon Rekognition.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 5.7
   },
   {
    "id": "04-013",
@@ -134,7 +146,8 @@
    },
    "kind": "video",
    "video": "04 - AWS Managed AI Services/013 Amazon Rekognition - Hands On.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.7
   },
   {
    "id": "04-014",
@@ -144,7 +157,8 @@
    },
    "kind": "video",
    "video": "04 - AWS Managed AI Services/014 Amazon Lex.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.9
   },
   {
    "id": "04-015",
@@ -154,7 +168,8 @@
    },
    "kind": "video",
    "video": "04 - AWS Managed AI Services/015 Amazon Lex - Hands On.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.5
   },
   {
    "id": "04-016",
@@ -164,7 +179,8 @@
    },
    "kind": "video",
    "video": "04 - AWS Managed AI Services/016 Amazon Personalize.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.1
   },
   {
    "id": "04-017",
@@ -174,7 +190,8 @@
    },
    "kind": "video",
    "video": "04 - AWS Managed AI Services/017 Amazon Textract.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 0.9
   },
   {
    "id": "04-018",
@@ -184,7 +201,8 @@
    },
    "kind": "video",
    "video": "04 - AWS Managed AI Services/018 Amazon Textract - Hands On.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.4
   },
   {
    "id": "04-019",
@@ -194,7 +212,8 @@
    },
    "kind": "video",
    "video": "04 - AWS Managed AI Services/019 Amazon Quick.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 5.0
   },
   {
    "id": "04-020",
@@ -204,7 +223,8 @@
    },
    "kind": "video",
    "video": "04 - AWS Managed AI Services/020 Amazon_s Hardware for AI.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.8
   },
   {
    "id": "04-021",
@@ -214,7 +234,8 @@
    },
    "kind": "video",
    "video": "04 - AWS Managed AI Services/021 Amazon_s Hardware for AI - Hands On.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.3
   }
  ]
 }

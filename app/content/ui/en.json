@@ -182,5 +182,20 @@
   "mistakes.noRelated": "No clearly related lecture was found.",
   "mistakes.advice": "Advice from the exam",
   "quizzes.clear": "Clear exam history",
-  "quizzes.clearConfirm": "Delete all scores, missed questions and unfinished attempts for this account? This cannot be undone. Lectures and flashcards are kept."
+  "quizzes.clearConfirm": "Delete all scores, missed questions and unfinished attempts for this account? This cannot be undone. Lectures and flashcards are kept.",
+  "nav.schedule": "Study plan",
+  "plan.lead": "Pick when you start and when you sit the exam. Lectures are spread over the days by video length, in course order, and the last 7 days before the exam are kept for practice exams.",
+  "plan.start": "Start date",
+  "plan.exam": "Exam date",
+  "plan.summary": "{days} study days, about {minutes} min of video a day. Review week starts {review}.",
+  "plan.invalid": "Pick both dates.",
+  "plan.tooShort": "Leave at least 8 days between the start and the exam: the last 7 are for review.",
+  "plan.late": "{n} lectures from earlier days are not done yet.",
+  "plan.studyH": "Lectures",
+  "plan.reviewH": "Review week",
+  "plan.today": "Today",
+  "plan.dayMeta": "Day {n} · {lectures} lectures · {minutes} min",
+  "plan.free": "Nothing new today: catch up or rest.",
+  "plan.reviewTodo": "Missed questions and due flashcards",
+  "plan.examDay": "Exam day"
 }

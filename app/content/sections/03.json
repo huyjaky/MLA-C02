@@ -14,7 +14,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/001 Intro Data Transformation, Integrity, and Feature Engineering.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.3
   },
   {
    "id": "03-002",
@@ -24,7 +25,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/002 Elastic MapReduce (EMR) and Hadoop Overview.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 7.2
   },
   {
    "id": "03-003",
@@ -34,7 +36,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/003 EMR Serverless.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 11.9
   },
   {
    "id": "03-004",
@@ -44,7 +47,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/004 Apache Spark on EMR.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 10.0
   },
   {
    "id": "03-005",
@@ -54,7 +58,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/005 Feature Engineering and the Curse of Dimensionality.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 6.5
   },
   {
    "id": "03-006",
@@ -68,7 +73,8 @@
    "materials": [
     "TF-IDF.ipynb",
     "subset-small.tsv"
-   ]
+   ],
+   "minutes": 6.3
   },
   {
    "id": "03-007",
@@ -82,7 +88,8 @@
    "materials": [
     "TF-IDF.ipynb",
     "subset-small.tsv"
-   ]
+   ],
+   "minutes": 20.1
   },
   {
    "id": "03-008",
@@ -92,7 +99,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/008 Imputing Missing Data.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 8.0
   },
   {
    "id": "03-009",
@@ -102,7 +110,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/009 Dealing with Unbalanced Data.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 5.6
   },
   {
    "id": "03-010",
@@ -112,7 +121,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/010 Handling Outliers.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 8.4
   },
   {
    "id": "03-011",
@@ -122,7 +132,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/011 Binning, Transforming, Encoding, Scaling, and Shuffling.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 8.0
   },
   {
    "id": "03-012",
@@ -132,7 +143,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/012 Advanced Text Pre-Processing for AI.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.0
   },
   {
    "id": "03-013",
@@ -142,7 +154,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/013 Data Masking and Anonymization.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.5
   },
   {
    "id": "03-014",
@@ -152,7 +165,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/014 AI Training - Data Integrity.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.2
   },
   {
    "id": "03-015",
@@ -171,7 +185,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/016 SageMaker AI Overview.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.7
   },
   {
    "id": "03-017",
@@ -181,7 +196,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/017 SageMaker AI Domains.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.2
   },
   {
    "id": "03-018",
@@ -191,7 +207,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/018 Data Processing, Training, and Deployment with SageMaker AI.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 5.6
   },
   {
    "id": "03-019",
@@ -201,7 +218,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/019 Labeling and Annotating Training Data.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 8.1
   },
   {
    "id": "03-020",
@@ -211,7 +229,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/020 SageMaker Data Wrangler.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 6.9
   },
   {
    "id": "03-021",
@@ -230,7 +249,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/022 Demo SageMaker Studio, Canvas, and Data Wrangler.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 24.3
   },
   {
    "id": "03-023",
@@ -240,7 +260,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/023 Pre-Training Bias Metrics, and Mitigating Bias.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.6
   },
   {
    "id": "03-024",
@@ -250,7 +271,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/024 Partial Dependence Plots (PDPs), Shapley values, and SHAP.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.1
   },
   {
    "id": "03-025",
@@ -260,7 +282,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/025 SageMaker Feature Store.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.7
   },
   {
    "id": "03-026",
@@ -270,7 +293,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/026 SageMaker Canvas.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.8
   },
   {
    "id": "03-027",
@@ -280,7 +304,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/027 AWS Glue.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 6.0
   },
   {
    "id": "03-028",
@@ -290,7 +315,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/028 AWS Glue Studio.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 5.3
   },
   {
    "id": "03-029",
@@ -300,7 +326,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/029 AWS Glue Data Quality.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.0
   },
   {
    "id": "03-030",
@@ -310,7 +337,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/030 AWS Glue DataBrew.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.9
   },
   {
    "id": "03-031",
@@ -320,7 +348,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/031 Demo Glue DataBrew.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 6.6
   },
   {
    "id": "03-032",
@@ -330,7 +359,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/032 Handling PII in DataBrew Transformations.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.0
   },
   {
    "id": "03-033",
@@ -340,7 +370,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/033 Intro to Amazon Athena.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.3
   },
   {
    "id": "03-034",
@@ -350,7 +381,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/034 Athena and Glue.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 7.8
   },
   {
    "id": "03-035",
@@ -360,7 +392,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/035 Athena and CREATE TABLE AS SELECT.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.5
   },
   {
    "id": "03-036",
@@ -370,7 +403,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/036 Athena Performance.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.8
   },
   {
    "id": "03-037",
@@ -380,7 +414,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/037 Athena ACID Transactions.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.9
   },
   {
    "id": "03-038",
@@ -390,7 +425,8 @@
    },
    "kind": "video",
    "video": "03 - Data Transformation, Integrity, and Feature Engineering/038 Athena Fine-Grained Access.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.1
   }
  ]
 }

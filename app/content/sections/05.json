@@ -14,7 +14,8 @@
    },
    "kind": "video",
    "video": "05 - SageMaker Built-In Algorithms/001 Intro SageMaker Built-In Algorithms.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 0.7
   },
   {
    "id": "05-002",
@@ -24,7 +25,8 @@
    },
    "kind": "video",
    "video": "05 - SageMaker Built-In Algorithms/002 Introducing Amazon SageMaker.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 9.6
   },
   {
    "id": "05-003",
@@ -34,7 +36,8 @@
    },
    "kind": "video",
    "video": "05 - SageMaker Built-In Algorithms/003 SageMaker Input Modes.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.1
   },
   {
    "id": "05-004",
@@ -44,7 +47,8 @@
    },
    "kind": "video",
    "video": "05 - SageMaker Built-In Algorithms/004 Linear Learner in SageMaker.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 5.5
   },
   {
    "id": "05-005",
@@ -54,7 +58,8 @@
    },
    "kind": "video",
    "video": "05 - SageMaker Built-In Algorithms/005 XGBoost in SageMaker.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 5.4
   },
   {
    "id": "05-006",
@@ -64,7 +69,8 @@
    },
    "kind": "video",
    "video": "05 - SageMaker Built-In Algorithms/006 LightGBM in SageMaker.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.8
   },
   {
    "id": "05-007",
@@ -74,7 +80,8 @@
    },
    "kind": "video",
    "video": "05 - SageMaker Built-In Algorithms/007 Seq2Seq in SageMaker.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.7
   },
   {
    "id": "05-008",
@@ -84,7 +91,8 @@
    },
    "kind": "video",
    "video": "05 - SageMaker Built-In Algorithms/008 DeepAR in SageMaker.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.4
   },
   {
    "id": "05-009",
@@ -94,7 +102,8 @@
    },
    "kind": "video",
    "video": "05 - SageMaker Built-In Algorithms/009 BlazingText in SageMaker.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.9
   },
   {
    "id": "05-010",
@@ -104,7 +113,8 @@
    },
    "kind": "video",
    "video": "05 - SageMaker Built-In Algorithms/010 Object2Vec in SageMaker.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.8
   },
   {
    "id": "05-011",
@@ -114,7 +124,8 @@
    },
    "kind": "video",
    "video": "05 - SageMaker Built-In Algorithms/011 Object Detection in SageMaker.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.7
   },
   {
    "id": "05-012",
@@ -124,7 +135,8 @@
    },
    "kind": "video",
    "video": "05 - SageMaker Built-In Algorithms/012 Image Classification in SageMaker.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.2
   },
   {
    "id": "05-013",
@@ -134,7 +146,8 @@
    },
    "kind": "video",
    "video": "05 - SageMaker Built-In Algorithms/013 Semantic Segmentation in SageMaker.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.3
   },
   {
    "id": "05-014",
@@ -144,7 +157,8 @@
    },
    "kind": "video",
    "video": "05 - SageMaker Built-In Algorithms/014 Random Cut Forest in SageMaker.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.0
   },
   {
    "id": "05-015",
@@ -154,7 +168,8 @@
    },
    "kind": "video",
    "video": "05 - SageMaker Built-In Algorithms/015 Neural Topic Model in SageMaker.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.4
   },
   {
    "id": "05-016",
@@ -164,7 +179,8 @@
    },
    "kind": "video",
    "video": "05 - SageMaker Built-In Algorithms/016 Latent Dirichlet Allocation (LDA) in SageMaker.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.1
   },
   {
    "id": "05-017",
@@ -174,7 +190,8 @@
    },
    "kind": "video",
    "video": "05 - SageMaker Built-In Algorithms/017 K-Nearest-Neighbors (KNN) in SageMaker.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.0
   },
   {
    "id": "05-018",
@@ -184,7 +201,8 @@
    },
    "kind": "video",
    "video": "05 - SageMaker Built-In Algorithms/018 K-Means Clustering in SageMaker.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 5.1
   },
   {
    "id": "05-019",
@@ -194,7 +212,8 @@
    },
    "kind": "video",
    "video": "05 - SageMaker Built-In Algorithms/019 Principal Component Analysis (PCA) in SageMaker.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.3
   },
   {
    "id": "05-020",
@@ -204,7 +223,8 @@
    },
    "kind": "video",
    "video": "05 - SageMaker Built-In Algorithms/020 Factorization Machines in SageMaker.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.2
   },
   {
    "id": "05-021",
@@ -214,7 +234,8 @@
    },
    "kind": "video",
    "video": "05 - SageMaker Built-In Algorithms/021 IP Insights in SageMaker.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.9
   }
  ]
 }

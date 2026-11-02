@@ -14,7 +14,8 @@
    },
    "kind": "video",
    "video": "01 - Introduction/001 Introduction and Course Overview.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 9.5
   },
   {
    "id": "01-002",
@@ -88,7 +89,8 @@
    },
    "kind": "video",
    "video": "01 - Introduction/005 [Important] AWS Console UI Update.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.2
   },
   {
    "id": "01-006",
@@ -98,7 +100,8 @@
    },
    "kind": "video",
    "video": "01 - Introduction/006 Setting Up an AWS Billing Alarm.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.7
   }
  ]
 }

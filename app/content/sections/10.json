@@ -24,7 +24,8 @@
    },
    "kind": "video",
    "video": "10 - Security, Identity, and Compliance/002 Principle of Least Privilege.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.1
   },
   {
    "id": "10-003",
@@ -34,7 +35,8 @@
    },
    "kind": "video",
    "video": "10 - Security, Identity, and Compliance/003 SageMaker Security Encryption at Rest and in Transit.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.5
   },
   {
    "id": "10-004",
@@ -44,7 +46,8 @@
    },
    "kind": "video",
    "video": "10 - Security, Identity, and Compliance/004 SageMaker Security VPC_s, IAM, Logging and Monitoring.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.0
   },
   {
    "id": "10-005",
@@ -54,7 +57,8 @@
    },
    "kind": "video",
    "video": "10 - Security, Identity, and Compliance/005 IAM Introduction Users, Groups, Policies.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 3.4
   },
   {
    "id": "10-006",
@@ -64,7 +68,8 @@
    },
    "kind": "video",
    "video": "10 - Security, Identity, and Compliance/006 IAM Users & Groups - Hands On.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 6.4
   },
   {
    "id": "10-007",
@@ -74,7 +79,8 @@
    },
    "kind": "video",
    "video": "10 - Security, Identity, and Compliance/007 AWS Console Simultaneous Sign-in.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.8
   },
   {
    "id": "10-008",
@@ -84,7 +90,8 @@
    },
    "kind": "video",
    "video": "10 - Security, Identity, and Compliance/008 IAM Policies.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.8
   },
   {
    "id": "10-009",
@@ -94,7 +101,8 @@
    },
    "kind": "video",
    "video": "10 - Security, Identity, and Compliance/009 IAM Policies - Hands On.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 8.0
   },
   {
    "id": "10-010",
@@ -104,7 +112,8 @@
    },
    "kind": "video",
    "video": "10 - Security, Identity, and Compliance/010 IAM MFA.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.2
   },
   {
    "id": "10-011",
@@ -114,7 +123,8 @@
    },
    "kind": "video",
    "video": "10 - Security, Identity, and Compliance/011 IAM MFA - Hands On.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.0
   },
   {
    "id": "10-012",
@@ -124,7 +134,8 @@
    },
    "kind": "video",
    "video": "10 - Security, Identity, and Compliance/012 IAM Roles.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.6
   },
   {
    "id": "10-013",
@@ -134,7 +145,8 @@
    },
    "kind": "video",
    "video": "10 - Security, Identity, and Compliance/013 IAM Roles - Hands On.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.1
   },
   {
    "id": "10-014",
@@ -144,7 +156,8 @@
    },
    "kind": "video",
    "video": "10 - Security, Identity, and Compliance/014 Encryption 101.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.0
   },
   {
    "id": "10-015",
@@ -154,7 +167,8 @@
    },
    "kind": "video",
    "video": "10 - Security, Identity, and Compliance/015 AWS KMS.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 7.5
   },
   {
    "id": "10-016",
@@ -168,7 +182,8 @@
    "materials": [
     "kms/kms-demo-cli.sh",
     "kms/ExampleSecretFile.txt"
-   ]
+   ],
+   "minutes": 9.5
   },
   {
    "id": "10-017",
@@ -178,7 +193,8 @@
    },
    "kind": "video",
    "video": "10 - Security, Identity, and Compliance/017 Amazon Macie.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.1
   },
   {
    "id": "10-018",
@@ -188,7 +204,8 @@
    },
    "kind": "video",
    "video": "10 - Security, Identity, and Compliance/018 AWS Secrets Manager.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.2
   },
   {
    "id": "10-019",
@@ -198,7 +215,8 @@
    },
    "kind": "video",
    "video": "10 - Security, Identity, and Compliance/019 AWS Secrets Manager - Hands On.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.0
   },
   {
    "id": "10-020",
@@ -208,7 +226,8 @@
    },
    "kind": "video",
    "video": "10 - Security, Identity, and Compliance/020 VPC, Subnets, Internet Gateway, NAT Gateway.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 5.4
   },
   {
    "id": "10-021",
@@ -218,7 +237,8 @@
    },
    "kind": "video",
    "video": "10 - Security, Identity, and Compliance/021 NACL, Security Groups, VPC Flow Logs.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 4.7
   },
   {
    "id": "10-022",
@@ -228,7 +248,8 @@
    },
    "kind": "video",
    "video": "10 - Security, Identity, and Compliance/022 VPC Peering, Endpoints, VPN, Direct Connect.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 5.5
   },
   {
    "id": "10-023",
@@ -238,7 +259,8 @@
    },
    "kind": "video",
    "video": "10 - Security, Identity, and Compliance/023 VPC Cheat Sheet & Closing Comments.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.5
   },
   {
    "id": "10-024",
@@ -248,7 +270,8 @@
    },
    "kind": "video",
    "video": "10 - Security, Identity, and Compliance/024 AWS PrivateLink.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 2.0
   }
  ]
 }

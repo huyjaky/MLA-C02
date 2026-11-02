@@ -1882,3 +1882,109 @@ article.prose {
     flex-wrap: wrap;
   }
 }
+
+/* ---------- study plan ---------- */
+.field input[type='date'] {
+  min-height: 2.375rem;
+  padding: 0 var(--s-3);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+}
+
+.plan {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  margin-top: var(--s-6);
+}
+
+.plan-alert {
+  padding: var(--s-3) var(--s-4);
+  border-left: 3px solid var(--rule-red);
+  border-radius: var(--radius);
+  background: var(--card);
+  font-size: var(--fs-sm);
+}
+
+.plan-day {
+  background: var(--card);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  scroll-margin: var(--s-6);
+}
+
+.plan-day[data-today='true'] {
+  outline: 2px solid var(--accent);
+}
+
+.plan-day summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2) var(--s-3);
+  padding: var(--s-3) var(--s-4);
+  cursor: pointer;
+  list-style: none;
+}
+
+.plan-day summary::-webkit-details-marker {
+  display: none;
+}
+
+.plan-day summary:hover {
+  background: var(--card-2);
+}
+
+.plan-day__date {
+  font-weight: 600;
+  min-width: 7.5rem;
+}
+
+.plan-day__tag {
+  padding: 0 var(--s-2);
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+}
+
+.plan-day__meta {
+  flex: 1;
+}
+
+.plan-day .lecture-list {
+  border-radius: 0;
+  box-shadow: none;
+  border-top: 1px solid var(--line);
+}
+
+.plan-day .lecture-row__num {
+  width: 3.25rem;
+}
+
+.plan-day__empty,
+.plan-day__actions {
+  padding: var(--s-3) var(--s-4);
+  border-top: 1px solid var(--line);
+}
+
+.plan-day__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+.plan-day--exam {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-3) var(--s-4);
+  border-left: 3px solid var(--rule-red);
+}

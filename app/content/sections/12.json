@@ -14,7 +14,8 @@
    },
    "kind": "video",
    "video": "12 - Machine Learning Best Practices/001 Intro Machine Learning Best Practices.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 0.6
   },
   {
    "id": "12-002",
@@ -24,7 +25,8 @@
    },
    "kind": "video",
    "video": "12 - Machine Learning Best Practices/002 AWS Tools for Responsible AI.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 6.8
   },
   {
    "id": "12-003",
@@ -34,7 +36,8 @@
    },
    "kind": "video",
    "video": "12 - Machine Learning Best Practices/003 AWS Well-Architected Machine Learning Lens.mp4",
-   "transcript": true
+   "transcript": true,
+   "minutes": 1.3
   }
  ]
 }
