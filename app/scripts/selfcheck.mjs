@@ -6,6 +6,7 @@ import { TranscriptTrack } from '../src/core/TranscriptTrack.js'
 import { Localizer } from '../src/core/Localizer.js'
 import { MistakeCoach } from '../src/core/MistakeCoach.js'
 import { StudyPlanner } from '../src/core/StudyPlanner.js'
+import { ProgressTracker } from '../src/core/ProgressTracker.js'
 
 const now = 1_000_000
 assert.equal(LeitnerScheduler.review(undefined, true, now).box, 2)
@@ -85,5 +86,18 @@ assert.deepEqual(plan.review.map((d) => d.date), ['2026-03-03', '2026-03-04', '2
 assert.deepEqual(plan.review.map((d) => d.exams.length), [1, 0, 0, 1, 0, 0, 1], 'exams spread over the review week')
 assert.equal(StudyPlanner.plan(lessons, '2026-03-01', '2026-03-08').error, 'tooShort')
 assert.equal(StudyPlanner.addDays('2026-03-28', 2), '2026-03-30', 'no DST drift')
+
+
+const persisted = []
+const tracker = new ProgressTracker({ lectures: { '01-001': 1 }, settings: { lang: 'en' } }, (s) => persisted.push(s))
+const backup = JSON.parse(JSON.stringify(tracker.exportData()))
+const other = new ProgressTracker({ lectures: { '09-009': 2 } }, (s) => persisted.push(s))
+await other.importData(backup)
+assert.deepEqual(other.state.lectures, { '01-001': 1 }, 'import replaces progress')
+assert.equal(other.state.settings.theme, 'system', 'missing settings fall back to defaults')
+assert.equal(persisted.length, 1, 'imported progress is persisted right away')
+assert.throws(() => other.importData({ lectures: {} }), /notBackup/, 'a random JSON file is refused')
+assert.throws(() => other.importData({ ...backup, state: { ...backup.state, lectures: [] } }), /notBackup/)
+assert.deepEqual(other.state.lectures, { '01-001': 1 }, 'a refused file changes nothing')
 
 console.log('selfcheck OK')

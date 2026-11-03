@@ -1,5 +1,5 @@
-import { PersistentStore } from './PersistentStore'
-import { LeitnerScheduler } from './LeitnerScheduler'
+import { PersistentStore } from './PersistentStore.js'
+import { LeitnerScheduler } from './LeitnerScheduler.js'
 
 const RESUME_MIN = 10 // seconds: earlier than this, starting over costs nothing
 const RESUME_END_MARGIN = 15 // seconds: this close to the end counts as finished
@@ -8,6 +8,7 @@ const DEFAULTS = {
   settings: { lang: 'vi', dual: false, theme: 'system', captions: 'both' },
   lectures: {}, // lecture id -> completed at (ms)
   quizzes: {}, // quiz id -> { best, attempts: [{ correct, total, percent, mode, at }] }
+  quizRuns: {}, // quiz id -> unfinished QuizSession snapshot
   mistakes: {}, // question id -> quiz id, until answered correctly
   leitner: {}, // card id -> { box, due }
   subDelays: {}, // lecture id -> subtitle delay in seconds (+ = subtitles later)
@@ -17,10 +18,33 @@ const DEFAULTS = {
   planView: null, // study plan page: { open: [expanded dates], lecture: last lecture opened from it }
 }
 
+const BACKUP_FORMAT = 'mla-study-progress'
+const isPlainObject = (v) => v !== null && typeof v === 'object' && !Array.isArray(v)
+
 /** One account's progress and preferences; `persist` saves them to that account on the server. */
 export class ProgressTracker extends PersistentStore {
   constructor(initial, persist) {
     super(DEFAULTS, initial, persist)
+  }
+
+  /** Contents of a backup file holding everything this account has done. */
+  exportData() {
+    return { format: BACKUP_FORMAT, version: 1, exportedAt: new Date().toISOString(), state: this.state }
+  }
+
+  /** Replace all progress with a backup from exportData; throws, changing nothing, when the file is not one. */
+  importData(backup) {
+    if (backup?.format !== BACKUP_FORMAT || !isPlainObject(backup.state)) throw new Error('notBackup')
+    const next = {}
+    for (const [slice, fallback] of Object.entries(DEFAULTS)) {
+      const value = backup.state[slice] ?? fallback
+      // map slices must stay objects; the nullable ones (lastLecture, schedule, planView) take a string or an object
+      const ok = isPlainObject(fallback) ? isPlainObject(value) : value === null || typeof value === 'string' || isPlainObject(value)
+      if (!ok) throw new Error('notBackup')
+      next[slice] = slice === 'settings' ? { ...DEFAULTS.settings, ...value } : value
+    }
+    Object.entries(next).forEach(([slice, value]) => this.update(slice, () => value))
+    return this.flush()
   }
 
   setSetting(name, value) {

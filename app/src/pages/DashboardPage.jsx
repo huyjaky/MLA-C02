@@ -1,5 +1,6 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Layers, PlayCircle, RotateCcw } from 'lucide-react'
+import { ArrowRight, Download, Layers, PlayCircle, RotateCcw, Upload } from 'lucide-react'
 import { useApp } from '../state/AppContext'
 import { PageHeader } from '../components/PageHeader'
 import { BiText } from '../components/BiText'
@@ -19,6 +20,53 @@ function TodayLink({ to, icon: Icon, label, value, children, primary = false }) 
       </span>
       <ArrowRight size={18} className="today__go" aria-hidden="true" />
     </Link>
+  )
+}
+
+const MAX_BACKUP_BYTES = 1_000_000 // the server refuses bigger progress saves anyway
+
+/** Download this account's progress as a JSON file, or replace it with one. */
+function BackupPanel() {
+  const { tracker, user, l } = useApp()
+  const [status, setStatus] = useState(null)
+
+  const exportFile = () => {
+    const blob = new Blob([JSON.stringify(tracker.exportData(), null, 1)], { type: 'application/json' })
+    const link = document.createElement('a')
+    link.href = URL.createObjectURL(blob)
+    link.download = `mla-c02-progress-${user.username}-${new Date().toISOString().slice(0, 10)}.json`
+    link.click()
+    URL.revokeObjectURL(link.href)
+  }
+
+  const importFile = async (e) => {
+    const file = e.target.files[0]
+    e.target.value = '' // picking the same file again still fires change
+    if (!file || !window.confirm(l.ui('backup.confirm'))) return
+    try {
+      if (file.size > MAX_BACKUP_BYTES) throw new Error('tooBig')
+      await tracker.importData(JSON.parse(await file.text()))
+      setStatus({ ok: true, text: l.ui('backup.done') })
+    } catch {
+      setStatus({ ok: false, text: l.ui('backup.invalid') })
+    }
+  }
+
+  return (
+    <section className="panel" aria-labelledby="backup-h">
+      <h2 id="backup-h">{l.ui('backup.title')}</h2>
+      <p className="muted small">{l.ui('backup.help')}</p>
+      <div className="backup__actions">
+        <button type="button" className="btn" onClick={exportFile}>
+          <Download size={16} aria-hidden="true" /> {l.ui('backup.export')}
+        </button>
+        <label className="btn">
+          <Upload size={16} aria-hidden="true" /> {l.ui('backup.import')}
+          <input type="file" accept="application/json,.json" className="sr-only" onChange={importFile} />
+        </label>
+      </div>
+      {status && <p className={`small ${status.ok ? 'backup__ok' : 'backup__error'}`} role="status">{status.text}</p>}
+    </section>
   )
 }
 
@@ -131,6 +179,7 @@ export function DashboardPage() {
             <LeitnerBox counts={scheduler.counts(cards)} />
             <p className="muted small">{l.ui('cards.boxHelp')}</p>
           </section>
+          <BackupPanel />
         </div>
       </div>
     </div>

@@ -1988,3 +1988,28 @@ article.prose {
   padding: var(--s-3) var(--s-4);
   border-left: 3px solid var(--rule-red);
 }
+
+/* ---------- progress backup ---------- */
+.backup__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+.backup__actions label.btn {
+  cursor: pointer;
+}
+
+/* the file input is visually hidden inside its label: show its keyboard focus on the button */
+.backup__actions label.btn:has(input:focus-visible) {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.backup__ok {
+  color: var(--ok);
+}
+
+.backup__error {
+  color: var(--bad);
+}

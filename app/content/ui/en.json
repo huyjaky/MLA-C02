@@ -197,5 +197,12 @@
   "plan.dayMeta": "Day {n} · {lectures} lectures · {minutes} min",
   "plan.free": "Nothing new today: catch up or rest.",
   "plan.reviewTodo": "Missed questions and due flashcards",
-  "plan.examDay": "Exam day"
+  "plan.examDay": "Exam day",
+  "backup.title": "Back up progress",
+  "backup.help": "Save everything you have done (lectures, scores, flashcards, study plan, settings) to a file, or load it into this account.",
+  "backup.export": "Export",
+  "backup.import": "Import",
+  "backup.confirm": "Importing replaces all progress in this account with the file. Continue?",
+  "backup.done": "Progress imported and saved.",
+  "backup.invalid": "This file is not a progress backup from this app. Nothing was changed."
 }

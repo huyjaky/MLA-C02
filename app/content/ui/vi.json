@@ -197,5 +197,12 @@
   "plan.dayMeta": "Ngày {n} · {lectures} bài · {minutes} phút",
   "plan.free": "Hôm nay không có bài mới: học bù hoặc nghỉ.",
   "plan.reviewTodo": "Câu sai và flashcard đến hạn",
-  "plan.examDay": "Ngày thi"
+  "plan.examDay": "Ngày thi",
+  "backup.title": "Sao lưu tiến trình",
+  "backup.help": "Lưu toàn bộ quá trình học (bài đã xem, điểm thi, flashcard, lịch học, cài đặt) ra file, hoặc nạp file đó vào tài khoản này.",
+  "backup.export": "Xuất file",
+  "backup.import": "Nhập file",
+  "backup.confirm": "Nhập file sẽ thay toàn bộ tiến trình của tài khoản này bằng nội dung file. Tiếp tục?",
+  "backup.done": "Đã nhập và lưu tiến trình.",
+  "backup.invalid": "File này không phải bản sao lưu tiến trình của app. Không có gì bị thay đổi."
 }
