@@ -61,10 +61,12 @@ export function QuestionCard({ session, onChoose, onFlag }) {
       <header className="question__head">
         <span className="num">{l.ui('quiz.questionOf', { n: session.index + 1, total: session.questions.length })}</span>
         {q.domain && <span className="question__domain">{q.domain}</span>}
-        <button type="button" className="icon-btn" aria-pressed={session.flagged.has(q.id)} onClick={onFlag} title={l.ui('quiz.flag')}>
-          <Flag size={16} aria-hidden="true" />
-          <span className="sr-only">{l.ui('quiz.flag')}</span>
-        </button>
+        {onFlag && (
+          <button type="button" className="icon-btn" aria-pressed={session.flagged.has(q.id)} onClick={onFlag} title={l.ui('quiz.flag')}>
+            <Flag size={16} aria-hidden="true" />
+            <span className="sr-only">{l.ui('quiz.flag')}</span>
+          </button>
+        )}
       </header>
       {revealed && <Stamp correct={session.isCorrect(q)} />}
 

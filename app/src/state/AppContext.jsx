@@ -63,11 +63,11 @@ function SignedIn({ user, tracker, logout, children }) {
     return () => window.removeEventListener('pagehide', flush)
   }, [tracker])
 
-  const value = useMemo(() => ({ repo, tracker, state, l, user, logout }), [tracker, state, l, user, logout])
+  const value = useMemo(() => ({ repo, api, tracker, state, l, user, logout }), [tracker, state, l, user, logout])
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>
 }
 
-/** { repo, tracker, state, l, user, logout } — content, progress actions and snapshot, localizer, account. */
+/** { repo, api, tracker, state, l, user, logout } — content, server calls, progress actions and snapshot, localizer, account. */
 export const useApp = () => useContext(AppContext)
 
 /** Holds a mutable domain object (e.g. QuizSession) and re-renders after `commit`. */

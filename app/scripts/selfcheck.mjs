@@ -7,6 +7,9 @@ import { Localizer } from '../src/core/Localizer.js'
 import { MistakeCoach } from '../src/core/MistakeCoach.js'
 import { StudyPlanner } from '../src/core/StudyPlanner.js'
 import { ProgressTracker } from '../src/core/ProgressTracker.js'
+import { QuestionDifficulty } from '../src/core/QuestionDifficulty.js'
+import { DuelRules } from '../src/core/DuelRules.js'
+import { SurvivalRun } from '../src/core/SurvivalRun.js'
 
 const now = 1_000_000
 assert.equal(LeitnerScheduler.review(undefined, true, now).box, 2)
@@ -99,5 +102,42 @@ assert.equal(persisted.length, 1, 'imported progress is persisted right away')
 assert.throws(() => other.importData({ lectures: {} }), /notBackup/, 'a random JSON file is refused')
 assert.throws(() => other.importData({ ...backup, state: { ...backup.state, lectures: [] } }), /notBackup/)
 assert.deepEqual(other.state.lectures, { '01-001': 1 }, 'a refused file changes nothing')
+
+const long = { question: { en: `<p>${'x'.repeat(700)}</p>` }, answer: [0] }
+assert.equal(QuestionDifficulty.of({ question: { en: 'short' } }, { kind: 'section' }), 'easy')
+assert.equal(QuestionDifficulty.of({ question: { en: 'short' } }, { kind: 'exam' }), 'medium')
+assert.equal(QuestionDifficulty.of({ ...long }, { kind: 'exam' }), 'hard', 'long scenario')
+assert.equal(QuestionDifficulty.of({ question: { en: 'short' }, multi: true }, { kind: 'exam' }), 'hard', 'multi-select')
+
+const fast = (action, level, correct = true) => ({ action, level, correct, answeredMs: 0 })
+assert.deepEqual(DuelRules.hit(fast('attack', 'hard'), null), { damage: 30, kind: 'hit' }, 'instant hard attack: full power')
+assert.deepEqual(DuelRules.hit(fast('attack', 'hard'), fast('defend', 'hard')).kind, 'blocked')
+assert.equal(DuelRules.hit(fast('attack', 'hard'), fast('defend', 'hard')).damage, 6, 'a quick hard defend stops 80%')
+assert.deepEqual(DuelRules.hit(fast('break', 'hard'), fast('defend', 'hard')), { damage: 18, kind: 'pierced' }, 'break ignores defend')
+assert.ok(DuelRules.hit(fast('break', 'medium'), null).damage < DuelRules.hit(fast('attack', 'medium'), null).damage, 'break is weaker than attack')
+assert.deepEqual(DuelRules.hit(fast('attack', 'hard', false), null), { damage: 0, kind: 'miss' }, 'wrong answer: no damage')
+const slow = { action: 'attack', level: 'easy', correct: true, answeredMs: (DuelRules.CHOOSE_SECONDS + DuelRules.ANSWER_SECONDS.easy) * 1000 }
+assert.equal(DuelRules.hit(slow, null).damage, Math.round(12 * DuelRules.MIN_SPEED), 'the slower, the weaker')
+assert.ok(DuelRules.ANSWER_SECONDS.easy < DuelRules.ANSWER_SECONDS.hard, 'hard questions get more time')
+assert.deepEqual(DuelRules.resolve(null, null), { a: { damage: 0, kind: 'none' }, b: { damage: 0, kind: 'none' } })
+
+const qs = [0, 1, 2, 3].map((id) => ({ id, multi: false, options: ['x', 'y'], answer: [0] }))
+const survival = new SurvivalRun({ questions: qs, level: 'medium' })
+survival.choose(0)
+assert.equal(survival.check(), true)
+assert.equal(survival.check(), null, 'scored once')
+survival.next()
+survival.choose(0)
+survival.check()
+assert.deepEqual([survival.streak, survival.score, survival.lives], [2, 20 + 22, 3], 'streak bonus grows')
+survival.next()
+survival.choose(1)
+assert.equal(survival.check(), false)
+assert.deepEqual([survival.streak, survival.bestStreak, survival.lives], [0, 2, 2], 'a miss costs a life and the streak')
+const hc = new SurvivalRun({ questions: qs, level: 'easy', hardcore: true })
+hc.choose(1)
+hc.check()
+assert.ok(hc.isOver, 'hardcore: one life')
+assert.equal(hc.boardMode, 'easy-hardcore')
 
 console.log('selfcheck OK')

@@ -1905,9 +1905,9 @@ article.prose {
 
 .plan-alert {
   padding: var(--s-3) var(--s-4);
-  border-left: 3px solid var(--rule-red);
   border-radius: var(--radius);
-  background: var(--card);
+  background: var(--bad-soft);
+  color: var(--ink);
   font-size: var(--fs-sm);
 }
 
@@ -1986,7 +1986,11 @@ article.prose {
   align-items: center;
   gap: var(--s-3);
   padding: var(--s-3) var(--s-4);
-  border-left: 3px solid var(--rule-red);
+  color: var(--rule-red);
+}
+
+.plan-day--exam strong {
+  color: var(--ink);
 }
 
 /* ---------- progress backup ---------- */

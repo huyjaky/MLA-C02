@@ -15,6 +15,9 @@ ENV NODE_ENV=production
 RUN echo '{"private":true,"type":"module"}' > package.json && npm install --no-audit --no-fund sirv@2.0.4
 COPY --from=build /app/dist ./dist
 COPY server ./server
+# the duel referee picks and judges questions on the server, with the same rules as the app
+COPY src/core ./src/core
+COPY content/quizzes ./content/quizzes
 USER node
 EXPOSE 8080
 CMD ["node", "--no-warnings", "server/index.js"]

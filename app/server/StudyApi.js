@@ -5,6 +5,7 @@ import { createHash, randomBytes, scrypt as scryptCallback, timingSafeEqual } fr
 import { promisify } from 'node:util'
 import fs from 'node:fs'
 import path from 'node:path'
+import { DuelError, DuelReferee } from './DuelReferee.js'
 
 const scrypt = promisify(scryptCallback)
 const SESSION_DAYS = 30
@@ -13,6 +14,10 @@ const MAX_BODY_BYTES = 1_000_000 // a full progress blob is ~100 KB
 const USERNAME = /^[\p{L}\p{N}_.-]{3,32}$/u
 const MIN_PASSWORD = 8
 const DAY_MS = 86_400_000
+const SURVIVAL_MODES = ['easy', 'medium', 'hard'].flatMap((level) => [level, `${level}-hardcore`])
+const MAX_SURVIVAL_SCORE = 1_000_000 // far above any honest run over the whole question bank
+const LEADERBOARD_ROWS = 50
+const MASTERED_BOX = 4 // Leitner box from which a flashcard counts as learned
 
 class HttpError extends Error {
   constructor(status, code) {
@@ -63,6 +68,17 @@ export class StudyDatabase {
         state TEXT NOT NULL,
         updated_at INTEGER NOT NULL
       );
+      CREATE TABLE IF NOT EXISTS game_results (
+        id INTEGER PRIMARY KEY,
+        user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        game TEXT NOT NULL,          -- 'duel' | 'survival'
+        mode TEXT NOT NULL,          -- duel: '1v1'; survival: level, optionally '-hardcore'
+        result TEXT,                 -- duel: 'win' | 'loss' | 'draw'
+        score INTEGER NOT NULL DEFAULT 0,
+        streak INTEGER NOT NULL DEFAULT 0,
+        at INTEGER NOT NULL
+      );
+      CREATE INDEX IF NOT EXISTS game_results_board ON game_results (game, mode, user_id);
     `)
   }
 
@@ -113,12 +129,53 @@ export class StudyDatabase {
                 ON CONFLICT(user_id) DO UPDATE SET state = excluded.state, updated_at = excluded.updated_at`)
       .run(userId, JSON.stringify(state), Date.now())
   }
+
+  addResult(userId, { game, mode, result = null, score = 0, streak = 0 }) {
+    this.db
+      .prepare('INSERT INTO game_results (user_id, game, mode, result, score, streak, at) VALUES (?, ?, ?, ?, ?, ?, ?)')
+      .run(userId, game, mode, result, score, streak, Date.now())
+  }
+
+  duelBoard() {
+    return this.db
+      .prepare(`SELECT u.username, SUM(result = 'win') AS wins, SUM(result = 'loss') AS losses, SUM(result = 'draw') AS draws
+                FROM game_results g JOIN users u ON u.id = g.user_id WHERE g.game = 'duel'
+                GROUP BY g.user_id ORDER BY wins DESC, losses ASC, u.username LIMIT ?`)
+      .all(LEADERBOARD_ROWS)
+  }
+
+  survivalBoard(mode) {
+    return this.db
+      .prepare(`SELECT u.username, MAX(score) AS score, MAX(streak) AS streak, COUNT(*) AS runs
+                FROM game_results g JOIN users u ON u.id = g.user_id WHERE g.game = 'survival' AND g.mode = ?
+                GROUP BY g.user_id ORDER BY score DESC, streak DESC, u.username LIMIT ?`)
+      .all(mode, LEADERBOARD_ROWS)
+  }
+
+  /** Every account's username and saved progress, for the study leaderboard. */
+  allProgress() {
+    return this.db
+      .prepare('SELECT u.username, p.state FROM users u LEFT JOIN progress p ON p.user_id = u.id')
+      .all()
+      .map((row) => ({ username: row.username, state: row.state ? JSON.parse(row.state) : {} }))
+  }
 }
 
 /** Routes for /api. Each handler gets { req, res, body, user } and returns the JSON to send. */
 export class StudyApi {
-  constructor(db) {
+  constructor(db, quizzes = []) {
     this.db = db
+    this.examIds = quizzes.filter((q) => q.kind === 'exam').map((q) => q.id)
+    this.referee = new DuelReferee({ quizzes, onFinish: (match) => this.recordDuel(match) })
+    const arena = (fn) => (c) => {
+      const user = this.requireUser(c)
+      try {
+        return fn(user, c.body)
+      } catch (error) {
+        if (error instanceof DuelError) throw new HttpError(409, error.message)
+        throw error
+      }
+    }
     this.routes = {
       'POST /register': (c) => this.register(c),
       'POST /login': (c) => this.login(c),
@@ -126,6 +183,15 @@ export class StudyApi {
       'GET /me': (c) => ({ user: this.requireUser(c) }),
       'GET /progress': (c) => ({ state: this.db.progress(this.requireUser(c).id) }),
       'POST /progress': (c) => this.saveProgress(c),
+      'GET /leaderboards': (c) => this.leaderboards(c),
+      'POST /games/survival': (c) => this.saveSurvival(c),
+      'POST /arena/presence': arena((user) => this.referee.heartbeat(user)),
+      'POST /arena/challenge': arena((user, body) => this.referee.challenge(user, Number(body.to))),
+      'POST /arena/respond': arena((user, body) => this.referee.respond(user, Number(body.from), body.accept === true)),
+      'POST /arena/match': arena((user, body) => this.referee.view(user, String(body.id ?? ''))),
+      'POST /arena/move': arena((user, body) => this.referee.move(user, { action: body.action, level: body.level })),
+      'POST /arena/answer': arena((user, body) => this.referee.answer(user, body.picked)),
+      'POST /arena/leave': arena((user) => this.referee.leave(user)),
     }
   }
 
@@ -183,6 +249,43 @@ export class StudyApi {
     return { ok: true }
   }
 
+  saveSurvival(context) {
+    const user = this.requireUser(context)
+    const { mode, score, streak } = context.body
+    const valid = (n) => Number.isInteger(n) && n >= 0 && n <= MAX_SURVIVAL_SCORE
+    if (!SURVIVAL_MODES.includes(mode) || !valid(score) || !valid(streak)) throw new HttpError(400, 'bad_request')
+    // shortcut: the client keeps the survival score, so a hand-made request can fake one; move scoring server-side if that matters
+    this.db.addResult(user.id, { game: 'survival', mode, score, streak })
+    return { ok: true }
+  }
+
+  recordDuel(match) {
+    for (const p of match.players) {
+      const result = match.winner == null ? 'draw' : match.winner === p.id ? 'win' : 'loss'
+      this.db.addResult(p.id, { game: 'duel', mode: '1v1', result })
+    }
+  }
+
+  /** Study ranking (lectures done, then exam average, then learned flashcards), duel wins, survival best per mode. */
+  leaderboards(context) {
+    this.requireUser(context)
+    const study = this.db
+      .allProgress()
+      .map(({ username, state }) => {
+        const bests = this.examIds.map((id) => state.quizzes?.[id]?.best ?? 0)
+        return {
+          username,
+          lectures: Object.keys(state.lectures ?? {}).length,
+          exam: bests.length ? Math.round(bests.reduce((a, b) => a + b, 0) / bests.length) : 0,
+          cards: Object.values(state.leitner ?? {}).filter((c) => c?.box >= MASTERED_BOX).length,
+        }
+      })
+      .sort((a, b) => b.lectures - a.lectures || b.exam - a.exam || b.cards - a.cards || a.username.localeCompare(b.username))
+      .slice(0, LEADERBOARD_ROWS)
+    const survival = Object.fromEntries(SURVIVAL_MODES.map((mode) => [mode, this.db.survivalBoard(mode)]))
+    return { study, duel: this.db.duelBoard(), survival }
+  }
+
   startSession(res, userId) {
     const token = this.db.createSession(userId)
     // SameSite=Lax keeps the cookie off cross-site POSTs, which is the CSRF guard for this local API.
@@ -225,5 +328,11 @@ function sendJson(res, status, body) {
   res.end(JSON.stringify(body))
 }
 
+/** Every quiz file, so the duel referee can pick and judge questions itself. */
+function loadQuizzes() {
+  const dir = new URL('../content/quizzes/', import.meta.url)
+  return fs.readdirSync(dir).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(fs.readFileSync(new URL(f, dir), 'utf8')))
+}
+
 /** Middleware for vite.config.js: `server.middlewares.use('/api', studyApi(file))`. */
-export const studyApi = (dbFile) => new StudyApi(new StudyDatabase(dbFile)).middleware
+export const studyApi = (dbFile) => new StudyApi(new StudyDatabase(dbFile), loadQuizzes()).middleware

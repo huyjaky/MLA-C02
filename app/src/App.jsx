@@ -11,6 +11,9 @@ import { FlashcardsPage } from './pages/FlashcardsPage'
 import { GlossaryPage } from './pages/GlossaryPage'
 import { NotesPage } from './pages/NotesPage'
 import { SchedulePage } from './pages/SchedulePage'
+import { CompetitivePage } from './pages/CompetitivePage'
+import { DuelPage } from './pages/DuelPage'
+import { SurvivalPage } from './pages/SurvivalPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 
 // Hash routing keeps the built app working from any static folder.
@@ -24,6 +27,9 @@ export function App() {
             <Route path="section/:id" element={<SectionPage />} />
             <Route path="lecture/:id" element={<LecturePage />} />
             <Route path="schedule" element={<SchedulePage />} />
+            <Route path="competitive" element={<CompetitivePage />} />
+            <Route path="competitive/duel" element={<DuelPage />} />
+            <Route path="competitive/survival" element={<SurvivalPage />} />
             <Route path="quizzes" element={<QuizzesPage />} />
             <Route path="quiz/:id" element={<QuizPage />} />
             <Route path="mistakes" element={<MistakesPage />} />

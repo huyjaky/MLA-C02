@@ -69,8 +69,13 @@ export class QuizSession {
   }
 
   isCorrect(question) {
-    const picked = this.selectionOf(question)
-    return picked.size === question.answer.length && question.answer.every((i) => picked.has(i))
+    return QuizSession.matches(question, this.selectionOf(question))
+  }
+
+  /** True when the picked option indexes are exactly the question's answer. */
+  static matches(question, picked) {
+    const set = new Set(picked)
+    return set.size === question.answer.length && question.answer.every((i) => set.has(i))
   }
 
   /** Single choice replaces the pick; multi-select toggles it. */
