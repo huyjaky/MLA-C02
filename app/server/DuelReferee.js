@@ -1,15 +1,16 @@
-// Referee for live 1v1 duels. Everything lives in memory: who is online, open challenges and running
-// matches. Clients poll; each call first moves the match forward on the server clock, so no timers run.
+// Referee for live duels (1v1 and 2v2). Everything lives in memory: who is online, open challenges, lobby rooms
+// and running matches. Clients poll; each call first moves the match forward on the server clock, so no timers run.
 import { randomUUID } from 'node:crypto'
 import { DuelRules } from '../src/core/DuelRules.js'
 import { QuestionDifficulty } from '../src/core/QuestionDifficulty.js'
 import { QuizSession } from '../src/core/QuizSession.js'
 
-const ONLINE_MS = 10_000 // no heartbeat for this long: offline
+const ONLINE_MS = 10_000 // no heartbeat for this long: offline, and out of any lobby room
 const CHALLENGE_MS = 30_000
-const FORFEIT_MS = 30_000 // a player who stops polling mid-match loses
+const FORFEIT_MS = 30_000 // a fighter who stops polling mid-match is knocked out
 const RESULT_PAUSE_MS = 4_000 // time to play the round's animation before the next round opens
-const MAX_ROUNDS = 15 // then the higher HP wins, so two defenders cannot stall forever
+const START_DELAY_MS = 1_500 // a short "fight!" before round one
+const TEAMS = ['A', 'B']
 
 export class DuelError extends Error {}
 
@@ -21,102 +22,155 @@ export class DuelReferee {
     this.onFinish = onFinish
     this.now = now
     this.online = new Map() // user id -> { user, seenAt }
-    this.challenges = new Map() // `${from}>${to}` -> { from, to, at }
+    this.names = new Map() // user id -> username, for everyone ever seen
+    this.challenges = new Map() // `${from}>${to}` -> { from, to, rounds, at }
+    this.rooms = new Map() // room id -> { id, host, mode, rounds, seats: { A: [ids], B: [ids] } }
+    this.roomOf = new Map() // user id -> room id
     this.matches = new Map() // match id -> match
     this.matchOf = new Map() // user id -> match id, while it runs
   }
 
-  /** Mark `user` online; returns who else is, challenges waiting for them, and their running match. */
+  // ---------------------------------------------------------------- lobby
+
+  /** Mark `user` online; returns who else is, challenges for them, open rooms, their room and their running match. */
   heartbeat(user) {
     const now = this.now()
+    this.#see(user)
     this.online.set(user.id, { user, seenAt: now })
-    for (const [id, entry] of this.online) if (now - entry.seenAt > ONLINE_MS) this.online.delete(id)
+    for (const [id, entry] of this.online) {
+      if (now - entry.seenAt <= ONLINE_MS) continue
+      this.online.delete(id)
+      this.#leaveRoom(id)
+    }
     for (const [key, c] of this.challenges) if (now - c.at > CHALLENGE_MS || !this.online.has(c.from)) this.challenges.delete(key)
     const match = this.#runningMatch(user.id)
     return {
       online: [...this.online.values()]
         .filter((e) => e.user.id !== user.id)
-        .map((e) => ({ id: e.user.id, username: e.user.username, busy: this.matchOf.has(e.user.id), challenged: this.challenges.has(`${user.id}>${e.user.id}`) })),
-      challenges: [...this.challenges.values()].filter((c) => c.to === user.id).map((c) => ({ from: c.from, username: this.online.get(c.from)?.user.username })),
+        .map((e) => ({ id: e.user.id, username: e.user.username, busy: !this.#free(e.user.id), challenged: this.challenges.has(`${user.id}>${e.user.id}`) })),
+      challenges: [...this.challenges.values()].filter((c) => c.to === user.id).map((c) => ({ from: c.from, username: this.names.get(c.from), rounds: c.rounds })),
+      rooms: [...this.rooms.values()].filter((r) => !r.private).map((r) => this.#roomView(r)),
+      room: this.roomOf.has(user.id) ? this.#roomView(this.rooms.get(this.roomOf.get(user.id))) : null,
       matchId: match?.id ?? null,
     }
   }
 
-  challenge(user, to) {
+  /** Direct 1v1 challenge for `rounds` rounds; it starts as soon as the opponent accepts. */
+  challenge(user, to, rounds) {
+    this.#see(user)
+    if (!DuelRules.ROUND_OPTIONS.includes(rounds)) throw new DuelError('bad_request')
     if (to === user.id || !this.online.has(to)) throw new DuelError('not_online')
-    if (this.matchOf.has(to) || this.matchOf.has(user.id)) throw new DuelError('busy')
-    this.challenges.set(`${user.id}>${to}`, { from: user.id, to, at: this.now() })
+    if (!this.#free(to) || !this.#free(user.id)) throw new DuelError('busy')
+    this.challenges.set(`${user.id}>${to}`, { from: user.id, to, rounds, at: this.now() })
     return { ok: true }
   }
 
   respond(user, from, accept) {
-    if (!this.challenges.delete(`${from}>${user.id}`)) throw new DuelError('no_challenge')
+    this.#see(user)
+    const challenge = this.challenges.get(`${from}>${user.id}`)
+    if (!challenge) throw new DuelError('no_challenge')
+    this.challenges.delete(`${from}>${user.id}`)
     if (!accept) return { matchId: null }
-    if (this.matchOf.has(from) || this.matchOf.has(user.id) || !this.online.has(from)) throw new DuelError('busy')
-    for (const [k, c] of this.challenges) if ([c.from, c.to].some((id) => id === from || id === user.id)) this.challenges.delete(k)
-    const now = this.now()
-    const players = [this.online.get(from).user, user]
-    const match = {
-      id: randomUUID(),
-      players,
-      hp: Object.fromEntries(players.map((p) => [p.id, DuelRules.MAX_HP])),
-      round: 1,
-      roundStart: now + 1500, // a short "fight!" before round one
-      moves: {},
-      guarded: Object.fromEntries(players.map((p) => [p.id, false])), // guard earned by last round's correct defend
-      used: new Set(),
-      last: null,
-      winner: undefined, // user id, null for a draw
-      over: false,
-      seen: Object.fromEntries(players.map((p) => [p.id, now])),
-    }
-    this.matches.set(match.id, match)
-    players.forEach((p) => this.matchOf.set(p.id, match.id))
-    return { matchId: match.id }
+    if (!this.#free(from) || !this.#free(user.id) || !this.online.has(from)) throw new DuelError('busy')
+    const room = this.#openRoom(from, '1v1', challenge.rounds, true)
+    room.seats.B.push(user.id)
+    this.roomOf.set(user.id, room.id)
+    return { matchId: this.#startMatch(room).id }
   }
 
-  /** The match as `user` sees it: the opponent's action and question stay hidden until the round resolves. */
+  /** Open a lobby room; its host takes the first seat of team A. */
+  createRoom(user, { mode, rounds }) {
+    this.#see(user)
+    if (!DuelRules.TEAM_SIZE[mode] || !DuelRules.ROUND_OPTIONS.includes(rounds)) throw new DuelError('bad_request')
+    if (this.matchOf.has(user.id)) throw new DuelError('busy')
+    this.#leaveRoom(user.id)
+    return { room: this.#roomView(this.#openRoom(user.id, mode, rounds, false)) }
+  }
+
+  /** Take (or switch to) a seat on `team` in a room. */
+  joinRoom(user, roomId, team) {
+    this.#see(user)
+    const room = this.rooms.get(roomId)
+    if (!room || room.private) throw new DuelError('no_room')
+    if (!TEAMS.includes(team)) throw new DuelError('bad_request')
+    if (this.matchOf.has(user.id)) throw new DuelError('busy')
+    const seats = room.seats[team].filter((id) => id !== user.id)
+    if (seats.length >= DuelRules.TEAM_SIZE[room.mode]) throw new DuelError('room_full')
+    if (this.roomOf.get(user.id) !== room.id) this.#leaveRoom(user.id)
+    for (const t of TEAMS) room.seats[t] = room.seats[t].filter((id) => id !== user.id)
+    room.seats[team].push(user.id)
+    this.roomOf.set(user.id, room.id)
+    return { room: this.#roomView(room) }
+  }
+
+  leaveRoom(user) {
+    this.#leaveRoom(user.id)
+    return { ok: true }
+  }
+
+  /** The host starts a full room. */
+  startRoom(user) {
+    const room = this.rooms.get(this.roomOf.get(user.id))
+    if (!room || room.host !== user.id) throw new DuelError('not_host')
+    if (!this.#isFull(room)) throw new DuelError('room_not_full')
+    return { matchId: this.#startMatch(room).id }
+  }
+
+  // ---------------------------------------------------------------- match
+
+  /** The match as `user` sees it: other fighters' actions and questions stay hidden until the round resolves. */
   view(user, matchId) {
     const match = this.matches.get(matchId)
-    if (!match || !match.players.some((p) => p.id === user.id)) throw new DuelError('no_match')
+    const me = match?.fighters.find((f) => f.id === user.id)
+    if (!me) throw new DuelError('no_match')
     match.seen[user.id] = this.now()
     this.#advance(match)
-    const opponent = match.players.find((p) => p.id !== user.id)
     const mine = match.moves[user.id]
-    const theirs = match.moves[opponent.id]
     return {
       id: match.id,
       serverNow: this.now(),
-      me: { id: user.id, username: user.username, hp: match.hp[user.id], guarded: match.guarded[user.id] },
-      opponent: {
-        id: opponent.id,
-        username: opponent.username,
-        hp: match.hp[opponent.id],
-        guarded: match.guarded[opponent.id],
-        picked: Boolean(theirs),
-        answered: Boolean(theirs?.answeredAt),
-      },
+      mode: match.mode,
+      maxRounds: match.maxRounds,
       round: match.round,
       roundStart: match.roundStart,
       chooseUntil: this.#chooseUntil(match),
-      move: mine && { action: mine.action, level: mine.level, questionId: mine.questionId, deadline: mine.deadline, answered: Boolean(mine.answeredAt) },
+      me: user.id,
+      team: me.team,
+      fighters: match.fighters.map((f) => ({
+        id: f.id,
+        username: f.username,
+        team: f.team,
+        hp: match.hp[f.id],
+        ...match.status[f.id],
+        picked: Boolean(match.moves[f.id]),
+        answered: Boolean(match.moves[f.id]?.answeredAt),
+      })),
+      move: mine && { action: mine.action, level: mine.level, target: mine.target, questionId: mine.questionId, deadline: mine.deadline, answered: Boolean(mine.answeredAt) },
       last: match.last,
       over: match.over,
       winner: match.winner,
     }
   }
 
-  move(user, { action, level }) {
+  move(user, { action, level, target }) {
     const match = this.#playing(user)
     const now = this.now()
     if (!DuelRules.ACTIONS.includes(action) || !QuestionDifficulty.LEVELS.includes(level)) throw new DuelError('bad_move')
+    if (match.hp[user.id] === 0) throw new DuelError('knocked_out')
     if (now < match.roundStart || now > this.#chooseUntil(match)) throw new DuelError('not_now')
     if (match.moves[user.id]) throw new DuelError('already_moved')
     const fresh = this.pools[level].filter((q) => !match.used.has(q.id))
     const pool = fresh.length ? fresh : this.pools[level]
     const question = pool[Math.floor(Math.random() * pool.length)]
     match.used.add(question.id)
-    match.moves[user.id] = { action, level, questionId: question.id, chosenAt: now, deadline: now + DuelRules.ANSWER_SECONDS[level] * 1000 }
+    match.moves[user.id] = {
+      action,
+      level,
+      target: Number.isInteger(target) ? target : null, // DuelRules.aim falls back to a valid target
+      questionId: question.id,
+      chosenAt: now,
+      deadline: now + DuelRules.ANSWER_SECONDS[level] * 1000,
+    }
     return this.view(user, match.id)
   }
 
@@ -134,11 +188,88 @@ export class DuelReferee {
     return this.view(user, match.id)
   }
 
-  /** Walking away (or closing the arena) hands the win to the opponent. */
+  /** Walking away (or closing the arena) knocks you out; a team with nobody left loses. */
   leave(user) {
     const match = this.#runningMatch(user.id)
-    if (match) this.#finish(match, match.players.find((p) => p.id !== user.id).id)
+    if (match) {
+      match.hp[user.id] = 0
+      this.#settleWinner(match)
+    }
     return { ok: true }
+  }
+
+  // ---------------------------------------------------------------- internals
+
+  #see(user) {
+    this.names.set(user.id, user.username)
+  }
+
+  #free(id) {
+    return !this.matchOf.has(id) && !this.roomOf.has(id)
+  }
+
+  #openRoom(host, mode, rounds, isPrivate) {
+    const room = { id: randomUUID(), host, mode, rounds, private: isPrivate, seats: { A: [host], B: [] } }
+    this.rooms.set(room.id, room)
+    this.roomOf.set(host, room.id)
+    return room
+  }
+
+  #isFull(room) {
+    return TEAMS.every((t) => room.seats[t].length === DuelRules.TEAM_SIZE[room.mode])
+  }
+
+  #roomView(room) {
+    const seat = (id) => ({ id, username: this.names.get(id) })
+    return {
+      id: room.id,
+      host: room.host,
+      hostName: this.names.get(room.host),
+      mode: room.mode,
+      rounds: room.rounds,
+      size: DuelRules.TEAM_SIZE[room.mode],
+      seats: { A: room.seats.A.map(seat), B: room.seats.B.map(seat) },
+      full: this.#isFull(room),
+    }
+  }
+
+  /** Leave a lobby room; the next member becomes host, and an empty room closes. */
+  #leaveRoom(id) {
+    const room = this.rooms.get(this.roomOf.get(id))
+    this.roomOf.delete(id)
+    if (!room) return
+    for (const t of TEAMS) room.seats[t] = room.seats[t].filter((s) => s !== id)
+    const left = [...room.seats.A, ...room.seats.B]
+    if (!left.length) this.rooms.delete(room.id)
+    else if (room.host === id) room.host = left[0]
+  }
+
+  #startMatch(room) {
+    const now = this.now()
+    const fighters = TEAMS.flatMap((team) => room.seats[team].map((id) => ({ id, username: this.names.get(id), team })))
+    const match = {
+      id: randomUUID(),
+      mode: room.mode,
+      maxRounds: room.rounds,
+      fighters,
+      hp: Object.fromEntries(fighters.map((f) => [f.id, DuelRules.MAX_HP])),
+      status: Object.fromEntries(fighters.map((f) => [f.id, { guarded: false, buffed: false }])), // earned last round
+      round: 1,
+      roundStart: now + START_DELAY_MS,
+      moves: {},
+      used: new Set(),
+      last: null,
+      winner: undefined, // team, or null for a draw
+      over: false,
+      seen: Object.fromEntries(fighters.map((f) => [f.id, now])),
+    }
+    this.matches.set(match.id, match)
+    this.rooms.delete(room.id)
+    for (const f of fighters) {
+      this.roomOf.delete(f.id)
+      this.matchOf.set(f.id, match.id)
+    }
+    return match
   }
 
   #chooseUntil(match) {
@@ -158,39 +289,55 @@ export class DuelReferee {
     return match
   }
 
-  /** Close the round once both players answered or ran out of time; end the match on a knockout. */
+  #ruleFighters(match) {
+    return match.fighters.map((f) => ({ id: f.id, team: f.team, hp: match.hp[f.id], ...match.status[f.id] }))
+  }
+
+  /** Finish the match once a team is wiped out (or no rounds are left). */
+  #settleWinner(match) {
+    const played = match.last?.round ?? 0
+    const winner = DuelRules.winner(this.#ruleFighters(match), match.maxRounds - played)
+    if (winner !== undefined) this.#finish(match, winner)
+    return winner !== undefined
+  }
+
+  /** Close the round once every standing fighter answered or ran out of time. */
   #advance(match) {
     if (match.over) return
     const now = this.now()
-    const gone = match.players.find((p) => now - match.seen[p.id] > FORFEIT_MS)
-    if (gone) return this.#finish(match, match.players.find((p) => p !== gone).id)
-    if (now < match.roundStart) return
-    const settled = (p) => {
-      const m = match.moves[p.id]
+    for (const f of match.fighters) if (match.hp[f.id] > 0 && now - match.seen[f.id] > FORFEIT_MS) match.hp[f.id] = 0
+    if (this.#settleWinner(match) || now < match.roundStart) return
+    const standing = match.fighters.filter((f) => match.hp[f.id] > 0)
+    const settled = (f) => {
+      const m = match.moves[f.id]
       return m ? Boolean(m.answeredAt) || now > m.deadline : now > this.#chooseUntil(match)
     }
-    if (!match.players.every(settled)) return
+    if (!standing.every(settled)) return
 
-    const [a, b] = match.players
-    const ruleMove = (p) => {
-      const m = match.moves[p.id]
-      return m && { action: m.action, level: m.level, correct: Boolean(m.correct), answeredMs: (m.answeredAt ?? m.deadline) - match.roundStart }
+    const moves = Object.fromEntries(
+      standing
+        .filter((f) => match.moves[f.id])
+        .map((f) => {
+          const m = match.moves[f.id]
+          return [f.id, { action: m.action, level: m.level, target: m.target, correct: Boolean(m.correct), answeredMs: (m.answeredAt ?? m.deadline) - match.roundStart }]
+        }),
+    )
+    const out = DuelRules.resolveRound(this.#ruleFighters(match), moves)
+    match.last = {
+      round: match.round,
+      hits: out.hits,
+      players: Object.fromEntries(
+        match.fighters.map((f) => {
+          const m = match.moves[f.id]
+          const move = m && { action: m.action, level: m.level, correct: Boolean(m.correct), questionId: m.questionId, picked: m.picked ?? [] }
+          return [f.id, { move, ...match.status[f.id], next: out.next[f.id], hp: out.hp[f.id] }]
+        }),
+      ),
     }
-    const outcome = DuelRules.resolve(ruleMove(a), ruleMove(b), { a: match.guarded[a.id], b: match.guarded[b.id] })
-    match.hp[a.id] = Math.max(0, match.hp[a.id] - outcome.a.damage)
-    match.hp[b.id] = Math.max(0, match.hp[b.id] - outcome.b.damage)
-    const report = (p, taken, guardsNext) => {
-      const m = match.moves[p.id]
-      const move = m && { action: m.action, level: m.level, correct: Boolean(m.correct), questionId: m.questionId, picked: m.picked ?? [] }
-      return [p.id, { move, taken, hp: match.hp[p.id], guarded: match.guarded[p.id], guardsNext }]
-    }
-    match.last = { round: match.round, players: Object.fromEntries([report(a, outcome.a, outcome.next.a), report(b, outcome.b, outcome.next.b)]) }
-    match.guarded = { [a.id]: outcome.next.a, [b.id]: outcome.next.b }
+    match.hp = out.hp
+    match.status = out.next
     match.moves = {}
-    if (match.hp[a.id] === 0 || match.hp[b.id] === 0 || match.round >= MAX_ROUNDS) {
-      const winner = match.hp[a.id] === match.hp[b.id] ? null : match.hp[a.id] > match.hp[b.id] ? a.id : b.id
-      return this.#finish(match, winner)
-    }
+    if (this.#settleWinner(match)) return
     match.round++
     match.roundStart = now + RESULT_PAUSE_MS
   }
@@ -199,9 +346,9 @@ export class DuelReferee {
     if (match.over) return
     match.over = true
     match.winner = winner
-    match.players.forEach((p) => this.matchOf.delete(p.id))
+    match.fighters.forEach((f) => this.matchOf.delete(f.id))
     this.onFinish(match)
-    // keep the finished match a while so both players can read the result, then drop it
+    // keep the finished match a while so everyone can read the result, then drop it
     setTimeout(() => this.matches.delete(match.id), 5 * 60_000).unref?.()
   }
 }

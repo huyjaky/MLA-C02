@@ -33,7 +33,7 @@ export class ApiClient {
   saveProgress = (state) => this.request('POST', '/progress', { state })
   leaderboards = () => this.request('GET', '/leaderboards')
   saveSurvival = (result) => this.request('POST', '/games/survival', result)
-  /** Duel calls: presence, challenge, respond, match, move, answer, leave. */
+  /** Duel calls: presence, challenge, respond, match, move, answer, leave, room/create|join|leave|start. */
   arena = (action, body = {}) => this.request('POST', `/arena/${action}`, body)
 
   /** Last-chance save while the tab closes; text/plain keeps sendBeacon from refusing the body. */

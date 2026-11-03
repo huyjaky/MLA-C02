@@ -7,6 +7,7 @@ import { Segmented } from '../components/Segmented'
 import { TodayLink } from '../components/TodayLink'
 import { LevelPicker } from '../components/LevelPicker'
 import { SurvivalRun } from '../core/SurvivalRun'
+import { DuelRules } from '../core/DuelRules'
 
 /** Rank cell: the podium gets a rubber-stamp mark, everyone else a plain number. */
 function Rank({ n }) {
@@ -47,6 +48,7 @@ export function CompetitivePage() {
   const [tab, setTab] = useState('study')
   const [level, setLevel] = useState('medium')
   const [hardcore, setHardcore] = useState(false)
+  const [duelMode, setDuelMode] = useState('1v1')
 
   const player = { key: 'username', label: l.ui('comp.player') }
   const tables = {
@@ -60,7 +62,7 @@ export function CompetitivePage() {
       ],
     },
     duel: {
-      rows: boards?.duel,
+      rows: boards?.duel[duelMode],
       columns: [player, { key: 'wins', label: l.ui('comp.wins') }, { key: 'losses', label: l.ui('comp.losses') }, { key: 'draws', label: l.ui('comp.draws') }],
     },
     survival: {
@@ -92,6 +94,11 @@ export function CompetitivePage() {
             ]}
           />
         </div>
+        {tab === 'duel' && (
+          <div className="toolbar">
+            <Segmented label={l.ui('duel.mode')} value={duelMode} onChange={setDuelMode} options={Object.keys(DuelRules.TEAM_SIZE).map((m) => ({ value: m, label: m }))} />
+          </div>
+        )}
         {tab === 'survival' && <LevelPicker level={level} onLevel={setLevel} hardcore={hardcore} onHardcore={setHardcore} />}
         {loaded?.error ? (
           <p className="plan-alert" role="alert">{l.ui('comp.loadError')}</p>

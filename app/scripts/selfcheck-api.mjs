@@ -69,68 +69,82 @@ try {
   server.close()
 }
 
-// the duel referee on a fake clock: challenge, rounds, timeouts, knockout
+// the duel referee on a fake clock: challenges with a round count, lobby rooms, 2v2, timeouts
 {
   let clock = 1_000_000
   const finished = []
-  const quizzes = [{ id: 's', kind: 'section', questions: [{ id: 1, options: ['a', 'b'], answer: [0] }, { id: 2, options: ['a', 'b'], answer: [0] }] }]
+  const quizzes = [{ id: 's', kind: 'section', questions: [1, 2, 3, 4, 5, 6].map((id) => ({ id, options: ['a', 'b'], answer: [0] })) }]
   const ref = new DuelReferee({ quizzes, onFinish: (m) => finished.push(m), now: () => clock })
-  const a = { id: 1, username: 'a' }
-  const b = { id: 2, username: 'b' }
-  ref.heartbeat(a)
-  assert.deepEqual(ref.heartbeat(b).online.map((u) => u.username), ['a'])
-  ref.challenge(a, b.id)
-  assert.deepEqual(ref.heartbeat(b).challenges, [{ from: 1, username: 'a' }])
+  const [a, b, c, d] = ['a', 'b', 'c', 'd'].map((username, i) => ({ id: i + 1, username }))
+  const online = () => [a, b, c, d].forEach((u) => ref.heartbeat(u))
+  const play = (user, action, target) => {
+    ref.move(user, { action, level: 'easy', target })
+    ref.answer(user, [0])
+  }
+
+  // 1v1 challenge for 3 rounds: ends on rounds, not a knockout
+  online()
+  assert.throws(() => ref.challenge(a, b.id, 5), /bad_request/, 'only 3, 6, 9 or 12 rounds')
+  ref.challenge(a, b.id, 3)
+  assert.deepEqual(ref.heartbeat(b).challenges, [{ from: 1, username: 'a', rounds: 3 }])
   const { matchId } = ref.respond(b, a.id, true)
   assert.equal(ref.heartbeat(a).matchId, matchId)
   assert.throws(() => ref.move(a, { action: 'attack', level: 'easy' }), /not_now/, 'no move before the round opens')
-  clock += 1500
-  const view = ref.move(a, { action: 'attack', level: 'easy' })
-  assert.equal(view.move.level, 'easy')
-  assert.equal(ref.view(b, matchId).opponent.picked, true, 'b sees that a picked, not what')
-  assert.equal(ref.view(b, matchId).move, undefined)
-  ref.answer(a, [0])
-  clock += 16_000 // b never picks: the choice window closes and the round resolves
-  const r1 = ref.view(b, matchId)
-  assert.equal(r1.last.players[2].taken.kind, 'hit')
-  assert.ok(r1.me.hp < 100 && r1.opponent.hp === 100)
-  assert.throws(() => ref.move(a, { action: 'attack', level: 'easy' }), /not_now/, 'result pause before the next round')
-  // knock b out: keep attacking instantly
-  while (!ref.view(a, matchId).over) {
+  for (let round = 1; round <= 3; round++) {
     clock = ref.view(a, matchId).roundStart
-    ref.move(a, { action: 'attack', level: 'easy' })
-    ref.answer(a, [0])
+    play(a, 'attack')
+    if (round === 1) assert.equal(ref.view(b, matchId).fighters.find((f) => f.id === a.id).picked, true, 'b sees that a picked, not what')
+    clock += 16_000 // b never picks: the choice window closes and the round resolves
     ref.view(b, matchId)
-    clock += 16_000
   }
-  assert.equal(ref.view(b, matchId).winner, 1)
+  const done = ref.view(b, matchId)
+  assert.deepEqual([done.over, done.winner, done.maxRounds], [true, 'A', 3], 'after 3 rounds the higher HP wins')
   assert.equal(finished.length, 1, 'result recorded once')
-  assert.equal(ref.heartbeat(a).matchId, null, 'free for a new match')
 
-  // walking away forfeits
-  ref.heartbeat(b)
-  ref.challenge(b, a.id)
-  const second = ref.respond(a, b.id, true).matchId
-  ref.leave(b)
-  assert.equal(ref.view(a, second).winner, 1)
-  // a correct defend guards the next round only
-  ref.heartbeat(a)
-  ref.heartbeat(b)
-  ref.challenge(a, b.id)
-  const third = ref.respond(b, a.id, true).matchId
-  const play = (user, action) => {
-    ref.move(user, { action, level: 'easy' })
-    ref.answer(user, [0])
+  // lobby room, 2v2: seats, host start, team play
+  clock += 1000
+  online()
+  const { room } = ref.createRoom(a, { mode: '2v2', rounds: 6 })
+  assert.equal(ref.heartbeat(c).rooms[0].id, room.id, 'open rooms are listed')
+  ref.joinRoom(b, room.id, 'A')
+  ref.joinRoom(c, room.id, 'B')
+  assert.throws(() => ref.startRoom(a), /room_not_full/)
+  assert.throws(() => ref.joinRoom(d, room.id, 'A'), /room_full/)
+  ref.joinRoom(d, room.id, 'B')
+  assert.throws(() => ref.startRoom(c), /not_host/)
+  const team = ref.startRoom(a).matchId
+  assert.deepEqual(ref.view(c, team).fighters.map((f) => f.team), ['A', 'A', 'B', 'B'])
+  clock = ref.view(a, team).roundStart
+  play(a, 'buff', b.id) // a buffs b
+  play(b, 'attack', c.id)
+  play(c, 'defend', d.id) // c guards d for next round
+  play(d, 'attack', a.id)
+  const r1 = ref.view(a, team)
+  assert.deepEqual([r1.fighters.find((f) => f.id === b.id).buffed, r1.fighters.find((f) => f.id === d.id).guarded], [true, true])
+  clock = r1.roundStart
+  play(b, 'attack', d.id) // buffed into a guard
+  clock += 16_000
+  const r2 = ref.view(a, team)
+  const onD = r2.last.hits.find((h) => h.from === b.id)
+  assert.deepEqual([onD.to, onD.kind, onD.damage], [d.id, 'blocked', Math.round(10 * 1.5 * 0.2)], 'buff and guard both apply')
+  // c and d stop polling: knocked out after the forfeit time, team A wins
+  for (let i = 0; i < 8; i++) {
+    clock += 5_000
+    ref.view(a, team)
+    ref.view(b, team)
   }
-  clock = ref.view(a, third).roundStart
-  play(a, 'attack')
-  play(b, 'defend')
-  const g1 = ref.view(b, third)
-  assert.deepEqual([g1.last.players[2].taken.kind, g1.me.guarded], ['hit', true], 'defend does not block this round, guards the next')
-  clock = g1.roundStart
-  play(a, 'attack')
-  play(b, 'attack')
-  const g2 = ref.view(b, third)
-  assert.deepEqual([g2.last.players[2].taken.kind, g2.me.guarded], ['blocked', false], 'guard used up after one round')
+  assert.deepEqual([ref.view(a, team).over, ref.view(a, team).winner], [true, 'A'], 'a team that left is knocked out')
+  assert.equal(finished.length, 2)
+  assert.deepEqual(finished[1].fighters.map((f) => f.team), ['A', 'A', 'B', 'B'])
+
+  // leaving a room passes the host on; the last one out closes it
+  clock += 1000
+  online()
+  const solo = ref.createRoom(c, { mode: '1v1', rounds: 9 }).room
+  ref.joinRoom(d, solo.id, 'B')
+  ref.leaveRoom(c)
+  assert.equal(ref.heartbeat(d).room.host, d.id)
+  ref.leaveRoom(d)
+  assert.equal(ref.heartbeat(d).rooms.length, 0)
   console.log('duel referee OK')
 }

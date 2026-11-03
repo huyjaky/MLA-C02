@@ -140,11 +140,14 @@ class StudyDatabase {
       .run(userId, game, mode, result, score, streak, Date.now())
   }
 
-  duelBoard() {
-    return this.#sql(`SELECT u.username, SUM(result = 'win') AS wins, SUM(result = 'loss') AS losses, SUM(result = 'draw') AS draws
+  /** { mode: [rows] } of duel wins for every mode, from one query. */
+  duelBoards(modes) {
+    const boards = Object.fromEntries(modes.map((mode) => [mode, []]))
+    const rows = this.#sql(`SELECT g.mode, u.username, SUM(result = 'win') AS wins, SUM(result = 'loss') AS losses, SUM(result = 'draw') AS draws
                 FROM game_results g JOIN users u ON u.id = g.user_id WHERE g.game = 'duel'
-                GROUP BY g.user_id ORDER BY wins DESC, losses ASC, u.username LIMIT ?`)
-      .all(LEADERBOARD_ROWS)
+                GROUP BY g.mode, g.user_id ORDER BY wins DESC, losses ASC, u.username`).all()
+    for (const { mode, ...row } of rows) if (boards[mode]?.length < LEADERBOARD_ROWS) boards[mode].push(row)
+    return boards
   }
 
   /** { mode: [best rows] } for every survival mode, from one query. */
@@ -190,10 +193,14 @@ class StudyApi {
       'GET /leaderboards': (c) => this.leaderboards(c),
       'POST /games/survival': (c) => this.saveSurvival(c),
       'POST /arena/presence': arena((user) => this.referee.heartbeat(user)),
-      'POST /arena/challenge': arena((user, body) => this.referee.challenge(user, Number(body.to))),
+      'POST /arena/challenge': arena((user, body) => this.referee.challenge(user, Number(body.to), Number(body.rounds))),
       'POST /arena/respond': arena((user, body) => this.referee.respond(user, Number(body.from), body.accept === true)),
       'POST /arena/match': arena((user, body) => this.referee.view(user, String(body.id ?? ''))),
-      'POST /arena/move': arena((user, body) => this.referee.move(user, { action: body.action, level: body.level })),
+      'POST /arena/move': arena((user, body) => this.referee.move(user, { action: body.action, level: body.level, target: body.target })),
+      'POST /arena/room/create': arena((user, body) => this.referee.createRoom(user, { mode: body.mode, rounds: Number(body.rounds) })),
+      'POST /arena/room/join': arena((user, body) => this.referee.joinRoom(user, String(body.id ?? ''), body.team)),
+      'POST /arena/room/leave': arena((user) => this.referee.leaveRoom(user)),
+      'POST /arena/room/start': arena((user) => this.referee.startRoom(user)),
       'POST /arena/answer': arena((user, body) => this.referee.answer(user, body.picked)),
       'POST /arena/leave': arena((user) => this.referee.leave(user)),
     }
@@ -264,8 +271,8 @@ class StudyApi {
   }
 
   recordDuel(match) {
-    for (const p of match.players) {
-      this.db.addResult(p.id, { game: 'duel', mode: '1v1', result: DuelRules.outcomeFor(match.winner, p.id) })
+    for (const f of match.fighters) {
+      this.db.addResult(f.id, { game: 'duel', mode: match.mode, result: DuelRules.outcomeFor(match.winner, f.team) })
     }
   }
 
@@ -285,7 +292,7 @@ class StudyApi {
       })
       .sort((a, b) => b.lectures - a.lectures || b.exam - a.exam || b.cards - a.cards || a.username.localeCompare(b.username))
       .slice(0, LEADERBOARD_ROWS)
-    return { study, duel: this.db.duelBoard(), survival: this.db.survivalBoards(SurvivalRun.MODES) }
+    return { study, duel: this.db.duelBoards(Object.keys(DuelRules.TEAM_SIZE)), survival: this.db.survivalBoards(SurvivalRun.MODES) }
   }
 
   startSession(res, userId) {

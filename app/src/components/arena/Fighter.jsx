@@ -1,20 +1,27 @@
 /**
- * A standing index card with a divider tab: the duel fighter. `side` mirrors it, `pose` and `taken`
- * pick the round's CSS animation (the parent keys it by round, so every round replays), `tone` colours the tab.
- * `guarded`: wearing the card sleeve this round; `shielding`: a correct defend slips a new sleeve on for next round.
+ * A standing index card with a divider tab: the duel fighter. `side` and `slot` place it (2v2 puts a second card
+ * further back), `pose` and `taken` pick the round's CSS animation (the parent keys it by round, so every round
+ * replays), `tone` colours the tab. Statuses: `guarded` wears the card sleeve this round, `buffed` glows with
+ * highlighter ink; `shielding` / `empowering` show a status being earned for next round; `interrupted` a broken setup.
  */
-export function Fighter({ name, side, tone, pose = 'idle', taken, guarded = false, shielding = false, ko = false }) {
+export function Fighter({ name, side, slot = 0, tone, pose = 'idle', taken, status = {}, ko = false, tag }) {
+  const { guarded, buffed, shielding, empowering, interrupted } = status
   return (
     <div
       className="fighter"
       data-side={side}
+      data-slot={slot}
       data-pose={pose}
       data-taken={taken?.kind ?? 'none'}
-      data-guarded={guarded}
-      data-shielding={shielding}
+      data-guarded={Boolean(guarded)}
+      data-buffed={Boolean(buffed)}
+      data-shielding={Boolean(shielding)}
+      data-empowering={Boolean(empowering)}
+      data-interrupted={Boolean(interrupted)}
       data-ko={ko}
     >
       <div className="fighter__body">
+        <span className="fighter__aura" aria-hidden="true" />
         <svg viewBox="0 0 120 168" aria-hidden="true" className="fighter__card">
           <rect x="22" y="4" width="44" height="22" rx="4" fill={tone} />
           <text x="44" y="20" textAnchor="middle" className="fighter__initial">{name.slice(0, 1).toUpperCase()}</text>
@@ -35,7 +42,8 @@ export function Fighter({ name, side, tone, pose = 'idle', taken, guarded = fals
         </span>
       </div>
       <span className="fighter__shadow" aria-hidden="true" />
-      {taken && taken.kind !== 'none' && (
+      {tag && <span className="fighter__tag">{tag}</span>}
+      {taken && (
         <span className={`fighter__pop fighter__pop--${taken.kind}`} aria-hidden="true">
           {taken.damage > 0 ? `-${taken.damage}` : taken.label}
         </span>
@@ -48,7 +56,7 @@ export function Fighter({ name, side, tone, pose = 'idle', taken, guarded = fals
 export function HealthBar({ name, hp, max, side, label, status }) {
   const ratio = Math.max(0, hp) / max
   return (
-    <div className="hp" data-side={side}>
+    <div className="hp" data-side={side} data-out={hp <= 0}>
       <div className="hp__head">
         <strong>{name}</strong>
         <span className="num">{hp}/{max}</span>
