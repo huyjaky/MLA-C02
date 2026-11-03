@@ -8,6 +8,7 @@ import path from 'node:path'
 import { DuelError, DuelReferee } from './DuelReferee.js'
 import { DuelRules } from '../src/core/DuelRules.js'
 import { SurvivalRun } from '../src/core/SurvivalRun.js'
+import { Elo } from '../src/core/Elo.js'
 
 const scrypt = promisify(scryptCallback)
 const SESSION_DAYS = 30
@@ -47,7 +48,7 @@ class PasswordHasher {
 }
 
 /** Users, sessions and progress tables. Session tokens are stored only as SHA-256 hashes. */
-class StudyDatabase {
+export class StudyDatabase {
   constructor(file) {
     if (file !== ':memory:') fs.mkdirSync(path.dirname(file), { recursive: true })
     this.db = new DatabaseSync(file)
@@ -80,6 +81,13 @@ class StudyDatabase {
         at INTEGER NOT NULL
       );
       CREATE INDEX IF NOT EXISTS game_results_board ON game_results (game, mode, user_id);
+      CREATE TABLE IF NOT EXISTS ratings (
+        user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        mode TEXT NOT NULL,          -- duel mode: '1v1' | '2v2'
+        rating INTEGER NOT NULL,
+        games INTEGER NOT NULL DEFAULT 0,
+        PRIMARY KEY (user_id, mode)
+      );
     `)
   }
 
@@ -140,14 +148,29 @@ class StudyDatabase {
       .run(userId, game, mode, result, score, streak, Date.now())
   }
 
-  /** { mode: [rows] } of duel wins for every mode, from one query. */
+  /** { mode: [rows] } for every duel mode, best Elo first, with each player's record; one query. */
   duelBoards(modes) {
     const boards = Object.fromEntries(modes.map((mode) => [mode, []]))
-    const rows = this.#sql(`SELECT g.mode, u.username, SUM(result = 'win') AS wins, SUM(result = 'loss') AS losses, SUM(result = 'draw') AS draws
-                FROM game_results g JOIN users u ON u.id = g.user_id WHERE g.game = 'duel'
-                GROUP BY g.mode, g.user_id ORDER BY wins DESC, losses ASC, u.username`).all()
+    const rows = this.#sql(`SELECT r.mode, u.username, r.rating AS elo,
+                  COALESCE(SUM(g.result = 'win'), 0) AS wins, COALESCE(SUM(g.result = 'loss'), 0) AS losses,
+                  COALESCE(SUM(g.result = 'draw'), 0) AS draws
+                FROM ratings r JOIN users u ON u.id = r.user_id
+                LEFT JOIN game_results g ON g.user_id = r.user_id AND g.game = 'duel' AND g.mode = r.mode
+                GROUP BY r.mode, r.user_id ORDER BY r.rating DESC, wins DESC, u.username`).all()
     for (const { mode, ...row } of rows) if (boards[mode]?.length < LEADERBOARD_ROWS) boards[mode].push(row)
     return boards
+  }
+
+  /** Map of user id -> Elo in `mode`; players without a rating yet get the starting one. */
+  ratings(mode, ids) {
+    const rows = this.#sql('SELECT user_id, rating FROM ratings WHERE mode = ? AND user_id IN (SELECT value FROM json_each(?))').all(mode, JSON.stringify(ids))
+    const found = new Map(rows.map((r) => [r.user_id, r.rating]))
+    return new Map(ids.map((id) => [id, found.get(id) ?? Elo.START]))
+  }
+
+  setRating(userId, mode, rating) {
+    this.#sql(`INSERT INTO ratings (user_id, mode, rating, games) VALUES (?, ?, ?, 1)
+               ON CONFLICT(user_id, mode) DO UPDATE SET rating = excluded.rating, games = games + 1`).run(userId, mode, rating)
   }
 
   /** { mode: [best rows] } for every survival mode, from one query. */
@@ -169,7 +192,7 @@ class StudyDatabase {
 }
 
 /** Routes for /api. Each handler gets { req, res, body, user } and returns the JSON to send. */
-class StudyApi {
+export class StudyApi {
   constructor(db, quizzes = []) {
     this.db = db
     this.examIds = quizzes.filter((q) => q.kind === 'exam').map((q) => q.id)
@@ -192,7 +215,7 @@ class StudyApi {
       'POST /progress': (c) => this.saveProgress(c),
       'GET /leaderboards': (c) => this.leaderboards(c),
       'POST /games/survival': (c) => this.saveSurvival(c),
-      'POST /arena/presence': arena((user) => this.referee.heartbeat(user)),
+      'POST /arena/presence': arena((user) => this.withElo(user, this.referee.heartbeat(user))),
       'POST /arena/challenge': arena((user, body) => this.referee.challenge(user, Number(body.to), Number(body.rounds))),
       'POST /arena/respond': arena((user, body) => this.referee.respond(user, Number(body.from), body.accept === true)),
       'POST /arena/match': arena((user, body) => this.referee.view(user, String(body.id ?? ''))),
@@ -270,9 +293,32 @@ class StudyApi {
     return { ok: true }
   }
 
+  /** Save each fighter's result and new Elo; the changes ride on the match so the end screen can show them. */
   recordDuel(match) {
+    const current = this.db.ratings(match.mode, match.fighters.map((f) => f.id))
+    const teams = { A: [], B: [] }
+    for (const f of match.fighters) teams[f.team].push({ id: f.id, rating: current.get(f.id) })
+    match.elo = Elo.update(teams, match.winner)
     for (const f of match.fighters) {
       this.db.addResult(f.id, { game: 'duel', mode: match.mode, result: DuelRules.outcomeFor(match.winner, f.team) })
+      this.db.setRating(f.id, match.mode, match.elo[f.id].after)
+    }
+  }
+
+  /** Lobby data with Elo: yours per mode, each online player's 1v1 rating, and seats rated for the room's mode. */
+  withElo(user, presence) {
+    const seats = presence.room ? [...presence.room.seats.A, ...presence.room.seats.B] : []
+    const ids = [user.id, ...presence.online.map((p) => p.id), ...seats.map((s) => s.id)]
+    const elo = Object.fromEntries(Object.keys(DuelRules.TEAM_SIZE).map((mode) => [mode, this.db.ratings(mode, ids)]))
+    const rateSeats = (room) => ({
+      ...room,
+      seats: Object.fromEntries(Object.entries(room.seats).map(([t, list]) => [t, list.map((s) => ({ ...s, elo: elo[room.mode].get(s.id) }))])),
+    })
+    return {
+      ...presence,
+      myElo: Object.fromEntries(Object.entries(elo).map(([mode, map]) => [mode, map.get(user.id)])),
+      online: presence.online.map((p) => ({ ...p, elo: elo['1v1'].get(p.id) })),
+      room: presence.room && rateSeats(presence.room),
     }
   }
 

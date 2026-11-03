@@ -11,6 +11,7 @@ import { QuestionDifficulty } from '../src/core/QuestionDifficulty.js'
 import { DuelRules } from '../src/core/DuelRules.js'
 import { SurvivalRun } from '../src/core/SurvivalRun.js'
 import { plainText } from '../src/core/plainText.js'
+import { Elo } from '../src/core/Elo.js'
 
 const now = 1_000_000
 assert.equal(LeitnerScheduler.review(undefined, true, now).box, 2)
@@ -178,5 +179,15 @@ judged.choose(0)
 judged.goTo(1)
 judged.choose(0)
 assert.deepEqual(judged.result(), { correct: 1, total: 2, percent: 50, passed: false, rightIds: [1], wrongIds: [2], byDomain: { D: { correct: 1, total: 1 } } })
+
+// Elo
+const even = Elo.update({ A: [{ id: 1, rating: 1000 }], B: [{ id: 2, rating: 1000 }] }, 'A')
+assert.deepEqual([even[1].delta, even[2].delta, even[1].after], [16, -16, 1016], 'even match: K/2 each way')
+const upset = Elo.update({ A: [{ id: 1, rating: 1000 }], B: [{ id: 2, rating: 1400 }] }, 'A')
+assert.equal(upset[1].delta, 29, 'beating a much stronger player pays more')
+assert.equal(Elo.update({ A: [{ id: 1, rating: 1400 }], B: [{ id: 2, rating: 1000 }] }, 'A')[1].delta, 3, 'beating a weaker one pays little')
+assert.equal(Elo.update({ A: [{ id: 1, rating: 1000 }], B: [{ id: 2, rating: 1000 }] }, null)[1].delta, 0, 'an even draw changes nothing')
+const pair = Elo.update({ A: [{ id: 1, rating: 1100 }, { id: 2, rating: 900 }], B: [{ id: 3, rating: 1000 }, { id: 4, rating: 1000 }] }, 'B')
+assert.deepEqual([pair[1].delta, pair[2].delta, pair[3].delta], [-16, -16, 16], 'teams play at their average; members move together')
 
 console.log('selfcheck OK')

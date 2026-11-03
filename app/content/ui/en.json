@@ -328,5 +328,7 @@
   "duel.error.no_room": "That room is gone.",
   "duel.error.room_full": "That team is full.",
   "duel.error.room_not_full": "Every seat must be taken first.",
-  "duel.error.not_host": "Only the host can start."
+  "duel.error.not_host": "Only the host can start.",
+  "duel.eloMine": "Your Elo",
+  "duel.eloChanges": "Elo after this match"
 }

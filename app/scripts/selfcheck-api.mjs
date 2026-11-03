@@ -1,7 +1,7 @@
 // Assert-based self-check for the study API over real HTTP (in-memory DB): `npm run check`
 import assert from 'node:assert/strict'
 import http from 'node:http'
-import { studyApi } from '../server/StudyApi.js'
+import { StudyApi, StudyDatabase, studyApi } from '../server/StudyApi.js'
 import { DuelReferee } from '../server/DuelReferee.js'
 
 const api = studyApi(':memory:')
@@ -147,4 +147,24 @@ try {
   ref.leaveRoom(d)
   assert.equal(ref.heartbeat(d).rooms.length, 0)
   console.log('duel referee OK')
+}
+
+// Elo is saved per mode after each duel and ranks the duel board
+{
+  const api = new StudyApi(new StudyDatabase(':memory:'), [])
+  const [x, y, z, w] = ['xa', 'yb', 'zc', 'wd'].map((name) => api.db.createUser(name, 'hash'))
+  const duel = (mode, fighters, winner) => {
+    const match = { mode, winner, fighters }
+    api.recordDuel(match)
+    return match.elo
+  }
+  assert.equal(duel('1v1', [{ ...x, team: 'A' }, { ...y, team: 'B' }], 'A')[x.id].after, 1016)
+  assert.equal(duel('1v1', [{ ...x, team: 'A' }, { ...y, team: 'B' }], 'A')[x.id].delta, 15, 'the favourite gains a little less')
+  duel('2v2', [{ ...x, team: 'A' }, { ...z, team: 'A' }, { ...y, team: 'B' }, { ...w, team: 'B' }], 'B')
+  const boards = api.db.duelBoards(['1v1', '2v2'])
+  assert.deepEqual(boards['1v1'].map((r) => [r.username, r.elo, r.wins, r.losses]), [['xa', 1031, 2, 0], ['yb', 969, 0, 2]])
+  assert.deepEqual(boards['2v2'].map((r) => r.elo), [1016, 1016, 984, 984], 'ratings are separate per mode')
+  const lobby = api.withElo(x, { online: [{ id: y.id }], room: null })
+  assert.deepEqual([lobby.myElo, lobby.online[0].elo], [{ '1v1': 1031, '2v2': 984 }, 969])
+  console.log('elo OK')
 }

@@ -149,6 +149,7 @@ export class DuelReferee {
       last: match.last,
       over: match.over,
       winner: match.winner,
+      elo: match.elo ?? null, // { id: { before, after, delta } }, set when the result is recorded
     }
   }
 

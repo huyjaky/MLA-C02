@@ -328,5 +328,7 @@
   "duel.error.no_room": "Phòng đó không còn nữa.",
   "duel.error.room_full": "Đội đó đã đủ người.",
   "duel.error.room_not_full": "Phải đủ người mới bắt đầu được.",
-  "duel.error.not_host": "Chỉ chủ phòng mới bắt đầu được."
+  "duel.error.not_host": "Chỉ chủ phòng mới bắt đầu được.",
+  "duel.eloMine": "Elo của bạn",
+  "duel.eloChanges": "Elo sau trận"
 }

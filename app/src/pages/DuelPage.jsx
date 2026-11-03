@@ -53,7 +53,22 @@ function Lobby({ onMatch }) {
 
   return (
     <div className="page">
-      <PageHeader title={l.ui('duel.title')} lead={l.ui('duel.lead')} />
+      <PageHeader
+        title={l.ui('duel.title')}
+        lead={l.ui('duel.lead')}
+        aside={
+          presence?.myElo && (
+            <dl className="elo-mine" aria-label={l.ui('duel.eloMine')}>
+              {Object.entries(presence.myElo).map(([mode, elo]) => (
+                <div key={mode}>
+                  <dt>Elo {mode}</dt>
+                  <dd className="num">{elo}</dd>
+                </div>
+              ))}
+            </dl>
+          )
+        }
+      />
       {error && <p className="plan-alert" role="alert">{l.ui(`duel.error.${error}`)}</p>}
 
       {presence?.challenges.length > 0 && (
@@ -124,7 +139,9 @@ function Lobby({ onMatch }) {
                     <UserRound size={18} aria-hidden="true" />
                     <span className="duel-player__who">
                       <strong>{p.username}</strong>
-                      <small className="muted">{p.busy ? l.ui('duel.busy') : p.challenged ? l.ui('duel.waiting') : l.ui('duel.free')}</small>
+                      <small className="muted">
+                        Elo <span className="num">{p.elo}</span> · {p.busy ? l.ui('duel.busy') : p.challenged ? l.ui('duel.waiting') : l.ui('duel.free')}
+                      </small>
                     </span>
                     <button type="button" className="btn" disabled={p.busy || p.challenged} onClick={() => call('challenge', { to: p.id, rounds })}>
                       <Swords size={16} aria-hidden="true" /> {l.ui('duel.challenge')}
@@ -165,6 +182,7 @@ function RoomPanel({ room, me, call }) {
                       <>
                         {seat.id === room.host ? <Crown size={15} aria-label={l.ui('duel.host')} /> : <UserRound size={15} aria-hidden="true" />}
                         <span>{seat.username}{seat.id === me ? ` (${l.ui('duel.you')})` : ''}</span>
+                        <span className="room__elo num">{seat.elo}</span>
                       </>
                     ) : (
                       <span className="muted">{l.ui('duel.emptySeat')}</span>
@@ -520,6 +538,24 @@ function Arena({ matchId, onExit }) {
         </p>
       )}
       {phase === 'out' && <p className="duel-wait muted" role="status">{l.ui('duel.knockedOut')}</p>}
+
+      {phase === 'over' && view.elo && (
+        <section className="elo-change" aria-label={l.ui('duel.eloChanges')}>
+          <h2>{l.ui('duel.eloChanges')}</h2>
+          <ul>
+            {fighters.map((f) => {
+              const change = view.elo[f.id]
+              return (
+                <li key={f.id} aria-current={f.id === view.me || undefined}>
+                  <span>{f.id === view.me ? `${f.username} (${l.ui('duel.you')})` : f.username}</span>
+                  <span className="num">{change.before} → {change.after}</span>
+                  <strong className="num" data-sign={Math.sign(change.delta)}>{change.delta > 0 ? '+' : ''}{change.delta}</strong>
+                </li>
+              )
+            })}
+          </ul>
+        </section>
+      )}
 
       <div className="duel-end">
         {phase === 'over' ? (

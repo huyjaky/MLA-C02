@@ -1228,6 +1228,83 @@
   gap: var(--s-2);
 }
 
+/* ---------- Elo ---------- */
+.elo-mine {
+  display: flex;
+  gap: var(--s-4);
+  margin: 0;
+}
+
+.elo-mine dt {
+  color: var(--ink-3);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+}
+
+.elo-mine dd {
+  margin: 0;
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.room__elo {
+  margin-left: auto;
+  color: var(--ink-3);
+  font-size: var(--fs-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.elo-change {
+  max-width: 28rem;
+  margin: var(--s-4) auto 0;
+  padding: var(--s-4) var(--s-5);
+  border-radius: var(--radius-card);
+  background: var(--card);
+  box-shadow: var(--shadow-card);
+  animation: invite-in var(--t-slow) var(--ease-out) 1200ms both;
+}
+
+.elo-change h2 {
+  margin: 0 0 var(--s-2);
+  font-size: var(--fs-md);
+}
+
+.elo-change ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.elo-change li {
+  display: grid;
+  grid-template-columns: 1fr auto 3.5rem;
+  gap: var(--s-3);
+  padding: var(--s-1) var(--s-2);
+  border-radius: var(--radius);
+  font-size: var(--fs-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.elo-change li[aria-current='true'] {
+  background: var(--accent-soft);
+}
+
+.elo-change strong {
+  text-align: right;
+}
+
+.elo-change strong[data-sign='1'] {
+  color: var(--ok);
+}
+
+.elo-change strong[data-sign='-1'] {
+  color: var(--bad);
+}
+
 /* ---------- small screens ---------- */
 @media (max-width: 760px) {
   .arena-launch,

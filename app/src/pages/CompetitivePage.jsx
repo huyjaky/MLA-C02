@@ -63,7 +63,13 @@ export function CompetitivePage() {
     },
     duel: {
       rows: boards?.duel[duelMode],
-      columns: [player, { key: 'wins', label: l.ui('comp.wins') }, { key: 'losses', label: l.ui('comp.losses') }, { key: 'draws', label: l.ui('comp.draws') }],
+      columns: [
+        player,
+        { key: 'elo', label: 'Elo' },
+        { key: 'wins', label: l.ui('comp.wins') },
+        { key: 'losses', label: l.ui('comp.losses') },
+        { key: 'draws', label: l.ui('comp.draws') },
+      ],
     },
     survival: {
       rows: boards?.survival[SurvivalRun.modeKey(level, hardcore)],
