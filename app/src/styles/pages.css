@@ -1969,6 +1969,37 @@ article.prose {
   width: 3.25rem;
 }
 
+/* the star sits beside the row link, not inside it, so starring never opens the lecture */
+.plan-day .lecture-list li {
+  display: flex;
+  align-items: center;
+  padding-right: var(--s-2);
+}
+
+.plan-day .lecture-list li > span {
+  flex: 1;
+  min-width: 0;
+}
+
+.plan-star:not([aria-pressed='true']) {
+  color: var(--ink-3);
+  opacity: 0.55;
+}
+
+.plan-day .lecture-list li:hover .plan-star,
+.plan-star:focus-visible {
+  opacity: 1;
+}
+
+.plan-day__stars {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-1);
+  color: var(--warn);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+}
+
 .plan-day__empty,
 .plan-day__actions {
   padding: var(--s-3) var(--s-4);

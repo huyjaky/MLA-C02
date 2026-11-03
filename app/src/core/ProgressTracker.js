@@ -15,7 +15,8 @@ const DEFAULTS = {
   positions: {}, // lecture id -> { t, d, at }: last playback second, duration, saved at (ms)
   lastLecture: null,
   schedule: null, // { start, exam } as 'YYYY-MM-DD'
-  planView: null, // study plan page: { open: [expanded dates], lecture: last lecture opened from it }
+  planView: null, // study plan page: { open: [expanded dates], lecture: last lecture opened from it, stars: starred-only filter }
+  stars: {}, // lecture id -> starred at (ms): lectures the learner flagged as important
 }
 
 const BACKUP_FORMAT = 'mla-study-progress'
@@ -148,6 +149,17 @@ export class ProgressTracker extends PersistentStore {
 
   setPlanView(view) {
     this.update('planView', () => view)
+  }
+
+  isStarred(lectureId) {
+    return Boolean(this.state.stars?.[lectureId])
+  }
+
+  toggleStar(lectureId) {
+    this.update('stars', (all = {}) => {
+      const { [lectureId]: had, ...rest } = all
+      return had ? rest : { ...all, [lectureId]: Date.now() }
+    })
   }
 
   get mistakeIds() {

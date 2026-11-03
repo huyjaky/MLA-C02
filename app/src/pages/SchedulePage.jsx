@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { Check, ClipboardCheck, Dumbbell, Flag, Layers } from 'lucide-react'
+import { Check, ClipboardCheck, Dumbbell, Flag, Layers, Star } from 'lucide-react'
 import { useApp } from '../state/AppContext'
 import { PageHeader } from '../components/PageHeader'
 import { BiText } from '../components/BiText'
@@ -47,13 +47,20 @@ export function SchedulePage() {
     </>
   )
   const setDate = (name, value) => value && tracker.setSchedule({ start, exam, [name]: value })
+  const starred = (lecture) => tracker.isStarred(lecture.id)
+  const starCount = lectures.filter(starred).length
+  const onlyStars = Boolean(view.stars) && starCount > 0
+  // starred-only view: just the days holding starred lectures, all opened, other lectures hidden
+  const studyDays = onlyStars
+    ? plan.study?.map((d, i) => ({ ...d, n: i + 1, lectures: d.lectures.filter(starred) })).filter((d) => d.lectures.length)
+    : plan.study?.map((d, i) => ({ ...d, n: i + 1 }))
   const late = plan.study?.filter((d) => d.date < today).flatMap((d) => d.lectures).filter((x) => !tracker.isLectureDone(x.id)).length
 
   const dayProps = (date) => ({
     className: 'plan-day',
     'data-today': date === today,
-    open: open.has(date),
-    onToggle: (e) => toggle(date, e.currentTarget.open),
+    open: onlyStars || open.has(date),
+    onToggle: onlyStars ? undefined : (e) => toggle(date, e.currentTarget.open),
     ref: date === today ? todayRef : undefined,
   })
 
@@ -70,6 +77,9 @@ export function SchedulePage() {
           <span>{l.ui('plan.exam')}</span>
           <input type="date" value={exam} min={StudyPlanner.addDays(start, StudyPlanner.REVIEW_DAYS + 1)} onChange={(e) => setDate('exam', e.target.value)} />
         </label>
+        <button type="button" className="toggle" aria-pressed={onlyStars} disabled={!starCount} onClick={() => remember({ stars: !onlyStars })} title={starCount ? undefined : l.ui('plan.starsNone')}>
+          <Star size={16} aria-hidden="true" fill={onlyStars ? 'currentColor' : 'none'} /> {l.ui('plan.onlyStars', { n: starCount })}
+        </button>
       </div>
 
       {plan.error ? (
@@ -87,21 +97,39 @@ export function SchedulePage() {
 
           <section aria-labelledby="plan-study-h" className="plan">
             <h2 id="plan-study-h">{l.ui('plan.studyH')}</h2>
-            {plan.study.map((day, i) => {
+            {studyDays.map((day) => {
               const done = day.lectures.every((x) => tracker.isLectureDone(x.id))
+              const stars = day.lectures.filter(starred).length
               return (
                 <details key={day.date} {...dayProps(day.date)}>
                   <summary>
                     {dayHead(day.date)}
                     <span className="plan-day__meta muted small">
-                      {l.ui('plan.dayMeta', { n: i + 1, lectures: day.lectures.length, minutes: Math.round(day.minutes) })}
+                      {l.ui('plan.dayMeta', { n: day.n, lectures: day.lectures.length, minutes: Math.round(day.minutes) })}
                     </span>
+                    {stars > 0 && !onlyStars && (
+                      <span className="plan-day__stars" aria-label={l.ui('plan.starCount', { n: stars })}>
+                        <Star size={14} fill="currentColor" aria-hidden="true" /> {stars}
+                      </span>
+                    )}
                     {done && day.lectures.length > 0 && <Check size={16} className="lecture-row__done" aria-label={l.ui('lecture.done')} />}
                   </summary>
                   {day.lectures.length > 0 ? (
                     <ol className="lecture-list">
                       {day.lectures.map((lecture) => (
-                        <li key={lecture.id} id={`plan-${lecture.id}`} onClick={() => remember({ lecture: lecture.id })}><LectureRow lecture={lecture} num={lecture.id} /></li>
+                        <li key={lecture.id} id={`plan-${lecture.id}`}>
+                          <span onClick={() => remember({ lecture: lecture.id })}><LectureRow lecture={lecture} num={lecture.id} /></span>
+                          <button
+                            type="button"
+                            className="icon-btn plan-star"
+                            aria-pressed={starred(lecture)}
+                            aria-label={l.ui(starred(lecture) ? 'plan.unstar' : 'plan.star')}
+                            title={l.ui(starred(lecture) ? 'plan.unstar' : 'plan.star')}
+                            onClick={() => tracker.toggleStar(lecture.id)}
+                          >
+                            <Star size={16} aria-hidden="true" fill={starred(lecture) ? 'currentColor' : 'none'} />
+                          </button>
+                        </li>
                       ))}
                     </ol>
                   ) : (
@@ -112,6 +140,7 @@ export function SchedulePage() {
             })}
           </section>
 
+          {!onlyStars && (
           <section aria-labelledby="plan-review-h" className="plan">
             <h2 id="plan-review-h">{l.ui('plan.reviewH')}</h2>
             {plan.review.map((day) => (
@@ -139,6 +168,7 @@ export function SchedulePage() {
               <strong>{l.ui('plan.examDay')}</strong>
             </div>
           </section>
+          )}
         </>
       )}
     </div>

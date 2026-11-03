@@ -104,6 +104,10 @@ assert.equal(persisted.length, 1, 'imported progress is persisted right away')
 assert.throws(() => other.importData({ lectures: {} }), /notBackup/, 'a random JSON file is refused')
 assert.throws(() => other.importData({ ...backup, state: { ...backup.state, lectures: [] } }), /notBackup/)
 assert.deepEqual(other.state.lectures, { '01-001': 1 }, 'a refused file changes nothing')
+other.toggleStar('02-010')
+assert.equal(other.isStarred('02-010'), true, 'a star sticks')
+other.toggleStar('02-010')
+assert.deepEqual([other.isStarred('02-010'), other.state.stars], [false, {}], 'starring again removes it')
 
 const long = { question: { en: `<p>${'x'.repeat(700)}</p>` }, answer: [0] }
 assert.equal(QuestionDifficulty.of({ question: { en: 'short' } }, { kind: 'section' }), 'easy')
