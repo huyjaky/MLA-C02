@@ -1,7 +1,7 @@
 import { useApp } from '../state/AppContext'
 
 /** Sanitized content HTML (cleaned at import); links open outside the app. */
-export function Html({ html, className, as: Tag = 'div', lang }) {
+function Html({ html, className, as: Tag = 'div', lang }) {
   const safe = html.replaceAll('<a ', '<a target="_blank" rel="noreferrer" ')
   return <Tag className={className} lang={lang} dangerouslySetInnerHTML={{ __html: safe }} />
 }

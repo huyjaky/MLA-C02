@@ -265,9 +265,9 @@
   "duel.action.attack": "Tấn công",
   "duel.action.break": "Phá giáp",
   "duel.action.defend": "Phòng thủ",
-  "duel.actionHint.attack": "Sát thương đầy đủ, nhưng bị phòng thủ chặn phần lớn.",
-  "duel.actionHint.break": "Yếu hơn tấn công, nhưng xuyên thẳng qua phòng thủ.",
-  "duel.actionHint.defend": "Chặn tới 80% đòn tấn công. Không gây sát thương.",
+  "duel.actionHint.attack": "Sát thương đầy đủ, nhưng chỉ còn 20% nếu hiệp trước đối thủ phòng thủ đúng.",
+  "duel.actionHint.break": "Yếu hơn tấn công, nhưng xuyên thẳng qua khiên.",
+  "duel.actionHint.defend": "Trả lời đúng để dựng khiên: hiệp sau, đòn tấn công vào bạn giảm 80%. Không gây sát thương.",
   "duel.time": "Thời gian",
   "duel.power": "Sức mạnh",
   "duel.speedRule": "Hai bên cùng {hp} máu. Bạn có {choose}s để chọn; sau đó càng chậm thì sức mạnh càng giảm, thấp nhất 35%. Trả lời sai hoặc không trả lời thì đòn không có tác dụng.",
@@ -299,5 +299,6 @@
   "duel.oppAnswering": "{name} đang trả lời…",
   "duel.oppPicking": "{name} đang chọn đòn…",
   "duel.backToLobby": "Về sảnh",
-  "duel.surrender": "Đầu hàng"
+  "duel.surrender": "Đầu hàng",
+  "duel.guarded": "Có khiên: đòn tấn công giảm 80% hiệp này"
 }

@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, CheckCheck, Play, RotateCcw } from 'lucide-react'
-import { useApp, useMutable } from '../state/AppContext'
+import { useApp } from '../state/AppContext'
+import { useHotkeys, useMutable } from '../state/hooks'
 import { QuizSession } from '../core/QuizSession'
 import { PageHeader } from '../components/PageHeader'
 import { BiText } from '../components/BiText'
@@ -78,7 +79,7 @@ function QuizIntro({ quiz, initialMode, onStart, onResume }) {
                 total: quiz.questions.length,
                 answered: Object.keys(saved.selections).length,
                 mode: l.ui(saved.mode === 'exam' ? 'quiz.exam' : 'quiz.practice'),
-                time: new Date(saved.savedAt).toLocaleString(l.lang === 'vi' ? 'vi-VN' : 'en-US', { dateStyle: 'short', timeStyle: 'short' }),
+                time: l.date(saved.savedAt, { dateStyle: 'short', timeStyle: 'short' }),
               })}
             </p>
           </div>
@@ -138,20 +139,15 @@ function QuizRun({ quiz, mode, saved, onRestart }) {
     else if (!isLast) commit((s) => s.goTo(s.index + 1))
   }
 
-  useEffect(() => {
-    const onKey = (e) => {
-      if (e.target.closest('input, textarea, select') || e.metaKey || e.ctrlKey || e.altKey) return
-      const n = Number(e.key)
-      if (n >= 1 && n <= q.options.length) commit((s) => s.choose(n - 1))
-      else if (e.key === 'ArrowRight') commit((s) => s.goTo(s.index + 1))
-      else if (e.key === 'ArrowLeft') commit((s) => s.goTo(s.index - 1))
-      else if (e.key === 'Enter' && !e.target.closest('button, a')) advance()
-      else if (e.key.toLowerCase() === 'f') commit((s) => s.toggleFlag())
-      else return
-      e.preventDefault()
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+  useHotkeys((e) => {
+    const n = Number(e.key)
+    if (n >= 1 && n <= q.options.length) commit((s) => s.choose(n - 1))
+    else if (e.key === 'ArrowRight') commit((s) => s.goTo(s.index + 1))
+    else if (e.key === 'ArrowLeft') commit((s) => s.goTo(s.index - 1))
+    else if (e.key === 'Enter' && !e.target.closest('button, a')) advance()
+    else if (e.key.toLowerCase() === 'f') commit((s) => s.toggleFlag())
+    else return false
+    return true
   })
 
   if (result && !reviewing) {

@@ -13,12 +13,18 @@ export function GlossaryPage() {
   const [query, setQuery] = useState('')
   const deferred = useDeferredValue(query)
 
-  // Matches term and both definitions, accent-insensitive, so "hoc may" finds "học máy".
+  // Matches term and both definitions, accent-insensitive, so "hoc may" finds "học máy". Folded once per term, not per keystroke.
+  const searchable = useMemo(() => repo.terms.map((t) => ({ t, text: fold(`${t.term} ${t.definition.en} ${t.definition.vi}`) })), [repo])
   const groups = useMemo(() => {
     const needle = fold(deferred.trim())
-    const hits = repo.terms.filter((t) => !needle || fold(`${t.term} ${t.definition.en} ${t.definition.vi}`).includes(needle))
-    return repo.studySections.map((s) => ({ section: s, terms: hits.filter((t) => t.section === s.id) })).filter((g) => g.terms.length)
-  }, [repo, deferred])
+    const bySection = new Map()
+    for (const { t, text } of searchable) {
+      if (needle && !text.includes(needle)) continue
+      if (!bySection.has(t.section)) bySection.set(t.section, [])
+      bySection.get(t.section).push(t)
+    }
+    return repo.studySections.filter((s) => bySection.has(s.id)).map((s) => ({ section: s, terms: bySection.get(s.id) }))
+  }, [repo, searchable, deferred])
   const count = groups.reduce((n, g) => n + g.terms.length, 0)
 
   return (

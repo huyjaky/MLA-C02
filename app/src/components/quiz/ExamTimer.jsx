@@ -1,17 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Timer } from 'lucide-react'
 import { Localizer } from '../../core/Localizer'
+import { useTicker } from '../../state/hooks'
 
 /** Countdown that re-renders only itself each second and fires onExpire once at zero. */
 export function ExamTimer({ session, onExpire }) {
-  const [, tick] = useState(0)
+  useTicker(1000, !session.submitted)
   const left = session.secondsLeft()
 
   useEffect(() => {
-    if (session.submitted) return
-    if (left <= 0) return onExpire()
-    const t = setTimeout(() => tick((n) => n + 1), 1000)
-    return () => clearTimeout(t)
+    if (!session.submitted && left <= 0) onExpire()
   })
 
   return (

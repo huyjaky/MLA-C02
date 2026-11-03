@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { ArrowRight, HeartPulse, Skull, Swords } from 'lucide-react'
+import { useState } from 'react'
+import { HeartPulse, Swords } from 'lucide-react'
 import { useApp } from '../state/AppContext'
+import { useAsync } from '../state/hooks'
 import { PageHeader } from '../components/PageHeader'
 import { Segmented } from '../components/Segmented'
-import { QuestionDifficulty } from '../core/QuestionDifficulty'
+import { TodayLink } from '../components/TodayLink'
+import { LevelPicker } from '../components/LevelPicker'
 import { SurvivalRun } from '../core/SurvivalRun'
 
 /** Rank cell: the podium gets a rubber-stamp mark, everyone else a plain number. */
@@ -41,15 +42,11 @@ function Board({ rows, columns, me, empty, caption }) {
 /** Competitive hub: the two games, then the study ranking and one ranking per game (and per survival mode). */
 export function CompetitivePage() {
   const { api, user, repo, l } = useApp()
-  const [boards, setBoards] = useState(null)
-  const [error, setError] = useState(false)
+  const loaded = useAsync(() => api.leaderboards().catch(() => ({ error: true })), [api])
+  const boards = loaded?.error ? null : loaded
   const [tab, setTab] = useState('study')
   const [level, setLevel] = useState('medium')
   const [hardcore, setHardcore] = useState(false)
-
-  useEffect(() => {
-    api.leaderboards().then(setBoards, () => setError(true))
-  }, [api])
 
   const player = { key: 'username', label: l.ui('comp.player') }
   const tables = {
@@ -77,22 +74,8 @@ export function CompetitivePage() {
       <PageHeader title={l.ui('nav.competitive')} lead={l.ui('comp.lead')} />
 
       <section className="today arena-launch" aria-label={l.ui('comp.games')}>
-        <Link to="/competitive/duel" className="today__item today__item--primary">
-          <Swords size={22} strokeWidth={1.6} aria-hidden="true" />
-          <span>
-            <strong>{l.ui('duel.title')}</strong>
-            <small>{l.ui('comp.duelHint')}</small>
-          </span>
-          <ArrowRight size={18} className="today__go" aria-hidden="true" />
-        </Link>
-        <Link to="/competitive/survival" className="today__item">
-          <HeartPulse size={22} strokeWidth={1.6} aria-hidden="true" />
-          <span>
-            <strong>{l.ui('surv.title')}</strong>
-            <small>{l.ui('comp.survivalHint')}</small>
-          </span>
-          <ArrowRight size={18} className="today__go" aria-hidden="true" />
-        </Link>
+        <TodayLink primary to="/competitive/duel" icon={Swords} label={l.ui('comp.duelHint')} value={l.ui('duel.title')} />
+        <TodayLink to="/competitive/survival" icon={HeartPulse} label={l.ui('comp.survivalHint')} value={l.ui('surv.title')} />
       </section>
 
       <section className="panel board-panel" aria-labelledby="boards-h">
@@ -109,20 +92,8 @@ export function CompetitivePage() {
             ]}
           />
         </div>
-        {tab === 'survival' && (
-          <div className="toolbar">
-            <Segmented
-              label={l.ui('surv.level')}
-              value={level}
-              onChange={setLevel}
-              options={QuestionDifficulty.LEVELS.map((v) => ({ value: v, label: l.ui(`level.${v}`) }))}
-            />
-            <button type="button" className="toggle" aria-pressed={hardcore} onClick={() => setHardcore(!hardcore)}>
-              <Skull size={16} aria-hidden="true" /> {l.ui('surv.hardcore')}
-            </button>
-          </div>
-        )}
-        {error ? (
+        {tab === 'survival' && <LevelPicker level={level} onLevel={setLevel} hardcore={hardcore} onHardcore={setHardcore} />}
+        {loaded?.error ? (
           <p className="plan-alert" role="alert">{l.ui('comp.loadError')}</p>
         ) : !boards ? (
           <p className="muted" role="status">{l.ui('comp.loading')}</p>

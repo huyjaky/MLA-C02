@@ -6,6 +6,8 @@ import { promisify } from 'node:util'
 import fs from 'node:fs'
 import path from 'node:path'
 import { DuelError, DuelReferee } from './DuelReferee.js'
+import { DuelRules } from '../src/core/DuelRules.js'
+import { SurvivalRun } from '../src/core/SurvivalRun.js'
 
 const scrypt = promisify(scryptCallback)
 const SESSION_DAYS = 30
@@ -14,7 +16,6 @@ const MAX_BODY_BYTES = 1_000_000 // a full progress blob is ~100 KB
 const USERNAME = /^[\p{L}\p{N}_.-]{3,32}$/u
 const MIN_PASSWORD = 8
 const DAY_MS = 86_400_000
-const SURVIVAL_MODES = ['easy', 'medium', 'hard'].flatMap((level) => [level, `${level}-hardcore`])
 const MAX_SURVIVAL_SCORE = 1_000_000 // far above any honest run over the whole question bank
 const LEADERBOARD_ROWS = 50
 const MASTERED_BOX = 4 // Leitner box from which a flashcard counts as learned
@@ -28,7 +29,7 @@ class HttpError extends Error {
 }
 
 /** scrypt with a random salt per password, stored as "salt:hash" (hex). */
-export class PasswordHasher {
+class PasswordHasher {
   static KEY_LENGTH = 64
 
   static async hash(password) {
@@ -46,7 +47,7 @@ export class PasswordHasher {
 }
 
 /** Users, sessions and progress tables. Session tokens are stored only as SHA-256 hashes. */
-export class StudyDatabase {
+class StudyDatabase {
   constructor(file) {
     if (file !== ':memory:') fs.mkdirSync(path.dirname(file), { recursive: true })
     this.db = new DatabaseSync(file)
@@ -82,17 +83,23 @@ export class StudyDatabase {
     `)
   }
 
+  /** Prepared statement for `sql`, compiled once: session lookups run on every request, duel polls every 700 ms. */
+  #sql(sql) {
+    this.statements ??= new Map()
+    if (!this.statements.has(sql)) this.statements.set(sql, this.db.prepare(sql))
+    return this.statements.get(sql)
+  }
+
   static #digest(token) {
     return createHash('sha256').update(token).digest('hex')
   }
 
   userByName(username) {
-    return this.db.prepare('SELECT id, username, password_hash FROM users WHERE username = ?').get(username)
+    return this.#sql('SELECT id, username, password_hash FROM users WHERE username = ?').get(username)
   }
 
   createUser(username, passwordHash) {
-    const result = this.db
-      .prepare('INSERT INTO users (username, password_hash, created_at) VALUES (?, ?, ?)')
+    const result = this.#sql('INSERT INTO users (username, password_hash, created_at) VALUES (?, ?, ?)')
       .run(username, passwordHash, Date.now())
     return { id: Number(result.lastInsertRowid), username }
   }
@@ -100,69 +107,66 @@ export class StudyDatabase {
   createSession(userId) {
     const token = randomBytes(32).toString('hex')
     const expiresAt = Date.now() + SESSION_DAYS * DAY_MS
-    this.db.prepare('DELETE FROM sessions WHERE expires_at <= ?').run(Date.now())
-    this.db.prepare('INSERT INTO sessions VALUES (?, ?, ?)').run(StudyDatabase.#digest(token), userId, expiresAt)
+    this.#sql('DELETE FROM sessions WHERE expires_at <= ?').run(Date.now())
+    this.#sql('INSERT INTO sessions VALUES (?, ?, ?)').run(StudyDatabase.#digest(token), userId, expiresAt)
     return token
   }
 
   userBySession(token) {
     if (!token) return null
     return (
-      this.db
-        .prepare('SELECT u.id, u.username FROM sessions s JOIN users u ON u.id = s.user_id WHERE s.token_hash = ? AND s.expires_at > ?')
+      this.#sql('SELECT u.id, u.username FROM sessions s JOIN users u ON u.id = s.user_id WHERE s.token_hash = ? AND s.expires_at > ?')
         .get(StudyDatabase.#digest(token), Date.now()) ?? null
     )
   }
 
   deleteSession(token) {
-    if (token) this.db.prepare('DELETE FROM sessions WHERE token_hash = ?').run(StudyDatabase.#digest(token))
+    if (token) this.#sql('DELETE FROM sessions WHERE token_hash = ?').run(StudyDatabase.#digest(token))
   }
 
   progress(userId) {
-    const row = this.db.prepare('SELECT state FROM progress WHERE user_id = ?').get(userId)
+    const row = this.#sql('SELECT state FROM progress WHERE user_id = ?').get(userId)
     return row ? JSON.parse(row.state) : null
   }
 
   saveProgress(userId, state) {
-    this.db
-      .prepare(`INSERT INTO progress (user_id, state, updated_at) VALUES (?, ?, ?)
+    this.#sql(`INSERT INTO progress (user_id, state, updated_at) VALUES (?, ?, ?)
                 ON CONFLICT(user_id) DO UPDATE SET state = excluded.state, updated_at = excluded.updated_at`)
       .run(userId, JSON.stringify(state), Date.now())
   }
 
   addResult(userId, { game, mode, result = null, score = 0, streak = 0 }) {
-    this.db
-      .prepare('INSERT INTO game_results (user_id, game, mode, result, score, streak, at) VALUES (?, ?, ?, ?, ?, ?, ?)')
+    this.#sql('INSERT INTO game_results (user_id, game, mode, result, score, streak, at) VALUES (?, ?, ?, ?, ?, ?, ?)')
       .run(userId, game, mode, result, score, streak, Date.now())
   }
 
   duelBoard() {
-    return this.db
-      .prepare(`SELECT u.username, SUM(result = 'win') AS wins, SUM(result = 'loss') AS losses, SUM(result = 'draw') AS draws
+    return this.#sql(`SELECT u.username, SUM(result = 'win') AS wins, SUM(result = 'loss') AS losses, SUM(result = 'draw') AS draws
                 FROM game_results g JOIN users u ON u.id = g.user_id WHERE g.game = 'duel'
                 GROUP BY g.user_id ORDER BY wins DESC, losses ASC, u.username LIMIT ?`)
       .all(LEADERBOARD_ROWS)
   }
 
-  survivalBoard(mode) {
-    return this.db
-      .prepare(`SELECT u.username, MAX(score) AS score, MAX(streak) AS streak, COUNT(*) AS runs
-                FROM game_results g JOIN users u ON u.id = g.user_id WHERE g.game = 'survival' AND g.mode = ?
-                GROUP BY g.user_id ORDER BY score DESC, streak DESC, u.username LIMIT ?`)
-      .all(mode, LEADERBOARD_ROWS)
+  /** { mode: [best rows] } for every survival mode, from one query. */
+  survivalBoards(modes) {
+    const boards = Object.fromEntries(modes.map((mode) => [mode, []]))
+    const rows = this.#sql(`SELECT g.mode, u.username, MAX(score) AS score, MAX(streak) AS streak, COUNT(*) AS runs
+                FROM game_results g JOIN users u ON u.id = g.user_id WHERE g.game = 'survival'
+                GROUP BY g.mode, g.user_id ORDER BY score DESC, streak DESC, u.username`).all()
+    for (const { mode, ...row } of rows) if (boards[mode]?.length < LEADERBOARD_ROWS) boards[mode].push(row)
+    return boards
   }
 
   /** Every account's username and saved progress, for the study leaderboard. */
   allProgress() {
-    return this.db
-      .prepare('SELECT u.username, p.state FROM users u LEFT JOIN progress p ON p.user_id = u.id')
+    return this.#sql('SELECT u.username, p.state FROM users u LEFT JOIN progress p ON p.user_id = u.id')
       .all()
       .map((row) => ({ username: row.username, state: row.state ? JSON.parse(row.state) : {} }))
   }
 }
 
 /** Routes for /api. Each handler gets { req, res, body, user } and returns the JSON to send. */
-export class StudyApi {
+class StudyApi {
   constructor(db, quizzes = []) {
     this.db = db
     this.examIds = quizzes.filter((q) => q.kind === 'exam').map((q) => q.id)
@@ -237,7 +241,7 @@ export class StudyApi {
 
   logout({ res, token }) {
     this.db.deleteSession(token)
-    res.setHeader('Set-Cookie', `${SESSION_COOKIE}=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0`)
+    res.setHeader('Set-Cookie', sessionCookie('', 0))
     return { ok: true }
   }
 
@@ -253,7 +257,7 @@ export class StudyApi {
     const user = this.requireUser(context)
     const { mode, score, streak } = context.body
     const valid = (n) => Number.isInteger(n) && n >= 0 && n <= MAX_SURVIVAL_SCORE
-    if (!SURVIVAL_MODES.includes(mode) || !valid(score) || !valid(streak)) throw new HttpError(400, 'bad_request')
+    if (!SurvivalRun.MODES.includes(mode) || !valid(score) || !valid(streak)) throw new HttpError(400, 'bad_request')
     // shortcut: the client keeps the survival score, so a hand-made request can fake one; move scoring server-side if that matters
     this.db.addResult(user.id, { game: 'survival', mode, score, streak })
     return { ok: true }
@@ -261,8 +265,7 @@ export class StudyApi {
 
   recordDuel(match) {
     for (const p of match.players) {
-      const result = match.winner == null ? 'draw' : match.winner === p.id ? 'win' : 'loss'
-      this.db.addResult(p.id, { game: 'duel', mode: '1v1', result })
+      this.db.addResult(p.id, { game: 'duel', mode: '1v1', result: DuelRules.outcomeFor(match.winner, p.id) })
     }
   }
 
@@ -282,16 +285,17 @@ export class StudyApi {
       })
       .sort((a, b) => b.lectures - a.lectures || b.exam - a.exam || b.cards - a.cards || a.username.localeCompare(b.username))
       .slice(0, LEADERBOARD_ROWS)
-    const survival = Object.fromEntries(SURVIVAL_MODES.map((mode) => [mode, this.db.survivalBoard(mode)]))
-    return { study, duel: this.db.duelBoard(), survival }
+    return { study, duel: this.db.duelBoard(), survival: this.db.survivalBoards(SurvivalRun.MODES) }
   }
 
   startSession(res, userId) {
     const token = this.db.createSession(userId)
-    // SameSite=Lax keeps the cookie off cross-site POSTs, which is the CSRF guard for this local API.
-    res.setHeader('Set-Cookie', `${SESSION_COOKIE}=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${SESSION_DAYS * 86400}`)
+    res.setHeader('Set-Cookie', sessionCookie(token, (SESSION_DAYS * DAY_MS) / 1000))
   }
 }
+
+// SameSite=Lax keeps the cookie off cross-site POSTs, which is the CSRF guard for this local API.
+const sessionCookie = (value, maxAgeSeconds) => `${SESSION_COOKIE}=${value}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${maxAgeSeconds}`
 
 function parseCookies(header = '') {
   return Object.fromEntries(

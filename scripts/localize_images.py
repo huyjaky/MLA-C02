@@ -16,8 +16,8 @@ import re
 import urllib.request
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
-QUIZZES = ROOT / "app" / "content" / "quizzes"
+from course_env import QUIZZES, ROOT, write_json
+
 IMAGES = ROOT / "app" / "public" / "quiz-images"
 IMG_SRC = re.compile(r'(<img\b[^>]*\bsrc=")(https?://[^"]+)(")')
 EXTENSIONS = {"image/png": ".png", "image/jpeg": ".jpg", "image/gif": ".gif", "image/webp": ".webp", "image/svg+xml": ".svg"}
@@ -61,10 +61,10 @@ class ImageLocalizer:
 
     def run(self) -> None:
         for path in sorted(QUIZZES.glob("*.json")):
-            before = path.read_text(encoding="utf-8")
-            after = json.dumps(self.walk(json.loads(before)), ensure_ascii=False, indent=1)
-            if after != before and json.loads(after) != json.loads(before):
-                path.write_text(after, encoding="utf-8")
+            original = json.loads(path.read_text(encoding="utf-8"))
+            updated = self.walk(json.loads(json.dumps(original)))  # walk rewrites in place: give it a copy
+            if updated != original:
+                write_json(path, updated)
                 print(f"updated {path.name}")
         print(f"{len(self.local)} images saved to {IMAGES}")
         for line in self.failed:

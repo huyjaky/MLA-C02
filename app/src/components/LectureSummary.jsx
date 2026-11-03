@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { ChevronDown, Lightbulb, NotebookText } from 'lucide-react'
 import { useApp } from '../state/AppContext'
+import { useAsync } from '../state/hooks'
 import { BiText } from './BiText'
 import { MermaidDiagram } from './MermaidDiagram'
 
@@ -12,16 +13,8 @@ const prefersDark = () => window.matchMedia('(prefers-color-scheme: dark)').matc
  */
 export function LectureSummary({ lectureId }) {
   const { repo, state, l } = useApp()
-  const [summary, setSummary] = useState(null)
+  const summary = useAsync(() => repo.summary(lectureId), [repo, lectureId])
   const [open, setOpen] = useState(false)
-
-  useEffect(() => {
-    let live = true
-    repo.summary(lectureId).then((s) => live && setSummary(s))
-    return () => {
-      live = false
-    }
-  }, [repo, lectureId])
 
   if (!summary) return null
   const { theme } = state.settings

@@ -4,11 +4,11 @@ import { useApp } from '../state/AppContext'
 import { PageHeader } from '../components/PageHeader'
 import { BiText } from '../components/BiText'
 import { SectionTab } from '../components/SectionTab'
+import { Score } from '../components/Score'
 
 function QuizRow({ quiz }) {
   const { tracker, l } = useApp()
   const stats = tracker.quizStats(quiz.id)
-  const passed = stats && stats.best >= quiz.passPercent
   const run = tracker.quizRun(quiz.id)
   return (
     <li className="quiz-row">
@@ -20,7 +20,7 @@ function QuizRow({ quiz }) {
           {run && <span className="quiz-row__run"> · {l.ui('quiz.inProgress', { n: Object.keys(run.selections).length, total: quiz.questions.length })}</span>}
         </small>
       </Link>
-      <span className={`score ${stats ? (passed ? 'score--pass' : 'score--fail') : ''}`}>{stats ? `${stats.best}%` : '-'}</span>
+      <Score best={stats?.best} pass={quiz.passPercent} />
       <span className="quiz-row__actions">
         <Link to={`/quiz/${quiz.id}?mode=practice`} className="btn btn--sm">{l.ui('quiz.practice')}</Link>
         <Link to={`/quiz/${quiz.id}?mode=exam`} className="btn btn--sm"><Timer size={14} aria-hidden="true" /> {l.ui('quiz.exam')}</Link>
@@ -32,7 +32,7 @@ function QuizRow({ quiz }) {
 export function QuizzesPage() {
   const { repo, tracker, l } = useApp()
   const groups = [
-    ['quizzes.exams', repo.quizzes.filter((q) => q.kind === 'exam')],
+    ['quizzes.exams', repo.exams],
     ['quizzes.sections', repo.quizzes.filter((q) => q.kind === 'section')],
   ]
   const mistakes = tracker.mistakeIds.length

@@ -154,8 +154,10 @@ export class ProgressTracker extends PersistentStore {
     return Object.keys(this.state.mistakes)
   }
 
+  /** Scheduler over the current Leitner records; rebuilt only when a review changes them, so memos can key on it. */
   get scheduler() {
-    return new LeitnerScheduler(this.state.leitner)
+    if (this.cachedScheduler?.records !== this.state.leitner) this.cachedScheduler = new LeitnerScheduler(this.state.leitner)
+    return this.cachedScheduler
   }
 
   reviewCard(cardId, known) {

@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { PlayCircle, RotateCcw, Check, X } from 'lucide-react'
 import { useApp } from '../state/AppContext'
+import { useHotkeys } from '../state/hooks'
 import { PageHeader } from '../components/PageHeader'
 import { BiText } from '../components/BiText'
 import { SectionTab } from '../components/SectionTab'
@@ -52,16 +53,21 @@ export function FlashcardsPage() {
   const [seen, setSeen] = useState(() => new Set()) // reviewed this round, so a missed card waits its turn
   const [ahead, setAhead] = useState(false)
 
-  const allCards = useMemo(() => repo.flashcards(), [repo])
+  const allCards = repo.flashcards()
   const cards = useMemo(
     () => allCards.filter((c) => (section === 'all' || c.section === section) && (kind === 'all' || c.kind === kind)),
     [allCards, section, kind],
   )
   const scheduler = tracker.scheduler
-  const pool = ahead ? [...cards].sort((a, b) => scheduler.box(a.id) - scheduler.box(b.id)) : scheduler.queue(cards)
+  // the queue sorts every card; flips and the leave animation re-render often, so it is rebuilt only when grading changes it
+  const pool = useMemo(
+    () => (ahead ? [...cards].sort((a, b) => scheduler.box(a.id) - scheduler.box(b.id)) : scheduler.queue(cards)),
+    [ahead, cards, scheduler],
+  )
   const queue = pool.filter((c) => !seen.has(c.id))
   const card = queue[0]
-  const sections = [...new Set(allCards.filter((c) => kind === 'all' || c.kind === kind).map((c) => c.section))]
+  const counts = useMemo(() => scheduler.counts(cards), [cards, scheduler])
+  const sections = useMemo(() => [...new Set(allCards.filter((c) => kind === 'all' || c.kind === kind).map((c) => c.section))], [allCards, kind])
 
   const restart = (studyAhead = false) => {
     setSeen(new Set())
@@ -86,18 +92,14 @@ export function FlashcardsPage() {
     }, LEAVE_MS)
   }
 
-  useEffect(() => {
-    const onKey = (e) => {
-      if (!card || e.target.closest('input, select, textarea, a') || e.metaKey || e.ctrlKey) return
-      if (e.key === ' ') setFlipped((f) => !f)
-      else if (flipped && e.key === '1') grade(false)
-      else if (flipped && e.key === '2') grade(true)
-      else return
-      e.preventDefault()
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  })
+  useHotkeys((e) => {
+    if (!card) return false
+    if (e.key === ' ') setFlipped((f) => !f)
+    else if (flipped && e.key === '1') grade(false)
+    else if (flipped && e.key === '2') grade(true)
+    else return false
+    return true
+  }, 'input, select, textarea, a')
 
   return (
     <div className="page">
@@ -127,7 +129,7 @@ export function FlashcardsPage() {
         />
       </div>
 
-      <LeitnerBox counts={scheduler.counts(cards)} active={card ? scheduler.box(card.id) : -1} />
+      <LeitnerBox counts={counts} active={card ? scheduler.box(card.id) : -1} />
 
       {card ? (
         <div className="flash-stage">

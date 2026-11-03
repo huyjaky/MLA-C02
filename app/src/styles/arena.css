@@ -255,6 +255,25 @@
   transition: width 700ms var(--ease-out) 1150ms;
 }
 
+.hp {
+  position: relative;
+}
+
+/* hangs under the bar without pushing it out of line with the other player's */
+.hp__status {
+  position: absolute;
+  top: calc(100% + var(--s-1));
+  left: 0;
+  right: 0;
+  color: #8fb2f7;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+}
+
+.hp[data-side='right'] .hp__status {
+  text-align: right;
+}
+
 .stage__floor {
   position: relative;
   height: clamp(220px, 32vw, 310px);
@@ -478,7 +497,7 @@
   }
 }
 
-/* defend: the card slips into a plastic sleeve */
+/* defend: a correct answer slips the card into a plastic sleeve that guards it next round */
 .fighter__sleeve {
   position: absolute;
   inset: 4% -7% -3%;
@@ -496,8 +515,13 @@
   animation: crouch 600ms var(--ease-out) both;
 }
 
-.fighter[data-pose='defend'] .fighter__sleeve {
-  animation: sleeve-on 380ms var(--ease-out) both;
+.fighter[data-guarded='true'] .fighter__sleeve {
+  opacity: 1;
+  transform: none;
+}
+
+.fighter[data-shielding='true'] .fighter__sleeve {
+  animation: sleeve-on 420ms var(--ease-out) 700ms both;
 }
 
 @keyframes crouch {
@@ -514,8 +538,8 @@
 }
 
 /* the sleeve takes a blocked hit: it flashes */
-.fighter[data-pose='defend'][data-taken='blocked'] .fighter__sleeve {
-  animation: sleeve-on 380ms var(--ease-out) both, sleeve-flash 500ms ease-out 420ms;
+.fighter[data-guarded='true'][data-taken='blocked'] .fighter__sleeve {
+  animation: sleeve-flash 500ms ease-out 420ms;
 }
 
 @keyframes sleeve-flash {
@@ -540,11 +564,11 @@
 .fighter__shard:nth-child(3) { bottom: 0; left: 0; --sx: -1; --sy: 1; clip-path: polygon(0 10%, 80% 0, 100% 100%, 0 100%); }
 .fighter__shard:nth-child(4) { bottom: 0; right: 0; --sx: 1; --sy: 1; clip-path: polygon(30% 0, 100% 15%, 100% 100%, 0 100%); }
 
-.fighter[data-pose='defend'][data-taken='pierced'] .fighter__sleeve {
-  animation: sleeve-on 380ms var(--ease-out) both, sleeve-break 200ms linear 440ms forwards;
+.fighter[data-guarded='true'][data-taken='pierced'] .fighter__sleeve {
+  animation: sleeve-break 200ms linear 440ms forwards;
 }
 
-.fighter[data-pose='defend'][data-taken='pierced'] .fighter__shard {
+.fighter[data-guarded='true'][data-taken='pierced'] .fighter__shard {
   animation: shard-fly 700ms var(--ease-out) 440ms both;
 }
 

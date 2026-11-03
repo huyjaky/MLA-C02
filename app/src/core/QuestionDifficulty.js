@@ -1,6 +1,7 @@
-const HARD_STEM_CHARS = 620 // about the top 40% of exam scenarios by length
+import { plainText } from './plainText.js'
 
-const stemLength = (question) => (question.question?.en ?? '').replace(/<[^>]+>/g, '').length
+const HARD_STEM_CHARS = 620 // about the top 40% of exam scenarios by length
+const stemLength = (question) => plainText(question.question?.en).length
 
 /**
  * Easy / medium / hard for every quiz question. The course does not grade them, so: section quizzes

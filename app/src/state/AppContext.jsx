@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useState, useSyncExternalStore } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, useSyncExternalStore } from 'react'
 import { ContentRepository } from '../core/ContentRepository'
 import { ProgressTracker } from '../core/ProgressTracker'
 import { Localizer } from '../core/Localizer'
@@ -69,15 +69,3 @@ function SignedIn({ user, tracker, logout, children }) {
 
 /** { repo, api, tracker, state, l, user, logout } — content, server calls, progress actions and snapshot, localizer, account. */
 export const useApp = () => useContext(AppContext)
-
-/** Holds a mutable domain object (e.g. QuizSession) and re-renders after `commit`. */
-export function useMutable(factory) {
-  const [object] = useState(factory)
-  const [, bump] = useReducer((n) => n + 1, 0)
-  const commit = (fn) => {
-    const result = fn?.(object)
-    bump()
-    return result
-  }
-  return [object, commit]
-}

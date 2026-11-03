@@ -113,5 +113,24 @@ try {
   const second = ref.respond(a, b.id, true).matchId
   ref.leave(b)
   assert.equal(ref.view(a, second).winner, 1)
+  // a correct defend guards the next round only
+  ref.heartbeat(a)
+  ref.heartbeat(b)
+  ref.challenge(a, b.id)
+  const third = ref.respond(b, a.id, true).matchId
+  const play = (user, action) => {
+    ref.move(user, { action, level: 'easy' })
+    ref.answer(user, [0])
+  }
+  clock = ref.view(a, third).roundStart
+  play(a, 'attack')
+  play(b, 'defend')
+  const g1 = ref.view(b, third)
+  assert.deepEqual([g1.last.players[2].taken.kind, g1.me.guarded], ['hit', true], 'defend does not block this round, guards the next')
+  clock = g1.roundStart
+  play(a, 'attack')
+  play(b, 'attack')
+  const g2 = ref.view(b, third)
+  assert.deepEqual([g2.last.players[2].taken.kind, g2.me.guarded], ['blocked', false], 'guard used up after one round')
   console.log('duel referee OK')
 }

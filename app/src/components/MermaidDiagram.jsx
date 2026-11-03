@@ -1,6 +1,7 @@
-import { useEffect, useId, useState } from 'react'
+import { useId, useState } from 'react'
 import { Check, Copy } from 'lucide-react'
 import { useApp } from '../state/AppContext'
+import { useAsync } from '../state/hooks'
 
 let mermaidModule // the library is large, so it is imported once, the first time a diagram opens
 const loadMermaid = () => (mermaidModule ??= import('mermaid').then((m) => m.default))
@@ -8,33 +9,25 @@ const loadMermaid = () => (mermaidModule ??= import('mermaid').then((m) => m.def
 /** Renders Mermaid source as SVG; falls back to showing the source if it does not parse. */
 export function MermaidDiagram({ code, dark, label }) {
   const id = `mmd-${useId().replace(/[^a-zA-Z0-9]/g, '')}`
-  const [svg, setSvg] = useState(null)
-  const [failed, setFailed] = useState(false)
-
-  useEffect(() => {
-    let live = true
-    loadMermaid()
-      .then(async (mermaid) => {
-        mermaid.initialize({
-          startOnLoad: false,
-          securityLevel: 'strict',
-          theme: dark ? 'dark' : 'neutral',
-          fontFamily: "'Be Vietnam Pro', system-ui, sans-serif",
+  const rendered = useAsync(
+    () =>
+      loadMermaid()
+        .then(async (mermaid) => {
+          mermaid.initialize({
+            startOnLoad: false,
+            securityLevel: 'strict',
+            theme: dark ? 'dark' : 'neutral',
+            fontFamily: "'Be Vietnam Pro', system-ui, sans-serif",
+          })
+          await mermaid.parse(code) // throws before render can leave an error graphic in the page
+          return { svg: (await mermaid.render(id, code)).svg }
         })
-        await mermaid.parse(code) // throws before render can leave an error graphic in the page
-        const result = await mermaid.render(id, code)
-        if (live) {
-          setSvg(result.svg)
-          setFailed(false)
-        }
-      })
-      .catch(() => live && setFailed(true))
-    return () => {
-      live = false
-    }
-  }, [code, dark, id])
+        .catch(() => ({ failed: true })),
+    [code, dark, id],
+  )
 
-  if (!svg && !failed) return <div className="diagram skeleton" aria-busy="true" />
+  if (!rendered) return <div className="diagram skeleton" aria-busy="true" />
+  const { svg, failed } = rendered
   return (
     <div className="diagram-wrap">
       {failed ? (

@@ -11,6 +11,18 @@ export class Localizer {
     return this.lang === 'en' ? 'vi' : 'en'
   }
 
+  get locale() {
+    return this.lang === 'vi' ? 'vi-VN' : 'en-GB'
+  }
+
+  /** Date/time `ms` formatted for this language; formatters are cached per option set. */
+  date(ms, options) {
+    const key = JSON.stringify(options)
+    this.formats ??= new Map()
+    if (!this.formats.has(key)) this.formats.set(key, new Intl.DateTimeFormat(this.locale, options))
+    return this.formats.get(key).format(ms)
+  }
+
   /** Text of a content pair in `lang`, falling back to English when untranslated. */
   text(pair, lang = this.lang) {
     if (pair == null) return ''

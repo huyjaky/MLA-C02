@@ -63,6 +63,7 @@ export class DuelReferee {
       round: 1,
       roundStart: now + 1500, // a short "fight!" before round one
       moves: {},
+      guarded: Object.fromEntries(players.map((p) => [p.id, false])), // guard earned by last round's correct defend
       used: new Set(),
       last: null,
       winner: undefined, // user id, null for a draw
@@ -86,11 +87,18 @@ export class DuelReferee {
     return {
       id: match.id,
       serverNow: this.now(),
-      me: { id: user.id, username: user.username, hp: match.hp[user.id] },
-      opponent: { id: opponent.id, username: opponent.username, hp: match.hp[opponent.id], picked: Boolean(theirs), answered: Boolean(theirs?.answeredAt) },
+      me: { id: user.id, username: user.username, hp: match.hp[user.id], guarded: match.guarded[user.id] },
+      opponent: {
+        id: opponent.id,
+        username: opponent.username,
+        hp: match.hp[opponent.id],
+        guarded: match.guarded[opponent.id],
+        picked: Boolean(theirs),
+        answered: Boolean(theirs?.answeredAt),
+      },
       round: match.round,
       roundStart: match.roundStart,
-      chooseUntil: match.roundStart + DuelRules.CHOOSE_SECONDS * 1000,
+      chooseUntil: this.#chooseUntil(match),
       move: mine && { action: mine.action, level: mine.level, questionId: mine.questionId, deadline: mine.deadline, answered: Boolean(mine.answeredAt) },
       last: match.last,
       over: match.over,
@@ -102,7 +110,7 @@ export class DuelReferee {
     const match = this.#playing(user)
     const now = this.now()
     if (!DuelRules.ACTIONS.includes(action) || !QuestionDifficulty.LEVELS.includes(level)) throw new DuelError('bad_move')
-    if (now < match.roundStart || now > match.roundStart + DuelRules.CHOOSE_SECONDS * 1000) throw new DuelError('not_now')
+    if (now < match.roundStart || now > this.#chooseUntil(match)) throw new DuelError('not_now')
     if (match.moves[user.id]) throw new DuelError('already_moved')
     const fresh = this.pools[level].filter((q) => !match.used.has(q.id))
     const pool = fresh.length ? fresh : this.pools[level]
@@ -133,6 +141,10 @@ export class DuelReferee {
     return { ok: true }
   }
 
+  #chooseUntil(match) {
+    return match.roundStart + DuelRules.CHOOSE_SECONDS * 1000
+  }
+
   #runningMatch(userId) {
     const match = this.matches.get(this.matchOf.get(userId))
     if (match) this.#advance(match)
@@ -155,7 +167,7 @@ export class DuelReferee {
     if (now < match.roundStart) return
     const settled = (p) => {
       const m = match.moves[p.id]
-      return m ? Boolean(m.answeredAt) || now > m.deadline : now > match.roundStart + DuelRules.CHOOSE_SECONDS * 1000
+      return m ? Boolean(m.answeredAt) || now > m.deadline : now > this.#chooseUntil(match)
     }
     if (!match.players.every(settled)) return
 
@@ -164,15 +176,16 @@ export class DuelReferee {
       const m = match.moves[p.id]
       return m && { action: m.action, level: m.level, correct: Boolean(m.correct), answeredMs: (m.answeredAt ?? m.deadline) - match.roundStart }
     }
-    const outcome = DuelRules.resolve(ruleMove(a), ruleMove(b))
+    const outcome = DuelRules.resolve(ruleMove(a), ruleMove(b), { a: match.guarded[a.id], b: match.guarded[b.id] })
     match.hp[a.id] = Math.max(0, match.hp[a.id] - outcome.a.damage)
     match.hp[b.id] = Math.max(0, match.hp[b.id] - outcome.b.damage)
-    const report = (p, taken) => {
+    const report = (p, taken, guardsNext) => {
       const m = match.moves[p.id]
       const move = m && { action: m.action, level: m.level, correct: Boolean(m.correct), questionId: m.questionId, picked: m.picked ?? [] }
-      return [p.id, { move, taken, hp: match.hp[p.id] }]
+      return [p.id, { move, taken, hp: match.hp[p.id], guarded: match.guarded[p.id], guardsNext }]
     }
-    match.last = { round: match.round, players: Object.fromEntries([report(a, outcome.a), report(b, outcome.b)]) }
+    match.last = { round: match.round, players: Object.fromEntries([report(a, outcome.a, outcome.next.a), report(b, outcome.b, outcome.next.b)]) }
+    match.guarded = { [a.id]: outcome.next.a, [b.id]: outcome.next.b }
     match.moves = {}
     if (match.hp[a.id] === 0 || match.hp[b.id] === 0 || match.round >= MAX_ROUNDS) {
       const winner = match.hp[a.id] === match.hp[b.id] ? null : match.hp[a.id] > match.hp[b.id] ? a.id : b.id

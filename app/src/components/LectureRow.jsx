@@ -5,20 +5,20 @@ import { BiText } from './BiText'
 import { Meter } from './Meter'
 
 /** One lecture in a list: number, title, and a done tick or how much was watched. */
-export function LectureRow({ lecture, num = lecture.id.slice(3), children }) {
+export function LectureRow({ lecture, num = lecture.id.slice(3) }) {
   const { tracker, l } = useApp()
   const done = tracker.isLectureDone(lecture.id)
+  const watched = tracker.watchRatio(lecture.id)
   const Icon = lecture.kind === 'note' ? FileText : PlayCircle
   return (
     <Link to={`/lecture/${lecture.id}`} className="lecture-row" data-done={done}>
       <span className="lecture-row__num num">{num}</span>
       <Icon size={16} strokeWidth={1.75} aria-hidden="true" className="lecture-row__icon" />
       <span className="lecture-row__title"><BiText pair={lecture.title} /></span>
-      {children}
       {done ? (
         <Check size={16} className="lecture-row__done" aria-label={l.ui('lecture.done')} />
       ) : (
-        tracker.watchRatio(lecture.id) > 0 && <Meter value={tracker.watchRatio(lecture.id)} label={l.ui('lecture.watched')} />
+        watched > 0 && <Meter value={watched} label={l.ui('lecture.watched')} />
       )}
     </Link>
   )

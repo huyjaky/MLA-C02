@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { Check, ChevronLeft, ChevronRight, FileDown, Minus, Play, Plus, X } from 'lucide-react'
 import { useApp } from '../state/AppContext'
+import { useAsync, useHotkeys } from '../state/hooks'
 import { TranscriptTrack } from '../core/TranscriptTrack'
 import { Localizer } from '../core/Localizer'
 import { BiText } from '../components/BiText'
@@ -22,18 +23,23 @@ const materialUrl = (path) => encodeURI(`/materials/${path}`)
 // the server answers /slides with SLIDES_FILE and its original file name (Content-Disposition)
 const SLIDES_URL = '/slides'
 
-function useTracks(repo, lectureId) {
-  const [tracks, setTracks] = useState(null)
-  useEffect(() => {
-    let live = true
-    setTracks(null)
-    repo.transcript(lectureId).then((cues) => {
-      if (live) setTracks({ en: new TranscriptTrack(cues.en), vi: new TranscriptTrack(cues.vi), ai: new TranscriptTrack(cues.ai) })
-    })
-    return () => { live = false }
-  }, [repo, lectureId])
-  return tracks
-}
+const useTracks = (repo, lectureId) =>
+  useAsync(
+    () => repo.transcript(lectureId).then((cues) => ({ en: new TranscriptTrack(cues.en), vi: new TranscriptTrack(cues.vi), ai: new TranscriptTrack(cues.ai) })),
+    [repo, lectureId],
+  )
+
+/** One transcript line. Memoized: a playback tick re-renders only the two rows whose highlight moved. */
+const CueRow = memo(function CueRow({ index, start, text, active, onSeek }) {
+  return (
+    <li data-index={index}>
+      <button type="button" className="cue" aria-current={active || undefined} onClick={() => onSeek(start)}>
+        <span className="cue__time num">{Localizer.clock(start)}</span>
+        <span className="cue__text"><CueText text={text} /></span>
+      </button>
+    </li>
+  )
+})
 
 export function LecturePage() {
   const { id } = useParams()
@@ -147,12 +153,9 @@ function VideoWithTranscript({ lecture, autoResume, onComplete }) {
 
   const track = tracks?.[lang]
   const active = track ? track.indexAt(subTime) : -1
-  const captionLines = useMemo(() => {
-    if (!tracks || captions === 'off') return []
-    const single = captions === 'ai' && tracks.ai.isEmpty ? 'vi' : captions // lectures without an AI rewrite fall back to the original
-    const langs = captions === 'both' ? [l.lang, l.other] : [single]
-    return langs.map((lg) => ({ lang: lg === 'ai' ? 'vi' : lg, text: tracks[lg].textAt(subTime) })).filter((c) => c.text)
-  }, [tracks, captions, subTime, l])
+  // lectures without an AI rewrite fall back to the original
+  const captionLangs = !tracks || captions === 'off' ? [] : captions === 'both' ? [l.lang, l.other] : [captions === 'ai' && tracks.ai.isEmpty ? 'vi' : captions]
+  const captionLines = captionLangs.map((lg) => ({ lang: lg === 'ai' ? 'vi' : lg, text: tracks[lg].textAt(subTime) })).filter((c) => c.text)
 
   useEffect(() => {
     const row = list.current?.querySelector(`[data-index="${active}"]`)
@@ -161,14 +164,10 @@ function VideoWithTranscript({ lecture, autoResume, onComplete }) {
   }, [active, follow])
 
   // VLC-style keys: G = subtitles earlier, H = subtitles later.
-  useEffect(() => {
-    const onKey = (e) => {
-      if (e.target.closest?.('input, select, textarea') || e.metaKey || e.ctrlKey || e.altKey) return
-      const step = { g: -DELAY_STEP, h: DELAY_STEP }[e.key.toLowerCase()]
-      if (step) nudge(step)
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+  useHotkeys((e) => {
+    const step = { g: -DELAY_STEP, h: DELAY_STEP }[e.key.toLowerCase()]
+    if (step) nudge(step)
+    return Boolean(step)
   })
 
   const playFrom = (seconds) => {
@@ -176,6 +175,7 @@ function VideoWithTranscript({ lecture, autoResume, onComplete }) {
     video.current.play().catch(() => {}) // autoplay may be refused; the user can still press play
     setOfferResume(false)
   }
+  const seekCue = useCallback((start) => playFrom(start + delay), [delay]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // ?resume=1 (the Continue buttons) jumps straight to the saved spot; leaving the page saves the final spot.
   useEffect(() => {
@@ -285,12 +285,7 @@ function VideoWithTranscript({ lecture, autoResume, onComplete }) {
         ) : (
           <ol className="transcript__list" ref={list} lang={lang === 'ai' ? 'vi' : lang}>
             {track.cues.map(([start, , text], i) => (
-              <li key={i} data-index={i}>
-                <button type="button" className="cue" aria-current={i === active || undefined} onClick={() => playFrom(start + delay)}>
-                  <span className="cue__time num">{Localizer.clock(start)}</span>
-                  <span className="cue__text"><CueText text={text} /></span>
-                </button>
-              </li>
+              <CueRow key={i} index={i} start={start} text={text} active={i === active} onSeek={seekCue} />
             ))}
           </ol>
         )}

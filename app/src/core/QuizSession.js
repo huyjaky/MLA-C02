@@ -110,23 +110,27 @@ export class QuizSession {
     return this.result()
   }
 
+  /** Score, per-domain breakdown and right/wrong ids, judging every question once. */
   result() {
-    const right = this.questions.filter((q) => this.isCorrect(q))
+    const rightIds = []
+    const wrongIds = []
     const byDomain = {}
     for (const q of this.questions) {
+      const right = this.isCorrect(q)
+      ;(right ? rightIds : wrongIds).push(q.id)
       if (!q.domain) continue
       const d = (byDomain[q.domain] ??= { correct: 0, total: 0 })
       d.total++
-      if (this.isCorrect(q)) d.correct++
+      if (right) d.correct++
     }
-    const percent = Math.round((right.length / this.questions.length) * 100)
+    const percent = Math.round((rightIds.length / this.questions.length) * 100)
     return {
-      correct: right.length,
+      correct: rightIds.length,
       total: this.questions.length,
       percent,
       passed: percent >= this.passPercent,
-      rightIds: right.map((q) => q.id),
-      wrongIds: this.questions.filter((q) => !this.isCorrect(q)).map((q) => q.id),
+      rightIds,
+      wrongIds,
       byDomain,
     }
   }

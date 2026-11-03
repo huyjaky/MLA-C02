@@ -16,6 +16,9 @@ export class StudyPlanner {
     return lecture.minutes ?? (lecture.kind === 'video' ? 8 : 2)
   }
 
+  /** 'YYYY-MM-DD' as UTC midnight in ms. */
+  static toMs = toMs
+
   /** Local calendar date as 'YYYY-MM-DD'. */
   static today(now = new Date()) {
     return toDate(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()))

@@ -6,10 +6,19 @@ Relative paths are resolved from the repo root; absolute paths are used as they 
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+CONTENT = ROOT / "app" / "content"
+QUIZZES = CONTENT / "quizzes"
 KEYS = ("COURSE_DIR", "MATERIALS_DIR", "SLIDES_FILE")
+
+
+def write_json(path: Path, data, indent: int | None = 1) -> None:
+    """Content JSON as the app reads it: UTF-8, Vietnamese kept readable."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=indent), encoding="utf-8")
 
 
 def load_paths() -> dict[str, Path]:

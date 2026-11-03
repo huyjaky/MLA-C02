@@ -1,10 +1,19 @@
 /**
  * A standing index card with a divider tab: the duel fighter. `side` mirrors it, `pose` and `taken`
  * pick the round's CSS animation (the parent keys it by round, so every round replays), `tone` colours the tab.
+ * `guarded`: wearing the card sleeve this round; `shielding`: a correct defend slips a new sleeve on for next round.
  */
-export function Fighter({ name, side, tone, pose = 'idle', taken, ko = false }) {
+export function Fighter({ name, side, tone, pose = 'idle', taken, guarded = false, shielding = false, ko = false }) {
   return (
-    <div className="fighter" data-side={side} data-pose={pose} data-taken={taken?.kind ?? 'none'} data-ko={ko}>
+    <div
+      className="fighter"
+      data-side={side}
+      data-pose={pose}
+      data-taken={taken?.kind ?? 'none'}
+      data-guarded={guarded}
+      data-shielding={shielding}
+      data-ko={ko}
+    >
       <div className="fighter__body">
         <svg viewBox="0 0 120 168" aria-hidden="true" className="fighter__card">
           <rect x="22" y="4" width="44" height="22" rx="4" fill={tone} />
@@ -35,8 +44,8 @@ export function Fighter({ name, side, tone, pose = 'idle', taken, ko = false }) 
   )
 }
 
-/** HP bar whose lost part lingers as a ghost before draining, so every hit reads. */
-export function HealthBar({ name, hp, max, side, label }) {
+/** HP bar whose lost part lingers as a ghost before draining, so every hit reads; `status` is a note under it. */
+export function HealthBar({ name, hp, max, side, label, status }) {
   const ratio = Math.max(0, hp) / max
   return (
     <div className="hp" data-side={side}>
@@ -48,6 +57,7 @@ export function HealthBar({ name, hp, max, side, label }) {
         <span className="hp__ghost" style={{ '--hp': ratio }} />
         <span className="hp__fill" style={{ '--hp': ratio }} data-low={ratio <= 0.3} />
       </div>
+      {status && <span className="hp__status">{status}</span>}
     </div>
   )
 }

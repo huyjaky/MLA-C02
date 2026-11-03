@@ -9,9 +9,13 @@ import { MistakeHelp } from '../components/quiz/MistakeHelp'
 export function MistakesPage() {
   const { repo, tracker, l } = useApp()
   const questions = repo.questionsByIds(tracker.mistakeIds)
-  const groups = repo.quizzes
-    .map((quiz) => ({ quiz, items: questions.filter((q) => repo.questionIndex.get(q.id).quiz === quiz) }))
-    .filter((g) => g.items.length)
+  const byQuiz = new Map()
+  for (const q of questions) {
+    const { quiz } = repo.questionIndex.get(q.id)
+    if (!byQuiz.has(quiz)) byQuiz.set(quiz, [])
+    byQuiz.get(quiz).push(q)
+  }
+  const groups = repo.quizzes.filter((quiz) => byQuiz.has(quiz)).map((quiz) => ({ quiz, items: byQuiz.get(quiz) }))
 
   return (
     <div className="page">

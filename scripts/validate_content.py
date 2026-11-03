@@ -14,9 +14,7 @@ import re
 import sys
 from pathlib import Path
 
-from course_env import ROOT, load_paths
-
-CONTENT = ROOT / "app" / "content"
+from course_env import CONTENT, load_paths
 TAG = re.compile(r"</?([a-z0-9]+)")
 SKIP = {"subtitles"}  # one language per file, not {en, vi} pairs
 

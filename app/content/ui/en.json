@@ -265,9 +265,9 @@
   "duel.action.attack": "Attack",
   "duel.action.break": "Armor break",
   "duel.action.defend": "Defend",
-  "duel.actionHint.attack": "Full damage, but a defend absorbs most of it.",
-  "duel.actionHint.break": "Weaker than attack, but goes straight through a defend.",
-  "duel.actionHint.defend": "Absorbs up to 80% of an attack. Deals no damage.",
+  "duel.actionHint.attack": "Full damage, but only 20% gets through if the opponent defended correctly last round.",
+  "duel.actionHint.break": "Weaker than attack, but goes straight through a guard.",
+  "duel.actionHint.defend": "Answer right to raise a guard: next round, attacks against you lose 80%. Deals no damage.",
   "duel.time": "Time",
   "duel.power": "Power",
   "duel.speedRule": "Both start at {hp} HP. You have {choose}s to pick; power then drops the longer you take, down to 35%. A wrong or missing answer does nothing.",
@@ -299,5 +299,6 @@
   "duel.oppAnswering": "{name} is answering…",
   "duel.oppPicking": "{name} is choosing a move…",
   "duel.backToLobby": "Back to the lobby",
-  "duel.surrender": "Surrender"
+  "duel.surrender": "Surrender",
+  "duel.guarded": "Guarded: attacks -80% this round"
 }

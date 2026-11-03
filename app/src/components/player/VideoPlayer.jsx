@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Maximize, Minimize, Pause, Play, RotateCcw, RotateCw, Volume2, VolumeX } from 'lucide-react'
 import { useApp } from '../../state/AppContext'
+import { useHotkeys } from '../../state/hooks'
 import { Localizer } from '../../core/Localizer'
 import { CueText } from './CueText'
 
@@ -66,23 +67,18 @@ export function VideoPlayer({ src, videoRef, captions = [], extraControls, overl
     }
   }, [])
 
-  useEffect(() => {
+  useHotkeys((e) => {
     const actions = {
       ' ': togglePlay, k: togglePlay, m: toggleMute, f: toggleFullscreen,
       arrowleft: () => seekBy(-SEEK_STEP), arrowright: () => seekBy(SEEK_STEP),
       j: () => seekBy(-JUMP_STEP), l: () => seekBy(JUMP_STEP),
     }
-    const onKey = (e) => {
-      if (e.metaKey || e.ctrlKey || e.altKey || e.target.closest?.('input, select, textarea, button, a')) return
-      const action = actions[e.key.toLowerCase()]
-      if (!action || !video()) return
-      e.preventDefault()
-      action()
-      wake()
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  })
+    const action = actions[e.key.toLowerCase()]
+    if (!action || !video()) return false
+    action()
+    wake()
+    return true
+  }, 'input, select, textarea, button, a')
 
   const wake = () => {
     setIdle(false)

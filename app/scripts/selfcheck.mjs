@@ -10,6 +10,7 @@ import { ProgressTracker } from '../src/core/ProgressTracker.js'
 import { QuestionDifficulty } from '../src/core/QuestionDifficulty.js'
 import { DuelRules } from '../src/core/DuelRules.js'
 import { SurvivalRun } from '../src/core/SurvivalRun.js'
+import { plainText } from '../src/core/plainText.js'
 
 const now = 1_000_000
 assert.equal(LeitnerScheduler.review(undefined, true, now).box, 2)
@@ -111,15 +112,20 @@ assert.equal(QuestionDifficulty.of({ question: { en: 'short' }, multi: true }, {
 
 const fast = (action, level, correct = true) => ({ action, level, correct, answeredMs: 0 })
 assert.deepEqual(DuelRules.hit(fast('attack', 'hard'), null), { damage: 30, kind: 'hit' }, 'instant hard attack: full power')
-assert.deepEqual(DuelRules.hit(fast('attack', 'hard'), fast('defend', 'hard')).kind, 'blocked')
-assert.equal(DuelRules.hit(fast('attack', 'hard'), fast('defend', 'hard')).damage, 6, 'a quick hard defend stops 80%')
-assert.deepEqual(DuelRules.hit(fast('break', 'hard'), fast('defend', 'hard')), { damage: 18, kind: 'pierced' }, 'break ignores defend')
+assert.deepEqual(DuelRules.hit(fast('attack', 'hard'), true), { damage: 6, kind: 'blocked' }, 'a guard stops 80% of an attack')
+assert.deepEqual(DuelRules.hit(fast('break', 'hard'), true), { damage: 18, kind: 'pierced' }, 'break goes through the guard')
+assert.deepEqual(DuelRules.hit(fast('break', 'hard'), false), { damage: 18, kind: 'hit' })
+const sameRound = DuelRules.resolve(fast('attack', 'hard'), fast('defend', 'easy'))
+assert.deepEqual([sameRound.b, sameRound.next], [{ damage: 30, kind: 'hit' }, { a: false, b: true }], 'defend protects next round, not this one')
+const nextRound = DuelRules.resolve(fast('attack', 'hard'), null, sameRound.next)
+assert.deepEqual([nextRound.b, nextRound.next], [{ damage: 6, kind: 'blocked' }, { a: false, b: false }], 'the guard lasts one round')
+assert.equal(DuelRules.resolve(null, fast('defend', 'hard', false)).next.b, false, 'a wrong defend raises no guard')
 assert.ok(DuelRules.hit(fast('break', 'medium'), null).damage < DuelRules.hit(fast('attack', 'medium'), null).damage, 'break is weaker than attack')
 assert.deepEqual(DuelRules.hit(fast('attack', 'hard', false), null), { damage: 0, kind: 'miss' }, 'wrong answer: no damage')
 const slow = { action: 'attack', level: 'easy', correct: true, answeredMs: (DuelRules.CHOOSE_SECONDS + DuelRules.ANSWER_SECONDS.easy) * 1000 }
 assert.equal(DuelRules.hit(slow, null).damage, Math.round(12 * DuelRules.MIN_SPEED), 'the slower, the weaker')
 assert.ok(DuelRules.ANSWER_SECONDS.easy < DuelRules.ANSWER_SECONDS.hard, 'hard questions get more time')
-assert.deepEqual(DuelRules.resolve(null, null), { a: { damage: 0, kind: 'none' }, b: { damage: 0, kind: 'none' } })
+assert.deepEqual(DuelRules.resolve(null, null), { a: { damage: 0, kind: 'none' }, b: { damage: 0, kind: 'none' }, next: { a: false, b: false } })
 
 const qs = [0, 1, 2, 3].map((id) => ({ id, multi: false, options: ['x', 'y'], answer: [0] }))
 const survival = new SurvivalRun({ questions: qs, level: 'medium' })
@@ -139,5 +145,20 @@ hc.choose(1)
 hc.check()
 assert.ok(hc.isOver, 'hardcore: one life')
 assert.equal(hc.boardMode, 'easy-hardcore')
+
+// shared helpers
+assert.equal(plainText('<p>a  <b>b</b></p>	 c'), 'a b c')
+assert.equal(DuelRules.outcomeFor(null, 1), 'draw')
+assert.equal(DuelRules.outcomeFor(2, 1), 'loss')
+assert.deepEqual(SurvivalRun.MODES, ['easy', 'easy-hardcore', 'medium', 'medium-hardcore', 'hard', 'hard-hardcore'])
+assert.equal(StudyPlanner.toMs('1970-01-02'), 86_400_000)
+const vi = new Localizer('vi', { vi: {}, en: {} })
+assert.equal(vi.date(0, { year: 'numeric', timeZone: 'UTC' }), '1970')
+assert.equal(vi.formats.size, 1, 'formatter cached per option set')
+const judged = new QuizSession({ id: 'r', questions: [{ id: 1, options: ['a', 'b'], answer: [0], domain: 'D' }, { id: 2, options: ['a', 'b'], answer: [1] }] })
+judged.choose(0)
+judged.goTo(1)
+judged.choose(0)
+assert.deepEqual(judged.result(), { correct: 1, total: 2, percent: 50, passed: false, rightIds: [1], wrongIds: [2], byDomain: { D: { correct: 1, total: 1 } } })
 
 console.log('selfcheck OK')

@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useReducer, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Check, Flag, Hammer, Shield, Swords, Trophy, UserRound, X } from 'lucide-react'
 import { useApp } from '../state/AppContext'
+import { usePoll, useTicker } from '../state/hooks'
 import { PageHeader } from '../components/PageHeader'
 import { QuestionCard } from '../components/quiz/QuestionCard'
 import { Fighter, HealthBar } from '../components/arena/Fighter'
@@ -13,27 +14,6 @@ const LOBBY_POLL_MS = 2500
 const MATCH_POLL_MS = 700
 const ACTION_ICONS = { attack: Swords, break: Hammer, defend: Shield }
 const LOBBY_ERRORS = ['not_online', 'busy', 'no_challenge']
-
-/** Calls `fn` now and every `ms` while `active`; the latest `fn` is used without restarting the timer. */
-function usePoll(fn, ms, active = true) {
-  const latest = useRef(fn)
-  latest.current = fn
-  useEffect(() => {
-    if (!active) return
-    latest.current()
-    const timer = setInterval(() => latest.current(), ms)
-    return () => clearInterval(timer)
-  }, [ms, active])
-}
-
-/** Re-render on a short interval so countdowns move between polls. */
-function useTicker(ms = 200) {
-  const [, tick] = useReducer((n) => n + 1, 0)
-  useEffect(() => {
-    const timer = setInterval(tick, ms)
-    return () => clearInterval(timer)
-  }, [ms])
-}
 
 export function DuelPage() {
   const [matchId, setMatchId] = useState(null)
@@ -174,7 +154,7 @@ function Arena({ matchId, onExit }) {
   const [level, setLevel] = useState(null)
   const [busy, setBusy] = useState(false)
   const [, bump] = useReducer((n) => n + 1, 0)
-  useTicker()
+  useTicker(200) // countdowns move between polls
 
   const take = useCallback((data) => {
     setOffset(data.serverNow - Date.now())
@@ -254,6 +234,8 @@ function Arena({ matchId, onExit }) {
         tone={tone}
         pose={info?.move?.action ?? (phase === 'answer' || phase === 'wait' ? 'ready' : 'idle')}
         taken={label(info?.taken)}
+        guarded={info ? info.guarded : p.guarded}
+        shielding={Boolean(info?.guardsNext)}
         ko={view.over && p.hp === 0}
       />
     )
@@ -272,15 +254,17 @@ function Arena({ matchId, onExit }) {
     })
   }
 
-  const result = view.winner == null ? 'draw' : view.winner === me.id ? 'win' : 'loss'
+  const result = DuelRules.outcomeFor(view.winner, me.id)
+  // during the result pause the bars still describe the round just played
+  const guardNote = (p) => ((showLast ? last.players[p.id].guarded : p.guarded) && !view.over ? l.ui('duel.guarded') : null)
 
   return (
     <div className="page arena-page">
       <section className="stage" aria-label={l.ui('duel.stage')}>
         <div className="stage__bars">
-          <HealthBar name={me.username} hp={me.hp} max={DuelRules.MAX_HP} side="left" label={l.ui('duel.hpOf', { name: me.username })} />
+          <HealthBar name={me.username} hp={me.hp} max={DuelRules.MAX_HP} side="left" label={l.ui('duel.hpOf', { name: me.username })} status={guardNote(me)} />
           <span className="stage__round num">{l.ui('duel.round', { n: showLast ? last.round : view.round })}</span>
-          <HealthBar name={opponent.username} hp={opponent.hp} max={DuelRules.MAX_HP} side="right" label={l.ui('duel.hpOf', { name: opponent.username })} />
+          <HealthBar name={opponent.username} hp={opponent.hp} max={DuelRules.MAX_HP} side="right" label={l.ui('duel.hpOf', { name: opponent.username })} status={guardNote(opponent)} />
         </div>
         <div className="stage__floor">
           {fighter(me, 'left', 'var(--tab-2)')}

@@ -8,6 +8,7 @@ import { LectureRow } from '../components/LectureRow'
 import { StudyPlanner } from '../core/StudyPlanner'
 
 const DEFAULT_WEEKS = 6
+const DAY_FORMAT = { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' }
 
 /** Pick a start and exam date; lectures are laid out day by day, then a week of practice exams. */
 export function SchedulePage() {
@@ -16,7 +17,7 @@ export function SchedulePage() {
   const { start, exam } = state.schedule ?? { start: today, exam: StudyPlanner.addDays(today, DEFAULT_WEEKS * 7) }
   const lectures = useMemo(() => repo.studySections.flatMap((s) => s.lectures), [repo])
   // shortest exam first, the full-length mock last
-  const exams = useMemo(() => repo.quizzes.filter((q) => q.kind === 'exam').sort((a, b) => a.questions.length - b.questions.length), [repo])
+  const exams = useMemo(() => [...repo.exams].sort((a, b) => a.questions.length - b.questions.length), [repo])
   const plan = useMemo(() => StudyPlanner.plan(lectures, start, exam, exams), [lectures, start, exam, exams])
   const todayRef = useRef(null)
   // which days are expanded and the lecture last opened from here, so coming back lands on the same spot
@@ -38,8 +39,13 @@ export function SchedulePage() {
     return () => clearTimeout(timer)
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const format = new Intl.DateTimeFormat(l.lang === 'vi' ? 'vi-VN' : 'en-GB', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' })
-  const dateLabel = (date) => format.format(Date.parse(`${date}T00:00:00Z`))
+  const dateLabel = (date) => l.date(StudyPlanner.toMs(date), DAY_FORMAT)
+  const dayHead = (date) => (
+    <>
+      <span className="plan-day__date">{dateLabel(date)}</span>
+      {date === today && <span className="plan-day__tag">{l.ui('plan.today')}</span>}
+    </>
+  )
   const setDate = (name, value) => value && tracker.setSchedule({ start, exam, [name]: value })
   const late = plan.study?.filter((d) => d.date < today).flatMap((d) => d.lectures).filter((x) => !tracker.isLectureDone(x.id)).length
 
@@ -86,8 +92,7 @@ export function SchedulePage() {
               return (
                 <details key={day.date} {...dayProps(day.date)}>
                   <summary>
-                    <span className="plan-day__date">{dateLabel(day.date)}</span>
-                    {day.date === today && <span className="plan-day__tag">{l.ui('plan.today')}</span>}
+                    {dayHead(day.date)}
                     <span className="plan-day__meta muted small">
                       {l.ui('plan.dayMeta', { n: i + 1, lectures: day.lectures.length, minutes: Math.round(day.minutes) })}
                     </span>
@@ -112,8 +117,7 @@ export function SchedulePage() {
             {plan.review.map((day) => (
               <details key={day.date} {...dayProps(day.date)}>
                 <summary>
-                  <span className="plan-day__date">{dateLabel(day.date)}</span>
-                  {day.date === today && <span className="plan-day__tag">{l.ui('plan.today')}</span>}
+                  {dayHead(day.date)}
                   <span className="plan-day__meta muted small">
                     {day.exams.length ? day.exams.map((q) => l.text(q.title)).join(' · ') : l.ui('plan.reviewTodo')}
                   </span>

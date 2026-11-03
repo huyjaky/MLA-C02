@@ -1,4 +1,5 @@
 import { QuizSession } from './QuizSession.js'
+import { QuestionDifficulty } from './QuestionDifficulty.js'
 
 /**
  * Survival: questions of one level until the lives run out. A right answer grows the streak and the
@@ -28,6 +29,9 @@ export class SurvivalRun extends QuizSession {
   static modeKey(level, hardcore) {
     return hardcore ? `${level}-hardcore` : level
   }
+
+  /** Every leaderboard mode. */
+  static MODES = QuestionDifficulty.LEVELS.flatMap((level) => [level, SurvivalRun.modeKey(level, true)])
 
   get isOver() {
     return this.lives === 0 || (this.isRevealed(this.current) && this.index === this.questions.length - 1)

@@ -23,9 +23,8 @@ import re
 from html.parser import HTMLParser
 from pathlib import Path
 
-from course_env import ROOT, load_paths
+from course_env import CONTENT, load_paths, write_json
 
-CONTENT = ROOT / "app" / "content"
 SECTION_DIR = re.compile(r"^(\d{2}) - (.+)$")
 LECTURE_FILE = re.compile(r"^(\d{3}) (.+?)(?:_(en|vi))?\.(mp4|srt|html)$")
 QUIZ_DATA = re.compile(r"const quizData = (\{.*?\});\s*\n", re.S)
@@ -114,9 +113,7 @@ class ContentWriter:
         if path.exists() and not (derived or self.force):
             self.kept += 1
             return
-        path.parent.mkdir(parents=True, exist_ok=True)
-        indent = None if derived else 1
-        path.write_text(json.dumps(data, ensure_ascii=False, indent=indent), encoding="utf-8")
+        write_json(path, data, indent=None if derived else 1)
         self.written += 1
 
 

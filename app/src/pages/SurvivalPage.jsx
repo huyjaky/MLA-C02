@@ -1,11 +1,10 @@
-import { useEffect, useMemo, useReducer, useRef, useState } from 'react'
+import { useEffect, useReducer, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Flame, Heart, RotateCcw, Skull, Trophy } from 'lucide-react'
+import { ArrowRight, Flame, Heart, RotateCcw, Trophy } from 'lucide-react'
 import { useApp } from '../state/AppContext'
 import { PageHeader } from '../components/PageHeader'
-import { Segmented } from '../components/Segmented'
+import { LevelPicker } from '../components/LevelPicker'
 import { QuestionCard } from '../components/quiz/QuestionCard'
-import { QuestionDifficulty } from '../core/QuestionDifficulty'
 import { SurvivalRun } from '../core/SurvivalRun'
 
 function shuffled(list) {
@@ -42,7 +41,7 @@ function Hud({ run, l }) {
 /** Survival: pick a level (and hardcore), answer until the lives run out, then the score goes to the leaderboard. */
 export function SurvivalPage() {
   const { repo, api, l } = useApp()
-  const pools = useMemo(() => QuestionDifficulty.pools(repo.quizzes), [repo])
+  const pools = repo.questionPools
   const [level, setLevel] = useState('medium')
   const [hardcore, setHardcore] = useState(false)
   const [run, setRun] = useState(null)
@@ -78,17 +77,7 @@ export function SurvivalPage() {
       <div className="page page--narrow">
         <PageHeader title={l.ui('surv.title')} lead={l.ui('surv.lead')} />
         <section className="panel surv-setup">
-          <div className="toolbar">
-            <Segmented
-              label={l.ui('surv.level')}
-              value={level}
-              onChange={setLevel}
-              options={QuestionDifficulty.LEVELS.map((v) => ({ value: v, label: l.ui(`level.${v}`) }))}
-            />
-            <button type="button" className="toggle" aria-pressed={hardcore} onClick={() => setHardcore(!hardcore)}>
-              <Skull size={16} aria-hidden="true" /> {l.ui('surv.hardcore')}
-            </button>
-          </div>
+          <LevelPicker level={level} onLevel={setLevel} hardcore={hardcore} onHardcore={setHardcore} />
           <p className="muted">
             {l.ui('surv.rules', { n: pools[level].length, lives: hardcore ? 1 : SurvivalRun.LIVES[level], points: SurvivalRun.POINTS[level] })}
           </p>

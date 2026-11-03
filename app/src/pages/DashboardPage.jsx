@@ -1,27 +1,15 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Download, Layers, PlayCircle, RotateCcw, Upload } from 'lucide-react'
+import { Download, Layers, PlayCircle, RotateCcw, Upload } from 'lucide-react'
 import { useApp } from '../state/AppContext'
 import { PageHeader } from '../components/PageHeader'
 import { BiText } from '../components/BiText'
 import { SectionTab } from '../components/SectionTab'
 import { Meter } from '../components/Meter'
 import { LeitnerBox } from '../components/LeitnerBox'
+import { TodayLink } from '../components/TodayLink'
+import { Score } from '../components/Score'
 import { Localizer } from '../core/Localizer'
-
-function TodayLink({ to, icon: Icon, label, value, children, primary = false }) {
-  return (
-    <Link to={to} className={`today__item ${primary ? 'today__item--primary' : ''}`}>
-      <Icon size={22} strokeWidth={1.6} aria-hidden="true" />
-      <span>
-        <small>{label}</small>
-        <strong>{value}</strong>
-        {children}
-      </span>
-      <ArrowRight size={18} className="today__go" aria-hidden="true" />
-    </Link>
-  )
-}
 
 const MAX_BACKUP_BYTES = 1_000_000 // the server refuses bigger progress saves anyway
 
@@ -77,7 +65,7 @@ export function DashboardPage() {
   const resume = repo.lecture(state.lastLecture ?? repo.studySections[0].lectures[0].id)
   const resumeAt = tracker.resumePoint(resume.lecture.id)
   const mistakes = tracker.mistakeIds.length
-  const exams = repo.quizzes.filter((q) => q.kind === 'exam')
+  const exams = repo.exams
 
   return (
     <div className="page">
@@ -164,9 +152,7 @@ export function DashboardPage() {
                         <strong>{l.ui('quiz.questionsN', { n: exam.questions.length })}</strong>
                         <small>{l.ui('quiz.pass', { n: exam.passPercent })}</small>
                       </span>
-                      <span className={`score ${best == null ? '' : passed ? 'score--pass' : 'score--fail'}`}>
-                        {best == null ? '-' : `${best}%`}
-                      </span>
+                      <Score best={best} pass={exam.passPercent} />
                     </Link>
                     <Meter value={(best ?? 0) / 100} label={l.ui('quiz.best')} tone={passed ? 'ok' : 'ink'} />
                   </li>

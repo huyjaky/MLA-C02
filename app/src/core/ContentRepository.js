@@ -6,6 +6,7 @@ const glossaryFiles = import.meta.glob('../../content/glossary/*.json', { eager:
 const uiFiles = import.meta.glob('../../content/ui/*.json', { eager: true, import: 'default' })
 import course from '../../content/course.json'
 import { MistakeCoach } from './MistakeCoach'
+import { QuestionDifficulty } from './QuestionDifficulty'
 
 // Large per-section files ({ lectureId: entry }), loaded only when a lecture asks for them.
 const lazySectionFiles = {
@@ -25,24 +26,22 @@ export class ContentRepository {
     this.quizzes = Object.values(quizFiles).sort(
       (a, b) => (a.kind === b.kind ? a.id.localeCompare(b.id) : a.kind === 'section' ? -1 : 1),
     )
+    this.exams = this.quizzes.filter((q) => q.kind === 'exam')
     this.notes = Object.values(noteFiles).sort((a, b) => a.id.localeCompare(b.id))
     this.terms = Object.values(glossaryFiles).flatMap((g) => g.terms.map((t) => ({ ...t, section: g.section })))
     this.dictionaries = Object.fromEntries(Object.entries(uiFiles).map(([path, dict]) => [fileName(path), dict]))
 
+    this.studySections = this.sections.filter((s) => s.lectures.length) // the practice-test folder has none
+    this.lectureIds = this.sections.flatMap((s) => s.lectures.map((l) => l.id)) // course order
     this.lectureIndex = new Map()
     this.sections.forEach((section) =>
-      section.lectures.forEach((lecture, i) => this.lectureIndex.set(lecture.id, { lecture, section, i })),
+      section.lectures.forEach((lecture, i) => this.lectureIndex.set(lecture.id, { lecture, section, i, at: this.lectureIndex.size })),
     )
     this.questionIndex = new Map()
     this.quizzes.forEach((quiz) => quiz.questions.forEach((q) => this.questionIndex.set(q.id, { question: q, quiz })))
     this.lazyCache = new Map()
     this.coach = new MistakeCoach(this.terms, [...this.lectureIndex.values()].map((e) => e.lecture))
     this.slides = course.slides
-  }
-
-  /** Sections that hold lectures (the practice-test folder has none). */
-  get studySections() {
-    return this.sections.filter((s) => s.lectures.length)
   }
 
   get lectureCount() {
@@ -57,9 +56,7 @@ export class ContentRepository {
   lecture(id) {
     const entry = this.lectureIndex.get(id)
     if (!entry) return null
-    const ids = [...this.lectureIndex.keys()]
-    const at = ids.indexOf(id)
-    return { ...entry, prev: ids[at - 1] ?? null, next: ids[at + 1] ?? null }
+    return { ...entry, prev: this.lectureIds[entry.at - 1] ?? null, next: this.lectureIds[entry.at + 1] ?? null }
   }
 
   quiz(id) {
@@ -108,8 +105,17 @@ export class ContentRepository {
     return (await this.#lectureEntry('summaries', lectureId)) ?? null
   }
 
-  /** Flashcards: glossary terms plus every quiz question (question on the front, answer on the back). */
+  /** { easy, medium, hard } question lists over every quiz, built once. */
+  get questionPools() {
+    return (this.cachedPools ??= QuestionDifficulty.pools(this.quizzes))
+  }
+
+  /** Flashcards: glossary terms plus every quiz question (question on the front, answer on the back), built once. */
   flashcards() {
+    return (this.cachedCards ??= this.#buildFlashcards())
+  }
+
+  #buildFlashcards() {
     const termCards = this.terms.map((t) => ({ id: `term:${t.section}:${t.id}`, kind: 'term', section: t.section, term: t }))
     const questionCards = this.quizzes.flatMap((quiz) =>
       quiz.questions.map((q) => ({ id: `q:${q.id}`, kind: 'question', section: quiz.section ?? 'exam', question: q })),
