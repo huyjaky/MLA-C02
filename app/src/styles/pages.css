@@ -1976,9 +1976,24 @@ article.prose {
   padding-right: var(--s-2);
 }
 
-.plan-day .lecture-list li > span {
+.plan-day .lecture-list li:not(.plan-section) > span {
   flex: 1;
   min-width: 0;
+}
+
+.plan-day__sections {
+  display: inline-flex;
+  gap: var(--s-1);
+}
+
+/* divider row where a day moves into the next section of the course */
+.plan-day .lecture-list li.plan-section {
+  gap: var(--s-2);
+  padding: var(--s-2) var(--s-4);
+  background: var(--card-2);
+  color: var(--ink-2);
+  font-size: var(--fs-xs);
+  font-weight: 600;
 }
 
 .plan-star:not([aria-pressed='true']) {
