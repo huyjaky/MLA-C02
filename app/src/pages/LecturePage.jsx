@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { Check, ChevronLeft, ChevronRight, FileDown, Minus, Play, Plus, X } from 'lucide-react'
 import { useApp } from '../state/AppContext'
@@ -9,7 +9,7 @@ import { BiText } from '../components/BiText'
 import { SectionTab } from '../components/SectionTab'
 import { Segmented } from '../components/Segmented'
 import { VideoPlayer } from '../components/player/VideoPlayer'
-import { CueText } from '../components/player/CueText'
+import { LectureRow } from '../components/LectureRow'
 import { LectureSummary } from '../components/LectureSummary'
 import { NotFoundPage } from './NotFoundPage'
 
@@ -28,18 +28,6 @@ const useTracks = (repo, lectureId) =>
     () => repo.transcript(lectureId).then((cues) => ({ en: new TranscriptTrack(cues.en), vi: new TranscriptTrack(cues.vi), ai: new TranscriptTrack(cues.ai) })),
     [repo, lectureId],
   )
-
-/** One transcript line. Memoized: a playback tick re-renders only the two rows whose highlight moved. */
-const CueRow = memo(function CueRow({ index, start, text, active, onSeek }) {
-  return (
-    <li data-index={index}>
-      <button type="button" className="cue" aria-current={active || undefined} onClick={() => onSeek(start)}>
-        <span className="cue__time num">{Localizer.clock(start)}</span>
-        <span className="cue__text"><CueText text={text} /></span>
-      </button>
-    </li>
-  )
-})
 
 export function LecturePage() {
   const { id } = useParams()
@@ -68,9 +56,10 @@ export function LecturePage() {
       {lecture.kind === 'note' ? (
         <NoteBody noteId={id} />
       ) : (
-        <VideoWithTranscript
+        <VideoWithLectures
           key={id}
           lecture={lecture}
+          section={section}
           autoResume={params.has('resume')}
           onComplete={() => !done && tracker.completeLecture(id)}
         />
@@ -132,15 +121,14 @@ function NoteBody({ noteId }) {
   return note ? <article className="prose card-stock"><BiText pair={note.body} html /></article> : null
 }
 
-function VideoWithTranscript({ lecture, autoResume, onComplete }) {
+function VideoWithLectures({ lecture, section, autoResume, onComplete }) {
   const { repo, tracker, state, l } = useApp()
   const video = useRef(null)
   const list = useRef(null)
+  const progress = tracker.sectionProgress(section)
   const tracks = useTracks(repo, lecture.id)
   const [time, setTime] = useState(0)
   const captions = state.settings.captions ?? 'both' // 'off' | 'en' | 'vi' | 'both', remembered across lectures
-  const lang = state.settings.transcriptLang ?? l.lang
-  const [follow, setFollow] = useState(true)
   const [videoError, setVideoError] = useState(false)
   const [resumeAt] = useState(() => tracker.resumePoint(lecture.id)) // captured on open so it does not move while watching
   const [offerResume, setOfferResume] = useState(Boolean(resumeAt))
@@ -151,17 +139,15 @@ function VideoWithTranscript({ lecture, autoResume, onComplete }) {
   const subTime = time - delay
   const nudge = (step) => tracker.setSubDelay(lecture.id, step ? delay + step : 0)
 
-  const track = tracks?.[lang]
-  const active = track ? track.indexAt(subTime) : -1
   // lectures without an AI rewrite fall back to the original
   const captionLangs = !tracks || captions === 'off' ? [] : captions === 'both' ? [l.lang, l.other] : [captions === 'ai' && tracks.ai.isEmpty ? 'vi' : captions]
   const captionLines = captionLangs.map((lg) => ({ lang: lg === 'ai' ? 'vi' : lg, text: tracks[lg].textAt(subTime) })).filter((c) => c.text)
 
+  // open with the current lecture in view, without scrolling the page itself
   useEffect(() => {
-    const row = list.current?.querySelector(`[data-index="${active}"]`)
-    if (!follow || !row) return
-    list.current.scrollTo({ top: row.offsetTop - list.current.clientHeight / 3, behavior: 'smooth' })
-  }, [active, follow])
+    const row = list.current?.querySelector('[aria-current]')
+    if (row) list.current.scrollTop = row.offsetTop - list.current.clientHeight / 3
+  }, [])
 
   // VLC-style keys: G = subtitles earlier, H = subtitles later.
   useHotkeys((e) => {
@@ -175,7 +161,6 @@ function VideoWithTranscript({ lecture, autoResume, onComplete }) {
     video.current.play().catch(() => {}) // autoplay may be refused; the user can still press play
     setOfferResume(false)
   }
-  const seekCue = useCallback((start) => playFrom(start + delay), [delay]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // ?resume=1 (the Continue buttons) jumps straight to the saved spot; leaving the page saves the final spot.
   useEffect(() => {
@@ -260,35 +245,19 @@ function VideoWithTranscript({ lecture, autoResume, onComplete }) {
         </div>
       )}
 
-      <aside className="transcript card-stock" aria-label={l.ui('lecture.transcript')}>
-        <div className="transcript__bar">
-          <Segmented
-            label={l.ui('lecture.transcriptLang')}
-            value={lang}
-            onChange={(v) => tracker.setSetting('transcriptLang', v)}
-            options={[
-              ...Localizer.LANGS.map((lg) => ({ value: lg, label: lg.toUpperCase() })),
-              { value: 'ai', label: l.ui('lecture.langAi'), title: l.ui('lecture.langAiHint') },
-            ]}
-          />
-          <label className="check">
-            <input type="checkbox" checked={follow} onChange={(e) => setFollow(e.target.checked)} />
-            {l.ui('lecture.follow')}
-          </label>
+      <aside className="lecture-nav card-stock" aria-labelledby="lecture-nav-h">
+        <div className="lecture-nav__bar">
+          <SectionTab id={section.id} size="sm" />
+          <h2 id="lecture-nav-h"><BiText pair={section.title} /></h2>
+          <span className="muted small num">{progress.done}/{progress.total}</span>
         </div>
-        {!tracks ? (
-          <ol className="transcript__list" aria-busy="true">
-            {Array.from({ length: 8 }, (_, i) => <li key={i} className="skeleton" />)}
-          </ol>
-        ) : track.isEmpty ? (
-          <p className="empty">{l.ui('lecture.noTranscript')}</p>
-        ) : (
-          <ol className="transcript__list" ref={list} lang={lang === 'ai' ? 'vi' : lang}>
-            {track.cues.map(([start, , text], i) => (
-              <CueRow key={i} index={i} start={start} text={text} active={i === active} onSeek={seekCue} />
-            ))}
-          </ol>
-        )}
+        <ol className="lecture-nav__list" ref={list}>
+          {section.lectures.map((x) => (
+            <li key={x.id} aria-current={x.id === lecture.id ? 'page' : undefined}>
+              <LectureRow lecture={x} />
+            </li>
+          ))}
+        </ol>
       </aside>
     </div>
   )
