@@ -63,7 +63,7 @@ function QuizIntro({ quiz, initialMode, onStart, onResume }) {
   const [mode, setMode] = useState(initialMode)
   const stats = tracker.quizStats(quiz.id)
   const saved = tracker.quizRun(quiz.id)
-  const minutes = (quiz.questions.length * QuizSession.SECONDS_PER_QUESTION) / 60
+  const minutes = Math.round((quiz.questions.length * QuizSession.SECONDS_PER_QUESTION) / 60)
   return (
     <div className="page page--narrow">
       <PageHeader title={<BiText pair={quiz.title} />} lead={l.ui('quiz.introLead', { n: quiz.questions.length, pass: quiz.passPercent })}>

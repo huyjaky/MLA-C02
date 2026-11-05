@@ -4,7 +4,7 @@
  * after each call through useMutable().
  */
 export class QuizSession {
-  static SECONDS_PER_QUESTION = 120 // MLA-C01: 65 questions in 130 minutes
+  static SECONDS_PER_QUESTION = (210 * 60) / 65 // the learner's sitting: 65 questions in 210 minutes
 
   constructor({ id, questions, mode = 'practice', passPercent = 70 }) {
     this.id = id
@@ -17,7 +17,7 @@ export class QuizSession {
     this.flagged = new Set()
     this.submitted = false
     this.startedAt = Date.now()
-    this.duration = questions.length * QuizSession.SECONDS_PER_QUESTION
+    this.duration = Math.round(questions.length * QuizSession.SECONDS_PER_QUESTION)
   }
 
   /** Plain data to save an unfinished run; answers are keyed by question id so edited content stays safe. */
