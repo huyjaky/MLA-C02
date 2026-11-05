@@ -997,7 +997,18 @@
   border-top: 1px solid var(--line);
 }
 
-.lecture-nav__list li[aria-current] .lecture-row {
+.lecture-nav__list li {
+  display: flex;
+  align-items: center;
+  padding-right: var(--s-2);
+}
+
+.lecture-nav__list .lecture-row {
+  flex: 1;
+  min-width: 0;
+}
+
+.lecture-nav__list li[aria-current] {
   background: var(--accent-soft);
   box-shadow: inset 2px 0 0 var(--accent);
 }
@@ -1976,13 +1987,13 @@ article.prose {
   font-weight: 600;
 }
 
-.plan-star:not([aria-pressed='true']) {
+.star-btn:not([aria-pressed='true']) {
   color: var(--ink-3);
   opacity: 0.55;
 }
 
-.plan-day .lecture-list li:hover .plan-star,
-.plan-star:focus-visible {
+li:hover > .star-btn,
+.star-btn:focus-visible {
   opacity: 1;
 }
 

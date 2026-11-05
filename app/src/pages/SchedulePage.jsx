@@ -6,6 +6,7 @@ import { PageHeader } from '../components/PageHeader'
 import { BiText } from '../components/BiText'
 import { LectureRow } from '../components/LectureRow'
 import { SectionTab } from '../components/SectionTab'
+import { StarButton } from '../components/StarButton'
 import { StudyPlanner } from '../core/StudyPlanner'
 
 const DEFAULT_WEEKS = 6
@@ -135,16 +136,7 @@ export function SchedulePage() {
                         )}
                         <li id={`plan-${lecture.id}`}>
                           <span onClick={() => remember({ lecture: lecture.id })}><LectureRow lecture={lecture} num={lecture.id} /></span>
-                          <button
-                            type="button"
-                            className="icon-btn plan-star"
-                            aria-pressed={starred(lecture)}
-                            aria-label={l.ui(starred(lecture) ? 'plan.unstar' : 'plan.star')}
-                            title={l.ui(starred(lecture) ? 'plan.unstar' : 'plan.star')}
-                            onClick={() => tracker.toggleStar(lecture.id)}
-                          >
-                            <Star size={16} aria-hidden="true" fill={starred(lecture) ? 'currentColor' : 'none'} />
-                          </button>
+                          <StarButton lectureId={lecture.id} />
                         </li>
                         </Fragment>
                       ))}

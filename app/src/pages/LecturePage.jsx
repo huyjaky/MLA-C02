@@ -10,6 +10,7 @@ import { SectionTab } from '../components/SectionTab'
 import { Segmented } from '../components/Segmented'
 import { VideoPlayer } from '../components/player/VideoPlayer'
 import { LectureRow } from '../components/LectureRow'
+import { StarButton } from '../components/StarButton'
 import { LectureSummary } from '../components/LectureSummary'
 import { NotFoundPage } from './NotFoundPage'
 
@@ -255,6 +256,7 @@ function VideoWithLectures({ lecture, section, autoResume, onComplete }) {
           {section.lectures.map((x) => (
             <li key={x.id} aria-current={x.id === lecture.id ? 'page' : undefined}>
               <LectureRow lecture={x} />
+              <StarButton lectureId={x.id} />
             </li>
           ))}
         </ol>
