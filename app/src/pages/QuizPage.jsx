@@ -12,6 +12,7 @@ import { QuestionCard } from '../components/quiz/QuestionCard'
 import { AnswerSheet } from '../components/quiz/AnswerSheet'
 import { ExamTimer } from '../components/quiz/ExamTimer'
 import { MistakeHelp } from '../components/quiz/MistakeHelp'
+import { LiveStats } from '../components/quiz/LiveStats'
 import { NotFoundPage } from './NotFoundPage'
 
 /** Real quizzes come from content; "mistakes" is built from every question answered wrong. */
@@ -189,6 +190,7 @@ function QuizRun({ quiz, mode, saved, onRestart }) {
         {session.isExam && !session.submitted && <ExamTimer session={session} onExpire={finish} />}
         <p className="small muted">{l.ui('quiz.answered', { n: session.answeredCount, total: session.questions.length })}</p>
         <AnswerSheet session={session} onJump={(i) => commit((s) => s.goTo(i))} />
+        {!session.submitted && <LiveStats session={session} />}
         {session.submitted ? (
           <button type="button" className="btn" onClick={() => setReviewing(false)}>{l.ui('quiz.backToResult')}</button>
         ) : (

@@ -110,12 +110,12 @@ export class QuizSession {
     return this.result()
   }
 
-  /** Score, per-domain breakdown and right/wrong ids, judging every question once. */
-  result() {
+  /** Right/wrong ids and per-domain counts over `questions`, judging each once. */
+  #tally(questions) {
     const rightIds = []
     const wrongIds = []
     const byDomain = {}
-    for (const q of this.questions) {
+    for (const q of questions) {
       const right = this.isCorrect(q)
       ;(right ? rightIds : wrongIds).push(q.id)
       if (!q.domain) continue
@@ -123,6 +123,29 @@ export class QuizSession {
       d.total++
       if (right) d.correct++
     }
+    return { rightIds, wrongIds, byDomain }
+  }
+
+  /**
+   * Running figures while answering: accuracy over the answers revealed so far (practice checks them one by one)
+   * and pace as seconds per answered question. accuracy and pace are null until there is something to measure.
+   */
+  liveStats(now = Date.now()) {
+    const { rightIds, wrongIds, byDomain } = this.#tally(this.questions.filter((q) => this.checked.has(q.id)))
+    const judged = rightIds.length + wrongIds.length
+    const answered = this.answeredCount
+    return {
+      judged,
+      correct: rightIds.length,
+      accuracy: judged ? rightIds.length / judged : null,
+      byDomain,
+      pace: answered ? (now - this.startedAt) / 1000 / answered : null,
+    }
+  }
+
+  /** Score, per-domain breakdown and right/wrong ids, judging every question once. */
+  result() {
+    const { rightIds, wrongIds, byDomain } = this.#tally(this.questions)
     const percent = Math.round((rightIds.length / this.questions.length) * 100)
     return {
       correct: rightIds.length,

@@ -109,6 +109,14 @@ assert.equal(other.isStarred('02-010'), true, 'a star sticks')
 other.toggleStar('02-010')
 assert.deepEqual([other.isStarred('02-010'), other.state.stars], [false, {}], 'starring again removes it')
 
+const liveQs = [{ id: 1, answer: [0], domain: 'D1', options: ['a', 'b'] }, { id: 2, answer: [1], domain: 'D2', options: ['a', 'b'] }, { id: 3, answer: [0], options: ['a', 'b'] }]
+const live = new QuizSession({ id: 'live', questions: liveQs })
+assert.deepEqual([live.liveStats().accuracy, live.liveStats().pace], [null, null], 'nothing to measure yet')
+live.choose(0); live.check(); live.goTo(1); live.choose(0); live.check(); live.goTo(2); live.choose(0)
+const ls = live.liveStats(live.startedAt + 60_000)
+assert.deepEqual([ls.judged, ls.correct, ls.accuracy, ls.pace], [2, 1, 0.5, 20], 'accuracy over checked answers, pace over answered ones')
+assert.deepEqual(ls.byDomain, { D1: { correct: 1, total: 1 }, D2: { correct: 0, total: 1 } })
+
 const long = { question: { en: `<p>${'x'.repeat(700)}</p>` }, answer: [0] }
 assert.equal(QuestionDifficulty.of({ question: { en: 'short' } }, { kind: 'section' }), 'easy')
 assert.equal(QuestionDifficulty.of({ question: { en: 'short' } }, { kind: 'exam' }), 'medium')
