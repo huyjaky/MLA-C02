@@ -1823,6 +1823,76 @@ article.prose {
   border-top: 1px solid var(--line);
 }
 
+/* weak spots on the mistakes page: domains to drill, lectures to rewatch */
+.weak {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  gap: var(--s-4);
+}
+
+.weak__panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  padding: var(--s-4);
+}
+
+.weak__panel h2 {
+  margin: 0;
+  font-size: var(--fs-md);
+}
+
+.weak__domains,
+.weak__lectures {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.weak__domains {
+  gap: var(--s-3);
+}
+
+.weak__domains li {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: var(--s-1) var(--s-3);
+}
+
+.weak__domains .meter {
+  grid-column: 1 / -1;
+  height: 4px;
+}
+
+.weak__name {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+
+.weak__lectures li {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding-right: var(--s-2);
+}
+
+.weak__lectures li + li {
+  border-top: 1px solid var(--line);
+}
+
+.weak__lectures .lecture-row {
+  flex: 1;
+  min-width: 0;
+  padding-left: 0;
+}
+
+.weak__lectures .lecture-row__num {
+  width: 3.25rem;
+}
+
 /* live performance dashboard in the quiz sidebar */
 .live {
   display: flex;

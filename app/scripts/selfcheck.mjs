@@ -7,6 +7,7 @@ import { Localizer } from '../src/core/Localizer.js'
 import { MistakeCoach } from '../src/core/MistakeCoach.js'
 import { StudyPlanner } from '../src/core/StudyPlanner.js'
 import { ProgressTracker } from '../src/core/ProgressTracker.js'
+import { examDomain } from '../src/core/ExamDomain.js'
 import { QuestionDifficulty } from '../src/core/QuestionDifficulty.js'
 import { DuelRules } from '../src/core/DuelRules.js'
 import { SurvivalRun } from '../src/core/SurvivalRun.js'
@@ -116,6 +117,12 @@ live.choose(0); live.check(); live.goTo(1); live.choose(0); live.check(); live.g
 const ls = live.liveStats(live.startedAt + 60_000)
 assert.deepEqual([ls.judged, ls.correct, ls.accuracy, ls.pace], [2, 1, 0.5, 20], 'accuracy over checked answers, pace over answered ones')
 assert.deepEqual(ls.byDomain, { D1: { correct: 1, total: 1 }, D2: { correct: 0, total: 1 } })
+
+assert.deepEqual(
+  ['Transform data and perform feature engineering.', 'ML Model and Foundation Model (FM) Development', 'Content Domain 3: Deployment and Orchestration of ML and AI', 'ML Solution Monitoring, Maintenance, and Security', 'Content Domain 4: Operating, Monitoring, and Securing ML and', ''].map(examDomain),
+  [1, 2, 3, 4, 4, 0],
+  'every exam-file wording maps to its domain',
+)
 
 const long = { question: { en: `<p>${'x'.repeat(700)}</p>` }, answer: [0] }
 assert.equal(QuestionDifficulty.of({ question: { en: 'short' } }, { kind: 'section' }), 'easy')

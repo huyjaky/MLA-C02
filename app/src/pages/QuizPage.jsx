@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, CheckCheck, Play, RotateCcw } from 'lucide-react
 import { useApp } from '../state/AppContext'
 import { useHotkeys, useMutable } from '../state/hooks'
 import { QuizSession } from '../core/QuizSession'
+import { examDomain } from '../core/ExamDomain'
 import { PageHeader } from '../components/PageHeader'
 import { BiText } from '../components/BiText'
 import { Segmented } from '../components/Segmented'
@@ -15,21 +16,22 @@ import { MistakeHelp } from '../components/quiz/MistakeHelp'
 import { LiveStats } from '../components/quiz/LiveStats'
 import { NotFoundPage } from './NotFoundPage'
 
-/** Real quizzes come from content; "mistakes" is built from every question answered wrong. */
-function useQuiz(id) {
+/** Real quizzes come from content; "mistakes" is built from every question answered wrong, or one exam domain's. */
+function useQuiz(id, domain) {
   const { repo, tracker, l } = useApp()
   // Captured once per visit, so answering does not reshuffle the review list mid-run.
   return useMemo(() => {
     if (id !== 'mistakes') return repo.quiz(id)
-    const title = { en: l.ui('quiz.mistakes'), vi: l.ui('quiz.mistakes') }
-    return { id, kind: 'review', title, passPercent: 70, questions: repo.questionsByIds(tracker.mistakeIds) }
-  }, [id, repo]) // eslint-disable-line react-hooks/exhaustive-deps
+    const name = domain == null ? l.ui('quiz.mistakes') : `${l.ui('quiz.mistakes')}: ${l.ui(`domain.${domain}`)}`
+    const questions = repo.questionsByIds(tracker.mistakeIds).filter((q) => domain == null || examDomain(q.domain) === Number(domain))
+    return { id, kind: 'review', title: { en: name, vi: name }, passPercent: 70, questions }
+  }, [id, domain, repo]) // eslint-disable-line react-hooks/exhaustive-deps
 }
 
 export function QuizPage() {
   const { id } = useParams()
   const [params] = useSearchParams()
-  const quiz = useQuiz(id)
+  const quiz = useQuiz(id, params.get('domain'))
   const { tracker } = useApp()
   const [run, setRun] = useState(null) // { mode, key, saved? } while a session is active
 
