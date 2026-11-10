@@ -185,6 +185,7 @@
   "mistakes.byDomain": "Domain cần khắc phục",
   "mistakes.weakLectures": "Bài nên xem lại trước",
   "mistakes.count": "{n} câu sai",
+  "mistakes.total": "câu sai",
   "mistakes.drill": "Luyện",
   "domain.1": "Chuẩn bị dữ liệu cho ML",
   "domain.2": "Phát triển mô hình ML",

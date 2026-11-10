@@ -1842,8 +1842,8 @@ article.prose {
   font-size: var(--fs-md);
 }
 
-.weak__domains,
-.weak__lectures {
+.weak__lectures,
+.donut__legend {
   display: flex;
   flex-direction: column;
   margin: 0;
@@ -1851,25 +1851,117 @@ article.prose {
   list-style: none;
 }
 
-.weak__domains {
-  gap: var(--s-3);
-}
-
-.weak__domains li {
-  display: grid;
-  grid-template-columns: 1fr auto auto;
+/* donut of mistakes by domain: hover names a slice, click scrolls to its questions */
+.donut {
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: var(--s-1) var(--s-3);
+  gap: var(--s-4);
 }
 
-.weak__domains .meter {
-  grid-column: 1 / -1;
-  height: 4px;
+.donut__chart {
+  flex: none;
+  width: 11rem;
+  height: 11rem;
 }
 
-.weak__name {
-  font-size: var(--fs-sm);
+.donut__slice {
+  fill: none;
+  stroke-width: 18;
+  cursor: pointer;
+  transition: opacity var(--t-fast), stroke-width var(--t-fast);
+}
+
+.donut__slice:hover {
+  stroke-width: 22;
+}
+
+.donut__slice[data-dim='true'] {
+  opacity: 0.3;
+}
+
+.donut__value {
+  text-anchor: middle;
+  fill: var(--ink);
+  font-size: 26px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.donut__caption {
+  text-anchor: middle;
+  fill: var(--ink-3);
+  font-size: 11px;
   font-weight: 600;
+}
+
+.donut__legend {
+  flex: 1;
+  min-width: 12rem;
+  gap: 2px;
+}
+
+.donut__item {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  width: 100%;
+  padding: var(--s-2);
+  border: 0;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+  font-size: var(--fs-sm);
+  transition: background var(--t-fast);
+}
+
+.donut__item[data-active='true'] {
+  background: var(--card-2);
+}
+
+.donut__swatch {
+  flex: none;
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 2px;
+}
+
+.donut__label {
+  flex: 1;
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .donut__slice,
+  .donut__item {
+    transition: none;
+  }
+}
+
+/* mistakes grouped by domain: the donut scrolls to these */
+.mistake-domain {
+  scroll-margin-top: 5rem;
+}
+
+.mistake-domain__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2);
+}
+
+.mistake-domain__head h2 {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin: 0;
+}
+
+.mistake__source {
+  margin: 0 0 var(--s-1);
 }
 
 .weak__lectures li {

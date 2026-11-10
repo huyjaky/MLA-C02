@@ -185,6 +185,7 @@
   "mistakes.byDomain": "Domains to fix",
   "mistakes.weakLectures": "Lectures to rewatch first",
   "mistakes.count": "{n} wrong",
+  "mistakes.total": "wrong",
   "mistakes.drill": "Drill",
   "domain.1": "Data preparation for ML",
   "domain.2": "ML model development",
