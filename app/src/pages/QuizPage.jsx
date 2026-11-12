@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
-import { ArrowLeft, ArrowRight, CheckCheck, Play, RotateCcw } from 'lucide-react'
+import { ArrowLeft, ArrowRight, CheckCheck, LogOut, Play, RotateCcw, Trash2 } from 'lucide-react'
 import { useApp } from '../state/AppContext'
 import { useHotkeys, useMutable } from '../state/hooks'
 import { QuizSession } from '../core/QuizSession'
@@ -9,6 +9,7 @@ import { PageHeader } from '../components/PageHeader'
 import { BiText } from '../components/BiText'
 import { Segmented } from '../components/Segmented'
 import { Meter } from '../components/Meter'
+import { Score } from '../components/Score'
 import { QuestionCard } from '../components/quiz/QuestionCard'
 import { AnswerSheet } from '../components/quiz/AnswerSheet'
 import { ExamTimer } from '../components/quiz/ExamTimer'
@@ -33,21 +34,19 @@ export function QuizPage() {
   const [params] = useSearchParams()
   const quiz = useQuiz(id, params.get('domain'))
   const { tracker } = useApp()
-  const [run, setRun] = useState(null) // { mode, key, saved? } while a session is active
+  const [run, setRun] = useState(null) // { mode, key, runId, saved? } while a session is active
 
   if (!quiz) return <NotFoundPage />
   if (!quiz.questions.length) return <EmptyQuiz />
   if (!run) {
     const mode = params.get('mode') ?? 'practice'
-    const start = (m) => {
-      tracker.clearQuizRun(quiz.id) // starting over discards the unfinished attempt
-      setRun({ mode: m, key: Date.now() })
-    }
-    const resume = (saved) => setRun({ mode: saved.mode, key: Date.now(), saved })
+    // a new run never discards the unfinished ones: each is saved under its own runId
+    const start = (m) => setRun({ mode: m, key: Date.now(), runId: Date.now() })
+    const resume = (saved) => setRun({ mode: saved.mode, key: Date.now(), runId: saved.id, saved })
     // keyed so a new ?mode= (e.g. Practice vs Exam links) resets the intro's selection
     return <QuizIntro key={`${quiz.id}-${mode}`} quiz={quiz} initialMode={mode} onStart={start} onResume={resume} />
   }
-  return <QuizRun key={run.key} quiz={quiz} mode={run.mode} saved={run.saved} onRestart={() => setRun(null)} />
+  return <QuizRun key={run.key} quiz={quiz} mode={run.mode} runId={run.runId} saved={run.saved} onRestart={() => setRun(null)} />
 }
 
 function EmptyQuiz() {
@@ -65,31 +64,43 @@ function QuizIntro({ quiz, initialMode, onStart, onResume }) {
   const { tracker, l } = useApp()
   const [mode, setMode] = useState(initialMode)
   const stats = tracker.quizStats(quiz.id)
-  const saved = tracker.quizRun(quiz.id)
+  const runs = tracker.savedRuns(quiz.id)
+  const saved = runs.length > 0
   const minutes = Math.round((quiz.questions.length * QuizSession.SECONDS_PER_QUESTION) / 60)
+  const when = (ms) => l.date(ms, { dateStyle: 'short', timeStyle: 'short' })
+  const modeName = (m) => l.ui(m === 'exam' ? 'quiz.exam' : 'quiz.practice')
+  const remove = (run) => window.confirm(l.ui('quiz.deleteRunConfirm')) && tracker.deleteQuizRun(quiz.id, run.id)
   return (
     <div className="page page--narrow">
       <PageHeader title={<BiText pair={quiz.title} />} lead={l.ui('quiz.introLead', { n: quiz.questions.length, pass: quiz.passPercent })}>
         {stats && <p className="muted">{l.ui('quiz.bestAttempts', { best: stats.best, n: stats.attempts.length })}</p>}
       </PageHeader>
       {saved && (
-        <div className="resume-run card-stock">
-          <div>
-            <strong>{l.ui('quiz.resumeTitle')}</strong>
-            <p className="muted small">
-              {l.ui('quiz.resumeInfo', {
-                n: saved.index + 1,
-                total: quiz.questions.length,
-                answered: Object.keys(saved.selections).length,
-                mode: l.ui(saved.mode === 'exam' ? 'quiz.exam' : 'quiz.practice'),
-                time: l.date(saved.savedAt, { dateStyle: 'short', timeStyle: 'short' }),
-              })}
-            </p>
-          </div>
-          <button type="button" className="btn btn--primary btn--lg" onClick={() => onResume(saved)} autoFocus>
-            <Play size={18} aria-hidden="true" /> {l.ui('quiz.resume')}
-          </button>
-        </div>
+        <section className="resume-run card-stock" aria-labelledby="runs-h">
+          <h2 id="runs-h" className="resume-run__title">{l.ui('quiz.runsTitle', { n: runs.length })}</h2>
+          <ul className="resume-run__list">
+            {runs.map((run, i) => (
+              <li key={run.id}>
+                <p className="muted small">
+                  {l.ui('quiz.resumeInfo', {
+                    n: run.index + 1,
+                    total: quiz.questions.length,
+                    answered: Object.keys(run.selections).length,
+                    mode: modeName(run.mode),
+                    time: when(run.savedAt),
+                  })}
+                </p>
+                <button type="button" className={`btn ${i === 0 ? 'btn--primary' : ''}`} onClick={() => onResume(run)} autoFocus={i === 0}>
+                  <Play size={16} aria-hidden="true" /> {l.ui('quiz.resume')}
+                </button>
+                <button type="button" className="icon-btn" onClick={() => remove(run)} title={l.ui('quiz.deleteRun')}>
+                  <Trash2 size={16} aria-hidden="true" />
+                  <span className="sr-only">{l.ui('quiz.deleteRun')}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </section>
       )}
       <div className="intro card-stock">
         <Segmented
@@ -103,11 +114,28 @@ function QuizIntro({ quiz, initialMode, onStart, onResume }) {
           {l.ui(saved ? 'quiz.startOver' : 'quiz.start')} <ArrowRight size={18} aria-hidden="true" />
         </button>
       </div>
+      {stats?.attempts.length > 0 && (
+        <section className="history card-stock" aria-labelledby="history-h">
+          <h2 id="history-h" className="resume-run__title">{l.ui('quiz.historyTitle')}</h2>
+          <table className="table">
+            <tbody>
+              {[...stats.attempts].reverse().map((a) => (
+                <tr key={a.at}>
+                  <td className="small">{when(a.at)}</td>
+                  <td className="small muted">{modeName(a.mode)}</td>
+                  <td className="num small">{a.correct}/{a.total}</td>
+                  <td><Score best={a.percent} pass={quiz.passPercent} /></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+      )}
     </div>
   )
 }
 
-function QuizRun({ quiz, mode, saved, onRestart }) {
+function QuizRun({ quiz, mode, runId, saved, onRestart }) {
   const { tracker, l } = useApp()
   const [session, commitOnly] = useMutable(() => {
     const options = { id: quiz.id, questions: quiz.questions, mode, passPercent: quiz.passPercent }
@@ -115,7 +143,7 @@ function QuizRun({ quiz, mode, saved, onRestart }) {
   })
   // Save the attempt after every answer, move and flag (and when leaving), so it can be resumed later.
   const persist = () => {
-    if (!session.submitted && (session.answeredCount || session.flagged.size)) tracker.saveQuizRun(quiz.id, session.snapshot())
+    if (!session.submitted && (session.answeredCount || session.flagged.size)) tracker.saveQuizRun(quiz.id, runId, session.snapshot())
   }
   const commit = (fn) => {
     const result = commitOnly(fn)
@@ -133,7 +161,7 @@ function QuizRun({ quiz, mode, saved, onRestart }) {
     if (session.submitted) return
     const r = commitOnly((s) => s.submit())
     tracker.recordQuiz(quiz.id, mode, r)
-    tracker.clearQuizRun(quiz.id)
+    tracker.deleteQuizRun(quiz.id, runId)
     setResult(r)
   }
   // Practice: first press checks the answer, second moves on. Exam: always moves on.
@@ -196,9 +224,15 @@ function QuizRun({ quiz, mode, saved, onRestart }) {
         {session.submitted ? (
           <button type="button" className="btn" onClick={() => setReviewing(false)}>{l.ui('quiz.backToResult')}</button>
         ) : (
-          <button type="button" className="btn btn--primary" onClick={finish}>
-            <CheckCheck size={16} aria-hidden="true" /> {l.ui('quiz.submit')}
-          </button>
+          <>
+            <button type="button" className="btn btn--primary" onClick={finish}>
+              <CheckCheck size={16} aria-hidden="true" /> {l.ui('quiz.submit')}
+            </button>
+            {/* leaving saves this run (on unmount); the intro then lists it with the other unfinished ones */}
+            <button type="button" className="btn btn--ghost" onClick={onRestart}>
+              <LogOut size={16} aria-hidden="true" /> {l.ui('quiz.exit')}
+            </button>
+          </>
         )}
         {quiz.id === 'mistakes' && <MistakeHelp question={q} showAdvice={revealed} />}
       </aside>

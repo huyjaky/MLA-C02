@@ -3,12 +3,13 @@ import { LeitnerScheduler } from './LeitnerScheduler.js'
 
 const RESUME_MIN = 10 // seconds: earlier than this, starting over costs nothing
 const RESUME_END_MARGIN = 15 // seconds: this close to the end counts as finished
+const MAX_RUNS = 10 // unfinished attempts kept per quiz; the oldest goes first
 
 const DEFAULTS = {
   settings: { lang: 'vi', dual: false, theme: 'system', captions: 'both' },
   lectures: {}, // lecture id -> completed at (ms)
   quizzes: {}, // quiz id -> { best, attempts: [{ correct, total, percent, mode, at }] }
-  quizRuns: {}, // quiz id -> unfinished QuizSession snapshot
+  quizRuns: {}, // quiz id -> unfinished QuizSession snapshots [{ id, ...snapshot }], newest first
   mistakes: {}, // question id -> quiz id, until answered correctly
   leitner: {}, // card id -> { box, due }
   subDelays: {}, // lecture id -> subtitle delay in seconds (+ = subtitles later)
@@ -87,20 +88,26 @@ export class ProgressTracker extends PersistentStore {
     })
   }
 
-  /** Unfinished attempt of a quiz (a QuizSession snapshot), or null. */
-  quizRun(quizId) {
-    return this.state.quizRuns?.[quizId] ?? null
+  /** Unfinished attempts of a quiz, newest first: QuizSession snapshots plus their run `id`. */
+  savedRuns(quizId) {
+    const runs = this.state.quizRuns?.[quizId]
+    if (!runs) return []
+    // progress saved before several runs per quiz were kept holds one bare snapshot
+    return Array.isArray(runs) ? runs : [{ ...runs, id: runs.savedAt ?? 0 }]
   }
 
-  saveQuizRun(quizId, snapshot) {
-    this.update('quizRuns', (all = {}) => ({ ...all, [quizId]: snapshot }))
+  saveQuizRun(quizId, runId, snapshot) {
+    const runs = [{ ...snapshot, id: runId }, ...this.savedRuns(quizId).filter((r) => r.id !== runId)].slice(0, MAX_RUNS)
+    this.update('quizRuns', (all = {}) => ({ ...all, [quizId]: runs }))
   }
 
-  clearQuizRun(quizId) {
-    if (!this.quizRun(quizId)) return
+  deleteQuizRun(quizId, runId) {
+    const runs = this.savedRuns(quizId)
+    if (!runs.some((r) => r.id === runId)) return
     this.update('quizRuns', (all = {}) => {
       const { [quizId]: _, ...rest } = all
-      return rest
+      const left = runs.filter((r) => r.id !== runId)
+      return left.length ? { ...rest, [quizId]: left } : rest
     })
   }
 

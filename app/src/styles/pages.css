@@ -1097,16 +1097,52 @@ article.prose {
   gap: var(--s-2);
 }
 
-/* unfinished attempt, offered above the mode picker */
+/* unfinished attempts, offered above the mode picker; finished ones listed below it */
 .resume-run {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--s-3) var(--s-5);
+  flex-direction: column;
+  gap: var(--s-3);
   padding: var(--s-4) var(--s-5);
   border-top: 3px solid var(--rule-red);
   border-radius: 0 0 var(--radius-card) var(--radius-card);
+}
+
+.resume-run__title {
+  margin: 0;
+  font-size: var(--fs-md);
+}
+
+.resume-run__list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.resume-run__list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2) var(--s-3);
+  padding: var(--s-2) 0;
+}
+
+.resume-run__list li + li {
+  border-top: 1px solid var(--line);
+}
+
+.resume-run__list p {
+  flex: 1;
+  min-width: 14rem;
+  margin: 0;
+}
+
+.history {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  padding: var(--s-4) var(--s-5);
 }
 
 .quiz-row__run {

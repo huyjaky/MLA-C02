@@ -9,7 +9,7 @@ import { Score } from '../components/Score'
 function QuizRow({ quiz }) {
   const { tracker, l } = useApp()
   const stats = tracker.quizStats(quiz.id)
-  const run = tracker.quizRun(quiz.id)
+  const [run] = tracker.savedRuns(quiz.id) // newest unfinished run
   return (
     <li className="quiz-row">
       <SectionTab id={quiz.section ?? 'exam'} size="sm" />

@@ -124,6 +124,16 @@ assert.deepEqual(
   'every exam-file wording maps to its domain',
 )
 
+const runs = new ProgressTracker({ quizRuns: { q: { mode: 'exam', index: 2, selections: {}, savedAt: 5 } } }, () => {})
+assert.deepEqual(runs.savedRuns('q').map((r) => [r.id, r.mode]), [[5, 'exam']], 'a single legacy snapshot reads as one run')
+runs.saveQuizRun('q', 9, { mode: 'practice', index: 0, selections: {} })
+runs.saveQuizRun('q', 5, { mode: 'exam', index: 3, selections: {} })
+assert.deepEqual(runs.savedRuns('q').map((r) => [r.id, r.index]), [[5, 3], [9, 0]], 'a new run keeps the old one; saving moves a run to the top')
+runs.deleteQuizRun('q', 5)
+assert.deepEqual(runs.savedRuns('q').map((r) => r.id), [9], 'deleting removes only that run')
+runs.deleteQuizRun('q', 9)
+assert.deepEqual([runs.savedRuns('q'), runs.state.quizRuns], [[], {}], 'the last delete drops the quiz entry')
+
 const long = { question: { en: `<p>${'x'.repeat(700)}</p>` }, answer: [0] }
 assert.equal(QuestionDifficulty.of({ question: { en: 'short' } }, { kind: 'section' }), 'easy')
 assert.equal(QuestionDifficulty.of({ question: { en: 'short' } }, { kind: 'exam' }), 'medium')
