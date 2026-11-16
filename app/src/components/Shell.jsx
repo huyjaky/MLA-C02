@@ -1,5 +1,5 @@
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
-import { BookOpenText, CalendarDays, Trophy, Dumbbell, Layers, LayoutGrid, ListChecks, LogOut, Moon, NotebookPen, PlayCircle, Sun, SunMoon, Library, Languages, UserRound } from 'lucide-react'
+import { BookOpenText, CalendarDays, Trophy, Dumbbell, Layers, LayoutGrid, ListChecks, LogOut, Moon, NotebookPen, PlayCircle, Presentation, Sun, SunMoon, Library, Languages, UserRound } from 'lucide-react'
 import { useEffect, useRef } from 'react'
 import { useApp } from '../state/AppContext'
 import { BiText } from './BiText'
@@ -15,6 +15,7 @@ const NAV = [
   { to: '/competitive', key: 'nav.competitive', icon: Trophy },
   { to: '/glossary', key: 'nav.glossary', icon: Library },
   { to: '/notes', key: 'nav.notes', icon: NotebookPen },
+  { to: '/slides', key: 'nav.slides', icon: Presentation },
 ]
 
 export function Shell() {

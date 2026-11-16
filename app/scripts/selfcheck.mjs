@@ -7,6 +7,7 @@ import { Localizer } from '../src/core/Localizer.js'
 import { MistakeCoach } from '../src/core/MistakeCoach.js'
 import { StudyPlanner } from '../src/core/StudyPlanner.js'
 import { ProgressTracker } from '../src/core/ProgressTracker.js'
+import { SlideView } from '../src/core/SlideView.js'
 import { examDomain } from '../src/core/ExamDomain.js'
 import { QuestionDifficulty } from '../src/core/QuestionDifficulty.js'
 import { DuelRules } from '../src/core/DuelRules.js'
@@ -218,5 +219,21 @@ assert.equal(Elo.update({ A: [{ id: 1, rating: 1400 }], B: [{ id: 2, rating: 100
 assert.equal(Elo.update({ A: [{ id: 1, rating: 1000 }], B: [{ id: 2, rating: 1000 }] }, null)[1].delta, 0, 'an even draw changes nothing')
 const pair = Elo.update({ A: [{ id: 1, rating: 1100 }, { id: 2, rating: 900 }], B: [{ id: 3, rating: 1000 }, { id: 4, rating: 1000 }] }, 'B')
 assert.deepEqual([pair[1].delta, pair[2].delta, pair[3].delta], [-16, -16, 16], 'teams play at their average; members move together')
+
+assert.deepEqual(SlideView.locate(0, 500, 10), { page: 0, frac: 0 }, 'top of the first page')
+assert.deepEqual(SlideView.locate(1250, 500, 10), { page: 2, frac: 0.5 }, 'halfway down page 3')
+assert.deepEqual(SlideView.locate(99999, 500, 10), { page: 9, frac: 1 }, 'past the end stays on the last page')
+assert.equal(SlideView.offset(SlideView.locate(1250, 500, 10), 800, 10), 2000, 'the spot survives a zoom change')
+assert.equal(SlideView.offset({ page: 40, frac: 0.2 }, 500, 10), 4600, 'a spot beyond a shorter deck clamps to its last page')
+assert.deepEqual([SlideView.zoom(0.83), SlideView.zoom('x'), SlideView.zoom(5)], [0.8, 0.8, 1], 'zoom snaps to a step')
+const reader = new ProgressTracker({}, () => {})
+reader.setSlidesView({ page: 3, frac: 0.25, zoom: 0.8 })
+const slideState = reader.state.slides
+reader.setSlidesView({ page: 3, frac: 0.25, zoom: 0.8 })
+assert.equal(reader.state.slides, slideState, 'an unchanged spot causes no update')
+assert.equal(new ProgressTracker({}, () => {}).state.slides, null, 'no spot before the slides are opened')
+const restored = new ProgressTracker({}, () => {})
+await restored.importData(JSON.parse(JSON.stringify(reader.exportData())))
+assert.deepEqual(restored.state.slides, { page: 3, frac: 0.25, zoom: 0.8 }, 'the slide spot travels in a backup')
 
 console.log('selfcheck OK')

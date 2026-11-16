@@ -18,6 +18,7 @@ const DEFAULTS = {
   schedule: null, // { start, exam } as 'YYYY-MM-DD'
   planView: null, // study plan page: { open: [expanded dates], lecture: last lecture opened from it, stars: starred-only filter }
   stars: {}, // lecture id -> starred at (ms): lectures the learner flagged as important
+  slides: null, // slide viewer: { page, frac, zoom }: page at the top of the screen (0-based), share of it scrolled past, zoom
 }
 
 const BACKUP_FORMAT = 'mla-study-progress'
@@ -40,7 +41,7 @@ export class ProgressTracker extends PersistentStore {
     const next = {}
     for (const [slice, fallback] of Object.entries(DEFAULTS)) {
       const value = backup.state[slice] ?? fallback
-      // map slices must stay objects; the nullable ones (lastLecture, schedule, planView) take a string or an object
+      // map slices must stay objects; the nullable ones (lastLecture, schedule, planView, slides) take a string or an object
       const ok = isPlainObject(fallback) ? isPlainObject(value) : value === null || typeof value === 'string' || isPlainObject(value)
       if (!ok) throw new Error('notBackup')
       next[slice] = slice === 'settings' ? { ...DEFAULTS.settings, ...value } : value
@@ -156,6 +157,13 @@ export class ProgressTracker extends PersistentStore {
 
   setPlanView(view) {
     this.update('planView', () => view)
+  }
+
+  /** Remember where the slide viewer is; skipped when nothing moved, so idle scroll events cost no save. */
+  setSlidesView(view) {
+    const prev = this.state.slides
+    if (prev && prev.page === view.page && prev.frac === view.frac && prev.zoom === view.zoom) return
+    this.update('slides', () => ({ page: view.page, frac: view.frac, zoom: view.zoom }))
   }
 
   isStarred(lectureId) {

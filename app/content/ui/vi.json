@@ -350,5 +350,18 @@
   "duel.error.room_not_full": "Phải đủ người mới bắt đầu được.",
   "duel.error.not_host": "Chỉ chủ phòng mới bắt đầu được.",
   "duel.eloMine": "Elo của bạn",
-  "duel.eloChanges": "Elo sau trận"
+  "duel.eloChanges": "Elo sau trận",
+  "nav.slides": "Slide",
+  "slides.lead": "Slide khóa học xem ngay tại đây. Mở lại sẽ về đúng trang và vị trí bạn đọc dở, trên mọi máy bạn đăng nhập.",
+  "slides.toolbar": "Điều khiển slide",
+  "slides.page": "Trang",
+  "slides.pageLabel": "Trang slide {n}",
+  "slides.prev": "Trang trước",
+  "slides.next": "Trang sau",
+  "slides.zoomIn": "Phóng to",
+  "slides.zoomOut": "Thu nhỏ",
+  "slides.download": "Tải PDF",
+  "slides.loading": "Đang tải slide…",
+  "slides.error": "Không tải được slide. Kiểm tra SLIDES_FILE trong .env, hoặc tải file về.",
+  "lecture.viewSlides": "Xem slide"
 }

@@ -350,5 +350,18 @@
   "duel.error.room_not_full": "Every seat must be taken first.",
   "duel.error.not_host": "Only the host can start.",
   "duel.eloMine": "Your Elo",
-  "duel.eloChanges": "Elo after this match"
+  "duel.eloChanges": "Elo after this match",
+  "nav.slides": "Slides",
+  "slides.lead": "The course slides, right here. You reopen at the page and spot you last read, on any device you sign in from.",
+  "slides.toolbar": "Slide controls",
+  "slides.page": "Page",
+  "slides.pageLabel": "Slide page {n}",
+  "slides.prev": "Previous page",
+  "slides.next": "Next page",
+  "slides.zoomIn": "Zoom in",
+  "slides.zoomOut": "Zoom out",
+  "slides.download": "Download PDF",
+  "slides.loading": "Loading slides…",
+  "slides.error": "The slides could not be loaded. Check SLIDES_FILE in .env, or download the file instead.",
+  "lecture.viewSlides": "View slides"
 }

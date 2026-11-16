@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react'
 import { HashRouter, Route, Routes } from 'react-router-dom'
 import { AppProvider } from './state/AppContext'
 import { Shell } from './components/Shell'
@@ -15,6 +16,9 @@ import { CompetitivePage } from './pages/CompetitivePage'
 import { DuelPage } from './pages/DuelPage'
 import { SurvivalPage } from './pages/SurvivalPage'
 import { NotFoundPage } from './pages/NotFoundPage'
+
+// pdf.js is large: load the slide viewer only when it is opened
+const SlidesPage = lazy(() => import('./pages/SlidesPage').then((m) => ({ default: m.SlidesPage })))
 
 // Hash routing keeps the built app working from any static folder.
 export function App() {
@@ -36,6 +40,7 @@ export function App() {
             <Route path="flashcards" element={<FlashcardsPage />} />
             <Route path="glossary" element={<GlossaryPage />} />
             <Route path="notes" element={<NotesPage />} />
+            <Route path="slides" element={<Suspense fallback={null}><SlidesPage /></Suspense>} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>

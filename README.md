@@ -1,7 +1,7 @@
 # MLA-C02 Study Box
 
 Web ôn thi AWS Certified Machine Learning Engineer – Associate, dựng từ khóa học nằm ngoài repo này (video, phụ đề, slide, tài liệu không có trong git).
-Song ngữ EN/VI: bài giảng (video + phụ đề đồng bộ), quiz & đề thi thử, flashcard Leitner, thuật ngữ, ghi chú giảng viên.
+Song ngữ EN/VI: bài giảng (video + phụ đề đồng bộ), xem slide PDF ngay trong web (nhớ trang đang đọc theo tài khoản), quiz & đề thi thử, flashcard Leitner, thuật ngữ, ghi chú giảng viên.
 
 ## Chạy bằng Docker (khuyên dùng)
 
@@ -67,6 +67,7 @@ app/
       LeitnerScheduler     lịch ôn flashcard 5 ngăn
       TranscriptTrack      tra phụ đề theo thời gian
       Localizer            chọn ngôn ngữ cho cặp {en,vi} và chuỗi UI
+      SlideView            vị trí đọc slide (trang + phần đã cuộn) độc lập với zoom
     state/                 React context nối core với UI
     components/            thành phần dùng chung (BiText, SectionTab, Stamp, ...)
     pages/                 mỗi route một trang

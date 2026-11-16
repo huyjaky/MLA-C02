@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
-import { Check, ChevronLeft, ChevronRight, FileDown, Minus, Play, Plus, X } from 'lucide-react'
+import { Check, ChevronLeft, ChevronRight, FileDown, Minus, Play, Plus, Presentation, X } from 'lucide-react'
 import { useApp } from '../state/AppContext'
 import { useAsync, useHotkeys } from '../state/hooks'
 import { TranscriptTrack } from '../core/TranscriptTrack'
@@ -109,6 +109,12 @@ function Materials({ files }) {
     <section className="materials card-stock" aria-labelledby="materials-h">
       <h2 id="materials-h">{l.ui('lecture.materials')}</h2>
       <ul className="materials__list">
+        <li>
+          <Link to="/slides" className="material">
+            <Presentation size={16} aria-hidden="true" />
+            <span className="material__name">{l.ui('lecture.viewSlides')}</span>
+          </Link>
+        </li>
         {link(SLIDES_URL, l.text(repo.slides.title))}
         {files.map((path) => link(materialUrl(path), path.split('/').pop(), path.split('/').slice(0, -1).join('/')))}
       </ul>
